@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge Graph Explorer — Listed Companies VN</title>
+    <title>Khám phá Knowledge Graph — Công ty niêm yết VN</title>
 
     <!-- Vis.js -->
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
@@ -28,15 +28,15 @@
         <header id="app-header">
             <div class="header-left">
                 <span class="logo">KG</span>
-                <h1>KG Explorer — Listed Companies VN</h1>
+                <h1>KG Explorer — Công ty niêm yết VN</h1>
             </div>
             <div class="header-right">
-                <span id="stats-display" class="stats-badge">0 nodes · 0 edges</span>
+                <span id="stats-display" class="stats-badge">0 node · 0 cạnh</span>
                 <span id="last-crawl-badge" class="stats-badge last-crawl-badge" title=""></span>
                 <button type="button" id="btn-search" onclick="toggleSearchBar()" class="btn-ghost btn-search-header" title="Tìm công ty / người (Ctrl+K)">Tìm thực thể</button>
-                <button id="btn-crawl" onclick="startCrawl()" class="btn-success">Crawl Data</button>
+                <button id="btn-crawl" onclick="startCrawl()" class="btn-success">Crawl dữ liệu</button>
                 <a id="neo4j-browser-link" href="{{ neo4j_browser_url }}" target="_blank" rel="noopener" class="btn-ghost" title="Neo4j Browser" style="display:none;">Neo4j</a>
-                <button id="theme-toggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+                <button id="theme-toggle" onclick="toggleTheme()" title="Đổi giao diện sáng/tối">🌙</button>
             </div>
         </header>
 
@@ -46,7 +46,7 @@
                 <input type="text" id="searchInput" placeholder="🔍 Tìm công ty hoặc người..." 
                        style="flex:1;padding:var(--space-sm) var(--space-md);border:1px solid var(--border-subtle);border-radius:var(--radius-md);background:var(--bg-base);color:var(--text-primary);"
                        onkeyup="handleSearchInput(event)">
-                <button onclick="toggleSearchBar()" style="padding:var(--space-sm) var(--space-md);background:var(--bg-base);border:1px solid var(--border-subtle);border-radius:var(--radius-md);cursor:pointer;" title="Close">✕</button>
+                <button onclick="toggleSearchBar()" style="padding:var(--space-sm) var(--space-md);background:var(--bg-base);border:1px solid var(--border-subtle);border-radius:var(--radius-md);cursor:pointer;" title="Đóng">✕</button>
             </div>
             <div id="searchResults" style="margin-top:var(--space-md);max-height:200px;overflow-y:auto;"></div>
         </div>
@@ -57,7 +57,7 @@
                 <!-- GRAPH -->
                 <section class="dash-section" id="dash-section-graph">
                     <div class="dash-section-head">
-                        <h2 class="dash-section-title">Knowledge Graph</h2>
+                        <h2 class="dash-section-title">Đồ thị Knowledge Graph</h2>
                         <button type="button" class="btn-collapse" id="btn-collapse-graph" onclick="toggleDashSection('graph')" aria-expanded="true" aria-controls="dash-body-graph">Thu gọn</button>
                     </div>
                     <div class="dash-section-body dash-section-body--graph" id="dash-body-graph">
@@ -66,26 +66,26 @@
                     <div class="panel panel-graph" data-panel="graph">
                         <div class="panel-header panel-header--graph-toolbar">
                             <div class="panel-actions">
-                                <button onclick="loadGlobalGraph()" class="btn-secondary" id="btnKgCompanies">Companies</button>
-                                <button onclick="loadPersonGraph()" class="btn-secondary" id="btnKgPersons">Persons</button>
+                                <button onclick="loadGlobalGraph()" class="btn-secondary" id="btnKgCompanies">Công ty</button>
+                                <button onclick="loadPersonGraph()" class="btn-secondary" id="btnKgPersons">Cá nhân</button>
                             </div>
                         </div>
                         <div id="mynetwork" style="position:relative;"></div>
 
                         <!-- Legend -->
                         <div id="graph-legend">
-                            <span class="legend-item"><span class="dot company"></span>Company</span>
-                            <span class="legend-item"><span class="dot person"></span>Person</span>
-                            <span class="legend-item"><span class="dot institution"></span>Institution</span>
+                            <span class="legend-item"><span class="dot company"></span>Công ty</span>
+                            <span class="legend-item"><span class="dot person"></span>Cá nhân</span>
+                            <span class="legend-item"><span class="dot institution"></span>Tổ chức</span>
                             <span class="legend-divider">|</span>
-                            <span class="legend-item"><span class="dot inferred-low"></span>Low (&lt;25%)</span>
-                            <span class="legend-item"><span class="dot inferred-medium"></span>Medium (25-50%)</span>
-                            <span class="legend-item"><span class="dot inferred-high"></span>High (&ge;50%)</span>
+                            <span class="legend-item"><span class="dot inferred-low"></span>Thấp (&lt;25%)</span>
+                            <span class="legend-item"><span class="dot inferred-medium"></span>Trung bình (25–50%)</span>
+                            <span class="legend-item"><span class="dot inferred-high"></span>Cao (&ge;50%)</span>
                         </div>
 
                         <!-- Pagination Controls -->
                         <div id="graph-pagination" style="padding:var(--space-md);border-top:1px solid var(--border-subtle);display:flex;justify-content:space-between;align-items:center;background:var(--bg-elevated);font-size:0.85rem;gap:var(--space-md);">
-                            <span id="pagination-info">Đã tải: 0/0 nodes</span>
+                            <span id="pagination-info">Đã tải: 0/0 node</span>
                             <div style="display:flex;gap:var(--space-sm);">
                                 <button onclick="previousGraphPage()" id="btn-prev-page" class="btn-sm" style="padding:4px 8px;opacity:0.5;cursor:not-allowed;">← Trang trước</button>
                                 <span style="color:var(--text-muted);font-size:0.8rem;">Trang</span>
@@ -105,31 +105,31 @@
                     </div>
                         </div>
 
-                        <aside class="graph-right-col" aria-label="KPI và Process Monitor">
+                        <aside class="graph-right-col" aria-label="KPI và giám sát tiến trình">
                     <div class="panel panel-kpi" data-panel="kpi">
                         <div class="kpi-card">
-                            <span class="kpi-label">Nodes</span>
+                            <span class="kpi-label">Node</span>
                             <span class="kpi-value" id="kpi-nodes">0</span>
                         </div>
                         <div class="kpi-card">
-                            <span class="kpi-label">Edges</span>
+                            <span class="kpi-label">Cạnh</span>
                             <span class="kpi-value" id="kpi-edges">0</span>
                         </div>
                         <div class="kpi-card">
-                            <span class="kpi-label">Inferred</span>
+                            <span class="kpi-label">Suy diễn</span>
                             <span class="kpi-value" id="kpi-inferred">0</span>
                         </div>
                     </div>
 
                     <div class="panel panel-process" data-panel="process">
                         <div class="panel-header">
-                            <h2>Process Monitor</h2>
+                            <h2>Giám sát tiến trình</h2>
                         </div>
                         <div id="processPane" style="padding:var(--space-md);overflow-y:auto;flex:1;">
                             <div id="process-steps">
                                 <p style="color:var(--text-muted);font-size:0.85rem;">Chưa có truy vấn nào được thực hiện.</p>
                             </div>
-                            <div id="cypherSection" style="margin-top:var(--space-md);background:var(--bg-overlay);color:var(--text-secondary);padding:var(--space-sm) var(--space-md);border-radius:var(--radius-md);font-family:'JetBrains Mono','Fira Code',monospace;font-size:0.78rem;word-break:break-all;max-height:150px;overflow-y:auto;">N/A</div>
+                            <div id="cypherSection" style="margin-top:var(--space-md);background:var(--bg-overlay);color:var(--text-secondary);padding:var(--space-sm) var(--space-md);border-radius:var(--radius-md);font-family:'JetBrains Mono','Fira Code',monospace;font-size:0.78rem;word-break:break-all;max-height:150px;overflow-y:auto;">Không có</div>
                         </div>
                     </div>
                         </aside>
@@ -147,7 +147,7 @@
                     <div class="tab-panel-chat-inner panel panel-chat-full">
                         <div class="chat-toolbar-wrap">
                             <div class="chat-toolbar">
-                                <label for="modelSelect">Model Ollama</label>
+                                <label for="modelSelect">Model (Ollama)</label>
                                 <select id="modelSelect" class="model-select" title="Chọn model" onchange="saveModelChoice()"></select>
                                 <label for="sessionSelect">Phiên đã lưu</label>
                                 <select id="sessionSelect" class="session-select" title="Tải phiên đã lưu" onchange="loadSessionFromSelect()">
@@ -160,7 +160,7 @@
                                     <button type="button" onclick="clearAllChatSessions()" class="btn-sm btn-secondary">Xóa tất cả</button>
                                 </div>
                             </div>
-                            <p class="model-hint">Danh sách model từ backend: vLLM/OpenAI (<code>/v1/models</code>) hoặc Ollama (<code>/api/tags</code>). Mặc định app: <code>MODEL_NAME</code> trong cấu hình.</p>
+                            <p class="model-hint">Danh sách model từ backend: vLLM/OpenAI (<code>/v1/models</code>) hoặc Ollama (<code>/api/tags</code>). Mặc định ứng dụng: <code>MODEL_NAME</code> trong cấu hình.</p>
                         </div>
                         <div class="chat-container">
                             <div class="chat-messages" id="chatHistory">
@@ -240,11 +240,11 @@
                         <div id="statsPane" style="padding:0;overflow-y:visible;flex:1;">
                             <div class="stats-grid-four">
                                 <div style="background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-md);">
-                                    <div style="color:var(--text-muted);font-size:0.85rem;margin-bottom:var(--space-sm);">Tổng Node</div>
+                                    <div style="color:var(--text-muted);font-size:0.85rem;margin-bottom:var(--space-sm);">Tổng số node</div>
                                     <div id="stat-total-nodes" style="font-size:1.75rem;font-weight:700;color:var(--accent-primary);">0</div>
                                 </div>
                                 <div style="background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-md);">
-                                    <div style="color:var(--text-muted);font-size:0.85rem;margin-bottom:var(--space-sm);">Tổng Edge</div>
+                                    <div style="color:var(--text-muted);font-size:0.85rem;margin-bottom:var(--space-sm);">Tổng số cạnh</div>
                                     <div id="stat-total-edges" style="font-size:1.75rem;font-weight:700;color:var(--accent-secondary);">0</div>
                                 </div>
                                 <div style="background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-md);">
@@ -257,11 +257,11 @@
                                 </div>
                             </div>
                             <div style="margin-top:var(--space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-md);">
-                                <div style="color:var(--text-muted);font-size:0.85rem;margin-bottom:var(--space-sm);">Node tham gia quan hệ suy diễn</div>
+                                <div style="color:var(--text-muted);font-size:0.85rem;margin-bottom:var(--space-sm);">Node trong quan hệ suy diễn</div>
                                 <div id="stat-inferred-nodes" style="font-size:1.75rem;font-weight:700;color:var(--warning);">0</div>
                             </div>
                             <div style="margin-top:var(--space-lg);background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-md);">
-                                <h3 style="margin:0 0 var(--space-md) 0;font-size:0.95rem;">Phân bổ (Company / Person)</h3>
+                                <h3 style="margin:0 0 var(--space-md) 0;font-size:0.95rem;">Phân bổ (công ty / cá nhân)</h3>
                                 <div id="stat-distribution" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:var(--space-md);"></div>
                             </div>
                         </div>
@@ -460,7 +460,7 @@
             if (store.sessions.length > 40) store.sessions.length = 40;
             saveSessionsStore(store);
             refreshSessionDropdown();
-            showToast('Đã lưu phiên chat', 'success');
+            showToast('Đã lưu phiên hội thoại', 'success');
         }
 
         function loadSessionFromSelect() {
@@ -568,7 +568,7 @@
 
             // Loading overlay
             var netContainer = document.getElementById('mynetwork');
-            netContainer.innerHTML = '<div id="graph-loader"><div class="loader-text">Đang render graph...</div><div class="loader-sub">' + graphData.nodes.length + ' nodes, ' + (graphData.edges || []).length + ' edges</div></div>';
+            netContainer.innerHTML = '<div id="graph-loader"><div class="loader-text">Đang vẽ đồ thị...</div><div class="loader-sub">' + graphData.nodes.length + ' node, ' + (graphData.edges || []).length + ' cạnh</div></div>';
 
             var opts = getVisOptions();
 
@@ -732,19 +732,26 @@
                     : '—';
             }
             var statsDisplay = document.getElementById('stats-display');
-            if (statsDisplay) statsDisplay.textContent = nodeCount + ' nodes · ' + edgeCount + ' edges';
+            if (statsDisplay) statsDisplay.textContent = nodeCount + ' node · ' + edgeCount + ' cạnh';
         }
 
         // ============================================================
         //  PAGINATION FUNCTIONS
         // ============================================================
+        function graphModeLabel(mode) {
+            if (mode === 'companies') return 'công ty';
+            if (mode === 'persons') return 'cá nhân';
+            if (mode === 'chat') return 'chat';
+            return mode || '';
+        }
+
         function updatePaginationUI() {
             var rowTotal = graphPaginationState.paginationRowCount || graphPaginationState.totalEdges || 0;
             var loadedCount = Object.keys(graphPaginationState.loadedNodes).length;
             var edgeLoaded = (graphPaginationState.loadedEdges || []).length;
-            var suf = graphPaginationState.truncated ? ' (giới hạn hiển thị; tổng trong DB lớn hơn)' : '';
+            var suf = graphPaginationState.truncated ? ' (giới hạn hiển thị; tổng trong CSDL lớn hơn)' : '';
             document.getElementById('pagination-info').textContent =
-                loadedCount + ' nodes · ' + edgeLoaded + ' cạnh hiển thị · tổng ' + rowTotal + ' cạnh trong DB · ' + graphPaginationState.mode + suf;
+                loadedCount + ' node · ' + edgeLoaded + ' cạnh hiển thị · tổng ' + rowTotal + ' cạnh trong CSDL · chế độ: ' + graphModeLabel(graphPaginationState.mode) + suf;
             document.getElementById('pagination-numbers').textContent = '—';
             var btnPrev = document.getElementById('btn-prev-page');
             var btnNext = document.getElementById('btn-next-page');
@@ -903,7 +910,7 @@
                     if (!el) return;
                     var ls = d.last_success;
                     if (ls && ls.completed_at) {
-                        el.textContent = 'Crawl OK: ' + ls.completed_at;
+                        el.textContent = 'Crawl thành công: ' + ls.completed_at;
                         el.title = ls.message || '';
                     } else {
                         el.textContent = '';
@@ -924,7 +931,7 @@
                 stepsContainer.appendChild(div);
             });
             var cypherEl = document.getElementById('cypherSection');
-            if (cypherEl) cypherEl.textContent = cypher || 'N/A';
+            if (cypherEl) cypherEl.textContent = cypher || 'Không có';
         }
 
         function sendQuery() {
@@ -1030,7 +1037,7 @@
             fetch('/api/inference', { method: 'POST', headers: { 'Content-Type': 'application/json' } })
                 .then(function (res) { return res.json(); })
                 .then(function (data) {
-                    alert('Inference hoàn tất: ' + (data.message || 'OK'));
+                    alert('Inference đã hoàn tất: ' + (data.message || 'OK'));
                     loadGlobalGraph();
                     loadStats();
                 })
@@ -1106,7 +1113,7 @@
             var btn = document.getElementById('btn-crawl');
             if (btn) {
                 btn.disabled = false;
-                btn.textContent = 'Crawl Data';
+                btn.textContent = 'Crawl dữ liệu';
             }
         }
 
@@ -1125,7 +1132,7 @@
                     var e = data.total_edges || 0;
                     var inf = data.inferred_nodes;
                     var statsDisplay = document.getElementById('stats-display');
-                    if (statsDisplay) statsDisplay.textContent = n + ' nodes · ' + e + ' edges';
+                    if (statsDisplay) statsDisplay.textContent = n + ' node · ' + e + ' cạnh';
                     updateKPI(n, e, inf);
                     var stn = document.getElementById('stat-total-nodes');
                     var ste = document.getElementById('stat-total-edges');
@@ -1139,8 +1146,8 @@
                     if (sp) sp.textContent = (data.persons != null) ? data.persons.toLocaleString() : '0';
                     var dist = document.getElementById('stat-distribution');
                     if (dist && data.companies != null && data.persons != null) {
-                        dist.innerHTML = '<div style="padding:var(--space-sm);background:var(--bg-overlay);border-radius:var(--radius-md);border:1px solid var(--border-subtle);"><strong>Company</strong><br><span style="font-size:1.4rem;font-weight:700;color:var(--accent-primary);">' + data.companies.toLocaleString() + '</span></div>' +
-                            '<div style="padding:var(--space-sm);background:var(--bg-overlay);border-radius:var(--radius-md);border:1px solid var(--border-subtle);"><strong>Person</strong><br><span style="font-size:1.4rem;font-weight:700;color:var(--accent-secondary);">' + data.persons.toLocaleString() + '</span></div>';
+                        dist.innerHTML = '<div style="padding:var(--space-sm);background:var(--bg-overlay);border-radius:var(--radius-md);border:1px solid var(--border-subtle);"><strong>Công ty</strong><br><span style="font-size:1.4rem;font-weight:700;color:var(--accent-primary);">' + data.companies.toLocaleString() + '</span></div>' +
+                            '<div style="padding:var(--space-sm);background:var(--bg-overlay);border-radius:var(--radius-md);border:1px solid var(--border-subtle);"><strong>Cá nhân</strong><br><span style="font-size:1.4rem;font-weight:700;color:var(--accent-secondary);">' + data.persons.toLocaleString() + '</span></div>';
                     }
                 })
                 .catch(function (err) {
@@ -1229,7 +1236,7 @@
                                    'onmouseout="this.style.background=\'transparent\'" ' +
                                    'onclick="selectSearchResult(\'' + item.id.replace(/'/g, "\\'") + '\')">' +
                                    '<strong>' + item.label + '</strong><br>' +
-                                   '<span style="color:var(--text-muted);">' + (item.type || 'Entity') + '</span>' +
+                                   '<span style="color:var(--text-muted);">' + (item.type || 'Thực thể') + '</span>' +
                                    '</div>';
                         });
                         html += '</div>';
