@@ -1,0 +1,307 @@
+/* ============================================================
+   Components — Buttons, Cards, Inputs, Tags, KPI, Sidebar
+   ============================================================ */
+
+/* ---------- Panels (shared) ---------- */
+.panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+  flex-shrink: 0;
+}
+
+.panel-header h2 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.panel-actions {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+/* ---------- Buttons ---------- */
+button,
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s, transform 0.1s;
+  user-select: none;
+  white-space: nowrap;
+}
+
+button:active,
+.btn:active {
+  transform: scale(0.97);
+}
+
+button:disabled,
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Primary */
+.btn-primary,
+button.btn-primary {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled),
+button.btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  box-shadow: var(--shadow-md);
+}
+
+/* Secondary */
+.btn-secondary,
+button.btn-secondary {
+  background: var(--bg-overlay);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--bg-elevated);
+}
+
+/* Ghost */
+.btn-ghost,
+button.btn-ghost,
+a.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  padding: var(--space-sm);
+}
+
+.btn-ghost:hover:not(:disabled),
+button.btn-ghost:hover:not(:disabled) {
+  background: var(--bg-overlay);
+  color: var(--text-primary);
+}
+
+/* Small */
+.btn-sm,
+button.btn-sm {
+  padding: var(--space-xs) var(--space-sm);
+  font-size: 0.78rem;
+}
+
+/* Success / Danger */
+.btn-success {
+  background: var(--success);
+  color: #fff;
+}
+
+.btn-success:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+/* ---------- Inputs ---------- */
+input[type="text"],
+input[type="search"],
+textarea {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  background: var(--bg-overlay);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+input[type="text"]:focus,
+input[type="search"]:focus,
+textarea:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* ---------- Tags / Badges ---------- */
+.tag,
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--space-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  background: var(--bg-overlay);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+
+.badge-success {
+  background: rgba(0, 184, 148, 0.12);
+  color: var(--success);
+  border-color: transparent;
+}
+
+.badge-warning {
+  background: rgba(253, 203, 110, 0.12);
+  color: var(--warning);
+  border-color: transparent;
+}
+
+.badge-error {
+  background: rgba(207, 102, 121, 0.12);
+  color: var(--error);
+  border-color: transparent;
+}
+
+/* ---------- KPI Cards ---------- */
+.panel-kpi {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  padding: var(--space-md);
+  min-height: auto;
+}
+
+.kpi-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg) var(--space-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  text-align: center;
+  min-height: 120px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.kpi-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-sm);
+}
+
+.kpi-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+  line-height: 1.2;
+}
+
+.kpi-card:nth-child(2) .kpi-value { color: var(--accent-secondary); }
+.kpi-card:nth-child(3) .kpi-value { color: var(--warning); }
+
+/* ---------- Process Steps ---------- */
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-elevated);
+  border-left: 3px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.step-item.completed {
+  border-left-color: var(--success);
+  color: var(--text-primary);
+}
+
+.step-item.active {
+  border-left-color: var(--warning);
+  background: rgba(253, 203, 110, 0.06);
+  color: var(--text-primary);
+}
+
+.step-item.error {
+  border-left-color: var(--error);
+  color: var(--error);
+}
+
+.step-icon {
+  flex-shrink: 0;
+  font-size: 0.9rem;
+}
+
+/* ---------- Chat toolbar (model + sessions) ---------- */
+.chat-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+}
+
+.chat-toolbar label {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.model-select,
+.session-select {
+  font-size: 0.82rem;
+  padding: var(--space-xs) var(--space-sm);
+  max-width: min(280px, 100%);
+  background: var(--bg-overlay);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+}
+
+.chat-toolbar .panel-actions {
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+/* ---------- Stats grid (4 KPI) ---------- */
+.stats-grid-four {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-md);
+}

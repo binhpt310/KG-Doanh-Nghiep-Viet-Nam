@@ -1,0 +1,162 @@
+/* ============================================================
+   Graph — Vis.js Container, Legend, Zoom Controls, Node Detail
+   ============================================================ */
+
+/* ---------- Graph Container ---------- */
+.panel-graph {
+  min-height: 400px;
+}
+
+#mynetwork {
+  width: 100%;
+  flex: 1;
+  min-height: 350px;
+  background: var(--bg-primary);
+}
+
+/*
+ * Dashboard single-page: #main-content scrolls; parents have no bounded height.
+ * flex:1 + vis-network here caused the canvas container to grow without limit.
+ * Fixed viewport-relative height caps the graph; vis still fills this box.
+ */
+#dash-body-graph #mynetwork {
+  flex: 0 0 auto;
+  min-height: 280px;
+  height: clamp(280px, 52vh, 680px);
+  max-height: min(72vh, 800px);
+  overflow: hidden;
+}
+
+/* ---------- Graph Legend ---------- */
+#graph-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dot.company      { background: var(--graph-company); }
+.dot.person       { background: var(--graph-person); }
+.dot.institution  { background: var(--graph-institution); }
+.dot.inferred-low { background: var(--graph-edge-inferred-low); }
+.dot.inferred-medium { background: var(--graph-edge-inferred-medium); }
+.dot.inferred-high   { background: var(--graph-edge-inferred-high); }
+
+/* ---------- Node Detail Panel (floating) ---------- */
+#node-detail-panel {
+  display: none;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 300px;
+  max-height: 70%;
+  overflow-y: auto;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+  padding: var(--space-md);
+  font-size: 0.9em;
+}
+
+#node-detail-panel .panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  background: transparent;
+}
+
+#node-detail-panel h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+#node-detail-close {
+  cursor: pointer;
+  font-size: 1.2em;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  line-height: 1;
+  padding: 0 var(--space-xs);
+  transition: color 0.15s;
+}
+
+#node-detail-close:hover {
+  color: var(--error);
+}
+
+#node-detail-body p {
+  margin: var(--space-xs) 0 var(--space-sm) 0;
+  color: var(--text-secondary);
+  font-size: 0.88em;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+#node-detail-body strong {
+  color: var(--text-primary);
+}
+
+/* ---------- Graph Loader ---------- */
+#graph-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 999;
+  pointer-events: none;
+}
+
+#graph-loader .loader-text {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+}
+
+#graph-loader .loader-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: var(--space-sm);
+}
+
+/* ---------- Vis.js overrides (theme-aware) ---------- */
+.vis-network {
+  background: var(--bg-primary) !important;
+}
+
+.vis-tooltip {
+  background: var(--bg-surface) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-medium) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-md) !important;
+  padding: var(--space-sm) var(--space-md) !important;
+  font-size: 0.85rem !important;
+}

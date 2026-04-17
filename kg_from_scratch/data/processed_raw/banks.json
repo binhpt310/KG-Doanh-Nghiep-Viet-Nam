@@ -1,0 +1,1031 @@
+[
+  {
+    "Symbol": "VCB",
+    "FullName": "Ngân hàng TMCP Ngoại thương Việt Nam",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "BID",
+    "FullName": "Ngân hàng TMCP Đầu tư và Phát triển Việt Nam",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "CTG",
+    "FullName": "Ngân hàng TMCP Công Thương Việt Nam",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "MBB",
+    "FullName": "Ngân hàng TMCP Quân Đội",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "ACB",
+    "FullName": "Ngân hàng TMCP Á Châu",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VPB",
+    "FullName": "Ngân hàng TMCP Việt Nam Thịnh Vượng",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "TCB",
+    "FullName": "Ngân hàng TMCP Kỹ thương Việt Nam",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "STB",
+    "FullName": "Ngân hàng TMCP Sài Gòn Thương Tín",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "EIB",
+    "FullName": "Ngân hàng TMCP Xuất Nhập Khẩu Việt Nam",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "HDB",
+    "FullName": "Ngân hàng TMCP Phát triển Thành phố Hồ Chí Minh",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "TPB",
+    "FullName": "Ngân Hàng TMCP Tiên Phong",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VIB",
+    "FullName": "Ngân hàng TMCP Quốc tế Việt Nam",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "OCB",
+    "FullName": "Ngân hàng TMCP Phương Đông",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "MSB",
+    "FullName": "Ngân hàng TMCP Hàng Hải Việt Nam",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "SHB",
+    "FullName": "Ngân hàng TMCP Sài Gòn - Hà Nội",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "NVB",
+    "FullName": "Ngân hàng TMCP Quốc Dân",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "LPB",
+    "FullName": "Ngân hàng TMCP Lộc Phát Việt Nam",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "BVB",
+    "FullName": "Ngân hàng TMCP Bản Việt",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "NAB",
+    "FullName": "Ngân hàng TMCP Nam Á",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "SCB",
+    "FullName": "",
+    "Price": null,
+    "Exchange": "",
+    "Industry": ""
+  },
+  {
+    "Symbol": "SGB",
+    "FullName": "Ngân hàng TMCP Sài Gòn Công thương",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "ABB",
+    "FullName": "Ngân hàng TMCP An Bình",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VAB",
+    "FullName": "Ngân hàng TMCP Việt Á",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "BAC",
+    "FullName": "",
+    "Price": null,
+    "Exchange": "",
+    "Industry": ""
+  },
+  {
+    "Symbol": "KLB",
+    "FullName": "Ngân hàng TMCP Kiên Long",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VHM",
+    "FullName": "CTCP Vinhomes",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VIC",
+    "FullName": "Tập đoàn Vingroup - CTCP",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VRE",
+    "FullName": "CTCP Vincom Retail",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "NVL",
+    "FullName": "CTCP Tập đoàn Đầu tư Địa ốc No Va",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "KDH",
+    "FullName": "CTCP Đầu tư và Kinh doanh Nhà Khang Điền",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "HDG",
+    "FullName": "CTCP Tập đoàn Hà Đô",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "SCR",
+    "FullName": "CTCP Địa ốc Sài Gòn Thương Tín",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "DXG",
+    "FullName": "CTCP Tập đoàn Đất Xanh",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "NLG",
+    "FullName": "CTCP Đầu tư Nam Long",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "PDR",
+    "FullName": "CTCP Phát triển Bất động sản Phát Đạt",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "BCF",
+    "FullName": "CTCP Thực phẩm Bích Chi",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "BCM",
+    "FullName": "Tập đoàn Đầu tư và Phát triển Công nghiệp Becamex - CTCP",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "TCH",
+    "FullName": "CTCP Đầu tư Dịch vụ Tài chính Hoàng Huy",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "DIG",
+    "FullName": "Tổng CTCP Đầu tư Phát triển Xây dựng",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "ITC",
+    "FullName": "CTCP Đầu tư - Kinh doanh Nhà",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "QCG",
+    "FullName": "CTCP Quốc Cường - Gia Lai",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "LDG",
+    "FullName": "CTCP Đầu tư LDG",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "AHM",
+    "FullName": "",
+    "Price": null,
+    "Exchange": "",
+    "Industry": ""
+  },
+  {
+    "Symbol": "HAG",
+    "FullName": "CTCP Hoàng Anh Gia Lai",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "HNG",
+    "FullName": "CTCP Nông nghiệp Quốc tế Hoàng Anh Gia Lai",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VCG",
+    "FullName": "Tổng CTCP Xuất nhập khẩu và Xây dựng Việt Nam",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "FCN",
+    "FullName": "CTCP FECON",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "CII",
+    "FullName": "CTCP Đầu tư Hạ tầng Kỹ thuật Thành phố Hồ Chí Minh",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "CVC",
+    "FullName": "CTCP Cơ điện Vật tư",
+    "Price": null,
+    "Exchange": "OTC",
+    "Industry": ""
+  },
+  {
+    "Symbol": "HPG",
+    "FullName": "CTCP Tập đoàn Hòa Phát",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "HSG",
+    "FullName": "CTCP Tập đoàn Hoa Sen",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "NKG",
+    "FullName": "CTCP Thép Nam Kim",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "SMC",
+    "FullName": "CTCP Đầu tư Thương mại SMC",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "GAS",
+    "FullName": "Tổng Công ty khí Việt Nam - CTCP",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "PVS",
+    "FullName": "Tổng CTCP Dịch vụ Kỹ thuật Dầu khí Việt Nam",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "PVD",
+    "FullName": "Tổng CTCP Khoan và Dịch vụ Khoan Dầu khí",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "BSR",
+    "FullName": "CTCP Lọc - Hóa dầu Bình Sơn",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "PVB",
+    "FullName": "CTCP Bọc ống Dầu khí Việt Nam",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "PVP",
+    "FullName": "CTCP Vận tải Dầu khí Thái Bình Dương",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "REE",
+    "FullName": "CTCP Cơ điện lạnh",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "GVR",
+    "FullName": "Tập đoàn Công nghiệp Cao su Việt Nam - CTCP",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "PC1",
+    "FullName": "CTCP Tập đoàn PC1",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "NT2",
+    "FullName": "CTCP Điện lực Dầu khí Nhơn Trạch 2",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "PTB",
+    "FullName": "CTCP Phú Tài",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "FPT",
+    "FullName": "CTCP FPT",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "CMG",
+    "FullName": "CTCP Tập đoàn Công nghệ CMC",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VGI",
+    "FullName": "Tổng CTCP Đầu tư Quốc tế Viettel",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "CTR",
+    "FullName": "Tổng CTCP Công trình Viettel",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "MWG",
+    "FullName": "CTCP Đầu tư Thế giới Di động",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "FRT",
+    "FullName": "CTCP Bán lẻ Kỹ thuật số FPT",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "PNJ",
+    "FullName": "CTCP Vàng bạc Đá quý Phú Nhuận",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "DCM",
+    "FullName": "CTCP - Tổng Công ty Phân bón Dầu khí Cà Mau",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VNM",
+    "FullName": "CTCP Sữa Việt Nam",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "MSN",
+    "FullName": "CTCP Tập đoàn MaSan",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "SAB",
+    "FullName": "Tổng CTCP Bia - Rượu - Nước giải khát Sài Gòn",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "KDC",
+    "FullName": "CTCP Tập đoàn KIDO",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VHC",
+    "FullName": "CTCP Vĩnh Hoàn",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "MPC",
+    "FullName": "CTCP Tập Đoàn Thủy Sản Minh Phú",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "TCT",
+    "FullName": "CTCP Cáp Treo Núi Bà Tây Ninh",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "NSC",
+    "FullName": "CTCP Tập đoàn Giống cây trồng Việt Nam",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "GMD",
+    "FullName": "CTCP Gemadept",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "PHP",
+    "FullName": "CTCP Cảng Hải Phòng",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VTP",
+    "FullName": "Tổng CTCP Bưu chính Viettel",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "SSI",
+    "FullName": "CTCP Chứng khoán SSI",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VND",
+    "FullName": "CTCP Chứng khoán VNDIRECT",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "HCM",
+    "FullName": "CTCP Chứng khoán Thành phố Hồ Chí Minh",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VCI",
+    "FullName": "CTCP Chứng Khoán Vietcap",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "MBS",
+    "FullName": "CTCP Chứng khoán MB",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "CTS",
+    "FullName": "CTCP Chứng khoán Vietinbank",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "BSI",
+    "FullName": "CTCP Chứng khoán BIDV",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "FTS",
+    "FullName": "CTCP Chứng khoán FPT",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "ORS",
+    "FullName": "CTCP Chứng khoán Tiên Phong",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "AAS",
+    "FullName": "CTCP chứng khoán SmartInvest",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "BMI",
+    "FullName": "Tổng CTCP Bảo Minh",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "BVH",
+    "FullName": "Tập đoàn Bảo Việt",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "PVI",
+    "FullName": "CTCP PVI",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "QBI",
+    "FullName": "",
+    "Price": null,
+    "Exchange": "",
+    "Industry": ""
+  },
+  {
+    "Symbol": "SVC",
+    "FullName": "CTCP Dịch vụ Tổng hợp Sài Gòn",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "SAM",
+    "FullName": "CTCP Sam Holdings",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "GIL",
+    "FullName": "CTCP Sản xuất kinh doanh Xuất nhập khẩu Bình Thạnh",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "TDC",
+    "FullName": "CTCP Kinh doanh và Phát triển Bình Dương",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "DTD",
+    "FullName": "CTCP Đầu tư Phát triển Thành Đạt",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "HBC",
+    "FullName": "CTCP Tập đoàn Xây dựng Hòa Bình",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "DPM",
+    "FullName": "Tổng Công ty Phân bón và Hóa chất Dầu khí - CTCP",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "DGC",
+    "FullName": "CTCP Tập đoàn Hóa chất Đức Giang",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "SHS",
+    "FullName": "CTCP Chứng khoán Sài Gòn - Hà Nội",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VIX",
+    "FullName": "CTCP Chứng khoán VIX",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "NDN",
+    "FullName": "CTCP Đầu tư Phát triển Nhà Đà Nẵng",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "PVC",
+    "FullName": "Tổng Công ty Hóa chất và Dịch vụ dầu khí - CTCP",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "PVT",
+    "FullName": "Tổng CTCP Vận tải Dầu khí",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "PIC",
+    "FullName": "CTCP Đầu tư Điện lực 3",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "TCD",
+    "FullName": "CTCP Tập đoàn Xây dựng TRACODI",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VCS",
+    "FullName": "CTCP Vicostone",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "NTP",
+    "FullName": "CTCP Nhựa Thiếu Niên Tiền Phong",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "TVC",
+    "FullName": "CTCP Tập đoàn Quản lý tài sản T-CORP",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "NET",
+    "FullName": "CTCP Bột Giặt Net",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "TNG",
+    "FullName": "CTCP Đầu tư và Thương mại TNG",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "D2D",
+    "FullName": "CTCP Phát triển Đô thị Công nghiệp Số 2",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VGC",
+    "FullName": "Tổng Công ty Viglacera - CTCP",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "S99",
+    "FullName": "CTCP SCI",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "TIG",
+    "FullName": "CTCP Tập đoàn Đầu tư Thăng Long",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VFS",
+    "FullName": "CTCP Chứng khoán Nhất Việt",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "HUT",
+    "FullName": "CTCP Tasco",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "CEO",
+    "FullName": "CTCP Tập đoàn C.E.O",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "RCL",
+    "FullName": "CTCP Địa ốc Chợ Lớn",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VCC",
+    "FullName": "CTCP Vinaconex 25",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "TDW",
+    "FullName": "CTCP Cấp nước Thủ Đức",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "TDT",
+    "FullName": "CTCP Đầu tư và Phát triển TDT",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "DDV",
+    "FullName": "CTCP DAP - VINACHEM",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "KTS",
+    "FullName": "CTCP Đường Kon Tum",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "MHL",
+    "FullName": "CTCP Minh Hữu Liên",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "L14",
+    "FullName": "CTCP Licogi 14",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "DNT",
+    "FullName": "CTCP Du lịch Đồng Nai",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "DTA",
+    "FullName": "CTCP Đệ Tam",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "PBT",
+    "FullName": "CTCP Bao bì và Thương mại Dầu khí Bình Sơn",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "T10",
+    "FullName": "",
+    "Price": null,
+    "Exchange": "",
+    "Industry": ""
+  },
+  {
+    "Symbol": "EVF",
+    "FullName": "Công ty Tài chính Tổng hợp Cổ phần Điện lực",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "ACV",
+    "FullName": "Tổng Công ty Cảng hàng không Việt Nam - CTCP",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "QNS",
+    "FullName": "CTCP Đường Quảng Ngãi",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "BWE",
+    "FullName": "CTCP - Tổng Công Ty Nước - Môi Trường Bình Dương",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "NBC",
+    "FullName": "CTCP Than núi Béo - Vinacomin",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "PHC",
+    "FullName": "CTCP Xây dựng Phục Hưng Holdings",
+    "Price": null,
+    "Exchange": "HSX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "CJC",
+    "FullName": "CTCP Cơ điện Miền Trung",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "TST",
+    "FullName": "CTCP Dịch vụ Kỹ thuật Viễn thông",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VE1",
+    "FullName": "CTCP Xây dựng điện VNECO 1",
+    "Price": null,
+    "Exchange": "HNX",
+    "Industry": ""
+  },
+  {
+    "Symbol": "VE2",
+    "FullName": "CTCP Xây dựng điện VNECO 2",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  },
+  {
+    "Symbol": "CCV",
+    "FullName": "CTCP Tư vấn Xây dựng Công nghiệp và Đô thị Việt Nam",
+    "Price": null,
+    "Exchange": "UPCOM",
+    "Industry": ""
+  }
+]

@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Graph Explorer — Listed Companies VN</title>
+
+    <!-- Vis.js -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <!-- Markdown + Sanitize -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.8/purify.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/tokens.css">
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+    <link rel="stylesheet" href="/assets/css/graph.css">
+    <link rel="stylesheet" href="/assets/css/chat.css">
+    <link rel="stylesheet" href="/assets/css/animations.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- ========== HEADER ========== -->
+        <header id="app-header">
+            <div class="header-left">
+                <span class="logo">KG</span>
+                <h1>KG Explorer — Listed Companies VN</h1>
+            </div>
+            <div class="header-right">
+                <span id="stats-display" class="stats-badge">0 nodes · 0 edges</span>
+                <span id="last-crawl-badge" class="stats-badge last-crawl-badge" title=""></span>
+                <button type="button" id="btn-search" onclick="toggleSearchBar()" class="btn-ghost btn-search-header" title="Tìm công ty / người (Ctrl+K)">Tìm thực thể</button>
+                <button id="btn-crawl" onclick="startCrawl()" class="btn-success">Crawl Data</button>
+                <a id="neo4j-browser-link" href="{{ neo4j_browser_url }}" target="_blank" rel="noopener" class="btn-ghost" title="Neo4j Browser" style="display:none;">Neo4j</a>
+                <button id="theme-toggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+            </div>
+        </header>
+
+        <!-- ========== SEARCH BAR ========== -->
+        <div id="search-bar-container" style="padding:var(--space-md);background:var(--bg-elevated);border-bottom:1px solid var(--border-subtle);display:none;">
+            <div style="display:flex;gap:var(--space-sm);align-items:center;max-width:600px;">
+                <input type="text" id="searchInput" placeholder="🔍 Tìm công ty hoặc người..." 
+                       style="flex:1;padding:var(--space-sm) var(--space-md);border:1px solid var(--border-subtle);border-radius:var(--radius-md);background:var(--bg-base);color:var(--text-primary);"
+                       onkeyup="handleSearchInput(event)">
+                <button onclick="toggleSearchBar()" style="padding:var(--space-sm) var(--space-md);background:var(--bg-base);border:1px solid var(--border-subtle);border-radius:var(--radius-md);cursor:pointer;" title="Close">✕</button>
+            </div>
+            <div id="searchResults" style="margin-top:var(--space-md);max-height:200px;overflow-y:auto;"></div>
+        </div>
+
+        <!-- ========== MAIN LAYOUT (single scroll page, collapsible sections) ========== -->
+        <div id="main-layout">
+            <main id="main-content" class="dashboard-page">
+                <!-- GRAPH -->
+                <section class="dash-section" id="dash-section-graph">
+                    <div class="dash-section-head">
+                        <h2 class="dash-section-title">Knowledge Graph</h2>
+                        <button type="button" class="btn-collapse" id="btn-collapse-graph" onclick="toggleDashSection('graph')" aria-expanded="true" aria-controls="dash-body-graph">Thu gọn</button>
+                    </div>
+                    <div class="dash-section-body dash-section-body--graph" id="dash-body-graph">
+                    <div class="graph-view-layout">
+                        <div class="graph-main-col">
+                    <div class="panel panel-graph" data-panel="graph">
+                        <div class="panel-header panel-header--graph-toolbar">
+                            <div class="panel-actions">
+                                <button onclick="loadGlobalGraph()" class="btn-secondary" id="btnKgCompanies">Companies</button>
+                                <button onclick="loadPersonGraph()" class="btn-secondary" id="btnKgPersons">Persons</button>
+                            </div>
+                        </div>
+                        <div id="mynetwork" style="position:relative;"></div>
+
+                        <!-- Legend -->
+                        <div id="graph-legend">
+                            <span class="legend-item"><span class="dot company"></span>Company</span>
+                            <span class="legend-item"><span class="dot person"></span>Person</span>
+                            <span class="legend-item"><span class="dot institution"></span>Institution</span>
+                            <span class="legend-divider">|</span>
+                            <span class="legend-item"><span class="dot inferred-low"></span>Low (&lt;25%)</span>
+                            <span class="legend-item"><span class="dot inferred-medium"></span>Medium (25-50%)</span>
+                            <span class="legend-item"><span class="dot inferred-high"></span>High (&ge;50%)</span>
+                        </div>
+
+                        <!-- Pagination Controls -->
+                        <div id="graph-pagination" style="padding:var(--space-md);border-top:1px solid var(--border-subtle);display:flex;justify-content:space-between;align-items:center;background:var(--bg-elevated);font-size:0.85rem;gap:var(--space-md);">
+                            <span id="pagination-info">Đã tải: 0/0 nodes</span>
+                            <div style="display:flex;gap:var(--space-sm);">
+                                <button onclick="previousGraphPage()" id="btn-prev-page" class="btn-sm" style="padding:4px 8px;opacity:0.5;cursor:not-allowed;">← Trang trước</button>
+                                <span style="color:var(--text-muted);font-size:0.8rem;">Trang</span>
+                                <span id="pagination-numbers" style="min-width:72px;text-align:center;">1 / 1</span>
+                                <button onclick="nextGraphPage()" id="btn-next-page" class="btn-sm" style="padding:4px 8px;">Trang sau →</button>
+                            </div>
+                        </div>
+
+                        <!-- Node detail panel (floating) -->
+                        <div id="node-detail-panel">
+                            <div class="panel-header">
+                                <h3 id="node-detail-title">Chi tiết thực thể</h3>
+                                <button id="node-detail-close" onclick="closeNodePanel()" title="Đóng">&#x2715;</button>
+                            </div>
+                            <div id="node-detail-body"></div>
+                        </div>
+                    </div>
+                        </div>
+
+                        <aside class="graph-right-col" aria-label="KPI và Process Monitor">
+                    <div class="panel panel-kpi" data-panel="kpi">
+                        <div class="kpi-card">
+                            <span class="kpi-label">Nodes</span>
+                            <span class="kpi-value" id="kpi-nodes">0</span>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">Edges</span>
+                            <span class="kpi-value" id="kpi-edges">0</span>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">Inferred</span>
+                            <span class="kpi-value" id="kpi-inferred">0</span>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-process" data-panel="process">
+                        <div class="panel-header">
+                            <h2>Process Monitor</h2>
+                        </div>
+                        <div id="processPane" style="padding:var(--space-md);overflow-y:auto;flex:1;">
+                            <div id="process-steps">
+                                <p style="color:var(--text-muted);font-size:0.85rem;">Chưa có truy vấn nào được thực hiện.</p>
+                            </div>
+                            <div id="cypherSection" style="margin-top:var(--space-md);background:var(--bg-overlay);color:var(--text-secondary);padding:var(--space-sm) var(--space-md);border-radius:var(--radius-md);font-family:'JetBrains Mono','Fira Code',monospace;font-size:0.78rem;word-break:break-all;max-height:150px;overflow-y:auto;">N/A</div>
+                        </div>
+                    </div>
+                        </aside>
+                    </div>
+                    </div>
+                </section>
+
+                <!-- CHAT RAG -->
+                <section class="dash-section" id="dash-section-chat">
+                    <div class="dash-section-head">
+                        <h2 class="dash-section-title">Trợ lý RAG</h2>
+                        <button type="button" class="btn-collapse" id="btn-collapse-chat" onclick="toggleDashSection('chat')" aria-expanded="true" aria-controls="dash-body-chat">Thu gọn</button>
+                    </div>
+                    <div class="dash-section-body" id="dash-body-chat">
+                    <div class="tab-panel-chat-inner panel panel-chat-full">
+                        <div class="chat-toolbar-wrap">
+                            <div class="chat-toolbar">
+                                <label for="modelSelect">Model Ollama</label>
+                                <select id="modelSelect" class="model-select" title="Chọn model" onchange="saveModelChoice()"></select>
+                                <label for="sessionSelect">Phiên đã lưu</label>
+                                <select id="sessionSelect" class="session-select" title="Tải phiên đã lưu" onchange="loadSessionFromSelect()">
+                                    <option value="">— Hội thoại hiện tại —</option>
+                                </select>
+                                <label><input type="checkbox" id="reasoningToggle" checked> Reasoning</label>
+                                <div class="panel-actions">
+                                    <button type="button" onclick="saveChatSession()" class="btn-sm btn-secondary">Lưu phiên</button>
+                                    <button type="button" onclick="clearChat()" class="btn-sm" style="background:var(--error);color:#fff;">Xóa hội thoại</button>
+                                    <button type="button" onclick="clearAllChatSessions()" class="btn-sm btn-secondary">Xóa tất cả</button>
+                                </div>
+                            </div>
+                            <p class="model-hint">Danh sách model từ backend: vLLM/OpenAI (<code>/v1/models</code>) hoặc Ollama (<code>/api/tags</code>). Mặc định app: <code>MODEL_NAME</code> trong cấu hình.</p>
+                        </div>
+                        <div class="chat-container">
+                            <div class="chat-messages" id="chatHistory">
+                                <div class="bot-msg">Xin chào! Tôi có thể giúp gì cho bạn? Hãy nhập câu hỏi về các ngân hàng hoặc công ty.</div>
+                            </div>
+                            <div class="chat-input-bar">
+                                <input id="queryInput" type="text" placeholder="VD: Ai là chủ tịch ACB? hoặc công ty con của VCB..." onkeypress="handleKeyPress(event)">
+                                <button type="button" onclick="sendQuery()" id="sendBtn" class="btn-primary">Gửi</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </section>
+
+                <!-- INFERENCE RULES -->
+                <section class="dash-section" id="dash-section-rules">
+                    <div class="dash-section-head dash-section-head--rules">
+                        <h2 class="dash-section-title">Luật suy diễn quan hệ ẩn</h2>
+                        <div class="dash-section-head-actions">
+                            <button type="button" onclick="runInference()" class="btn-sm btn-secondary">Chạy Inference</button>
+                            <button type="button" class="btn-collapse" id="btn-collapse-rules" onclick="toggleDashSection('rules')" aria-expanded="true" aria-controls="dash-body-rules">Thu gọn</button>
+                        </div>
+                    </div>
+                    <div class="dash-section-body" id="dash-body-rules">
+                    <div class="tab-panel-rules-inner panel" style="min-height:0;">
+                        <p class="rules-intro">Có <strong>3 luật</strong> suy diễn quan hệ ẩn, chạy bằng <strong>logic + Cypher trên Neo4j</strong> (không gọi LLM). Trợ lý Chat phía trên mới dùng LLM (Ollama) khi bạn gửi câu hỏi.</p>
+                        <div class="rules-list" id="rules-list" style="padding:0;overflow-y:visible;flex:1;">
+                            <div class="rule-card" onclick="toggleRuleDetail('rule-1')" style="background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-md);margin-bottom:var(--space-sm);cursor:pointer;">
+                                <div class="rule-header" style="display:flex;align-items:center;gap:var(--space-sm);flex-wrap:wrap;">
+                                    <span class="rule-display-num">Luật 1</span>
+                                    <span class="rule-title" style="font-size:0.88rem;font-weight:500;color:var(--text-primary);">Tổng hợp sở hữu vợ/chồng</span>
+                                    <a href="https://xaydungchinhsach.chinhphu.vn/toan-van-nghi-dinh-168-2025-nd-cp-ve-dang-ky-doanh-nghiep-119250702175708554.htm" target="_blank" rel="noopener" class="rule-link" onclick="event.stopPropagation()" style="margin-left:auto;font-size:0.9rem;">↗</a>
+                                </div>
+                                <div class="rule-detail" id="rule-1-detail" style="display:none;margin-top:var(--space-sm);font-size:0.82rem;color:var(--text-secondary);line-height:1.6;border-top:1px solid var(--border-subtle);padding-top:var(--space-sm);">
+                                    <p>Nếu A-B là vợ/chồng, A sở hữu x% C, B sở hữu y% C → Gia đình (A,B) kiểm soát (x+y)% của C</p>
+                                    <p><strong>Ngưỡng:</strong> ≥25% → UBO | ≥50% → Kiểm soát</p>
+                                    <p><strong>Nguồn:</strong> Nghị định 168/2025/NĐ-CP</p>
+                                </div>
+                            </div>
+                            <div class="rule-card" onclick="toggleRuleDetail('rule-2')" style="background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-md);margin-bottom:var(--space-sm);cursor:pointer;">
+                                <div class="rule-header" style="display:flex;align-items:center;gap:var(--space-sm);flex-wrap:wrap;">
+                                    <span class="rule-display-num">Luật 2</span>
+                                    <span class="rule-title" style="font-size:0.88rem;font-weight:500;color:var(--text-primary);">Sở hữu gián tiếp qua chuỗi</span>
+                                    <a href="https://vietnam.incorp.asia/ultimate-beneficial-owner/" target="_blank" rel="noopener" class="rule-link" onclick="event.stopPropagation()" style="margin-left:auto;font-size:0.9rem;">↗</a>
+                                </div>
+                                <div class="rule-detail" id="rule-2-detail" style="display:none;margin-top:var(--space-sm);font-size:0.82rem;color:var(--text-secondary);line-height:1.6;border-top:1px solid var(--border-subtle);padding-top:var(--space-sm);">
+                                    <p>A sở hữu x% B, B sở hữu y% C → A gián tiếp sở hữu (x×y)% của C</p>
+                                    <p><strong>Ngưỡng:</strong> ≥5% lợi ích | ≥25% UBO | ≥50% kiểm soát</p>
+                                    <p><strong>Nguồn:</strong> Luật Doanh nghiệp 2025, Điều 17</p>
+                                </div>
+                            </div>
+                            <div class="rule-card" onclick="toggleRuleDetail('rule-3')" style="background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-md);margin-bottom:var(--space-sm);cursor:pointer;">
+                                <div class="rule-header" style="display:flex;align-items:center;gap:var(--space-sm);flex-wrap:wrap;">
+                                    <span class="rule-display-num">Luật 3</span>
+                                    <span class="rule-title" style="font-size:0.88rem;font-weight:500;color:var(--text-primary);">Ảnh hưởng gián tiếp (nâng cấp)</span>
+                                    <a href="https://thuvienphapluat.vn/van-ban/Doanh-nghiep/Nghi-dinh-168-2025-ND-CP-dang-ky-doanh-nghiep-623074.aspx" target="_blank" rel="noopener" class="rule-link" onclick="event.stopPropagation()" style="margin-left:auto;font-size:0.9rem;">↗</a>
+                                </div>
+                                <div class="rule-detail" id="rule-3-detail" style="display:none;margin-top:var(--space-sm);font-size:0.82rem;color:var(--text-secondary);line-height:1.6;border-top:1px solid var(--border-subtle);padding-top:var(--space-sm);">
+                                    <p>A→B (x%), B CÓ_CÔNG_TY_CON→C (y%) → Gián tiếp sở hữu (x×y)% của C</p>
+                                    <p><strong>Ngưỡng:</strong> &lt;5%: Bỏ qua | 5-25%: Lợi ích | 25-50%: Ảnh hưởng | ≥50%: Kiểm soát</p>
+                                    <p><strong>Nguồn:</strong> NĐ 168/2025, TT 96/2020/TT-BTC</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </section>
+
+                <!-- STATISTICS -->
+                <section class="dash-section" id="dash-section-stats">
+                    <div class="dash-section-head">
+                        <h2 class="dash-section-title">Thống kê</h2>
+                        <button type="button" class="btn-collapse" id="btn-collapse-stats" onclick="toggleDashSection('stats')" aria-expanded="true" aria-controls="dash-body-stats">Thu gọn</button>
+                    </div>
+                    <div class="dash-section-body" id="dash-body-stats">
+                    <div class="tab-panel-stats-inner panel">
+                        <div id="statsPane" style="padding:0;overflow-y:visible;flex:1;">
+                            <div class="stats-grid-four">
+                                <div style="background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-md);">
+                                    <div style="color:var(--text-muted);font-size:0.85rem;margin-bottom:var(--space-sm);">Tổng Node</div>
+                                    <div id="stat-total-nodes" style="font-size:1.75rem;font-weight:700;color:var(--accent-primary);">0</div>
+                                </div>
+                                <div style="background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-md);">
+                                    <div style="color:var(--text-muted);font-size:0.85rem;margin-bottom:var(--space-sm);">Tổng Edge</div>
+                                    <div id="stat-total-edges" style="font-size:1.75rem;font-weight:700;color:var(--accent-secondary);">0</div>
+                                </div>
+                                <div style="background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-md);">
+                                    <div style="color:var(--text-muted);font-size:0.85rem;margin-bottom:var(--space-sm);">Công ty</div>
+                                    <div id="stat-companies" style="font-size:1.75rem;font-weight:700;color:var(--text-primary);">0</div>
+                                </div>
+                                <div style="background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-md);">
+                                    <div style="color:var(--text-muted);font-size:0.85rem;margin-bottom:var(--space-sm);">Cá nhân</div>
+                                    <div id="stat-persons" style="font-size:1.75rem;font-weight:700;color:var(--text-primary);">0</div>
+                                </div>
+                            </div>
+                            <div style="margin-top:var(--space-md);background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-md);">
+                                <div style="color:var(--text-muted);font-size:0.85rem;margin-bottom:var(--space-sm);">Node tham gia quan hệ suy diễn</div>
+                                <div id="stat-inferred-nodes" style="font-size:1.75rem;font-weight:700;color:var(--warning);">0</div>
+                            </div>
+                            <div style="margin-top:var(--space-lg);background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-md);">
+                                <h3 style="margin:0 0 var(--space-md) 0;font-size:0.95rem;">Phân bổ (Company / Person)</h3>
+                                <div id="stat-distribution" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:var(--space-md);"></div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </section>
+            </main>
+        </div><!-- /main-layout -->
+
+        <!-- ========== LOADING OVERLAY ========== -->
+        <div id="loading-overlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:9999;">
+            <div style="background:var(--bg-base);padding:var(--space-lg);border-radius:var(--radius-lg);text-align:center;">
+                <div style="width:40px;height:40px;border:4px solid var(--border-subtle);border-top:4px solid var(--accent-primary);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto var(--space-md) auto;"></div>
+                <p id="loading-text" style="color:var(--text-primary);font-weight:500;">Đang xử lý...</p>
+            </div>
+        </div>
+
+        <!-- ========== TOAST NOTIFICATIONS ========== -->
+        <div id="toast-container" style="position:fixed;bottom:var(--space-md);right:var(--space-md);z-index:10000;max-width:400px;"></div>
+
+        <!-- ========== ANIMATIONS ========== -->
+        <style>
+            @keyframes spin {
+                to { transform: rotate(360deg); }
+            }
+            .toast {
+                padding:var(--space-md);
+                border-radius:var(--radius-md);
+                margin-bottom:var(--space-sm);
+                animation:slideIn 0.3s ease-out;
+                box-shadow:0 4px 12px rgba(0,0,0,0.15);
+            }
+            .toast.success { background:var(--success);color:#fff; }
+            .toast.error { background:var(--error);color:#fff; }
+            .toast.warning { background:var(--warning);color:#000; }
+            .toast.info { background:var(--accent-primary);color:#fff; }
+            @keyframes slideIn {
+                from {
+                    transform:translateX(100%);
+                    opacity:0;
+                }
+                to {
+                    transform:translateX(0);
+                    opacity:1;
+                }
+            }
+        </style>
+    <script>
+        // ============================================================
+        //  THEME TOGGLE
+        // ============================================================
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            document.getElementById('theme-toggle').textContent = next === 'dark' ? '🌙' : '☀️';
+            // Update vis.js graph colors if network exists
+            if (network) { updateGraphTheme(); }
+        }
+        (function initTheme() {
+            const saved = localStorage.getItem('theme');
+            if (saved) {
+                document.documentElement.setAttribute('data-theme', saved);
+            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+            const t = document.documentElement.getAttribute('data-theme');
+            const btn = document.getElementById('theme-toggle');
+            if (btn) btn.textContent = t === 'dark' ? '🌙' : '☀️';
+        })();
+
+        // ============================================================
+        //  GLOBALS & PAGINATION STATE
+        // ============================================================
+        var network = null;
+        var container = document.getElementById('mynetwork');
+        var crawlInterval = null;
+        var graphPaginationState = {
+            mode: 'companies',
+            currentPage: 1,
+            pageSize: 25000,
+            totalNodes: 0,
+            totalEdges: 0,
+            paginationRowCount: 0,
+            loadedNodes: {},
+            loadedEdges: [],
+            truncated: false
+        };
+
+        (function setupNeo4jLink() {
+            var link = document.getElementById('neo4j-browser-link');
+            if (!link) return;
+            var h = window.location.hostname;
+            if (h === 'localhost' || h === '127.0.0.1' || h === '[::1]') {
+                link.style.display = '';
+            }
+        })();
+
+        // ============================================================
+        //  DASHBOARD SECTIONS — collapse / expand (single page)
+        // ============================================================
+        function toggleDashSection(id) {
+            var sec = document.getElementById('dash-section-' + id);
+            var btn = document.getElementById('btn-collapse-' + id);
+            if (!sec || !btn) return;
+            sec.classList.toggle('is-collapsed');
+            var collapsed = sec.classList.contains('is-collapsed');
+            btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+            btn.textContent = collapsed ? 'Mở rộng' : 'Thu gọn';
+            if (id === 'graph' && !collapsed && network) {
+                setTimeout(function () { try { network.fit(); } catch (e) {} }, 150);
+            }
+            if (id === 'chat' && !collapsed) {
+                var hi = document.getElementById('chatHistory');
+                if (hi) hi.scrollTop = hi.scrollHeight;
+            }
+        }
+
+        function loadOllamaModels() {
+            var sel = document.getElementById('modelSelect');
+            if (!sel) return;
+            fetch('/api/vllm/models')
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    var list = (data.models && data.models.length) ? data.models : [data.current || ''];
+                    var preferred = localStorage.getItem('kg_selected_model') || data.current || list[0];
+                    sel.innerHTML = '';
+                    list.forEach(function (m) {
+                        var opt = document.createElement('option');
+                        opt.value = m;
+                        opt.textContent = m;
+                        if (m === preferred) opt.selected = true;
+                        sel.appendChild(opt);
+                    });
+                })
+                .catch(function () {
+                    sel.innerHTML = '<option value="">(không tải được danh sách)</option>';
+                });
+        }
+
+        function saveModelChoice() {
+            var sel = document.getElementById('modelSelect');
+            if (sel && sel.value) localStorage.setItem('kg_selected_model', sel.value);
+        }
+
+        var CHAT_SESSIONS_KEY = 'kg_chat_sessions';
+
+        function getSessionsStore() {
+            try {
+                var raw = localStorage.getItem(CHAT_SESSIONS_KEY);
+                var o = raw ? JSON.parse(raw) : { sessions: [] };
+                if (!o.sessions) o.sessions = [];
+                return o;
+            } catch (e) {
+                return { sessions: [] };
+            }
+        }
+
+        function saveSessionsStore(store) {
+            localStorage.setItem(CHAT_SESSIONS_KEY, JSON.stringify(store));
+        }
+
+        function refreshSessionDropdown() {
+            var sel = document.getElementById('sessionSelect');
+            if (!sel) return;
+            var store = getSessionsStore();
+            var cur = sel.value;
+            sel.innerHTML = '<option value="">— Hội thoại hiện tại —</option>';
+            store.sessions.forEach(function (s) {
+                var opt = document.createElement('option');
+                opt.value = s.id;
+                opt.textContent = s.name || s.id;
+                sel.appendChild(opt);
+            });
+            if (cur) sel.value = cur;
+        }
+
+        function saveChatSession() {
+            if (!chatHistoryData || chatHistoryData.length === 0) {
+                showToast('Không có tin nhắn để lưu', 'warning');
+                return;
+            }
+            var d = new Date();
+            var name = 'Phiên ' + d.toLocaleDateString('vi-VN') + ' ' + d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+            var store = getSessionsStore();
+            var id = String(Date.now());
+            store.sessions.unshift({
+                id: id,
+                name: name,
+                ts: Date.now(),
+                messages: JSON.parse(JSON.stringify(chatHistoryData))
+            });
+            if (store.sessions.length > 40) store.sessions.length = 40;
+            saveSessionsStore(store);
+            refreshSessionDropdown();
+            showToast('Đã lưu phiên chat', 'success');
+        }
+
+        function loadSessionFromSelect() {
+            var sel = document.getElementById('sessionSelect');
+            if (!sel || !sel.value) return;
+            var store = getSessionsStore();
+            var s = store.sessions.find(function (x) { return x.id === sel.value; });
+            if (!s || !s.messages) return;
+            chatHistoryData = s.messages.slice();
+            localStorage.setItem('kg_chat_history', JSON.stringify(chatHistoryData));
+            loadChatHistory();
+            showToast('Đã tải phiên: ' + (s.name || ''), 'info', 2500);
+        }
+
+        function clearAllChatSessions() {
+            if (!confirm('Xóa toàn bộ phiên đã lưu và lịch sử hội thoại hiện tại?')) return;
+            localStorage.removeItem(CHAT_SESSIONS_KEY);
+            chatHistoryData = [];
+            localStorage.removeItem('kg_chat_history');
+            refreshSessionDropdown();
+            var sel = document.getElementById('sessionSelect');
+            if (sel) sel.value = '';
+            loadChatHistory();
+            showToast('Đã xóa tất cả', 'success');
+        }
+
+        // ============================================================
+        //  RENDER MARKDOWN
+        // ============================================================
+        function renderMarkdown(text) {
+            if (!text || typeof text !== 'string') return '';
+            try {
+                var raw = typeof marked !== 'undefined' ? marked.parse(text) : text;
+                return typeof DOMPurify !== 'undefined' ? DOMPurify.sanitize(raw) : raw;
+            } catch (e) { return text; }
+        }
+
+        // ============================================================
+        //  VIS.JS OPTIONS (theme-aware colors)
+        // ============================================================
+        function getVisOptions() {
+            return {
+                nodes: {
+                    shape: 'dot',
+                    size: 20,
+                    font: {
+                        size: 14,
+                        face: "'Inter', Arial, sans-serif",
+                        color: getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim() || '#E8E8F0',
+                        multi: true
+                    },
+                    shapeProperties: { interpolation: false },
+                    shadow: { enabled: false }
+                },
+                edges: {
+                    width: 1.5,
+                    arrows: { to: { enabled: true, scaleFactor: 0.5 } },
+                    smooth: { enabled: false },
+                    color: {
+                        color: getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim() || '#5C5C72',
+                        highlight: getComputedStyle(document.documentElement).getPropertyValue('--accent-primary').trim() || '#6C5CE7',
+                        hover: getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary').trim() || '#00D2FF'
+                    },
+                    font: {
+                        size: 11,
+                        face: "'Inter', Arial, sans-serif",
+                        color: getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim() || '#9494A8',
+                        align: 'middle'
+                    },
+                    hoverWidth: 0.5,
+                    selectionWidth: 2
+                },
+                groups: {
+                    'Company':   { color: { background: getComputedStyle(document.documentElement).getPropertyValue('--graph-company').trim()   || '#6C5CE7', border: '#5A4BD1' } },
+                    'Person':    { color: { background: getComputedStyle(document.documentElement).getPropertyValue('--graph-person').trim()    || '#00D2FF', border: '#0099CC' } },
+                    'Institution': { color: { background: getComputedStyle(document.documentElement).getPropertyValue('--graph-institution').trim() || '#FDCB6E', border: '#E5A800' } },
+                    'DEFAULT':   { color: { background: getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim()      || '#5C5C72', border: '#333' } }
+                },
+                physics: {
+                    enabled: true,
+                    solver: 'forceAtlas2Based',
+                    forceAtlas2Based: {
+                        gravitationalConstant: -100,
+                        damping: 0.8,
+                        avoidOverlap: 0.3
+                    },
+                    maxVelocity: 200,
+                    timestep: 0.35,
+                    stabilization: { enabled: true, iterations: 200, fit: true, updateInterval: 10 }
+                }
+            };
+        }
+
+        function updateGraphTheme() {
+            if (!network) return;
+            var opts = getVisOptions();
+            network.setOptions(opts);
+        }
+
+        // ============================================================
+        //  DRAW GRAPH
+        // ============================================================
+        function drawGraph(graphData) {
+            if (!graphData || !graphData.nodes) return;
+
+            // Loading overlay
+            var netContainer = document.getElementById('mynetwork');
+            netContainer.innerHTML = '<div id="graph-loader"><div class="loader-text">Đang render graph...</div><div class="loader-sub">' + graphData.nodes.length + ' nodes, ' + (graphData.edges || []).length + ' edges</div></div>';
+
+            var opts = getVisOptions();
+
+            var visNodes = graphData.nodes.map(function (n) {
+                var group = opts.groups[n.group] ? n.group : 'DEFAULT';
+                return {
+                    id: n.id,
+                    label: n.label || n.name || String(n.id),
+                    group: group,
+                    title: n.label || n.name || String(n.id)
+                };
+            });
+
+            var visEdges = (graphData.edges || []).map(function (e) {
+                var edgeObj = {
+                    from: e.from || e.source,
+                    to: e.to || e.target,
+                    label: e.label || '',
+                    dashes: e.dashes || false
+                };
+                // Color inferred edges
+                if (e.inferred) {
+                    var conf = e.confidence || 0;
+                    if (conf >= 0.5) {
+                        edgeObj.color = { color: getComputedStyle(document.documentElement).getPropertyValue('--graph-edge-inferred-high').trim() || '#CF6679' };
+                    } else if (conf >= 0.25) {
+                        edgeObj.color = { color: getComputedStyle(document.documentElement).getPropertyValue('--graph-edge-inferred-medium').trim() || '#E17055' };
+                    } else {
+                        edgeObj.color = { color: getComputedStyle(document.documentElement).getPropertyValue('--graph-edge-inferred-low').trim() || '#FDCB6E' };
+                    }
+                }
+                return edgeObj;
+            });
+
+            var data = {
+                nodes: new vis.DataSet(visNodes),
+                edges: new vis.DataSet(visEdges)
+            };
+
+            if (network !== null) { network.destroy(); }
+            network = new vis.Network(netContainer, data, opts);
+
+            network.once('stabilizationIterationsDone', function () {
+                var loader = document.getElementById('graph-loader');
+                if (loader) loader.remove();
+                network.setOptions({ physics: { enabled: false } });
+            });
+
+            network.on('zoom', function (params) {
+                var scale = network.getScale();
+                if (scale < 0.6) {
+                    network.setOptions({ edges: { font: { size: 0 } } });
+                } else if (scale < 1.2) {
+                    network.setOptions({ edges: { font: { size: 8 } } });
+                } else {
+                    network.setOptions({ edges: { font: { size: 12 } } });
+                }
+            });
+
+            network.on("dragStart", function (params) {
+                if (params.nodes.length > 0) {
+                    network.setOptions({ physics: { enabled: false } });
+                }
+            });
+
+            network.on("click", function (params) {
+                if (params.nodes.length > 0) {
+                    var nodeId = params.nodes[0];
+                    fetchNodeDetail(nodeId);
+                }
+            });
+
+            // Update KPI
+            updateKPI(visNodes.length, visEdges.length);
+        }
+
+        // ============================================================
+        //  NODE DETAIL
+        // ============================================================
+        function fetchNodeDetail(nodeId) {
+            fetch('/api/node/' + encodeURIComponent(nodeId))
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    if (!data.props) return;
+                    var props = data.props;
+                    var title = props.name || props.id || 'Chi tiết';
+                    document.getElementById('node-detail-title').textContent = title;
+
+                    var body = '';
+                    for (var key in props) {
+                        if (key === 'name') continue;
+                        var val = props[key];
+                        if (val === null || val === undefined || val === '') continue;
+                        var valStr = String(val).replace(/\n/g, '<br>');
+                        body += '<strong>' + key + ':</strong><p>' + valStr + '</p>';
+                    }
+                    if (!body) body = '<p style="color:var(--text-muted)">Không có thuộc tính bổ sung.</p>';
+
+                    document.getElementById('node-detail-body').innerHTML = body;
+                    document.getElementById('node-detail-panel').style.display = 'block';
+                })
+                .catch(function (err) {
+                    console.error('Lỗi lấy chi tiết node:', err);
+                });
+        }
+
+        function closeNodePanel() {
+            document.getElementById('node-detail-panel').style.display = 'none';
+        }
+
+        // ============================================================
+        //  LOAD GRAPHS
+        // ============================================================
+        function loadGlobalGraph() {
+            document.getElementById('queryInput').value = '';
+            closeNodePanel();
+            var btnC = document.getElementById('btnKgCompanies');
+            var btnP = document.getElementById('btnKgPersons');
+            if (btnC) btnC.classList.add('btn-primary');
+            if (btnP) btnP.classList.remove('btn-primary');
+            
+            // Reset pagination state
+            graphPaginationState.mode = 'companies';
+            graphPaginationState.currentPage = 1;
+            graphPaginationState.totalNodes = 0;
+            graphPaginationState.loadedNodes = {};
+            graphPaginationState.loadedEdges = [];
+            
+            fetchGraphPage(1);
+        }
+
+        function loadPersonGraph() {
+            closeNodePanel();
+            var btnC = document.getElementById('btnKgCompanies');
+            var btnP = document.getElementById('btnKgPersons');
+            if (btnC) btnC.classList.remove('btn-primary');
+            if (btnP) btnP.classList.add('btn-primary');
+            
+            // Reset pagination state
+            graphPaginationState.mode = 'persons';
+            graphPaginationState.currentPage = 1;
+            graphPaginationState.totalNodes = 0;
+            graphPaginationState.loadedNodes = {};
+            graphPaginationState.loadedEdges = [];
+            
+            fetchGraphPage(1);
+        }
+
+        // ============================================================
+        //  KPI
+        // ============================================================
+        function updateKPI(nodeCount, edgeCount, inferredNodes) {
+            var kpiNodes = document.getElementById('kpi-nodes');
+            var kpiEdges = document.getElementById('kpi-edges');
+            var kpiInferred = document.getElementById('kpi-inferred');
+            if (kpiNodes) kpiNodes.textContent = nodeCount;
+            if (kpiEdges) kpiEdges.textContent = edgeCount;
+            if (kpiInferred) {
+                kpiInferred.textContent = (inferredNodes !== undefined && inferredNodes !== null)
+                    ? inferredNodes
+                    : '—';
+            }
+            var statsDisplay = document.getElementById('stats-display');
+            if (statsDisplay) statsDisplay.textContent = nodeCount + ' nodes · ' + edgeCount + ' edges';
+        }
+
+        // ============================================================
+        //  PAGINATION FUNCTIONS
+        // ============================================================
+        function updatePaginationUI() {
+            var rowTotal = graphPaginationState.paginationRowCount || graphPaginationState.totalEdges || 0;
+            var loadedCount = Object.keys(graphPaginationState.loadedNodes).length;
+            var edgeLoaded = (graphPaginationState.loadedEdges || []).length;
+            var suf = graphPaginationState.truncated ? ' (giới hạn hiển thị; tổng trong DB lớn hơn)' : '';
+            document.getElementById('pagination-info').textContent =
+                loadedCount + ' nodes · ' + edgeLoaded + ' cạnh hiển thị · tổng ' + rowTotal + ' cạnh trong DB · ' + graphPaginationState.mode + suf;
+            document.getElementById('pagination-numbers').textContent = '—';
+            var btnPrev = document.getElementById('btn-prev-page');
+            var btnNext = document.getElementById('btn-next-page');
+            if (btnPrev) { btnPrev.style.display = 'none'; btnPrev.disabled = true; }
+            if (btnNext) { btnNext.style.display = 'none'; btnNext.disabled = true; }
+        }
+
+        function fetchGraphPage(page) {
+            var mode = graphPaginationState.mode;
+            var pageSize = graphPaginationState.pageSize;
+            
+            showLoading('Đang tải trang ' + page + '...');
+            fetch('/api/graph?mode=' + mode + '&page=' + page + '&limit=' + pageSize)
+                .then(function (res) {
+                    if (!res.ok) throw new Error('HTTP ' + res.status);
+                    return res.json();
+                })
+                .then(function (data) {
+                    hideLoading();
+                    
+                    // Một trang = một lô cạnh (thay trang, không cộng dồn các trang trước)
+                    graphPaginationState.currentPage = page;
+                    graphPaginationState.totalNodes = data.total || 0;
+                    graphPaginationState.totalEdges = data.total_edges || 0;
+                    graphPaginationState.paginationRowCount = data.pagination_row_count != null
+                        ? data.pagination_row_count
+                        : (data.total_edges || 0);
+                    graphPaginationState.truncated = !!data.truncated;
+
+                    graphPaginationState.loadedNodes = {};
+                    (data.nodes || []).forEach(function(node) {
+                        graphPaginationState.loadedNodes[node.id] = node;
+                    });
+                    graphPaginationState.loadedEdges = (data.edges || []).slice();
+
+                    drawGraph({
+                        nodes: Object.values(graphPaginationState.loadedNodes),
+                        edges: graphPaginationState.loadedEdges
+                    });
+                    
+                    updatePaginationUI();
+                    var msg = graphPaginationState.truncated
+                        ? 'Đã tải tối đa ' + graphPaginationState.loadedEdges.length + ' cạnh (còn nhiều hơn trong DB)'
+                        : 'Đã tải ' + graphPaginationState.loadedEdges.length + ' cạnh';
+                    showToast(msg, 'success', 2200);
+                })
+                .catch(function (err) {
+                    hideLoading();
+                    console.error("Error loading graph page:", err);
+                    showToast('Lỗi tải trang ' + page + ': ' + err.message, 'error');
+                });
+        }
+
+        function nextGraphPage() {
+            var rowTotal = graphPaginationState.paginationRowCount || graphPaginationState.totalEdges || 0;
+            var totalPages = rowTotal > 0 ? Math.ceil(rowTotal / graphPaginationState.pageSize) : 1;
+            if (graphPaginationState.currentPage < totalPages) {
+                fetchGraphPage(graphPaginationState.currentPage + 1);
+            }
+        }
+
+        function previousGraphPage() {
+            if (graphPaginationState.currentPage > 1) {
+                fetchGraphPage(graphPaginationState.currentPage - 1);
+            }
+        }
+
+        // ============================================================
+        //  CHAT
+        // ============================================================
+        var chatHistoryData = JSON.parse(localStorage.getItem('kg_chat_history')) || [];
+
+        function saveMessage(role, content) {
+            chatHistoryData.push({ role: role, content: content });
+            if (chatHistoryData.length > 20) chatHistoryData.shift();
+            localStorage.setItem('kg_chat_history', JSON.stringify(chatHistoryData));
+        }
+
+        function loadChatHistory() {
+            var history = document.getElementById('chatHistory');
+            if (!history) return;
+            history.innerHTML = '';
+            if (chatHistoryData.length === 0) {
+                var welcome = document.createElement('div');
+                welcome.className = 'bot-msg';
+                welcome.textContent = 'Xin chào! Tôi có thể giúp gì cho bạn? Hãy nhập câu hỏi về các ngân hàng hoặc công ty.';
+                history.appendChild(welcome);
+                return;
+            }
+            chatHistoryData.forEach(function (msg) {
+                var div = document.createElement('div');
+                div.className = (msg.role === 'user' ? 'user-msg' : 'bot-msg');
+                if (msg.role === 'user') {
+                    div.textContent = msg.content;
+                } else {
+                    div.innerHTML = renderMarkdown(msg.content);
+                }
+                history.appendChild(div);
+            });
+            history.scrollTop = history.scrollHeight;
+        }
+
+        function clearChat() {
+            chatHistoryData = [];
+            localStorage.removeItem('kg_chat_history');
+            var sel = document.getElementById('sessionSelect');
+            if (sel) sel.value = '';
+            var history = document.getElementById('chatHistory');
+            if (history) history.innerHTML = '<div class="bot-msg">Đã xóa hội thoại hiện tại. Tôi có thể giúp gì tiếp?</div>';
+        }
+
+        function applyChatGraphResult(data) {
+            var nodes = (data.nodes && data.nodes.length) ? data.nodes : null;
+            var edg = (data.edges && data.edges.length) ? data.edges : null;
+            if (data.graphs && data.graphs.length) {
+                for (var gi = 0; gi < data.graphs.length; gi++) {
+                    var g = data.graphs[gi];
+                    if (g.nodes && g.nodes.length) {
+                        nodes = g.nodes;
+                        edg = g.edges || [];
+                        break;
+                    }
+                }
+            }
+            if (!nodes || !nodes.length) return;
+            edg = edg || [];
+            graphPaginationState.mode = 'chat';
+            graphPaginationState.currentPage = 1;
+            graphPaginationState.truncated = false;
+            graphPaginationState.loadedNodes = {};
+            nodes.forEach(function (n) { graphPaginationState.loadedNodes[n.id] = n; });
+            graphPaginationState.loadedEdges = edg.slice();
+            graphPaginationState.totalNodes = nodes.length;
+            graphPaginationState.totalEdges = edg.length;
+            graphPaginationState.paginationRowCount = edg.length;
+            drawGraph({ nodes: nodes, edges: edg });
+            updatePaginationUI();
+            var btnC = document.getElementById('btnKgCompanies');
+            var btnP = document.getElementById('btnKgPersons');
+            if (btnC) btnC.classList.remove('btn-primary');
+            if (btnP) btnP.classList.remove('btn-primary');
+            var sec = document.getElementById('dash-section-graph');
+            if (sec && sec.classList.contains('is-collapsed')) {
+                toggleDashSection('graph');
+            }
+            setTimeout(function () {
+                if (network) try { network.fit(); } catch (e) {}
+            }, 200);
+        }
+
+        function refreshLastCrawlBadge() {
+            fetch('/api/crawl/progress')
+                .then(function (r) { return r.json(); })
+                .then(function (d) {
+                    var el = document.getElementById('last-crawl-badge');
+                    if (!el) return;
+                    var ls = d.last_success;
+                    if (ls && ls.completed_at) {
+                        el.textContent = 'Crawl OK: ' + ls.completed_at;
+                        el.title = ls.message || '';
+                    } else {
+                        el.textContent = '';
+                        el.title = '';
+                    }
+                })
+                .catch(function () {});
+        }
+
+        function updateProcessUI(steps, cypher) {
+            var stepsContainer = document.getElementById('process-steps');
+            if (!stepsContainer) return;
+            stepsContainer.innerHTML = '';
+            (steps || []).forEach(function (s) {
+                var div = document.createElement('div');
+                div.className = 'step-item';
+                div.textContent = s;
+                stepsContainer.appendChild(div);
+            });
+            var cypherEl = document.getElementById('cypherSection');
+            if (cypherEl) cypherEl.textContent = cypher || 'N/A';
+        }
+
+        function sendQuery() {
+            var query = document.getElementById('queryInput').value.trim();
+            if (!query) {
+                showToast('Vui lòng nhập câu hỏi', 'warning');
+                return;
+            }
+
+            var history = document.getElementById('chatHistory');
+            var sendBtn = document.getElementById('sendBtn');
+
+            var userDiv = document.createElement('div');
+            userDiv.className = 'user-msg';
+            userDiv.textContent = query;
+            history.appendChild(userDiv);
+
+            var loadingDiv = document.createElement('div');
+            loadingDiv.className = 'bot-msg loading-msg';
+            loadingDiv.id = 'loading-indicator';
+            loadingDiv.innerHTML = '<div style="display:flex;align-items:center;gap:8px;"><div style="width:16px;height:16px;border:2px solid currentColor;border-top:2px solid transparent;border-radius:50%;animation:spin 0.8s linear infinite;"></div> Đang xử lý...</div>';
+            history.appendChild(loadingDiv);
+            history.scrollTop = history.scrollHeight;
+
+            sendBtn.disabled = true;
+
+            var reasoningEnabled = document.getElementById('reasoningToggle').checked;
+            var modelSel = document.getElementById('modelSelect');
+            var modelName = (modelSel && modelSel.value) ? modelSel.value : (localStorage.getItem('kg_selected_model') || '');
+            fetch('/api/query', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    query: query,
+                    history: chatHistoryData,
+                    reasoning: reasoningEnabled,
+                    model: modelName
+                })
+            })
+                .then(function (res) {
+                    if (!res.ok) throw new Error('HTTP ' + res.status + ': ' + res.statusText);
+                    return res.json();
+                })
+                .then(function (data) {
+                    if (data.error) throw new Error(data.error);
+                    
+                    var loading = document.getElementById('loading-indicator');
+                    if (loading) loading.remove();
+
+                    var msgDiv = document.createElement('div');
+                    msgDiv.className = 'bot-msg';
+                    msgDiv.innerHTML = renderMarkdown(data.answer || 'Không có câu trả lời.');
+                    history.appendChild(msgDiv);
+                    history.scrollTop = history.scrollHeight;
+
+                    saveMessage('user', query);
+                    saveMessage('assistant', data.answer);
+
+                    updateProcessUI(data.steps, data.cypher);
+                    applyChatGraphResult(data);
+
+                    sendBtn.disabled = false;
+                    document.getElementById('queryInput').value = '';
+                    showToast('Câu trả lời đã cập nhật', 'success', 2000);
+                })
+                .catch(function (err) {
+                    var loading = document.getElementById('loading-indicator');
+                    if (loading) loading.remove();
+                    
+                    var errDiv = document.createElement('div');
+                    errDiv.className = 'bot-msg';
+                    errDiv.style.color = 'var(--error)';
+                    errDiv.textContent = '❌ Lỗi: ' + err.message;
+                    history.appendChild(errDiv);
+                    history.scrollTop = history.scrollHeight;
+                    sendBtn.disabled = false;
+                    showToast('Lỗi truy vấn: ' + err.message, 'error');
+                    console.error("Error querying:", err);
+                });
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') sendQuery();
+        }
+
+        // ============================================================
+        //  RULE DETAILS TOGGLE
+        // ============================================================
+        function toggleRuleDetail(ruleId) {
+            var detail = document.getElementById(ruleId + '-detail');
+            if (!detail) return;
+            if (detail.style.display === 'none') {
+                detail.style.display = 'block';
+            } else {
+                detail.style.display = 'none';
+            }
+        }
+
+        // ============================================================
+        //  INFERENCE (backend inference_rules)
+        // ============================================================
+        function runInference() {
+            fetch('/api/inference', { method: 'POST', headers: { 'Content-Type': 'application/json' } })
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    alert('Inference hoàn tất: ' + (data.message || 'OK'));
+                    loadGlobalGraph();
+                    loadStats();
+                })
+                .catch(function (err) {
+                    console.error('Inference error:', err);
+                    alert('Lỗi chạy inference: ' + err);
+                });
+        }
+
+        // ============================================================
+        //  CRAWL FUNCTIONS
+        // ============================================================
+        function startCrawl() {
+            var btn = document.getElementById('btn-crawl');
+
+            if (btn && btn.disabled) {
+                alert('Crawl đang chạy, vui lòng đợi!');
+                return;
+            }
+
+            if (!confirm('Bạn có muốn crawl dữ liệu mới từ Fireant API?\nQuá trình này có thể mất vài phút.')) {
+                return;
+            }
+
+            if (btn) {
+                btn.disabled = true;
+                btn.textContent = 'Đang crawl...';
+            }
+
+            fetch('/api/crawl/start', { method: 'POST', headers: { 'Content-Type': 'application/json' } })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) {
+                        alert('Lỗi: ' + data.error);
+                        resetCrawlUI();
+                        return;
+                    }
+                    crawlInterval = setInterval(pollCrawlProgress, 2000);
+                })
+                .catch(err => {
+                    alert('Lỗi kết nối: ' + err);
+                    resetCrawlUI();
+                });
+        }
+
+        function pollCrawlProgress() {
+            fetch('/api/crawl/progress')
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.running) {
+                        clearInterval(crawlInterval);
+                        if (data.error) {
+                            if (document.getElementById('stats-display')) {
+                                document.getElementById('stats-display').textContent = 'Lỗi: ' + data.message;
+                            }
+                        } else {
+                            setTimeout(function () {
+                                loadGlobalGraph();
+                                loadStats();
+                                refreshLastCrawlBadge();
+                            }, 1000);
+                        }
+                        resetCrawlUI();
+                        refreshLastCrawlBadge();
+                    }
+                })
+                .catch(err => {
+                    console.error('Error polling progress:', err);
+                });
+        }
+
+        function resetCrawlUI() {
+            var btn = document.getElementById('btn-crawl');
+            if (btn) {
+                btn.disabled = false;
+                btn.textContent = 'Crawl Data';
+            }
+        }
+
+        // ============================================================
+        //  STATS
+        // ============================================================
+        function loadStats() {
+            fetch('/api/stats')
+                .then(res => {
+                    if (!res.ok) throw new Error('HTTP ' + res.status);
+                    return res.json();
+                })
+                .then(function (data) {
+                    console.log('KG Stats:', data);
+                    var n = data.total_nodes || 0;
+                    var e = data.total_edges || 0;
+                    var inf = data.inferred_nodes;
+                    var statsDisplay = document.getElementById('stats-display');
+                    if (statsDisplay) statsDisplay.textContent = n + ' nodes · ' + e + ' edges';
+                    updateKPI(n, e, inf);
+                    var stn = document.getElementById('stat-total-nodes');
+                    var ste = document.getElementById('stat-total-edges');
+                    var sti = document.getElementById('stat-inferred-nodes');
+                    var sc = document.getElementById('stat-companies');
+                    var sp = document.getElementById('stat-persons');
+                    if (stn) stn.textContent = n.toLocaleString();
+                    if (ste) ste.textContent = e.toLocaleString();
+                    if (sti) sti.textContent = (inf !== undefined && inf !== null) ? inf.toLocaleString() : '0';
+                    if (sc) sc.textContent = (data.companies != null) ? data.companies.toLocaleString() : '0';
+                    if (sp) sp.textContent = (data.persons != null) ? data.persons.toLocaleString() : '0';
+                    var dist = document.getElementById('stat-distribution');
+                    if (dist && data.companies != null && data.persons != null) {
+                        dist.innerHTML = '<div style="padding:var(--space-sm);background:var(--bg-overlay);border-radius:var(--radius-md);border:1px solid var(--border-subtle);"><strong>Company</strong><br><span style="font-size:1.4rem;font-weight:700;color:var(--accent-primary);">' + data.companies.toLocaleString() + '</span></div>' +
+                            '<div style="padding:var(--space-sm);background:var(--bg-overlay);border-radius:var(--radius-md);border:1px solid var(--border-subtle);"><strong>Person</strong><br><span style="font-size:1.4rem;font-weight:700;color:var(--accent-secondary);">' + data.persons.toLocaleString() + '</span></div>';
+                    }
+                })
+                .catch(function (err) {
+                    console.error('Error loading stats:', err);
+                    // Don't show toast for stats error - just log it
+                });
+        }
+
+        // ============================================================
+        //  INIT
+        // ============================================================
+        loadGlobalGraph();
+        loadChatHistory();
+        loadStats();
+        refreshSessionDropdown();
+        loadOllamaModels();
+        refreshLastCrawlBadge();
+
+        // ============================================================
+        //  LOADING & NOTIFICATIONS
+        // ============================================================
+        function showLoading(message = "Đang xử lý...") {
+            var overlay = document.getElementById('loading-overlay');
+            document.getElementById('loading-text').textContent = message;
+            overlay.style.display = 'flex';
+        }
+
+        function hideLoading() {
+            var overlay = document.getElementById('loading-overlay');
+            overlay.style.display = 'none';
+        }
+
+        function showToast(message, type = 'info', duration = 3000) {
+            var container = document.getElementById('toast-container');
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.textContent = message;
+            container.appendChild(toast);
+
+            if (duration) {
+                setTimeout(function() {
+                    toast.style.animation = 'slideIn 0.3s ease-out reverse';
+                    setTimeout(function() { toast.remove(); }, 300);
+                }, duration);
+            }
+        }
+
+        // ============================================================
+        //  SEARCH FUNCTIONALITY
+        // ============================================================
+        function toggleSearchBar() {
+            var bar = document.getElementById('search-bar-container');
+            if (bar.style.display === 'none') {
+                bar.style.display = 'block';
+                document.getElementById('searchInput').focus();
+            } else {
+                bar.style.display = 'none';
+                document.getElementById('searchResults').innerHTML = '';
+            }
+        }
+
+        function handleSearchInput(event) {
+            var query = event.target.value.trim();
+            if (!query || query.length < 2) {
+                document.getElementById('searchResults').innerHTML = '';
+                return;
+            }
+
+            // Debounce: wait 300ms before searching
+            clearTimeout(window.searchTimeout);
+            document.getElementById('searchResults').innerHTML = '<p style="color:var(--text-muted);font-size:0.85rem;">🔄 Đang tìm kiếm...</p>';
+            
+            window.searchTimeout = setTimeout(function() {
+                fetch('/api/search?q=' + encodeURIComponent(query))
+                    .then(res => res.json())
+                    .then(data => {
+                        if (!data.results || data.results.length === 0) {
+                            document.getElementById('searchResults').innerHTML = '<p style="color:var(--text-muted);font-size:0.85rem;">Không tìm thấy kết quả</p>';
+                            return;
+                        }
+
+                        var html = '<div style="font-size:0.85rem;">';
+                        data.results.forEach(function(item, idx) {
+                            html += '<div style="padding:var(--space-sm);cursor:pointer;border-bottom:1px solid var(--border-subtle);background:transparent;" ' +
+                                   'onmouseover="this.style.background=\'var(--bg-overlay)\'" ' +
+                                   'onmouseout="this.style.background=\'transparent\'" ' +
+                                   'onclick="selectSearchResult(\'' + item.id.replace(/'/g, "\\'") + '\')">' +
+                                   '<strong>' + item.label + '</strong><br>' +
+                                   '<span style="color:var(--text-muted);">' + (item.type || 'Entity') + '</span>' +
+                                   '</div>';
+                        });
+                        html += '</div>';
+                        document.getElementById('searchResults').innerHTML = html;
+                    })
+                    .catch(err => {
+                        document.getElementById('searchResults').innerHTML = '<p style="color:var(--error);font-size:0.85rem;">Lỗi tìm kiếm: ' + err + '</p>';
+                    });
+            }, 300);
+        }
+
+        function selectSearchResult(nodeId) {
+            toggleSearchBar();
+            fetchNodeDetail(nodeId);
+            // Highlight node in graph
+            if (network) {
+                network.selectNodes([nodeId]);
+                network.focus(nodeId, { scale: 1.5, animation: { duration: 500, easingFunction: 'easeInOutQuad' } });
+            }
+        }
+
+        // Keyboard shortcut: Ctrl+K to toggle search
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                toggleSearchBar();
+            }
+            if (e.key === 'Escape' && document.getElementById('search-bar-container').style.display !== 'none') {
+                toggleSearchBar();
+            }
+        });
+    </script>
+</body>
+
+</html>

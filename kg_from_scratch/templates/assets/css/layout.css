@@ -1,0 +1,339 @@
+/* ============================================================
+   Layout — App Shell, Header, Tabs, Graph + Right Column, Responsive
+   ============================================================ */
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+#app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  min-height: 52px;
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.header-left .logo {
+  font-size: 1.35rem;
+}
+
+.header-left h1 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.stats-badge {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  background: var(--bg-overlay);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.last-crawl-badge {
+  max-width: 320px;
+  font-size: 0.72rem;
+}
+
+.btn-search-header {
+  min-width: 118px;
+  padding: var(--space-xs) var(--space-md);
+  font-size: 0.82rem;
+}
+
+#main-layout {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ---------- Single-page dashboard (scroll) + collapsible sections ---------- */
+#main-content.dashboard-page {
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--space-md);
+  background: var(--bg-primary);
+  min-width: 0;
+  display: block;
+  min-height: 0;
+}
+
+.dash-section {
+  margin-bottom: var(--space-lg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+
+.dash-section:last-child {
+  margin-bottom: 0;
+}
+
+.dash-section.is-collapsed .dash-section-body {
+  display: none;
+}
+
+.dash-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+}
+
+.dash-section-head--rules {
+  align-items: flex-start;
+}
+
+.dash-section-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dash-section-head-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.btn-collapse {
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: var(--space-xs) var(--space-sm);
+  color: var(--text-secondary);
+  background: var(--bg-overlay);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-collapse:hover {
+  color: var(--text-primary);
+  border-color: var(--accent-primary);
+}
+
+.dash-section-body {
+  padding: var(--space-md);
+}
+
+.dash-section-body--graph {
+  padding: 0;
+}
+
+/* Scroll page has no flex height budget — do not let graph column use flex:1 growth */
+.dash-section-body--graph .graph-view-layout {
+  min-height: 0;
+  flex: 0 0 auto;
+  align-items: flex-start;
+}
+
+.dash-section-body--graph .graph-main-col .panel-graph {
+  flex: 0 0 auto;
+  min-height: 0;
+}
+
+.panel-header--graph-toolbar {
+  justify-content: flex-end;
+}
+
+.chat-toolbar-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.model-hint {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.model-hint code {
+  font-size: 0.85em;
+}
+
+/* ---------- Graph view: main + right column ---------- */
+.graph-view-layout {
+  display: flex;
+  flex: 1;
+  gap: var(--space-md);
+  min-height: 0;
+  align-items: stretch;
+}
+
+.graph-main-col {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.graph-main-col .panel-graph {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.graph-right-col {
+  width: 320px;
+  min-width: 260px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  min-height: 0;
+}
+
+.graph-right-col .panel-kpi {
+  flex-shrink: 0;
+}
+
+.graph-right-col .panel-process {
+  flex: 1;
+  min-height: 180px;
+}
+
+/* ---------- Chat full-width tab ---------- */
+.tab-panel-chat-inner {
+  max-width: 920px;
+  width: 100%;
+  margin: 0 auto;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-chat-full {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-chat-full .chat-container {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ---------- Rules / Stats scroll areas ---------- */
+.tab-panel-rules-inner,
+.tab-panel-stats-inner {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.rules-intro {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-overlay);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.rule-display-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1199px) {
+  .graph-view-layout {
+    flex-direction: column;
+  }
+
+  .graph-right-col {
+    width: 100%;
+    min-width: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .graph-right-col .panel-kpi {
+    flex: 1 1 100%;
+  }
+
+  .graph-right-col .panel-process {
+    flex: 1 1 280px;
+    min-height: 160px;
+  }
+}
+
+@media (max-width: 767px) {
+  #main-content.dashboard-page {
+    padding: var(--space-sm);
+    padding-bottom: max(var(--space-sm), env(safe-area-inset-bottom, 0px));
+  }
+
+  .header-left h1 {
+    font-size: 0.85rem;
+    max-width: 42vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .graph-right-col {
+    flex-direction: column;
+  }
+
+  #app-header {
+    flex-wrap: wrap;
+  }
+}

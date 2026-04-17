@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Graph - KG Explorer</title>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>
+        body { font-family: monospace; padding: 20px; }
+        #status { padding: 10px; background: #f0f0f0; margin-bottom: 20px; }
+        #mynetwork { width: 100%; height: 600px; border: 1px solid #ccc; }
+        .log { color: #333; margin: 5px 0; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug Graph Visualization</h1>
+    <div id="status">Đang kiểm tra...</div>
+    <div id="logs"></div>
+    <div id="mynetwork"></div>
+
+    <script>
+        function log(msg, type='log') {
+            const logs = document.getElementById('logs');
+            const div = document.createElement('div');
+            div.className = `log ${type}`;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            logs.appendChild(div);
+            console.log(msg);
+        }
+
+        async function debug() {
+            const status = document.getElementById('status');
+            
+            // 1. Check Vis.js loaded
+            if (typeof vis === 'undefined') {
+                status.textContent = '❌ LỖI: Vis.js KHÔNG được load từ CDN!';
+                status.style.background = '#ffcccc';
+                log('Vis.js not loaded!', 'error');
+                return;
+            }
+            log('✅ Vis.js loaded successfully', 'success');
+
+            // 2. Test API
+            try {
+                status.textContent = '🔄 Đang gọi /api/graph...';
+                const res = await fetch('/api/graph?mode=companies');
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                
+                const data = await res.json();
+                log(`✅ API response: ${data.nodes.length} nodes, ${data.edges.length} edges`, 'success');
+                
+                if (data.nodes.length === 0) {
+                    status.textContent = '⚠️ Cảnh báo: API trả về 0 nodes!';
+                    status.style.background = '#fff3cd';
+                    log('WARNING: No nodes in response!', 'error');
+                    return;
+                }
+
+                // 3. Render graph
+                status.textContent = `🎨 Đang render ${data.nodes.length} nodes...`;
+                const nodes = new vis.DataSet(data.nodes);
+                const edges = new vis.DataSet(data.edges);
+                
+                const options = {
+                    physics: { enabled: true, stabilization: false },
+                    nodes: { shape: 'dot', size: 20, font: { size: 14 } },
+                    edges: { arrows: 'to', smooth: false }
+                };
+                
+                const container = document.getElementById('mynetwork');
+                const network = new vis.Network(container, { nodes, edges }, options);
+                
+                network.on('afterDrawing', function() {
+                    status.textContent = `✅ Graph rendered thành công! (${data.nodes.length} nodes, ${data.edges.length} edges)`;
+                    status.style.background = '#d4edda';
+                    log('Graph rendered successfully!', 'success');
+                });
+                
+                network.on('error', function(err) {
+                    status.textContent = '❌ LỖI khi render graph!';
+                    status.style.background = '#ffcccc';
+                    log(`Graph error: ${err}`, 'error');
+                });
+                
+            } catch (err) {
+                status.textContent = `❌ LỖI API: ${err.message}`;
+                status.style.background = '#ffcccc';
+                log(`API Error: ${err}`, 'error');
+            }
+        }
+
+        debug();
+    </script>
+</body>
+</html>

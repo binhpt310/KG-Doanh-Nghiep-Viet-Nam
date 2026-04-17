@@ -1,0 +1,37 @@
+# Python cache
+**/__pycache__
+**/*.pyc
+**/*.pyo
+
+# Local env (not needed in Docker)
+kg_from_scratch/.env
+
+# IDE / editor
+kg_from_scratch/.cursor
+kg_from_scratch/.agents
+.vscode
+.idea
+
+# Documentation (not needed at runtime)
+kg_from_scratch/*.md
+
+# Neo4j export dumps (large files)
+kg_from_scratch/Neo4j-*.txt
+
+# Git
+.git
+.gitignore
+
+# Docker files (already in build context)
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# Large data files (exclude very large files, keep necessary config)
+kg_from_scratch/data/*.csv
+kg_from_scratch/data/*.parquet
+kg_from_scratch/data/*.sqlite
+# Keep: data/config/, data/kg_data/, data/processed/, templates/
+
+# Node modules (if any)
+node_modules
