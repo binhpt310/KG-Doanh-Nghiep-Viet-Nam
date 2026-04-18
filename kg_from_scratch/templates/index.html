@@ -28,22 +28,6 @@
     <span class="brand-sub">Công ty niêm yết VN</span>
   </div>
 
-  <div class="topbar-search">
-    <div class="search-wrap">
-      <svg class="search-ico" width="14" height="14" viewBox="0 0 20 20" fill="none"
-           stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <circle cx="9" cy="9" r="6"/><path d="m15 15 3.5 3.5"/>
-      </svg>
-      <input id="searchInput" type="text" class="search-input"
-             placeholder="Tìm công ty, cá nhân… (Ctrl+K)"
-             autocomplete="off"
-             onkeyup="handleSearchInput(event)"
-             onfocus="showSearchDrop()"
-             onclick="event.stopPropagation()">
-      <div id="searchResults"></div>
-    </div>
-  </div>
-
   <div class="topbar-actions">
     <span id="stats-display" class="stats-chip">— node · — cạnh</span>
     <div class="topbar-divider"></div>
@@ -198,6 +182,26 @@
 
   <!-- ░░░░░░░░ GRAPH CANVAS ░░░░░░░░ -->
   <main id="graph-area">
+    <div id="graph-top-overlay">
+      <div id="qresult-area" class="qresult-area qresult-area-graph" style="display:none;">
+        <div id="qresult-body" class="qresult-inner">
+          <div class="cypher-block-label">Truy vấn Cypher</div>
+          <pre id="cypherSection" class="cypher-block"></pre>
+          <div id="process-steps" class="process-steps-wrap"></div>
+        </div>
+        <button
+          id="qresult-toggle"
+          class="qresult-toggle"
+          type="button"
+          aria-expanded="true"
+          aria-controls="qresult-body"
+        >
+          <span id="qresult-toggle-label">Thu gọn</span>
+          <span class="qresult-toggle-icon" aria-hidden="true">▾</span>
+        </button>
+      </div>
+    </div>
+
     <div id="mynetwork"></div>
 
     <!-- Node Detail floating panel -->
@@ -252,27 +256,35 @@
 
     <div id="rp-content">
       <div class="rp-header">
-        <div class="rp-title">Trợ lý Chat (RAG)</div>
+        <div class="rp-header-top">
+          <div class="rp-title">Trợ lý Chat (RAG)</div>
+          <div class="rp-sessions rp-sessions-compact">
+            <select id="sessionSelect" class="select-sm" onchange="loadSessionFromSelect()" style="flex:1"></select>
+            <button onclick="saveChatSession()" class="btn-icon-sm" title="Lưu phiên">💾</button>
+            <button onclick="clearAllChatSessions()" class="btn-icon-sm" title="Xóa tất cả">🗑️</button>
+          </div>
+        </div>
         <div class="rp-toolbar">
           <select id="modelSelect" class="select-sm" onchange="saveModelChoice()" style="flex:1"></select>
           <label class="toggle-label">
             <input type="checkbox" id="reasoningToggle"> Reasoning
           </label>
         </div>
-      </div>
 
-      <div class="rp-sessions">
-        <select id="sessionSelect" class="select-sm" onchange="loadSessionFromSelect()" style="flex:1"></select>
-        <button onclick="saveChatSession()"      class="btn-icon-sm" title="Lưu phiên">💾</button>
-        <button onclick="clearAllChatSessions()" class="btn-icon-sm" title="Xóa tất cả">🗑️</button>
-      </div>
-
-      <!-- Query result section (collapsible) -->
-      <div id="qresult-area" class="qresult-area" style="display:none;">
-        <div class="qresult-inner">
-          <div class="cypher-block-label">Truy vấn Cypher</div>
-          <pre id="cypherSection" class="cypher-block"></pre>
-          <div id="process-steps" class="process-steps-wrap"></div>
+        <div class="entity-search-shell">
+          <div class="search-wrap search-wrap-panel">
+            <svg class="search-ico" width="14" height="14" viewBox="0 0 20 20" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="9" cy="9" r="6"/><path d="m15 15 3.5 3.5"/>
+            </svg>
+            <input id="searchInput" type="text" class="search-input"
+                   placeholder="Tìm công ty, cá nhân… (Ctrl+K)"
+                   autocomplete="off"
+                   onkeyup="handleSearchInput(event)"
+                   onfocus="showSearchDrop()"
+                   onclick="event.stopPropagation()">
+            <div id="searchResults" class="search-results search-results-panel"></div>
+          </div>
         </div>
       </div>
 
@@ -366,25 +378,66 @@ function expandRightPanel() {
   setTimeout(function () { if (network) network.fit(); }, 320);
 }
 
-function toggleQResult() {
-  var area = document.getElementById('qresult-content-wrap');
-  if (area) {
-    if (area.style.display === 'none') {
-      area.style.display = 'block';
-    } else {
-      area.style.display = 'none';
-    }
+function setQueryResultPanelCollapsed(collapsed) {
+  var area = document.getElementById('qresult-area');
+  var body = document.getElementById('qresult-body');
+  var label = document.getElementById('qresult-toggle-label');
+  var button = document.getElementById('qresult-toggle');
+  if (!area || !body || !label || !button) return;
+
+  if (collapsed) {
+    area.classList.add('is-collapsed');
+  } else {
+    area.classList.remove('is-collapsed');
+  }
+  /* Class .is-collapsed + CSS !important thu gọn body; inline style dự phòng nếu CSS [hidden] bị ghi đè */
+  body.hidden = collapsed;
+  body.style.display = collapsed ? 'none' : '';
+  if (collapsed) {
+    body.setAttribute('aria-hidden', 'true');
+  } else {
+    body.removeAttribute('aria-hidden');
+  }
+  label.textContent = collapsed ? 'Mở rộng' : 'Thu gọn';
+  button.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+}
+
+function toggleQueryResultPanel() {
+  var area = document.getElementById('qresult-area');
+  if (!area) return;
+  setQueryResultPanelCollapsed(!area.classList.contains('is-collapsed'));
+}
+
+function bindQResultToggle() {
+  var overlay = document.getElementById('graph-top-overlay');
+  var btn = document.getElementById('qresult-toggle');
+  if (overlay) {
+    overlay.addEventListener(
+      'pointerdown',
+      function (e) {
+        if (!e.target || !e.target.closest) return;
+        if (!e.target.closest('#qresult-toggle')) return;
+        e.stopPropagation();
+      },
+      true
+    );
+  }
+  if (btn) {
+    btn.addEventListener(
+      'click',
+      function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleQueryResultPanel();
+      },
+      true
+    );
   }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    var btnCloseQ = document.getElementById('btn-close-qresult');
-    if (btnCloseQ) {
-        btnCloseQ.addEventListener('click', function(e) {
-            e.stopPropagation();
-            document.getElementById('qresult-area').style.display = 'none';
-        });
-    }
+  setQueryResultPanelCollapsed(false);
+  bindQResultToggle();
 });
 
 // ─────────────────────────────────────────────────
@@ -586,6 +639,33 @@ function edgeToVis(e) {
   return obj;
 }
 
+function edgeIdentity(e) {
+  if (!e) return '';
+  return (e.from || e.source || '') + '→' + (e.to || e.target || '') + ':' + (e.label || e.edge_label || '');
+}
+
+function dedupeGraphPayload(nodes, edges) {
+  var nodeSeen = Object.create(null);
+  var edgeSeen = Object.create(null);
+  var cleanNodes = [];
+  var cleanEdges = [];
+
+  (nodes || []).forEach(function(n) {
+    if (!n || !n.id || nodeSeen[n.id]) return;
+    nodeSeen[n.id] = true;
+    cleanNodes.push(n);
+  });
+
+  (edges || []).forEach(function(e) {
+    var id = edgeIdentity(e);
+    if (!id || edgeSeen[id]) return;
+    edgeSeen[id] = true;
+    cleanEdges.push(e);
+  });
+
+  return { nodes: cleanNodes, edges: cleanEdges };
+}
+
 function computeDegrees(edges) {
   var dm = {};
   edges.forEach(function(e) {
@@ -615,15 +695,16 @@ function loadHubsOnly() {
   fetch('/api/graph?mode=companies&page=1&limit=50000', { headers: { 'ngrok-skip-browser-warning': 'skip' } })
     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function (data) {
+      var normalized = dedupeGraphPayload(data.nodes || [], data.edges || []);
       graphStore.allNodes    = {};
-      graphStore.allEdges    = data.edges || [];
+      graphStore.allEdges    = normalized.edges;
       graphStore.expandedSet = new Set();
       graphStore.expandArtifacts = {};
       graphStore.initialNodeIds = new Set();
       graphStore.mode        = 'hubs';
       currentExpandedId      = null;
 
-      (data.nodes || []).forEach(function(n) { graphStore.allNodes[n.id] = n; graphStore.initialNodeIds.add(n.id); });
+      normalized.nodes.forEach(function(n) { graphStore.allNodes[n.id] = n; graphStore.initialNodeIds.add(n.id); });
       graphStore.degreeMap = computeDegrees(graphStore.allEdges);
       graphStore._maxDeg   = Math.max(1, Math.max.apply(null,
         Object.values(graphStore.degreeMap).length ? Object.values(graphStore.degreeMap) : [1]));
@@ -837,10 +918,11 @@ function loadPersonGraph() {
   fetch('/api/graph?mode=persons&view=leaders&page=1&limit=25000', { headers: { 'ngrok-skip-browser-warning': 'skip' } })
     .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function(data) {
+      var normalized = dedupeGraphPayload(data.nodes || [], data.edges || []);
       graphStore.allNodes    = {};
-      graphStore.allEdges    = data.edges || [];
+      graphStore.allEdges    = normalized.edges;
 
-      (data.nodes || []).forEach(function(n) {
+      normalized.nodes.forEach(function(n) {
         graphStore.allNodes[n.id] = n;
         graphStore.initialNodeIds.add(n.id);
       });
@@ -850,7 +932,7 @@ function loadPersonGraph() {
 
       var opts = getVisOptions('persons');
 
-      var nodeCount = (data.nodes || []).length;
+      var nodeCount = normalized.nodes.length;
       if (nodeCount > 800) {
         opts.physics.barnesHut.gravitationalConstant = -20000;
         opts.physics.barnesHut.centralGravity = 0.01;
@@ -858,11 +940,11 @@ function loadPersonGraph() {
         showToast('Đồ thị lớn (' + nodeCount + ' thực thể): đang phân tán…', 'info', 3000);
       }
 
-      var nodeList = data.nodes || [];
+      var nodeList = normalized.nodes;
       var vnodes = nodeList.map(function(n, i) {
         return nodeToVis(n, graphStore.degreeMap[n.id] || 0, i, nodeList.length, 'persons');
       });
-      var vedges = (data.edges || []).map(edgeToVis);
+      var vedges = normalized.edges.map(edgeToVis);
 
       graphStore.visNodes = new vis.DataSet(vnodes);
       graphStore.visEdges = new vis.DataSet(vedges);
@@ -909,23 +991,24 @@ function loadGlobalGraph() { loadHubsOnly(); }
 function drawGraph(graphData) {
   // Direct draw with all nodes + edges (used by chat query result)
   if (!graphData || !graphData.nodes) return;
+  var normalized = dedupeGraphPayload(graphData.nodes || [], graphData.edges || []);
   var container = document.getElementById('mynetwork');
   container.innerHTML =
     '<div id="graph-loader"><div class="loader-ring"></div>' +
     '<div class="loader-text">Đang vẽ đồ thị…</div>' +
-    '<div class="loader-sub">' + graphData.nodes.length + ' node, ' + (graphData.edges||[]).length + ' cạnh</div></div>';
+    '<div class="loader-sub">' + normalized.nodes.length + ' node, ' + normalized.edges.length + ' cạnh</div></div>';
 
-  var dm = computeDegrees(graphData.edges || []);
+  var dm = computeDegrees(normalized.edges);
   var mx = Math.max(1, Math.max.apply(null, Object.values(dm).length ? Object.values(dm) : [1]));
 
   graphStore._maxDeg = mx;
   var opts = getVisOptions('hubs');
-  if (graphData.nodes.length > 300) {
+  if (normalized.nodes.length > 300) {
     opts.physics.barnesHut.gravitationalConstant = -10000;
     opts.physics.stabilization.iterations = 150;
   }
 
-  var gNodes = graphData.nodes;
+  var gNodes = normalized.nodes;
   var vnodes = gNodes.map(function(n, i) {
     var g = ['Company','Person','Institution'].includes(n.group) ? n.group : 'DEFAULT';
     var d = dm[n.id] || 0;
@@ -936,7 +1019,7 @@ function drawGraph(graphData) {
              size: sz, title: (n.label||n.name||String(n.id)) + '\nLiên kết: ' + d,
              x: pos.x, y: pos.y, fixed: false };
   });
-  var vedges = (graphData.edges||[]).map(edgeToVis);
+  var vedges = normalized.edges.map(edgeToVis);
 
   graphStore.visNodes = new vis.DataSet(vnodes);
   graphStore.visEdges = new vis.DataSet(vedges);
@@ -1030,14 +1113,15 @@ function formatNdpValue(val, fieldKey) {
 function layoutNodeDetailPanel() {
   var panel = document.getElementById('node-detail-panel');
   var ga = document.getElementById('graph-area');
-  var rp = document.getElementById('right-panel');
-  if (!panel || !ga || !rp) return;
-  var gap = 14;
-  var leftPad = 16;
-  var maxW = ga.clientWidth - rp.offsetWidth - gap - leftPad;
-  if (maxW < 260) maxW = Math.max(220, ga.clientWidth - gap * 2);
+  if (!panel || !ga) return;
+  var viewportW = window.innerWidth || document.documentElement.clientWidth || 0;
+  var isPhone = viewportW <= 700;
+  var isTablet = viewportW <= 1024;
+  var gap = isPhone ? 12 : 16;
+  var maxW = Math.max(260, ga.clientWidth - gap * 2);
+  var desiredW = isPhone ? maxW : (isTablet ? 460 : 540);
   panel.style.maxWidth = maxW + 'px';
-  panel.style.width = 'min(100%, ' + maxW + 'px)';
+  panel.style.width = Math.min(maxW, desiredW) + 'px';
 }
 
 function fetchAndShowNodeDetail(nodeId) {
@@ -1557,8 +1641,15 @@ function updateProcessUI(steps, cypher) {
   var area = document.getElementById('qresult-area');
   var cs   = document.getElementById('cypherSection');
   var ps   = document.getElementById('process-steps');
+  var hasContent = !!((steps && steps.length) || cypher);
   if (!area && !cs && !ps) return;
-  if (area && (steps && steps.length || cypher)) area.style.display = 'block';
+  if (area) {
+    area.style.display = hasContent ? 'flex' : 'none';
+  }
+  if (!hasContent) return;
+
+  // Mỗi kết quả mới sẽ mở panel ra lại để user thấy ngay toàn bộ diễn tiến truy vấn.
+  setQueryResultPanelCollapsed(false);
   if (cs) cs.textContent = cypher || '';
   if (ps) {
     ps.innerHTML = '';
@@ -1684,7 +1775,7 @@ function hideSearchDrop() {
 }
 
 document.addEventListener('click', function(e) {
-  var w = document.querySelector('.topbar-search');
+  var w = document.querySelector('.entity-search-shell');
   if (w && !w.contains(e.target)) hideSearchDrop();
 });
 

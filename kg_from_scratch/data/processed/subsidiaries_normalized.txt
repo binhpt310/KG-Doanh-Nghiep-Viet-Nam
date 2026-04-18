@@ -1,1 +1,2085 @@
-Dữ liệu JSON đã được parse trực tiếp vào Graph.
+VCB (VCB) có công ty con Ngân hàng TMCP Quân Đội (MBB). Tỷ lệ sở hữu 3.7199%.
+VCB (VCB) có công ty con Tổng Công ty Hàng không Việt Nam - CTCP (HVN). Tỷ lệ sở hữu 0.6685%.
+VCB (VCB) có công ty con Ngân hàng TMCP Xuất Nhập Khẩu Việt Nam (EIB). Tỷ lệ sở hữu 0.0000%.
+VCB (VCB) có công ty con Tổng CTCP Khoan và Dịch vụ Khoan Dầu khí (PVD). Tỷ lệ sở hữu 0.0000%.
+VCB (VCB) có công ty con Công ty TNHH Chứng khoán Ngân hàng TMCP Ngoại Thương Việt Nam (VCBS). Tỷ lệ sở hữu 100.0000%.
+VCB (VCB) có công ty con Ngân hàng TNHH MTV Ngoại thương Việt Nam tại Lào. Tỷ lệ sở hữu 100.0000%.
+VCB (VCB) có công ty con Tổng CTCP Bảo hiểm Petrolimex (PGI). Tỷ lệ sở hữu 8.0291%.
+VCB (VCB) có công ty con Công ty Liên doanh TNHH Vietcombank - Bonday - Bến Thành. Tỷ lệ sở hữu 52.0000%.
+VCB (VCB) có công ty con Công ty TNHH MTV Cho thuê tài chính Ngân hàng TMCP Ngoại thương Việt Nam. Tỷ lệ sở hữu 100.0000%.
+VCB (VCB) có công ty con Công ty TNHH Quản lý Quỹ đầu tư chứng khoán Vietcombank. Tỷ lệ sở hữu 51.0000%.
+VCB (VCB) có công ty con Công ty TNHH Tài chính Việt Nam tại Hồng Kông. Tỷ lệ sở hữu 100.0000%.
+VCB (VCB) có công ty con Công ty Chuyển tiền Vietcombank. Tỷ lệ sở hữu 87.5000%.
+VCB (VCB) có công ty con Công ty TNHH Cao Ốc Vietcombank 198. Tỷ lệ sở hữu 70.0000%.
+VCB (VCB) có công ty con Công ty Liên doanh TNHH Vietcombank - Bonday. Tỷ lệ sở hữu 16.0000%.
+VCB (VCB) có công ty con Công ty TNHH MTV Kiều hối Vietcombank. Tỷ lệ sở hữu 100.0000%.
+VCB (VCB) có công ty con Công ty TNHH Bảo hiểm FWD Việt Nam. Tỷ lệ sở hữu 0.0000%.
+VCB (VCB) có công ty con Ngân hàng Thương mại TNHH MTV Ngoại thương Công nghệ số. Tỷ lệ sở hữu 100.0000%.
+BID (BID) có công ty con Tổng Công ty Phân bón và Hóa chất Dầu khí - CTCP (DPM). Tỷ lệ sở hữu 0.0000%.
+BID (BID) có công ty con CTCP Đầu tư Hạ tầng Kỹ thuật Thành phố Hồ Chí Minh (CII). Tỷ lệ sở hữu 0.0000%.
+BID (BID) có công ty con CTCP Phát triển Hạ tầng Kỹ thuật (IJC). Tỷ lệ sở hữu 0.0000%.
+BID (BID) có công ty con Ngân hàng TMCP Đại Á (DAB). Tỷ lệ sở hữu 0.0000%.
+BID (BID) có công ty con Ngân hàng liên doanh Việt Nga. Tỷ lệ sở hữu 50.0000%.
+BID (BID) có công ty con CTCP Điện lực Dầu khí Nhơn Trạch 2 (NT2). Tỷ lệ sở hữu 0.0000%.
+BID (BID) có công ty con CTCP Chứng khoán BIDV (BSI). Tỷ lệ sở hữu 51.9698%.
+BID (BID) có công ty con CTCP Thủy điện Vĩnh Sơn - Sông Hinh (VSH). Tỷ lệ sở hữu 0.0000%.
+BID (BID) có công ty con Tổng CTCP Bảo hiểm Ngân hàng Đầu tư và Phát triển Việt Nam (BIC). Tỷ lệ sở hữu 51.0071%.
+BID (BID) có công ty con CTCP Cho thuê Máy bay Việt Nam. Tỷ lệ sở hữu 18.5200%.
+BID (BID) có công ty con Công ty TNHH Bảo hiểm nhân thọ BIDV Metlife. Tỷ lệ sở hữu 37.2500%.
+BID (BID) có công ty con CTCP Phát triển Nhà Thủ Đức (TDH). Tỷ lệ sở hữu 0.0000%.
+BID (BID) có công ty con CTCP Victory Capital (PTL). Tỷ lệ sở hữu 0.0000%.
+BID (BID) có công ty con Công ty Cho thuê Tài chính TNHH BIDV - SuMi Trust. Tỷ lệ sở hữu 50.0000%.
+BID (BID) có công ty con Tổng Công ty Gas Petrolimex - CTCP (PGC). Tỷ lệ sở hữu 0.0000%.
+BID (BID) có công ty con CTCP Chế tạo Giàn khoan Dầu khí (PVY). Tỷ lệ sở hữu 4.0343%.
+BID (BID) có công ty con CTCP Đầu tư và Phát triển điện Miền Bắc 2 (ND2). Tỷ lệ sở hữu 0.0000%.
+BID (BID) có công ty con CTCP Tập đoàn Dầu khí An Pha (ASP). Tỷ lệ sở hữu 0.0000%.
+BID (BID) có công ty con CTCP Ngô Han (NHW). Tỷ lệ sở hữu 0.0000%.
+BID (BID) có công ty con Công ty liên doanh Tháp BIDV. Tỷ lệ sở hữu 55.0000%.
+BID (BID) có công ty con Công ty TNHH Quản lý Nợ và Khai thác tài sản BIDV. Tỷ lệ sở hữu 100.0000%.
+BID (BID) có công ty con Công ty liên doanh Quản lý đầu tư BIDV - Việt Nam Partners. Tỷ lệ sở hữu 0.0000%.
+BID (BID) có công ty con CTCP Chứng khoán Ngân hàng Phát triển Nhà đồng bằng Sông Cửu Long (MHBS). Tỷ lệ sở hữu 60.0000%.
+BID (BID) có công ty con Ngân hàng liên doanh Lào - Việt. Tỷ lệ sở hữu 65.0000%.
+BID (BID) có công ty con Công ty TNHH Đầu tư Phát triển Quốc tế. Tỷ lệ sở hữu 0.0000%.
+BID (BID) có công ty con Công ty TNHH BIDV Quốc tế tại Hồng Kông. Tỷ lệ sở hữu 0.0000%.
+BID (BID) có công ty con Ngân hàng Đầu tư và Phát triển Campuchia. Tỷ lệ sở hữu 98.5000%.
+CTG (CTG) có công ty con Tổng Công ty Thép Việt Nam - CTCP (TVN). Tỷ lệ sở hữu 0.0000%.
+CTG (CTG) có công ty con Ngân hàng TNHH Indovina. Tỷ lệ sở hữu 50.0000%.
+CTG (CTG) có công ty con CTCP Cảng Hải Phòng (PHP). Tỷ lệ sở hữu 0.0000%.
+CTG (CTG) có công ty con CTCP Cảng Sài Gòn (SGP). Tỷ lệ sở hữu 8.9300%.
+CTG (CTG) có công ty con CTCP Chứng khoán Vietinbank (CTS). Tỷ lệ sở hữu 75.6362%.
+CTG (CTG) có công ty con CTCP Gang thép Thái Nguyên (TIS). Tỷ lệ sở hữu 0.0000%.
+CTG (CTG) có công ty con Ngân hàng TNHH Công thương Việt Nam (tại Lào). Tỷ lệ sở hữu 100.0000%.
+CTG (CTG) có công ty con Công ty TNHH MTV Cho thuê tài chính Ngân hàng TMCP Công thương Việt Nam. Tỷ lệ sở hữu 100.0000%.
+CTG (CTG) có công ty con Tổng CTCP Bảo hiểm Ngân hàng TMCP Công thương Việt Nam. Tỷ lệ sở hữu 73.3725%.
+CTG (CTG) có công ty con Công ty TNHH MTV Quản lý Quỹ Ngân hàng TMCP Công thương Việt Nam. Tỷ lệ sở hữu 100.0000%.
+CTG (CTG) có công ty con Công ty TNHH MTV Vàng bạc đá quý Ngân hàng TMCP Công thương Việt Nam. Tỷ lệ sở hữu 100.0000%.
+CTG (CTG) có công ty con Công ty TNHH MTV Quản lý nợ và Khai thác tài sản Ngân hàng TMCP Công thương Việt Nam. Tỷ lệ sở hữu 100.0000%.
+CTG (CTG) có công ty con Công ty TNHH MTV Chuyển tiền toàn cầu - Ngân hàng TMCP Công thương Việt Nam. Tỷ lệ sở hữu 100.0000%.
+MBB (MBB) có công ty con CTCP Chứng khoán MB (MBS). Tỷ lệ sở hữu 65.9035%.
+MBB (MBB) có công ty con CTCP Tập đoàn C.E.O (CEO). Tỷ lệ sở hữu 0.0000%.
+MBB (MBB) có công ty con CTCP Thủy điện Hủa Na (HNA). Tỷ lệ sở hữu 4.4637%.
+MBB (MBB) có công ty con Tổng CTCP Bảo hiểm Quân Đội (MIG). Tỷ lệ sở hữu 67.6793%.
+MBB (MBB) có công ty con Ngân hàng Đại chúng TNHH MB Campuchia. Tỷ lệ sở hữu 100.0000%.
+MBB (MBB) có công ty con Công ty Tài chính tín dụng tiêu dùng TNHH MB Shinsei. Tỷ lệ sở hữu 50.0000%.
+MBB (MBB) có công ty con Công ty TNHH Bảo hiểm nhân thọ MB AGEAS. Tỷ lệ sở hữu 61.0000%.
+MBB (MBB) có công ty con Công ty Tài chính cổ phần Sông Đà (SDF). Tỷ lệ sở hữu 0.0000%.
+MBB (MBB) có công ty con Công ty TNHH Quản lý Nợ và Khai thác tài sản Ngân hàng TMCP Quân Đội. Tỷ lệ sở hữu 100.0000%.
+MBB (MBB) có công ty con CTCP Tổng công ty MBLand. Tỷ lệ sở hữu 0.0000%.
+MBB (MBB) có công ty con CTCP Quản lý Quỹ đầu tư MB. Tỷ lệ sở hữu 90.7700%.
+MBB (MBB) có công ty con CTCP Vận tải và Thuê tàu (VFR). Tỷ lệ sở hữu 0.0000%.
+MBB (MBB) có công ty con CTCP Xây Dựng Công Trình Ngầm (CTN). Tỷ lệ sở hữu 0.0000%.
+MBB (MBB) có công ty con CTCP Merufa (MRF). Tỷ lệ sở hữu 0.0000%.
+MBB (MBB) có công ty con Ngân hàng TNHH MTV Việt Nam Hiện Đại. Tỷ lệ sở hữu 100.0000%.
+ACB (ACB) có công ty con Ngân hàng TMCP Xuất Nhập Khẩu Việt Nam (EIB). Tỷ lệ sở hữu 0.0000%.
+ACB (ACB) có công ty con CTCP Đầu tư và Công nghiệp Tân Tạo (ITA). Tỷ lệ sở hữu 0.0000%.
+ACB (ACB) có công ty con Công ty TNHH Chứng Khoán ACB (ACBS). Tỷ lệ sở hữu 100.0000%.
+ACB (ACB) có công ty con Tổng Công ty Phân bón và Hóa chất Dầu khí - CTCP (DPM). Tỷ lệ sở hữu 0.0000%.
+ACB (ACB) có công ty con Tổng CTCP Vận tải Dầu khí (PVT). Tỷ lệ sở hữu 0.0000%.
+ACB (ACB) có công ty con Ngân hàng TMCP Đại Á (DAB). Tỷ lệ sở hữu 0.0000%.
+ACB (ACB) có công ty con CTCP Vận tải Biển Việt Nam (VOS). Tỷ lệ sở hữu 4.8571%.
+ACB (ACB) có công ty con CTCP Xi măng VICEM Bút Sơn (BTS). Tỷ lệ sở hữu 4.9940%.
+ACB (ACB) có công ty con Công ty TNHH MTV Quản lý quỹ ACB. Tỷ lệ sở hữu 0.0000%.
+ACB (ACB) có công ty con Công ty TNHH Quản lý nợ và Khai thác tài sản Ngân hàng Á Châu. Tỷ lệ sở hữu 100.0000%.
+ACB (ACB) có công ty con CTCP Đầu tư Dầu khí Sao Mai - Bến Đình (PSB). Tỷ lệ sở hữu 0.0000%.
+ACB (ACB) có công ty con Công ty TNHH MTV Cho thuê tài chính Ngân hàng Á Châu. Tỷ lệ sở hữu 100.0000%.
+ACB (ACB) có công ty con CTCP Thương mại Dịch vụ Tổng hợp Cảng Hải Phòng (DVC). Tỷ lệ sở hữu 2.9800%.
+ACB (ACB) có công ty con CTCP Thủy Tạ (TTJ). Tỷ lệ sở hữu 0.0000%.
+ACB (ACB) có công ty con CTCP Sài Gòn kim hoàn ACB - SJC. Tỷ lệ sở hữu 10.0000%.
+ACB (ACB) có công ty con CTCP Dịch vụ bảo vệ Ngân hàng Á Châu. Tỷ lệ sở hữu 10.0000%.
+VPB (VPB) có công ty con CTCP Chứng khoán VPBank (VPX). Tỷ lệ sở hữu 79.9630%.
+VPB (VPB) có công ty con Công ty tài chính TNHH Ngân hàng Việt Nam Thịnh Vượng SMBC. Tỷ lệ sở hữu 50.0000%.
+VPB (VPB) có công ty con CTCP Cảng Sài Gòn (SGP). Tỷ lệ sở hữu 7.4389%.
+VPB (VPB) có công ty con CTCP Bảo hiểm OPES. Tỷ lệ sở hữu 99.4200%.
+VPB (VPB) có công ty con Công ty TNHH Quản lý tài sản Ngân hàng Việt Nam Thịnh Vượng. Tỷ lệ sở hữu 100.0000%.
+TCB (TCB) có công ty con Tổng Công ty Hàng không Việt Nam - CTCP (HVN). Tỷ lệ sở hữu 0.0015%.
+TCB (TCB) có công ty con CTCP Chứng khoán Kỹ thương (TCX). Tỷ lệ sở hữu 79.8249%.
+TCB (TCB) có công ty con Công ty TNHH MTV Quản lý nợ và Khai thác tài sản - Ngân hàng TMCP Kỹ thương Việt Nam. Tỷ lệ sở hữu 100.0000%.
+TCB (TCB) có công ty con CTCP Quản lý quỹ Kỹ thương. Tỷ lệ sở hữu 89.0000%.
+STB (STB) có công ty con CTCP Hoàng Anh Gia Lai (HAG). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con Công ty TNHH MTV Đầu tư kinh doanh Nhà Khang Phúc (BCI). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP Địa ốc Sài Gòn Thương Tín (SCR). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP Điện Gia Lai (GEG). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP Hàng tiêu dùng Biên Hòa (BHS). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con Ngân hàng Sài Gòn Thương Tín Campuchia. Tỷ lệ sở hữu 100.0000%.
+STB (STB) có công ty con CTCP Chứng khoán SBS (SBS). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con Ngân hàng TNHH Sài Gòn Thương Tín Lào. Tỷ lệ sở hữu 100.0000%.
+STB (STB) có công ty con CTCP Camimex Group (CMX). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP Kho vận Miền Nam (STG). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP Mía đường Lam Sơn (LSS). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP Vận tải Xăng dầu Vitaco (VTO). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con Công ty TNHH MTV Cho thuê tài chính Ngân hàng Sài Gòn Thương Tín. Tỷ lệ sở hữu 100.0000%.
+STB (STB) có công ty con Công ty TNHH MTV Quản lý nợ và Khai thác tài sản Ngân hàng Sài Gòn Thương Tín. Tỷ lệ sở hữu 100.0000%.
+STB (STB) có công ty con CTCP Mía đường - Nhiệt điện Gia Lai (SEC). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP Hữu Liên Á Châu (HLA). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP Đầu tư Xây dựng Long An IDICO (LAI). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con Công ty TNHH MTV Vàng bạc đá quý Ngân hàng Sài Gòn Thương Tín. Tỷ lệ sở hữu 100.0000%.
+STB (STB) có công ty con CTCP Dược phẩm Bến Tre (DBT). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP Chế biến Thủy sản Xuất khẩu Minh Hải (JOS). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP Giống cây trồng Miền Nam (SSC). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP Vật tư - Xăng dầu (COM). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP S.P.M (SPM). Tỷ lệ sở hữu 7.4393%.
+STB (STB) có công ty con CTCP Nhiên liệu Sài Gòn (SFC). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP Cấp nước Nhà Bè (NBW). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP Dịch vụ Hàng không Sân bay Nội Bài (NAS). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP Du lịch Đồng Nai (DNT). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP Merufa (MRF). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con CTCP Địa ốc Đà Lạt (DLR). Tỷ lệ sở hữu 0.0000%.
+STB (STB) có công ty con Công ty TNHH MTV Kiều hối Ngân hàng Sài Gòn Thương Tín. Tỷ lệ sở hữu 100.0000%.
+EIB (EIB) có công ty con Ngân hàng TMCP Sài Gòn Thương Tín (STB). Tỷ lệ sở hữu 0.0000%.
+EIB (EIB) có công ty con CTCP Chứng khoán Rồng Việt (VDS). Tỷ lệ sở hữu 0.0000%.
+EIB (EIB) có công ty con CTCP Đầu tư và Phát triển Du lịch Vinaconex (VCR). Tỷ lệ sở hữu 0.0000%.
+EIB (EIB) có công ty con CTCP Phát triển Nhà Thủ Đức (TDH). Tỷ lệ sở hữu 0.0000%.
+EIB (EIB) có công ty con Tổng CTCP Bảo hiểm Bảo Long (BLI). Tỷ lệ sở hữu 6.5061%.
+EIB (EIB) có công ty con CTCP Nông nghiệp Hùng Hậu (SJ1). Tỷ lệ sở hữu 0.0000%.
+EIB (EIB) có công ty con CTCP Ngoại thương và Phát triển Đầu tư Thành phố Hồ Chí Minh (FDC). Tỷ lệ sở hữu 0.0000%.
+EIB (EIB) có công ty con Công ty TNHH MTV Quản lý nợ và Khai thác tài sản Ngân hàng TMCP Xuất nhập khẩu Việt Nam. Tỷ lệ sở hữu 100.0000%.
+HDB (HDB) có công ty con CTCP Hàng không VIETJET (VJC). Tỷ lệ sở hữu 0.0000%.
+HDB (HDB) có công ty con Ngân hàng TNHH MTV số Vikki (VIKKIBANK). Tỷ lệ sở hữu 100.0000%.
+HDB (HDB) có công ty con CTCP Tập đoàn Đại Dương (OGC). Tỷ lệ sở hữu 0.0000%.
+HDB (HDB) có công ty con Công ty Tài chính TNHH HD SAISON. Tỷ lệ sở hữu 50.0000%.
+HDB (HDB) có công ty con CTCP Quốc tế Sơn Hà (SHI). Tỷ lệ sở hữu 0.0000%.
+HDB (HDB) có công ty con CTCP Chứng khoán HD (HDSC). Tỷ lệ sở hữu 29.9999%.
+HDB (HDB) có công ty con CTCP Phát triển Nhà Thủ Đức (TDH). Tỷ lệ sở hữu 0.0000%.
+HDB (HDB) có công ty con CTCP Thương mại Dầu khí (PTV). Tỷ lệ sở hữu 0.0000%.
+HDB (HDB) có công ty con CTCP Thương mại - Dịch vụ Bến Thành (BTT). Tỷ lệ sở hữu 0.0000%.
+HDB (HDB) có công ty con CTCP Mua bán nợ và Quản lý tài sản HDBank. Tỷ lệ sở hữu 0.0000%.
+TPB (TPB) có công ty con Ngân hàng TMCP Ngoại thương Việt Nam (VCB). Tỷ lệ sở hữu 0.0297%.
+TPB (TPB) có công ty con CTCP Nông nghiệp Quốc tế Hoàng Anh Gia Lai (HNG). Tỷ lệ sở hữu 0.0000%.
+TPB (TPB) có công ty con CTCP Chứng khoán Tiên Phong (ORS). Tỷ lệ sở hữu 51.0000%.
+TPB (TPB) có công ty con CTCP Lizen (LCG). Tỷ lệ sở hữu 0.0000%.
+TPB (TPB) có công ty con CTCP Everpia (EVE). Tỷ lệ sở hữu 0.0000%.
+TPB (TPB) có công ty con CTCP Quản lý quỹ Việt Cát. Tỷ lệ sở hữu 99.9000%.
+VIB (VIB) có công ty con CTCP Nhiệt điện Phả Lại (PPC). Tỷ lệ sở hữu 0.0000%.
+VIB (VIB) có công ty con Tổng CTCP Bảo hiểm Bưu điện (PTI). Tỷ lệ sở hữu 0.0000%.
+VIB (VIB) có công ty con Công ty TNHH MTV Quản lý nợ và Khai thác tài sản - Ngân hàng TMCP Quốc tế Việt Nam. Tỷ lệ sở hữu 100.0000%.
+VIB (VIB) có công ty con CTCP Đầu tư PV2 (PV2). Tỷ lệ sở hữu 0.0000%.
+OCB (OCB) có công ty con CTCP Chứng khoán Tiên Phong (ORS). Tỷ lệ sở hữu 0.0000%.
+OCB (OCB) có công ty con CTCP Công nghiệp và Xuất nhập khẩu Cao su (RBC). Tỷ lệ sở hữu 3.3232%.
+OCB (OCB) có công ty con Công ty TNHH MTV Chuyển tiền quốc tế Ngân hàng Thương mại Phương Đông. Tỷ lệ sở hữu 100.0000%.
+OCB (OCB) có công ty con Công ty TNHH MTV Quản lý nợ và Khai thác tài sản Ngân hàng Phương Đông. Tỷ lệ sở hữu 100.0000%.
+MSB (MSB) có công ty con Ngân hàng TMCP Quân Đội (MBB). Tỷ lệ sở hữu 0.0000%.
+MSB (MSB) có công ty con CTCP Chứng khoán Châu Á - Thái Bình Dương (APS). Tỷ lệ sở hữu 0.0000%.
+MSB (MSB) có công ty con Tổng CTCP Bảo hiểm Bảo Long (BLI). Tỷ lệ sở hữu 0.0000%.
+MSB (MSB) có công ty con Công ty tài chính TNHH MTV TNEX. Tỷ lệ sở hữu 100.0000%.
+MSB (MSB) có công ty con CTCP Container phía Nam (VSG). Tỷ lệ sở hữu 0.0000%.
+MSB (MSB) có công ty con Công ty TNHH Quản lý nợ và khai thác tài sản Ngân hàng TMCP Hàng Hải Việt Nam. Tỷ lệ sở hữu 0.0000%.
+MSB (MSB) có công ty con CTCP Vận tải biển Hải Âu (SSG). Tỷ lệ sở hữu 0.0000%.
+MSB (MSB) có công ty con CTCP Nhựa Đà Nẵng (DPC). Tỷ lệ sở hữu 0.0000%.
+SHB (SHB) có công ty con CTCP Chứng khoán Sài Gòn - Hà Nội (SHS). Tỷ lệ sở hữu 0.0000%.
+SHB (SHB) có công ty con Ngân hàng TNHH MTV Sài Gòn - Hà Nội Campuchia. Tỷ lệ sở hữu 100.0000%.
+SHB (SHB) có công ty con Ngân hàng TNHH MTV Sài Gòn - Hà Nội Lào. Tỷ lệ sở hữu 100.0000%.
+SHB (SHB) có công ty con Tổng CTCP Bảo hiểm Sài Gòn - Hà Nội (BHI). Tỷ lệ sở hữu 4.2857%.
+SHB (SHB) có công ty con Công ty Tài chính TNHH ngân hàng TMCP Sài Gòn - Hà Nội. Tỷ lệ sở hữu 50.0000%.
+SHB (SHB) có công ty con Tổng Công ty Thăng Long - CTCP (TTL). Tỷ lệ sở hữu 7.1585%.
+SHB (SHB) có công ty con CTCP Sản xuất Thương mại Dịch vụ GFC (GFC). Tỷ lệ sở hữu 0.0000%.
+SHB (SHB) có công ty con CTCP Chứng khoán SHB (SHBS). Tỷ lệ sở hữu 0.0000%.
+SHB (SHB) có công ty con Công ty TNHH MTV Quản lý nợ và Khai thác tài sản ngân hàng TMCP Sài gòn - Hà nội. Tỷ lệ sở hữu 100.0000%.
+NVB (NVB) có công ty con CTCP Chứng khoán Navibank (NVSC). Tỷ lệ sở hữu 7.0238%.
+NVB (NVB) có công ty con Công ty TNHH Quản lý Nợ và Khai thác tài sản Ngân hàng Quốc Dân. Tỷ lệ sở hữu 100.0000%.
+LPB (LPB) có công ty con CTCP Điện Việt Lào. Tỷ lệ sở hữu 9.6000%.
+LPB (LPB) có công ty con CTCP Chứng khoán Ngân hàng Lộc Phát Việt Nam (LPBS). Tỷ lệ sở hữu 5.5000%.
+BVB (BVB) có công ty con CTCP Chứng Khoán Vietcap (VCI). Tỷ lệ sở hữu 0.0000%.
+BVB (BVB) có công ty con Công ty TNHH MTV Quản lý nợ và Khai thác tài sản - NH TMCP Bản Việt. Tỷ lệ sở hữu 100.0000%.
+NAB (NAB) có công ty con CTCP One Capital Hospitality (OCH). Tỷ lệ sở hữu 0.0000%.
+NAB (NAB) có công ty con Công ty TNHH MTV Quản lý nợ và Khai thác tài sản - Ngân hàng TMCP Nam Á. Tỷ lệ sở hữu 100.0000%.
+NAB (NAB) có công ty con CTCP Chứng Khoán BeTa (BETA). Tỷ lệ sở hữu 11.0000%.
+NAB (NAB) có công ty con CTCP Xuất nhập khẩu Lâm - Thủy sản Bến Tre (FBT). Tỷ lệ sở hữu 0.0000%.
+SGB (SGB) có công ty con Ngân hàng TMCP Bản Việt (BVB). Tỷ lệ sở hữu 0.0000%.
+SGB (SGB) có công ty con Công ty TNHH Quản lý nợ và Khai thác tài sản. Tỷ lệ sở hữu 100.0000%.
+SGB (SGB) có công ty con CTCP Chứng khoán Saigonbank Berjaya (SBBS). Tỷ lệ sở hữu 9.4286%.
+ABB (ABB) có công ty con Công ty Tài chính Tổng hợp Cổ phần Điện lực (EVF). Tỷ lệ sở hữu 3.7486%.
+ABB (ABB) có công ty con CTCP Nhiệt điện Phả Lại (PPC). Tỷ lệ sở hữu 0.0000%.
+ABB (ABB) có công ty con CTCP Chứng khoán An Bình (ABW). Tỷ lệ sở hữu 0.0000%.
+ABB (ABB) có công ty con CTCP Thủy điện Thác Mơ (TMP). Tỷ lệ sở hữu 0.0000%.
+ABB (ABB) có công ty con CTCP EVN Quốc tế (EIC). Tỷ lệ sở hữu 10.3061%.
+ABB (ABB) có công ty con CTCP Đầu tư Điện lực 3 (PIC). Tỷ lệ sở hữu 5.1665%.
+ABB (ABB) có công ty con Công ty TNHH MTV Quản lý nợ và Khai thác tài sản Ngân hàng TMCP An Bình. Tỷ lệ sở hữu 100.0000%.
+ABB (ABB) có công ty con CTCP Dược phẩm Viễn Đông (DVD). Tỷ lệ sở hữu 0.0000%.
+ABB (ABB) có công ty con Công ty TNHH MTV Dịch vụ bảo vệ ABBA. Tỷ lệ sở hữu 0.0000%.
+VAB (VAB) có công ty con CTCP Tập đoàn Đất Xanh (DXG). Tỷ lệ sở hữu 0.0000%.
+VAB (VAB) có công ty con CTCP Tập đoàn Kỹ nghệ Gỗ Trường Thành (TTF). Tỷ lệ sở hữu 0.0000%.
+VAB (VAB) có công ty con Công ty TNHH MTV Quản lý nợ và Khai thác tài sản - Ngân hàng TMCP Việt Á. Tỷ lệ sở hữu 100.0000%.
+VAB (VAB) có công ty con CTCP Sông Đà 6 (SD6). Tỷ lệ sở hữu 0.0000%.
+VAB (VAB) có công ty con CTCP Đầu tư Phát triển Công nghiệp - Thương mại Củ Chi (CCI). Tỷ lệ sở hữu 0.0000%.
+VAB (VAB) có công ty con CTCP Công viên nước Đầm Sen (DSN). Tỷ lệ sở hữu 0.0000%.
+KLB (KLB) có công ty con Công ty TNHH MTV Quản lý nợ và Khai thác tài sản - Ngân hàng TMCP Kiên Long. Tỷ lệ sở hữu 100.0000%.
+VHM (VHM) có công ty con Tập đoàn Vingroup - CTCP (VIC). Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Đô thị Du lịch Cần Giờ. Tỷ lệ sở hữu 43.6900%.
+VHM (VHM) có công ty con CTCP Vincom Retail (VRE). Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Đầu tư Khu công nghiệp Vinhomes Hải Phòng. Tỷ lệ sở hữu 51.0000%.
+VHM (VHM) có công ty con CTCP Đầu tư xây dựng Thái Sơn. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con Công ty TNHH Đô thị Đại học Quốc tế Berjaya Việt Nam. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Phát triển Thành Phố Xanh. Tỷ lệ sở hữu 4.5000%.
+VHM (VHM) có công ty con Công ty TNHH Đầu tư Phát triển Bất động sản Vịnh Xanh 2. Tỷ lệ sở hữu 99.7700%.
+VHM (VHM) có công ty con CTCP Bất động sản SV Tây Hà Nội 2. Tỷ lệ sở hữu 49.0000%.
+VHM (VHM) có công ty con Công ty TNHH Phát triển Bất động sản Vịnh Xanh 1. Tỷ lệ sở hữu 99.7400%.
+VHM (VHM) có công ty con CTCP Đầu tư Xây dựng Đại An. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con Công ty TNHH Đầu tư Phát triển Bất động sản LightHouse 2. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Đầu tư và Phát triển Sinh thái. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Đầu tư Khu công nghiệp Vinhomes Hà Tĩnh. Tỷ lệ sở hữu 51.0000%.
+VHM (VHM) có công ty con Công ty TNHH Trung tâm tài chính Việt Nam Berjaya. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Phát triển kinh doanh bất động sản SV Tây Hà Nội. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con Công ty TNHH Đầu tư Sản xuất Phát triển Nông nghiệp WinEco. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con Công ty TNHH Đầu tư và Phát triển Đô thị Gia Lâm. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con Công ty TNHH Metropolis Hà Nội. Tỷ lệ sở hữu 100.0000%.
+VHM (VHM) có công ty con CTCP Đầu tư và Phát triển Khách sạn Landmark 81. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con Công ty TNHH Thương mại Đầu tư và Phát triển Thiên Niên Kỷ. Tỷ lệ sở hữu 100.0000%.
+VHM (VHM) có công ty con Công ty TNHH Vincom Retail Landmark 81. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Kinh doanh Bất động sản S-Vin Việt Nam. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Delta. Tỷ lệ sở hữu 100.0000%.
+VHM (VHM) có công ty con CTCP Phát triển và Đầu tư xây dựng Vincons. Tỷ lệ sở hữu 99.0000%.
+VHM (VHM) có công ty con CTCP Đầu tư và Phát triển Đô thị Sài Đồng (SDI). Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con Công ty TNHH Kinh doanh thương mại và dịch vụ VinDS. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Kinh doanh và Phát triển Sinh Thái. Tỷ lệ sở hữu 98.1800%.
+VHM (VHM) có công ty con CTCP Đầu tư Bất động sản Prime Land. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Muối Cam Ranh. Tỷ lệ sở hữu 99.0000%.
+VHM (VHM) có công ty con Công ty TNHH Kinh doanh Bất động sản Phú Gia. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Đầu tư và phát triển Địa ốc Thành phố Hoàng Gia. Tỷ lệ sở hữu 96.8510%.
+VHM (VHM) có công ty con CTCP Đầu tư Khu công nghiệp Vinhomes. Tỷ lệ sở hữu 51.0000%.
+VHM (VHM) có công ty con CTCP Phát triển GS Củ Chi. Tỷ lệ sở hữu 98.0000%.
+VHM (VHM) có công ty con Công ty TNHH Bất động sản Tây Thăng Long. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con Công ty TNHH Đầu tư kinh doanh Thương mại Phát Lộc. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con Công ty TNHH Tư vấn và Xây dựng Vincom. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Vin3S. Tỷ lệ sở hữu 47.5100%.
+VHM (VHM) có công ty con CTCP Đầu tư và Phát triển Làng Vân. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Phát triển Xây dựng VINCONS WINDOWS. Tỷ lệ sở hữu 99.0000%.
+VHM (VHM) có công ty con CTCP Du lịch Cá Tầm. Tỷ lệ sở hữu 48.6700%.
+VHM (VHM) có công ty con CTCP Tư vấn đầu tư và Đầu tư Việt Nam. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Đầu tư Hiệp Thành Công. Tỷ lệ sở hữu 49.0000%.
+VHM (VHM) có công ty con CTCP Giải pháp Công nghệ thông tin và Hạ tầng truyền dẫn VinITIS. Tỷ lệ sở hữu 79.0000%.
+VHM (VHM) có công ty con Công ty TNHH Kinh doanh và Phát triển thương mại An phát. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Kinh doanh và phát triển thương mại An Thịnh. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Giải pháp công nghệ thông tin VInIT. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Bệnh viện Đa khoa Quốc tế Vinmec. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con Công ty TNHH MTV Thương mại Đầu tư và Phát triển Thời Đại. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Vinpearlland. Tỷ lệ sở hữu 0.0000%.
+VHM (VHM) có công ty con CTCP Giải pháp năng lượng Vines.
+VIC (VIC) có công ty con CTCP Sản xuất và Kinh doanh Vinfast. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Vinhomes (VHM). Tỷ lệ sở hữu 73.5068%.
+VIC (VIC) có công ty con CTCP Chứng khoán VIX (VIX). Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Vincom Retail (VRE). Tỷ lệ sở hữu 18.3662%.
+VIC (VIC) có công ty con CTCP Thương mại và Kinh doanh Ngọc Việt. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Vinpearl (VPL). Tỷ lệ sở hữu 85.5101%.
+VIC (VIC) có công ty con CTCP Phát triển NVY Việt Nam. Tỷ lệ sở hữu 99.9140%.
+VIC (VIC) có công ty con CTCP Nghiên cứu và Sản xuất Vinsmart. Tỷ lệ sở hữu 67.3400%.
+VIC (VIC) có công ty con CTCP Đầu tư kinh doanh VMC Holding. Tỷ lệ sở hữu 74.5200%.
+VIC (VIC) có công ty con CTCP Dịch vụ Thương mại tổng hợp Wincommerce. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Kinh Doanh Thương Mại SADO. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP One Mount Group. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Tập đoàn Dệt may Việt Nam (VGT). Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Việt Nam Grand Prix. Tỷ lệ sở hữu 100.0000%.
+VIC (VIC) có công ty con CTCP ONEID. Tỷ lệ sở hữu 0.0500%.
+VIC (VIC) có công ty con CTCP Đầu tư Bảo Lai. Tỷ lệ sở hữu 96.5000%.
+VIC (VIC) có công ty con Công ty TNHH Đầu tư Sản xuất Phát triển Nông nghiệp WinEco. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Bất động sản Xavinco. Tỷ lệ sở hữu 95.4375%.
+VIC (VIC) có công ty con Công ty TNHH Giáo dục và Đào tạo VinAcademy. Tỷ lệ sở hữu 98.7001%.
+VIC (VIC) có công ty con CTCP Trung tâm Hội chợ Triển lãm Việt Nam (VEF). Tỷ lệ sở hữu 83.3179%.
+VIC (VIC) có công ty con CTCP Vinpearl Cửa Hội. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Phát triển công nghệ Vintech. Tỷ lệ sở hữu 80.0000%.
+VIC (VIC) có công ty con CTCP Vinpearl Invest. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Đầu tư và Phát triển Đô thị Sài Đồng (SDI). Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Kinh doanh thương mại và dịch vụ VinDS. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Sách Việt Nam (VNB). Tỷ lệ sở hữu 65.3281%.
+VIC (VIC) có công ty con CTCP VinBrain. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Đầu tư xây dựng Tân Liên Phát. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Kinh doanh và Thương mại dịch vụ Vinpro. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Đầu tư và phát triển Địa ốc Thành phố Hoàng Gia. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Đầu tư kinh doanh và Phát triển Đô thị Ngôi Sao Phương Nam. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Bất động sản Tây Thăng Long. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Phát triển nhà Phúc Đồng. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Tư vấn và Xây dựng Vincom. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Kinh doanh Thương Mại Dịch vụ Hoa Mai. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Genestory. Tỷ lệ sở hữu 30.3200%.
+VIC (VIC) có công ty con Công ty TNHH Logistics Vincom. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Đầu tư và Phát triển Làng Vân. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Vinpearl Cần Thơ. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Aivicam. Tỷ lệ sở hữu 49.7300%.
+VIC (VIC) có công ty con CTCP Năng lượng Hải Linh. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Giải pháp công nghệ thông tin VInIT. Tỷ lệ sở hữu 79.0000%.
+VIC (VIC) có công ty con Công ty TNHH MTV Vinpearl Hội An. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Vinpearl Nha Trang. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Bệnh viện Đa khoa Quốc tế Vinmec. Tỷ lệ sở hữu 74.8500%.
+VIC (VIC) có công ty con Công ty TNHH Đầu tư kinh doanh thương mại BFF. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Đầu tư và Phát triển Thành phố Hoàng Gia. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Dịch vụ Bảo vệ Vincom. Tỷ lệ sở hữu 100.0000%.
+VIC (VIC) có công ty con Công ty TNHH Kinh doanh Bất động sản Vinhomes 1. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Kinh doanh Bất động sản Vinhomes 2. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH MTV Thương mại Đầu tư và Phát triển Thời Đại. Tỷ lệ sở hữu 100.0000%.
+VIC (VIC) có công ty con Công ty TNHH MTV Vinschool. Tỷ lệ sở hữu 100.0000%.
+VIC (VIC) có công ty con Công ty TNHH Kinh doanh Dịch vụ tổng hợp Vincom. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Quản lý Xây dựng Vincom 6. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Đầu tư dịch vụ thương mại Thành phố Hồ Chí Minh. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Đầu tư Kinh doanh Bất động sản Thăng Long. Tỷ lệ sở hữu 70.2300%.
+VIC (VIC) có công ty con CTCP Phát triển thể thao và giải trí Mễ Trì. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH MTV Vinpearl Đà Nẵng. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Vinpearlland. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Vinpearl Hạ Long. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Quản lý sân Golf Vinpearl. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Đầu Tư Thương mại Vinpearl. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Quản lý Vinpearl. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Vinpearl Quy Nhơn. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Vinpearl Bãi Dài. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Sản xuất và kinh doanh Vinfast. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công ty TNHH Kinh doanh và Phát triển đô thị Nam Hà Nội. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Vinfa. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con Công Ty TNHH Giải Pháp Và Dịch Vụ Công Nghệ Vinconnect. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Đầu tư Kinh doanh và Thương mại P&S. Tỷ lệ sở hữu 100.0000%.
+VIC (VIC) có công ty con Công ty TNHH Đầu tư và Phát triển Thương mại SDI. Tỷ lệ sở hữu 15.7700%.
+VIC (VIC) có công ty con CTCP Phát triển NVY. Tỷ lệ sở hữu 80.0000%.
+VIC (VIC) có công ty con Công ty TNHH Thương mại và Kinh doanh VSN. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Đầu tư y học công nghệ cao Vinmedtech. Tỷ lệ sở hữu 0.0000%.
+VIC (VIC) có công ty con CTCP Đầu tư phát triển VS. Tỷ lệ sở hữu 61.4200%.
+VIC (VIC) có công ty con Công ty TNHH World Academy. Tỷ lệ sở hữu 100.0000%.
+VIC (VIC) có công ty con Công ty TNHH Dịch vụ vận tải sinh thái Vinbus. Tỷ lệ sở hữu 100.0000%.
+VRE (VRE) có công ty con Công ty TNHH Vận hành Vincom Retail. Tỷ lệ sở hữu 98.9600%.
+VRE (VRE) có công ty con Công ty TNHH Vincom Retail Miền Nam. Tỷ lệ sở hữu 0.0000%.
+VRE (VRE) có công ty con Công ty TNHH Vincom Retail Landmark 81. Tỷ lệ sở hữu 100.0000%.
+VRE (VRE) có công ty con Công ty TNHH Đầu tư và Phát triển Đô thị Suối Hoa. Tỷ lệ sở hữu 100.0000%.
+VRE (VRE) có công ty con Công ty TNHH Đầu tư và Phát triển bất động sản Hà Thành. Tỷ lệ sở hữu 0.0000%.
+VRE (VRE) có công ty con Công ty TNHH Bất động sản Vincom NCT. Tỷ lệ sở hữu 99.9900%.
+NVL (NVL) có công ty con CTCP Nova Hospitality. Tỷ lệ sở hữu 99.9900%.
+NVL (NVL) có công ty con CTCP Phát triển đô thị Kỷ Nguyên. Tỷ lệ sở hữu 0.0100%.
+NVL (NVL) có công ty con Công ty TNHH No Va Thảo Điền. Tỷ lệ sở hữu 99.9900%.
+NVL (NVL) có công ty con Công ty TNHH Địa ốc No Va Mỹ Đình. Tỷ lệ sở hữu 54.0500%.
+NVL (NVL) có công ty con Công ty TNHH Bất động sản Khải Hưng. Tỷ lệ sở hữu 97.7600%.
+NVL (NVL) có công ty con CTCP Đầu tư Địa ốc No Va. Tỷ lệ sở hữu 98.0900%.
+NVL (NVL) có công ty con Công ty TNHH Bất động sản Gia Đức. Tỷ lệ sở hữu 53.9900%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư Địa ốc Nova Saigon Royal. Tỷ lệ sở hữu 99.9900%.
+NVL (NVL) có công ty con CTCP The Prince Residence. Tỷ lệ sở hữu 99.9600%.
+NVL (NVL) có công ty con CTCP Bất động sản Đà Lạt Valley. Tỷ lệ sở hữu 72.6200%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư Bất động sản Unity. Tỷ lệ sở hữu 99.9800%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư Bất động sản Tân Kim Yến. Tỷ lệ sở hữu 99.9900%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư và Phát triển Bất động sản Sun City. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con Công ty TNHH Bất động sản Bách Hợp. Tỷ lệ sở hữu 99.7700%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư và Bất động sản Tường Minh. Tỷ lệ sở hữu 99.9900%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư và Phát triển bất động sản An Phát. Tỷ lệ sở hữu 99.9900%.
+NVL (NVL) có công ty con CTCP Địa ốc Thành Nhơn. Tỷ lệ sở hữu 42.4200%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư địa ốc Thành Nhơn. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con Công ty TNHH Nova Nippon. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con CTCP Cảng Phú Định. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con Công ty TNHH Nova Rivergate. Tỷ lệ sở hữu 99.7700%.
+NVL (NVL) có công ty con CTCP Đầu tư Ngọc Linh Hoa. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư và Phát triển địa ốc Gia Huy. Tỷ lệ sở hữu 51.0000%.
+NVL (NVL) có công ty con CTCP Đầu tư và Phát triển Bất động sản Bình An. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư và Phát triển Bất động sản Nova Phúc Nguyên. Tỷ lệ sở hữu 99.9700%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư và Phát triển Phước Long. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con Công ty TNHH Nova Sasco. Tỷ lệ sở hữu 99.9900%.
+NVL (NVL) có công ty con Công ty TNHH Nova Sagel. Tỷ lệ sở hữu 73.0000%.
+NVL (NVL) có công ty con Công ty TNHH Nova Nam Á. Tỷ lệ sở hữu 92.7000%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư Phát triển nhà ở và Hạ tầng Sài Gòn. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con Công ty TNHH Nova An Phú. Tỷ lệ sở hữu 92.2700%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư phát triển bất động sản Phúc Thịnh. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con CTCP Ngôi nhà Mega. Tỷ lệ sở hữu 98.6000%.
+NVL (NVL) có công ty con CTCP 234 Thạnh Mỹ Lợi. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con CTCP Nova Festival. Tỷ lệ sở hữu 94.0200%.
+NVL (NVL) có công ty con Công ty TNHH Nova Property Management. Tỷ lệ sở hữu 99.9900%.
+NVL (NVL) có công ty con Công ty TNHH Nova Lucky Palace. Tỷ lệ sở hữu 99.9900%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư địa ốc Novaland Đất Tâm. Tỷ lệ sở hữu 51.0000%.
+NVL (NVL) có công ty con CTCP Đầu tư Bất động sản Phong Điền. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư và Phát triển Bất động sản ICONIC. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con CTCP Phát triển và Dịch vụ Nhà Bến Thành. Tỷ lệ sở hữu 25.0000%.
+NVL (NVL) có công ty con CTCP Nova Princess Residence. Tỷ lệ sở hữu 99.9000%.
+NVL (NVL) có công ty con CTCP Khách sạn Du lịch Thanh Niên Vũng Tàu. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư Bất động sản Vương Cung. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con Công ty TNHH MTV Novaland Agent. Tỷ lệ sở hữu 100.0000%.
+NVL (NVL) có công ty con CTCP Điện tử và Dịch vụ Công nghiệp Sài Gòn. Tỷ lệ sở hữu 33.3100%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư Bất động sản Cao Nguyên Xanh. Tỷ lệ sở hữu 100.0000%.
+NVL (NVL) có công ty con CTCP Đầu tư Redwood. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con CTCP Cảng Phú Thịnh. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con CTCP Nova Phù Sa. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư Bất động sản Vạn Phát. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con Công ty TNHH Đầu tư và Phát triển Bất động sản Khánh An. Tỷ lệ sở hữu 0.0000%.
+NVL (NVL) có công ty con CTCP Địa ốc Ngân Hiệp. Tỷ lệ sở hữu 99.9800%.
+KDH (KDH) có công ty con Công ty TNHH MTV Đầu tư kinh doanh Nhà Khang Phúc (BCI). Tỷ lệ sở hữu 100.0000%.
+KDH (KDH) có công ty con Công ty TNHH Tư vấn Quốc tế. Tỷ lệ sở hữu 99.9500%.
+KDH (KDH) có công ty con CTCP Vi La. Tỷ lệ sở hữu 0.0000%.
+KDH (KDH) có công ty con Công ty TNHH Đầu tư Kinh doanh Bất động sản Kim Phát. Tỷ lệ sở hữu 99.9000%.
+KDH (KDH) có công ty con Công ty TNHH Đầu tư Kinh doanh Địa ốc Gia Phước. Tỷ lệ sở hữu 99.9000%.
+KDH (KDH) có công ty con CTCP Bất động sản Thủy Sinh. Tỷ lệ sở hữu 99.9600%.
+KDH (KDH) có công ty con Công ty TNHH Kinh doanh bất động sản Phúc Thông. Tỷ lệ sở hữu 99.0000%.
+KDH (KDH) có công ty con Công ty TNHH Đầu tư Thành Phúc. Tỷ lệ sở hữu 99.9000%.
+KDH (KDH) có công ty con Công ty TNHH Đầu tư Kinh doanh Bất động sản Saphire. Tỷ lệ sở hữu 99.9000%.
+KDH (KDH) có công ty con CTCP Đầu tư và Kinh doanh Bất Động sản Trí Minh. Tỷ lệ sở hữu 99.8000%.
+KDH (KDH) có công ty con CTCP Đầu tư kinh doanh bất động sản Đạt An. Tỷ lệ sở hữu 0.0000%.
+KDH (KDH) có công ty con Công ty TNHH Phát triển Nhà và Xây dựng Hạ tầng Long Phước Điền. Tỷ lệ sở hữu 0.0000%.
+KDH (KDH) có công ty con Công ty TNHH MTV Hào Khang. Tỷ lệ sở hữu 100.0000%.
+KDH (KDH) có công ty con Công ty TNHH Phát triển bất động sản Nam Phú. Tỷ lệ sở hữu 0.0000%.
+KDH (KDH) có công ty con Công ty TNHH Đô thị Mê Ga. Tỷ lệ sở hữu 99.8500%.
+KDH (KDH) có công ty con Công ty TNHH Đầu tư và Kinh doanh Địa ốc Trí Kiệt. Tỷ lệ sở hữu 99.9000%.
+HDG (HDG) có công ty con CTCP Za Hưng. Tỷ lệ sở hữu 51.7500%.
+HDG (HDG) có công ty con CTCP Năng lượng và Đầu tư hạ tầng Hà Đô. Tỷ lệ sở hữu 99.9644%.
+HDG (HDG) có công ty con CTCP Năng lượng Agrita - Quảng Nam. Tỷ lệ sở hữu 94.9800%.
+HDG (HDG) có công ty con CTCP Đầu tư bất động sản Bình An Riverside. Tỷ lệ sở hữu 99.9709%.
+HDG (HDG) có công ty con CTCP Thủy điện Sông Tranh 4. Tỷ lệ sở hữu 62.9200%.
+HDG (HDG) có công ty con CTCP Hà Đô 756 Sài Gòn. Tỷ lệ sở hữu 63.0000%.
+HDG (HDG) có công ty con CTCP Minh Long Đông Sài Gòn. Tỷ lệ sở hữu 99.9800%.
+HDG (HDG) có công ty con CTCP Thiết bị giáo dục 1. Tỷ lệ sở hữu 99.9800%.
+HDG (HDG) có công ty con Công ty TNHH MTV Đầu tư quốc tế Hà Đô. Tỷ lệ sở hữu 100.0000%.
+HDG (HDG) có công ty con CTCP Hà Đô Bình Thuận. Tỷ lệ sở hữu 0.0000%.
+HDG (HDG) có công ty con CTCP Đầu tư Khánh Hà. Tỷ lệ sở hữu 70.9196%.
+HDG (HDG) có công ty con CTCP Hà Đô 23. Tỷ lệ sở hữu 0.0000%.
+HDG (HDG) có công ty con Công ty TNHH Hỗn hợp Dịch Vọng. Tỷ lệ sở hữu 50.0000%.
+HDG (HDG) có công ty con CTCP Hà Đô 1. Tỷ lệ sở hữu 0.0000%.
+HDG (HDG) có công ty con CTCP Hà Đô 4. Tỷ lệ sở hữu 0.0000%.
+HDG (HDG) có công ty con CTCP Hà Đô 45. Tỷ lệ sở hữu 0.0000%.
+HDG (HDG) có công ty con CTCP Quản lý và Kinh doanh Bất động sản Hà Đô. Tỷ lệ sở hữu 99.9900%.
+HDG (HDG) có công ty con CTCP Quản lý - Vận hành - Khai thác Bất động sản Hà Đô. Tỷ lệ sở hữu 99.9500%.
+HDG (HDG) có công ty con CTCP Cơ điện Xây dựng - Thiết bị công nghiệp Hà Đô. Tỷ lệ sở hữu 0.0000%.
+HDG (HDG) có công ty con CTCP Thương mại Hà Đô. Tỷ lệ sở hữu 0.0000%.
+HDG (HDG) có công ty con CTCP Tư vấn Hà Đô. Tỷ lệ sở hữu 0.0000%.
+HDG (HDG) có công ty con Công ty TNHH MTV Quản lý và Kinh doanh Bất động sản Hà Đô. Tỷ lệ sở hữu 0.0000%.
+HDG (HDG) có công ty con Công ty TNHH MTV Hà Đô Ninh Thuận. Tỷ lệ sở hữu 0.0000%.
+HDG (HDG) có công ty con Công ty TNHH MTV Điện gió Hà Đô Thuận Nam. Tỷ lệ sở hữu 0.0000%.
+HDG (HDG) có công ty con Công ty TNHH Năng lượng Surya Prakash Việt Nam. Tỷ lệ sở hữu 0.0000%.
+SCR (SCR) có công ty con Ngân hàng TMCP Sài Gòn Thương Tín (STB). Tỷ lệ sở hữu 0.0000%.
+SCR (SCR) có công ty con Công ty TNHH Thương Tín - CJ Cầu Tre. Tỷ lệ sở hữu 0.0000%.
+SCR (SCR) có công ty con CTCP Đầu tư Kinh doanh bất động sản Hùng Anh Năm. Tỷ lệ sở hữu 95.0000%.
+SCR (SCR) có công ty con CTCP Khu công nghiệp Thành Thành Công. Tỷ lệ sở hữu 0.0000%.
+SCR (SCR) có công ty con CTCP Thương mại Nguyễn Kim Đà Nẵng. Tỷ lệ sở hữu 96.3000%.
+SCR (SCR) có công ty con CTCP Đầu tư Bất động sản TTC Land Hưng Điền. Tỷ lệ sở hữu 61.0000%.
+SCR (SCR) có công ty con CTCP Thương Tín Tàu Cuốc. Tỷ lệ sở hữu 82.0700%.
+SCR (SCR) có công ty con CTCP Đầu tư phát triển Bất động sản Đông Sài Gòn. Tỷ lệ sở hữu 99.9000%.
+SCR (SCR) có công ty con CTCP Bao bì Kho bãi Bình Tây. Tỷ lệ sở hữu 0.0000%.
+SCR (SCR) có công ty con CTCP Năng lượng Thương Tín. Tỷ lệ sở hữu 0.0000%.
+SCR (SCR) có công ty con Công ty TNHH Dịch vụ quản lý bất động sản Sài Gòn Thương Tín. Tỷ lệ sở hữu 94.4444%.
+SCR (SCR) có công ty con Công ty TNHH MTV Kinh doanh dịch vụ Địa ốc Sài Gòn Thương Tín. Tỷ lệ sở hữu 100.0000%.
+SCR (SCR) có công ty con CTCP Mai Lan. Tỷ lệ sở hữu 65.2000%.
+SCR (SCR) có công ty con CTCP Đầu tư bất động sản TTC Land Long An. Tỷ lệ sở hữu 0.0000%.
+SCR (SCR) có công ty con Công ty TNHH MTV Đầu tư Bất Động Sản TTC Land Phú Quốc. Tỷ lệ sở hữu 0.0000%.
+SCR (SCR) có công ty con CTCP Đầu tư Địa ốc Kim Thành. Tỷ lệ sở hữu 0.0000%.
+SCR (SCR) có công ty con Công ty TNHH MTV TTC Land Retail Management. Tỷ lệ sở hữu 0.0000%.
+SCR (SCR) có công ty con CTCP Đầu tư SVG. Tỷ lệ sở hữu 0.0000%.
+SCR (SCR) có công ty con Công ty TNHH New SITC Containers Lines Việt Nam. Tỷ lệ sở hữu 0.0000%.
+SCR (SCR) có công ty con CTCP Thương mại Hải Phòng Plaza. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con CTCP Dịch vụ Bất động sản Đất Xanh (DXS). Tỷ lệ sở hữu 55.3715%.
+DXG (DXG) có công ty con CTCP Đầu tư LDG (LDG). Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con CTCP Đầu tư kinh doanh Bất động sản Hà An. Tỷ lệ sở hữu 99.9900%.
+DXG (DXG) có công ty con CTCP Regal Group (RGG). Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con CTCP Hội An Invest. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con Công ty TNHH Đầu tư Sài Gòn Riverside. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con Công ty TNHH Đầu tư Bất động sản Phúc Hưng Phát. Tỷ lệ sở hữu 100.0000%.
+DXG (DXG) có công ty con CTCP Dịch vụ và Địa ốc Đất Xanh Miền Bắc. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con Công ty TNHH Đất Xanh Quảng Bình. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con CTCP Đầu tư dầu khí Thăng Long. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con Công ty TNHH Đầu tư DHG. Tỷ lệ sở hữu 85.0000%.
+DXG (DXG) có công ty con CTCP Đầu tư Dầu khí Nha Trang. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con CTCP Vicco - Sài Gòn. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con CTCP Đầu tư và Dịch vụ Đất Xanh Miền Nam. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con CTCP Đầu tư Đất Viễn Đông. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con Công ty TNHH EPIC LAND. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con CTCP Bất động sản Sài Đồng. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con CTCP DBFS. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con CTCP Sài Gòn Riverview. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con CTCP CARA GROUP. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con CTCP In Nông nghiệp. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con CTCP Victorycons. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con CTCP Dịch vụ và Đầu tư Đất Xanh Đông Nam Bộ. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con Công ty TNHH MTV Đất Xanh Tech. Tỷ lệ sở hữu 100.0000%.
+DXG (DXG) có công ty con Công ty TNHH Patheon Holdings. Tỷ lệ sở hữu 100.0000%.
+DXG (DXG) có công ty con Công ty TNHH Athena Invest. Tỷ lệ sở hữu 100.0000%.
+DXG (DXG) có công ty con Công ty TNHH Đất xanh Finance. Tỷ lệ sở hữu 100.0000%.
+DXG (DXG) có công ty con Công ty TNHH Xây dựng - Thương mại - Dịch vụ Hà Thuận Hùng. Tỷ lệ sở hữu 0.0000%.
+DXG (DXG) có công ty con CTCP Đầu tư Bất động sản Miền Bắc. Tỷ lệ sở hữu 0.0000%.
+NLG (NLG) có công ty con Công ty TNHH Thành phố Waterfront Đồng Nai. Tỷ lệ sở hữu 65.1000%.
+NLG (NLG) có công ty con CTCP Nam Long VCD. Tỷ lệ sở hữu 99.9600%.
+NLG (NLG) có công ty con CTCP Southgate. Tỷ lệ sở hữu 65.0000%.
+NLG (NLG) có công ty con Công ty TNHH MTV Paragon Đại Phước. Tỷ lệ sở hữu 50.0000%.
+NLG (NLG) có công ty con CTCP NNH Mizuki. Tỷ lệ sở hữu 50.0000%.
+NLG (NLG) có công ty con Công ty TNHH Đầu tư Nam Long Land. Tỷ lệ sở hữu 100.0000%.
+NLG (NLG) có công ty con Công ty TNHH NNH Kikyo Valora. Tỷ lệ sở hữu 59.1100%.
+NLG (NLG) có công ty con CTCP NLG - NNR - HR FUJI. Tỷ lệ sở hữu 50.0000%.
+NLG (NLG) có công ty con Công ty TNHH MTV Đầu tư Xây dựng Phát triển Nam Khang. Tỷ lệ sở hữu 100.0000%.
+NLG (NLG) có công ty con Công ty TNHH Nam Long Commercial Property. Tỷ lệ sở hữu 100.0000%.
+NLG (NLG) có công ty con CTCP Phát triển Căn hộ Nam Long. Tỷ lệ sở hữu 0.0000%.
+NLG (NLG) có công ty con Công ty TNHH Đầu tư Nam Phát Land. Tỷ lệ sở hữu 100.0000%.
+NLG (NLG) có công ty con CTCP Đầu tư Nam Phan. Tỷ lệ sở hữu 100.0000%.
+NLG (NLG) có công ty con Công ty TNHH Nam Long Retail. Tỷ lệ sở hữu 0.0000%.
+NLG (NLG) có công ty con CTCP Bất động sản Nguyên Sơn. Tỷ lệ sở hữu 87.3300%.
+NLG (NLG) có công ty con Công ty TNHH Đầu tư và Kinh doanh Bất động sản Nguyên Phúc. Tỷ lệ sở hữu 0.0000%.
+NLG (NLG) có công ty con CTCP Nam Long Mekong. Tỷ lệ sở hữu 0.0000%.
+NLG (NLG) có công ty con Công ty TNHH Đầu tư và Kinh doanh Bất động sản Thảo Nguyên. Tỷ lệ sở hữu 0.0000%.
+NLG (NLG) có công ty con Công ty TNHH MTV Dịch vụ Nam Long. Tỷ lệ sở hữu 0.0000%.
+NLG (NLG) có công ty con Công ty TNHH NNH Kikyo Flora. Tỷ lệ sở hữu 0.0000%.
+NLG (NLG) có công ty con Công ty TNHH MTV Dịch vụ vận tải Nam Long. Tỷ lệ sở hữu 0.0000%.
+NLG (NLG) có công ty con Công ty TNHH MTV Sàn Giao dịch Bất động sản Nam Long. Tỷ lệ sở hữu 0.0000%.
+NLG (NLG) có công ty con Công ty TNHH Nam Long SPV. Tỷ lệ sở hữu 100.0000%.
+NLG (NLG) có công ty con Công ty TNHH Kinh doanh vật liệu xây dựng Nam Khang. Tỷ lệ sở hữu 100.0000%.
+NLG (NLG) có công ty con Công ty TNHH Lộc An Thạnh. Tỷ lệ sở hữu 100.0000%.
+PDR (PDR) có công ty con CTCP Bất động sản Đầu tư và Phát triển Cao ốc Bình Dương. Tỷ lệ sở hữu 99.5000%.
+PDR (PDR) có công ty con CTCP Đầu tư Bất động sản BIDICI. Tỷ lệ sở hữu 0.0000%.
+PDR (PDR) có công ty con CTCP Địa ốc Sài Gòn - KL. Tỷ lệ sở hữu 0.0000%.
+PDR (PDR) có công ty con CTCP Bến Thành - Long Hải. Tỷ lệ sở hữu 99.9000%.
+PDR (PDR) có công ty con CTCP Đầu tư bất động sản Ngô Mây. Tỷ lệ sở hữu 0.0000%.
+PDR (PDR) có công ty con Công ty TNHH MTV Đầu tư Phát Đạt. Tỷ lệ sở hữu 0.0000%.
+PDR (PDR) có công ty con CTCP ĐK Phú Quốc. Tỷ lệ sở hữu 99.0000%.
+PDR (PDR) có công ty con CTCP Đầu tư và Phát triển Khu công nghiệp Phát Đạt. Tỷ lệ sở hữu 0.0000%.
+PDR (PDR) có công ty con CTCP Đầu tư Bắc Cường. Tỷ lệ sở hữu 0.0000%.
+PDR (PDR) có công ty con CTCP Bất động sản Commonwealth Properties. Tỷ lệ sở hữu 27.0000%.
+PDR (PDR) có công ty con Công ty TNHH Đầu tư xây dựng công trình PĐP. Tỷ lệ sở hữu 49.0000%.
+PDR (PDR) có công ty con Công ty TNHH Đầu tư xây dựng hạ tầng kỹ thuật Coinin. Tỷ lệ sở hữu 99.9000%.
+PDR (PDR) có công ty con Công ty TNHH Đầu tư Bất động sản Phú Hưng. Tỷ lệ sở hữu 0.0000%.
+PDR (PDR) có công ty con CTCP Đầu tư Serenity. Tỷ lệ sở hữu 99.3400%.
+PDR (PDR) có công ty con Công ty TNHH Bất động sản Đìền Gia Khang. Tỷ lệ sở hữu 0.0000%.
+PDR (PDR) có công ty con Công ty TNHH Phát triển Bất động sản Điền Gia Khánh. Tỷ lệ sở hữu 0.0000%.
+PDR (PDR) có công ty con CTCP Phát triển Bất động sản Phát Đạt Ánh Dương. Tỷ lệ sở hữu 0.0000%.
+BCF (BCF) có công ty con Công ty TNHH Thực phẩm Bích Chi 2. Tỷ lệ sở hữu 100.0000%.
+BCF (BCF) có công ty con CTCP đầu tư BLC. Tỷ lệ sở hữu 0.0000%.
+BCM (BCM) có công ty con CTCP Phát triển Công nghiệp BW. Tỷ lệ sở hữu 23.9100%.
+BCM (BCM) có công ty con Công ty TNHH Becamex Tokyu. Tỷ lệ sở hữu 35.0000%.
+BCM (BCM) có công ty con CTCP Phát triển Hạ tầng Kỹ thuật (IJC). Tỷ lệ sở hữu 49.7600%.
+BCM (BCM) có công ty con Công ty TNHH Chứng khoán Yuanta Việt Nam (YSVN). Tỷ lệ sở hữu 0.0000%.
+BCM (BCM) có công ty con CTCP - Tổng Công Ty Nước - Môi Trường Bình Dương (BWE). Tỷ lệ sở hữu 19.4381%.
+BCM (BCM) có công ty con CTCP Phát triển Hạ tầng Kỹ thuật Becamex - Bình Phước. Tỷ lệ sở hữu 23.9105%.
+BCM (BCM) có công ty con Công ty Liên doanh TNHH Khu công nghiệp Việt Nam - Singapore. Tỷ lệ sở hữu 49.0001%.
+BCM (BCM) có công ty con CTCP Kinh doanh và Phát triển Bình Dương (TDC). Tỷ lệ sở hữu 0.0000%.
+BCM (BCM) có công ty con CTCP Đầu tư và Xây dựng Bình Dương ACC (ACC). Tỷ lệ sở hữu 0.0000%.
+BCM (BCM) có công ty con CTCP Khoáng sản Miền Đông AHP (BMJ). Tỷ lệ sở hữu 0.0000%.
+BCM (BCM) có công ty con CTCP Setia - Becamex. Tỷ lệ sở hữu 40.0000%.
+BCM (BCM) có công ty con CTCP Becamex Bình Định. Tỷ lệ sở hữu 40.0000%.
+BCM (BCM) có công ty con CTCP VSIP Cần Thơ. Tỷ lệ sở hữu 39.9778%.
+BCM (BCM) có công ty con CTCP Đầu tư và Phát triển điện Becamex - Vsip. Tỷ lệ sở hữu 49.0000%.
+BCM (BCM) có công ty con CTCP Công nghệ và Truyền thông Việt Nam (TTN). Tỷ lệ sở hữu 48.5865%.
+BCM (BCM) có công ty con CTCP Phát triển Giáo dục Miền Đông. Tỷ lệ sở hữu 50.0000%.
+BCM (BCM) có công ty con CTCP Giải pháp năng lượng thông minh Việt Nam - Singapore. Tỷ lệ sở hữu 36.0000%.
+BCM (BCM) có công ty con CTCP Xây dựng và Giao thông Bình Dương (BCE). Tỷ lệ sở hữu 0.0000%.
+BCM (BCM) có công ty con Tổng CTCP Bảo hiểm Hùng Vương. Tỷ lệ sở hữu 0.0000%.
+BCM (BCM) có công ty con CTCP Bệnh viện Mỹ Phước. Tỷ lệ sở hữu 65.4700%.
+BCM (BCM) có công ty con CTCP Bệnh Viện Đa khoa Quốc tế Becamex. Tỷ lệ sở hữu 90.0000%.
+BCM (BCM) có công ty con CTCP Cao Su Bình Dương. Tỷ lệ sở hữu 46.9444%.
+BCM (BCM) có công ty con CTCP Phát triển Đô thị (UDJ). Tỷ lệ sở hữu 51.0000%.
+BCM (BCM) có công ty con CTCP Dược phẩm Savi. Tỷ lệ sở hữu 35.1869%.
+BCM (BCM) có công ty con CTCP Đầu tư và Phát triển công nghiệp Đông Sài Gòn. Tỷ lệ sở hữu 30.0000%.
+BCM (BCM) có công ty con CTCP Đường cao tốc thành phố Hồ Chí Minh - Thủ Dầu một - Chơn Thành. Tỷ lệ sở hữu 49.0000%.
+BCM (BCM) có công ty con CTCP Đường Vành Đai 4 Thành phố Hồ Chí Minh. Tỷ lệ sở hữu 49.0000%.
+BCM (BCM) có công ty con CTCP Dược Enlie (BCP). Tỷ lệ sở hữu 0.0000%.
+BCM (BCM) có công ty con Trường Đại học Quốc tế Miền Đông. Tỷ lệ sở hữu 51.0000%.
+BCM (BCM) có công ty con Công ty TNHH MTV Hỗ trợ khởi nghiệp Becamex IDC - Block 71. Tỷ lệ sở hữu 100.0000%.
+TCH (TCH) có công ty con CTCP Tập đoàn bất động sản CRV (CRV). Tỷ lệ sở hữu 35.4904%.
+TCH (TCH) có công ty con CTCP Đầu tư dịch vụ Hoàng Huy (HHS). Tỷ lệ sở hữu 58.3134%.
+TCH (TCH) có công ty con CTCP Phát triển nhà Đại Lộc. Tỷ lệ sở hữu 0.0000%.
+TCH (TCH) có công ty con CTCP Đầu tư Dịch vụ Hoàng Hà. Tỷ lệ sở hữu 0.0000%.
+TCH (TCH) có công ty con CTCP Đầu tư Thương mại Quốc tế Vinh Quang. Tỷ lệ sở hữu 0.0000%.
+TCH (TCH) có công ty con CTCP Dịch vụ Thương mại Lâm Hậu. Tỷ lệ sở hữu 0.0000%.
+TCH (TCH) có công ty con CTCP Thương mại và Phát triển Việt Dũng. Tỷ lệ sở hữu 0.0000%.
+TCH (TCH) có công ty con CTCP Phát triển dịch vụ Trường Giang. Tỷ lệ sở hữu 0.0000%.
+TCH (TCH) có công ty con CTCP Xây dựng Đại Thịnh Vượng. Tỷ lệ sở hữu 0.0000%.
+TCH (TCH) có công ty con CTCP Đầu tư Tô Hiệu. Tỷ lệ sở hữu 99.9815%.
+TCH (TCH) có công ty con CTCP Xây dựng Thịnh Hiệp. Tỷ lệ sở hữu 95.8400%.
+TCH (TCH) có công ty con CTCP Xây dựng Địa ốc Thịnh Phát. Tỷ lệ sở hữu 96.3264%.
+DIG (DIG) có công ty con CTCP Vina Đại Phước. Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con CTCP Du lịch DIC. Tỷ lệ sở hữu 99.3600%.
+DIG (DIG) có công ty con Công ty TNHH Đại Phước Thiên An. Tỷ lệ sở hữu 99.9600%.
+DIG (DIG) có công ty con CTCP Dicera Holdings (DC4). Tỷ lệ sở hữu 25.3265%.
+DIG (DIG) có công ty con Công ty TNHH Đại Phước Thiên Minh. Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con CTCP Đầu tư Phát triển Phương Nam. Tỷ lệ sở hữu 43.3462%.
+DIG (DIG) có công ty con CTCP Đầu tư và Thương mại DIC (DIC). Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con CTCP Đầu tư Việt Thiên Lâm. Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con CTCP Gạch men Anh em DIC. Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con CTCP DIC - Đồng Tiến (DID). Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con CTCP Thủy cung DIG. Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con CTCP Đầu tư phát triển - Xây dựng (DIC) Số 2 (DC2). Tỷ lệ sở hữu 50.1427%.
+DIG (DIG) có công ty con CTCP Du lịch và Thương mại DIC (DCD). Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con CTCP Bất động sản DIC. Tỷ lệ sở hữu 42.6800%.
+DIG (DIG) có công ty con CTCP Vật liệu xây dựng DIC. Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con Công ty TNHH Đầu tư Phát triển Xây dựng Hà Nam. Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con CTCP Đầu tư Phát triển Xây dựng Bê Tông. Tỷ lệ sở hữu 36.0000%.
+DIG (DIG) có công ty con CTCP Đầu tư Phát triển Xây dựng - Hội An (DIH). Tỷ lệ sở hữu 0.2502%.
+DIG (DIG) có công ty con CTCP Đầu tư Phát triển Xây dựng Du lịch Thể thao Vũng Tàu. Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con CTCP Đầu tư phát triển tầm nhìn DIC. Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con CTCP Phát Triển Thương mại Thiên Quang. Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con Công ty TNHH MTV Đầu tư phát triển đô thị và Khu công nghiệp DIC. Tỷ lệ sở hữu 100.0000%.
+DIG (DIG) có công ty con CTCP Đầu tư Phát triển xây dựng số 1 (DC1). Tỷ lệ sở hữu 51.6752%.
+DIG (DIG) có công ty con CTCP Sông Đà Hà Nội (ASD). Tỷ lệ sở hữu 13.3333%.
+DIG (DIG) có công ty con CTCP Sông Đà 25 (SDJ). Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con CTCP Bê tông ly tâm Đồng Nai. Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con CTCP Đầu tư Phát triển Xây dựng Khoáng sản Miền Trung. Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con CTCP Đầu tư phát triển thương mại DIC. Tỷ lệ sở hữu 0.0000%.
+DIG (DIG) có công ty con CTCP DIC Toàn Cầu. Tỷ lệ sở hữu 0.0000%.
+ITC (ITC) có công ty con CTCP Đầu tư Sài Gòn - Bình Dương. Tỷ lệ sở hữu 64.3200%.
+ITC (ITC) có công ty con CTCP Phân lân nung chảy Văn Điển (VAF). Tỷ lệ sở hữu 0.0000%.
+ITC (ITC) có công ty con Công ty TNHH Xây dựng và Kinh doanh Nhà Phạm Gia. Tỷ lệ sở hữu 0.0000%.
+ITC (ITC) có công ty con CTCP Dịch vụ Du lịch Nhà hàng Khách sạn Royal. Tỷ lệ sở hữu 75.0000%.
+ITC (ITC) có công ty con CTCP Sản xuất - Thương mại - Xây dựng Long Bình. Tỷ lệ sở hữu 36.3600%.
+ITC (ITC) có công ty con CTCP Xây dựng Intresco. Tỷ lệ sở hữu 85.0000%.
+QCG (QCG) có công ty con CTCP Bến du thuyền Đà Nẵng. Tỷ lệ sở hữu 65.4800%.
+QCG (QCG) có công ty con CTCP Diamond Bay. Tỷ lệ sở hữu 0.0000%.
+QCG (QCG) có công ty con CTCP Bất động sản Hiệp Phúc. Tỷ lệ sở hữu 34.0000%.
+QCG (QCG) có công ty con CTCP Bất động sản Quốc Cường Thuận An. Tỷ lệ sở hữu 0.0000%.
+QCG (QCG) có công ty con Công ty TNHH Xây dựng và Kinh doanh Nhà Phạm Gia. Tỷ lệ sở hữu 43.8100%.
+QCG (QCG) có công ty con CTCP Quốc Cường Liên Á. Tỷ lệ sở hữu 0.0000%.
+QCG (QCG) có công ty con CTCP Bất động sản Hiệp Phú. Tỷ lệ sở hữu 5.0000%.
+QCG (QCG) có công ty con CTCP Bắc Phước Kiển Value Homes. Tỷ lệ sở hữu 0.0000%.
+QCG (QCG) có công ty con CTCP Đầu tư xây dựng Thủy điện Quốc Cường. Tỷ lệ sở hữu 90.0000%.
+QCG (QCG) có công ty con CTCP Giai Việt. Tỷ lệ sở hữu 50.0000%.
+QCG (QCG) có công ty con CTCP Bất động sản Sông Mã. Tỷ lệ sở hữu 14.9000%.
+QCG (QCG) có công ty con Công ty TNHH Bất động sản Quốc Cường Phước Kiền. Tỷ lệ sở hữu 0.0000%.
+QCG (QCG) có công ty con CTCP Bất động sản Hiệp Phát. Tỷ lệ sở hữu 0.0000%.
+LDG (LDG) có công ty con CTCP Du lịch Giang Điền. Tỷ lệ sở hữu 0.0000%.
+LDG (LDG) có công ty con CTCP Đầu tư Grand World. Tỷ lệ sở hữu 0.0000%.
+LDG (LDG) có công ty con CTCP Đầu tư và Phát triển địa ốc Nam Sài Gòn. Tỷ lệ sở hữu 99.9996%.
+LDG (LDG) có công ty con CTCP Đầu tư Du lịch Suối Mơ. Tỷ lệ sở hữu 0.0000%.
+LDG (LDG) có công ty con CTCP Đầu tư xây dựng Đại Thịnh Phát. Tỷ lệ sở hữu 0.0000%.
+LDG (LDG) có công ty con CTCP Tư vấn đầu tư và Xây dựng Gia Lộc. Tỷ lệ sở hữu 0.0000%.
+LDG (LDG) có công ty con CTCP Thủy sản Bình Minh. Tỷ lệ sở hữu 0.0000%.
+HAG (HAG) có công ty con CTCP Nông nghiệp Quốc tế Hoàng Anh Gia Lai (HNG). Tỷ lệ sở hữu 0.0000%.
+HAG (HAG) có công ty con CTCP Xây dựng và Phát triển Nhà Hoàng Anh. Tỷ lệ sở hữu 0.0000%.
+HAG (HAG) có công ty con CTCP Lê Me. Tỷ lệ sở hữu 87.7400%.
+HAG (HAG) có công ty con CTCP Chăn nuôi Gia Lai. Tỷ lệ sở hữu 85.0000%.
+HAG (HAG) có công ty con CTCP Đầu tư Quốc tế Hoàng Anh Gia Lai. Tỷ lệ sở hữu 98.7800%.
+HAG (HAG) có công ty con CTCP Gia súc Lơ Pang. Tỷ lệ sở hữu 90.4500%.
+HAG (HAG) có công ty con CTCP Thể thao LPBank Hoàng Anh Gia Lai. Tỷ lệ sở hữu 97.5000%.
+HAG (HAG) có công ty con CTCP Bệnh viện Đại học Y dược - Hoàng Anh Gia Lai. Tỷ lệ sở hữu 0.0000%.
+HAG (HAG) có công ty con CTCP Đầu tư và Tư vấn Xây dựng Á Đông. Tỷ lệ sở hữu 0.0000%.
+HAG (HAG) có công ty con Công ty TNHH MTV Hoàng Anh Gia Lai Vientiane. Tỷ lệ sở hữu 100.0000%.
+HAG (HAG) có công ty con CTCP Nông nghiệp Kon Thụp. Tỷ lệ sở hữu 0.0000%.
+HAG (HAG) có công ty con Công ty TNHH V&H Corporation (Lào). Tỷ lệ sở hữu 0.0000%.
+HAG (HAG) có công ty con CTCP Quản lý Bất động sản và Khách sạn Hoàng Anh Gia Lai. Tỷ lệ sở hữu 0.0000%.
+HAG (HAG) có công ty con CTCP Thủy điện Hoàng Anh Gia Lai. Tỷ lệ sở hữu 0.0000%.
+HAG (HAG) có công ty con CTCP Xây dựng Cầu đường Hoàng Anh Gia Lai. Tỷ lệ sở hữu 0.0000%.
+HAG (HAG) có công ty con CTCP Thực phẩm Heygo. Tỷ lệ sở hữu 0.0000%.
+HAG (HAG) có công ty con CTCP BAPI Hoàng Anh Gia Lai. Tỷ lệ sở hữu 0.0000%.
+HNG (HNG) có công ty con Công ty TNHH Phát triển Nông nghiệp Hoàng Anh Attapeu. Tỷ lệ sở hữu 100.0000%.
+HNG (HNG) có công ty con Công ty TNHH Đầu tư và Phát triển Cao su Đông Dương. Tỷ lệ sở hữu 0.0000%.
+HNG (HNG) có công ty con Công ty TNHH Hoàng Anh Oyadav. Tỷ lệ sở hữu 100.0000%.
+HNG (HNG) có công ty con Công ty TNHH Mía đường TTC Attapeu. Tỷ lệ sở hữu 0.0000%.
+HNG (HNG) có công ty con CTCP Cao su Trung Nguyên. Tỷ lệ sở hữu 0.0000%.
+HNG (HNG) có công ty con Công ty TNHH MTV Cây ăn trái Thagrico Cao Nguyên. Tỷ lệ sở hữu 0.0000%.
+HNG (HNG) có công ty con Công ty TNHH Hoàng Anh Rattanakiri. Tỷ lệ sở hữu 100.0000%.
+HNG (HNG) có công ty con CTCP Hoàng Anh Đắk Lắk. Tỷ lệ sở hữu 0.0000%.
+HNG (HNG) có công ty con CTCP Cao su Bidiphar. Tỷ lệ sở hữu 49.1400%.
+HNG (HNG) có công ty con Công ty TNHH MTV An Đông Mia. Tỷ lệ sở hữu 0.0000%.
+HNG (HNG) có công ty con Công ty TNHH MTV Cao su Hoàng Anh - Quang Minh. Tỷ lệ sở hữu 0.0000%.
+HNG (HNG) có công ty con Công ty TNHH Đông Pênh. Tỷ lệ sở hữu 0.0000%.
+HNG (HNG) có công ty con Công ty TNHH MTV Kinh doanh Xuất nhập khẩu Hoàng Anh Gia Lai. Tỷ lệ sở hữu 0.0000%.
+HNG (HNG) có công ty con Công ty TNHH Công nghiệp và Nông nghiệp Cao su Hoàng Anh - Quang Minh. Tỷ lệ sở hữu 100.0000%.
+HNG (HNG) có công ty con Công ty TNHH MTV Đầu tư và Sản xuất kinh doanh Nông nghiệp Nam Lào. Tỷ lệ sở hữu 100.0000%.
+VCG (VCG) có công ty con Công ty Liên doanh TNHH Phát triển đô thị mới An Khánh. Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Nhiệt điện Quảng Ninh (QTP). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Đầu tư và Phát triển Du lịch Vinaconex (VCR). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Xi măng Cẩm Phả. Tỷ lệ sở hữu 30.0000%.
+VCG (VCG) có công ty con CTCP Vicostone (VCS). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con Tổng CTCP Bảo Minh (BMI). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Tập đoàn Nam Mê Kông (VC3). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con Tổng CTCP Bảo hiểm Bưu điện (PTI). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Tập đoàn BGI (VC7). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con Công ty TNHH MTV Vinaconex Đầu tư. Tỷ lệ sở hữu 100.0000%.
+VCG (VCG) có công ty con CTCP Xây dựng và Năng lượng VCP (VCP). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Đầu tư và Xây dựng Vina2 (VC2). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Đầu tư nước sạch Sông Đà (VCW). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Đầu tư và Xây dựng Xuân Mai (XMC). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con Tổng công ty Đầu tư Nước và Môi trường Việt Nam - CTCP (VIW). Tỷ lệ sở hữu 98.1573%.
+VCG (VCG) có công ty con CTCP Đầu tư và Phát triển điện Miền Bắc 2 (ND2). Tỷ lệ sở hữu 51.0993%.
+VCG (VCG) có công ty con CTCP Đầu tư BOT Hà Nội - Bắc Giang. Tỷ lệ sở hữu 20.0900%.
+VCG (VCG) có công ty con CTCP VIWACO (VAV). Tỷ lệ sở hữu 51.0000%.
+VCG (VCG) có công ty con CTCP Xây lắp và Vật liệu xây dựng Đồng Tháp (BDT). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Đầu tư Phát triển nhà và Đô thị Vinahud (VHD). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP EVN Quốc tế (EIC). Tỷ lệ sở hữu 5.8333%.
+VCG (VCG) có công ty con CTCP Cảng quốc tế Vạn Ninh. Tỷ lệ sở hữu 40.0000%.
+VCG (VCG) có công ty con CTCP Bách Thiên Lộc. Tỷ lệ sở hữu 99.9900%.
+VCG (VCG) có công ty con CTCP VIMECO (VMC). Tỷ lệ sở hữu 5.0004%.
+VCG (VCG) có công ty con CTCP Xi măng Yên Bình (VCX). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Vinaconex 25 (VCC). Tỷ lệ sở hữu 71.1192%.
+VCG (VCG) có công ty con Công ty TNHH Phát triển hạ tầng đô thị Vĩnh Phúc. Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Phát triển Thương mại Vinaconex. Tỷ lệ sở hữu 42.6300%.
+VCG (VCG) có công ty con Công ty TNHH MTV Vinaconex Xây dựng. Tỷ lệ sở hữu 100.0000%.
+VCG (VCG) có công ty con CTCP Xây dựng số 9 - VC9 (VC9). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con Công ty TNHH MTV Giáo dục Lý Thái Tổ. Tỷ lệ sở hữu 100.0000%.
+VCG (VCG) có công ty con CTCP Xây dựng số 1 (VC1). Tỷ lệ sở hữu 55.1018%.
+VCG (VCG) có công ty con CTCP BV Life (VCM). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP VINACONEX 21 (V21). Tỷ lệ sở hữu 0.3250%.
+VCG (VCG) có công ty con CTCP Xây dựng số 12 (V12). Tỷ lệ sở hữu 2.5000%.
+VCG (VCG) có công ty con CTCP Vận tải Vinaconex (VCV). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Xây dựng và Đầu tư Visicons (VC6). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Xây dựng số 15 (V15). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Xây dựng số 11 (V11). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Bất động sản Vinaconex. Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Xây Dựng Công Trình Ngầm (CTN). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con Công ty TNHH Quốc tế Vinata. Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Cơ điện Vinaconex. Tỷ lệ sở hữu 7.6923%.
+VCG (VCG) có công ty con CTCP Vinaconex Sài Gòn. Tỷ lệ sở hữu 76.2500%.
+VCG (VCG) có công ty con CTCP Đầu tư VCN (VCN). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP BOO Nước sạch Sapa. Tỷ lệ sở hữu 99.0000%.
+VCG (VCG) có công ty con CTCP Xây dựng số 5 (VC5). Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con Công ty TNHH MTV Giáo dục Phúc Yên. Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Vinaconex Dung Quất. Tỷ lệ sở hữu 95.5070%.
+VCG (VCG) có công ty con CTCP Đầu tư và Dịch vụ Đô thị Việt Nam. Tỷ lệ sở hữu 42.9100%.
+VCG (VCG) có công ty con CTCP VIPACO. Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con Công ty TNHH Bê tông Nhựa Vinaconex - Tấn Lộc. Tỷ lệ sở hữu 50.0000%.
+VCG (VCG) có công ty con CTCP Vinaconex 27. Tỷ lệ sở hữu 57.3300%.
+VCG (VCG) có công ty con CTCP Xây dựng số 17 Vinaconex. Tỷ lệ sở hữu 82.0900%.
+VCG (VCG) có công ty con CTCP Siêu thị và Xuất nhập khẩu Thương mại Việt Nam. Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Xây dựng số 16. Tỷ lệ sở hữu 51.9300%.
+VCG (VCG) có công ty con CTCP Tư vấn Xây dựng Vinaconex (VCT). Tỷ lệ sở hữu 5.0000%.
+VCG (VCG) có công ty con CTCP Xây dựng Đà Nẵng. Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con Công ty Xây dựng số 4. Tỷ lệ sở hữu 100.0000%.
+VCG (VCG) có công ty con Công ty Tài chính Cổ phần Vinaconex - Viettel. Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Ống sợi thủy tinh Vinaconex. Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con Công ty TNHH Thủy tinh Pha lê Bohemia Hà Nội. Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Xây dựng và Xuẩt nhập khẩu Quyết Thắng. Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Đầu tư hạ tầng công nghiệp Thành Công Invest. Tỷ lệ sở hữu 0.0000%.
+VCG (VCG) có công ty con CTCP Đầu tư Vinaconex Việt Trì. Tỷ lệ sở hữu 51.0000%.
+VCG (VCG) có công ty con Công ty TNHH Vinaconex Capital One. Tỷ lệ sở hữu 100.0000%.
+FCN (FCN) có công ty con CTCP Bê tông Phan Vũ Hà Nam (FCM). Tỷ lệ sở hữu 0.0000%.
+FCN (FCN) có công ty con CTCP Đầu tư Fecon. Tỷ lệ sở hữu 90.5200%.
+FCN (FCN) có công ty con CTCP Đầu tư năng lượng Ecotech Việt Nam. Tỷ lệ sở hữu 48.9970%.
+FCN (FCN) có công ty con CTCP Năng lượng Fecon. Tỷ lệ sở hữu 14.2900%.
+FCN (FCN) có công ty con CTCP Năng lượng Vĩnh Hảo 6. Tỷ lệ sở hữu 0.0000%.
+FCN (FCN) có công ty con CTCP Xây dựng hạ tầng Fecon. Tỷ lệ sở hữu 99.5600%.
+FCN (FCN) có công ty con CTCP Năng lượng Côn Đảo. Tỷ lệ sở hữu 0.0000%.
+FCN (FCN) có công ty con CTCP Khoáng sản Fecon Hải Đăng. Tỷ lệ sở hữu 64.0000%.
+FCN (FCN) có công ty con CTCP Cọc và Xây dựng Fecon. Tỷ lệ sở hữu 93.5031%.
+FCN (FCN) có công ty con CTCP FECON SOUTH. Tỷ lệ sở hữu 99.9900%.
+FCN (FCN) có công ty con CTCP Công trình ngầm FECON RAITO. Tỷ lệ sở hữu 51.0000%.
+FCN (FCN) có công ty con Viện nền móng và công trình ngầm. Tỷ lệ sở hữu 0.0000%.
+FCN (FCN) có công ty con CTCP FECON MILTEC. Tỷ lệ sở hữu 0.0000%.
+FCN (FCN) có công ty con CTCP Nông nghiệp hữu cơ Đông Khê. Tỷ lệ sở hữu 0.0000%.
+FCN (FCN) có công ty con CTCP Thiết bị Fecon. Tỷ lệ sở hữu 86.1400%.
+FCN (FCN) có công ty con CTCP Cọc khoan và Kết cấu ngầm Fecon. Tỷ lệ sở hữu 0.0000%.
+FCN (FCN) có công ty con CTCP Thi công cọc FECON số 1. Tỷ lệ sở hữu 0.0000%.
+FCN (FCN) có công ty con Công ty TNHH Xây dựng Fecon Trung Chính Myanmar. Tỷ lệ sở hữu 51.0000%.
+FCN (FCN) có công ty con Fecon Rainbow Foundation Construction Co.,Ltd. Tỷ lệ sở hữu 60.0000%.
+FCN (FCN) có công ty con Trường THPT Ý Yên. Tỷ lệ sở hữu 72.9000%.
+FCN (FCN) có công ty con Công ty TNHH MTV Nguồn nhân lực Fecon. Tỷ lệ sở hữu 0.0000%.
+CII (CII) có công ty con CTCP Chứng khoán Thành phố Hồ Chí Minh (HCM). Tỷ lệ sở hữu 0.0000%.
+CII (CII) có công ty con CTCP Tasco (HUT). Tỷ lệ sở hữu 1.6172%.
+CII (CII) có công ty con CTCP Đầu tư Cầu đường CII (LGC). Tỷ lệ sở hữu 47.8086%.
+CII (CII) có công ty con CTCP Đầu tư và Xây dựng Xa Lộ Hà Nội. Tỷ lệ sở hữu 48.9989%.
+CII (CII) có công ty con Công ty TNHH MTV Khu Bắc Thủ Thiêm. Tỷ lệ sở hữu 100.0000%.
+CII (CII) có công ty con CTCP Đầu tư Năm Bảy Bảy (NBB). Tỷ lệ sở hữu 21.8803%.
+CII (CII) có công ty con CTCP Victory Capital (PTL). Tỷ lệ sở hữu 1.5000%.
+CII (CII) có công ty con CTCP Đầu tư Bất động sản Thủ Thiêm River Park. Tỷ lệ sở hữu 0.0000%.
+CII (CII) có công ty con Công ty TNHH MTV Thương mại và Đầu tư CII. Tỷ lệ sở hữu 100.0000%.
+CII (CII) có công ty con CTCP Hạ tầng nước Sài Gòn (SII). Tỷ lệ sở hữu 0.0102%.
+CII (CII) có công ty con CTCP Xây dựng Hạ tầng CII (CEE). Tỷ lệ sở hữu 0.0000%.
+CII (CII) có công ty con Công ty TNHH Đầu tư Cao ốc Điện Biên Phủ. Tỷ lệ sở hữu 100.0000%.
+CII (CII) có công ty con CTCP Hòa Phú. Tỷ lệ sở hữu 0.0000%.
+CII (CII) có công ty con CTCP Bến bãi Vận tải Sài Gòn (TPS). Tỷ lệ sở hữu 0.0000%.
+CII (CII) có công ty con CTCP Đầu tư và Xây dựng Cầu đường Bình Triệu. Tỷ lệ sở hữu 97.6800%.
+CII (CII) có công ty con Công ty TNHH MTV Hạ tầng Trung Bộ. Tỷ lệ sở hữu 0.0000%.
+CII (CII) có công ty con Công ty TNHH MTV Dịch vụ và Đầu tư CII. Tỷ lệ sở hữu 0.0000%.
+CII (CII) có công ty con CTCP Đầu tư hạ tầng kỹ thuật Vinaphil. Tỷ lệ sở hữu 0.0000%.
+CII (CII) có công ty con Công ty TNHH Đô thị xanh Sài Gòn Long Khánh. Tỷ lệ sở hữu 95.0000%.
+CII (CII) có công ty con Công ty TNHH MTV Cầu Sài Gòn. Tỷ lệ sở hữu 100.0000%.
+HPG (HPG) có công ty con CTCP Gang thép Hòa Phát. Tỷ lệ sở hữu 99.9900%.
+HPG (HPG) có công ty con CTCP Thép Hòa Phát Dung Quất. Tỷ lệ sở hữu 0.0000%.
+HPG (HPG) có công ty con CTCP Sản phẩm Thép Hòa Phát. Tỷ lệ sở hữu 99.9958%.
+HPG (HPG) có công ty con CTCP Thép Hòa Phát Hải Dương. Tỷ lệ sở hữu 0.0000%.
+HPG (HPG) có công ty con CTCP Phát triển Bất động sản Hòa Phát. Tỷ lệ sở hữu 99.9706%.
+HPG (HPG) có công ty con CTCP Phát triển Nông nghiệp Hòa Phát (HPA). Tỷ lệ sở hữu 84.9993%.
+HPG (HPG) có công ty con Công ty TNHH Tôn Hòa Phát. Tỷ lệ sở hữu 0.0000%.
+HPG (HPG) có công ty con Công ty TNHH Ống thép Hòa Phát. Tỷ lệ sở hữu 0.0000%.
+HPG (HPG) có công ty con CTCP Xây dựng và Phát triển Đô thị Hòa Phát. Tỷ lệ sở hữu 0.0000%.
+HPG (HPG) có công ty con Công ty TNHH Thép hòa phát Hưng Yên. Tỷ lệ sở hữu 0.0000%.
+HPG (HPG) có công ty con CTCP Điện máy gia dụng Hòa Phát. Tỷ lệ sở hữu 99.9000%.
+HPG (HPG) có công ty con CTCP Đầu tư Khoáng sản An Thông. Tỷ lệ sở hữu 0.0000%.
+HPG (HPG) có công ty con CTCP Golden Gain Việt Nam. Tỷ lệ sở hữu 0.0000%.
+HPG (HPG) có công ty con Công ty TNHH Chế tạo kim loại Hòa Phát. Tỷ lệ sở hữu 0.0000%.
+HPG (HPG) có công ty con CTCP Thương mại và Sản xuất nội thất The One. Tỷ lệ sở hữu 0.0000%.
+HPG (HPG) có công ty con Công ty TNHH Điện lạnh Hòa Phát. Tỷ lệ sở hữu 0.0000%.
+HPG (HPG) có công ty con CTCP Khai khoáng Hòa Phát - SSG. Tỷ lệ sở hữu 0.0000%.
+HSG (HSG) có công ty con Công ty TNHH MTV Hoa Sen Nghệ An. Tỷ lệ sở hữu 100.0000%.
+HSG (HSG) có công ty con Công ty TNHH MTV Hoa Sen Nhơn Hội - Bình Định. Tỷ lệ sở hữu 100.0000%.
+HSG (HSG) có công ty con Công ty TNHH MTV Hoa Sen Phú Mỹ. Tỷ lệ sở hữu 100.0000%.
+HSG (HSG) có công ty con CTCP Hoa Sen Yên Bái. Tỷ lệ sở hữu 97.2625%.
+HSG (HSG) có công ty con Công ty TNHH MTV Hoa sen Hà Nam. Tỷ lệ sở hữu 66.6667%.
+HSG (HSG) có công ty con CTCP Nhựa Hoa Sen. Tỷ lệ sở hữu 99.9500%.
+HSG (HSG) có công ty con Công ty TNHH MTV Tôn Hoa Sen. Tỷ lệ sở hữu 100.0000%.
+HSG (HSG) có công ty con Công ty TNHH MTV Hoa Sen Bình Định. Tỷ lệ sở hữu 100.0000%.
+HSG (HSG) có công ty con CTCP Hoa Sen Quy Nhơn. Tỷ lệ sở hữu 0.0000%.
+HSG (HSG) có công ty con Công ty TNHH MTV Đầu tư Khu liên hợp luyện cán thép Hoa Sen Cà Ná - Ninh Thuận. Tỷ lệ sở hữu 0.0000%.
+HSG (HSG) có công ty con CTCP Hoa Sen Vân Hội. Tỷ lệ sở hữu 0.0000%.
+HSG (HSG) có công ty con CTCP Hoa Sen Hội Vân. Tỷ lệ sở hữu 0.0000%.
+HSG (HSG) có công ty con CTCP Cảng quốc tế Trung Nam Cà Ná. Tỷ lệ sở hữu 0.0000%.
+HSG (HSG) có công ty con Công ty TNHH MTV Vật liệu xây dựng Hoa Sen Yên Bái. Tỷ lệ sở hữu 100.0000%.
+HSG (HSG) có công ty con CTCP Đầu tư hạ tầng Khu công nghiệp Hoa Sen Du Long. Tỷ lệ sở hữu 0.0000%.
+HSG (HSG) có công ty con Công ty TNHH MTV Xi măng Hoa Sen Cà Ná - Ninh Thuận. Tỷ lệ sở hữu 0.0000%.
+HSG (HSG) có công ty con Công ty TNHH Hoa Sen Eco - Homes. Tỷ lệ sở hữu 10.0000%.
+HSG (HSG) có công ty con Công ty TNHH MTV Năng lượng tái tạo Hoa Sen Cà Ná - Ninh Thuận. Tỷ lệ sở hữu 0.0000%.
+HSG (HSG) có công ty con Công ty TNHH MTV Vận tải và Cơ khí Hoa Sen. Tỷ lệ sở hữu 0.0000%.
+HSG (HSG) có công ty con CTCP Cảng quốc tế Hoa Sen. Tỷ lệ sở hữu 49.0000%.
+HSG (HSG) có công ty con CTCP Tiếp vận và Cảng Quốc Tế Hoa Sen - Gemadept. Tỷ lệ sở hữu 0.0000%.
+HSG (HSG) có công ty con CTCP Hoa Sen Sài Gòn. Tỷ lệ sở hữu 40.0000%.
+NKG (NKG) có công ty con Công ty TNHH MTV Tôn Nam Kim Phú Mỹ. Tỷ lệ sở hữu 100.0000%.
+NKG (NKG) có công ty con Công ty TNHH Dae Myung Paper Việt Nam. Tỷ lệ sở hữu 100.0000%.
+NKG (NKG) có công ty con Công ty TNHH MTV Nam Kim Corea. Tỷ lệ sở hữu 0.0000%.
+NKG (NKG) có công ty con Công ty TNHH MTV Ống thép Nam Kim. Tỷ lệ sở hữu 100.0000%.
+NKG (NKG) có công ty con Công ty TNHH MTV Ống thép Nam Kim Chu Lai. Tỷ lệ sở hữu 100.0000%.
+SMC (SMC) có công ty con CTCP Thép Nam Kim (NKG). Tỷ lệ sở hữu 4.6845%.
+SMC (SMC) có công ty con CTCP Du lịch Thành Thành Công (VNG). Tỷ lệ sở hữu 0.0000%.
+SMC (SMC) có công ty con Công ty TNHH Cơ khí chính xác SMC Phú Mỹ. Tỷ lệ sở hữu 100.0000%.
+SMC (SMC) có công ty con CTCP Thép Nhà Bè - VNSTEEL (TNB). Tỷ lệ sở hữu 0.0000%.
+SMC (SMC) có công ty con Công ty TNHH Thép SMC. Tỷ lệ sở hữu 100.0000%.
+SMC (SMC) có công ty con Công ty TNHH Gia công thép SMC Phú Mỹ. Tỷ lệ sở hữu 100.0000%.
+SMC (SMC) có công ty con CTCP VKC Holdings (VKC). Tỷ lệ sở hữu 0.0000%.
+SMC (SMC) có công ty con CTCP Thép tấm lá Thống Nhất (TNS). Tỷ lệ sở hữu 7.0000%.
+SMC (SMC) có công ty con Công ty TNHH MTV Cơ khí thép SMC. Tỷ lệ sở hữu 100.0000%.
+SMC (SMC) có công ty con Công ty TNHH Liên doanh Ống thép SENDO. Tỷ lệ sở hữu 75.0000%.
+SMC (SMC) có công ty con Công ty TNHH MTV SMC Tân Tạo. Tỷ lệ sở hữu 100.0000%.
+SMC (SMC) có công ty con Công ty TNHH SMC SUMMIT. Tỷ lệ sở hữu 50.0000%.
+SMC (SMC) có công ty con Công ty TNHH SMC TOAMI. Tỷ lệ sở hữu 25.0000%.
+SMC (SMC) có công ty con Công ty TNHH Hanwa SMC Steel Service Hà Nội. Tỷ lệ sở hữu 35.0000%.
+SMC (SMC) có công ty con Công ty TNHH MTV Thương mại SMC. Tỷ lệ sở hữu 100.0000%.
+SMC (SMC) có công ty con Công ty TNHH MTV SMC Đà Nẵng. Tỷ lệ sở hữu 100.0000%.
+SMC (SMC) có công ty con Công ty TNHH Thiết bị - Tự động SMC Phú Mỹ. Tỷ lệ sở hữu 100.0000%.
+SMC (SMC) có công ty con Công ty TNHH MTV SMC Hiệp Phước. Tỷ lệ sở hữu 100.0000%.
+SMC (SMC) có công ty con Công ty TNHH MTV Kinh doanh Thép SMC. Tỷ lệ sở hữu 0.0000%.
+GAS (GAS) có công ty con CTCP Sản xuất Ống thép Dầu khí Việt Nam. Tỷ lệ sở hữu 99.9900%.
+GAS (GAS) có công ty con CTCP Phân phối Khí thấp áp Dầu khí Việt Nam (PGD). Tỷ lệ sở hữu 50.5009%.
+GAS (GAS) có công ty con CTCP Vận tải biển Global Pacific (PCT). Tỷ lệ sở hữu 0.0000%.
+GAS (GAS) có công ty con CTCP Kinh doanh Khí Miền Nam (PGS). Tỷ lệ sở hữu 35.2632%.
+GAS (GAS) có công ty con CTCP Kinh doanh LPG Việt Nam (PVG). Tỷ lệ sở hữu 51.3081%.
+GAS (GAS) có công ty con CTCP CNG Việt Nam (CNG). Tỷ lệ sở hữu 56.0006%.
+GAS (GAS) có công ty con Công ty TNHH Kho cảng LNG Sơn Mỹ. Tỷ lệ sở hữu 61.0000%.
+GAS (GAS) có công ty con CTCP Bọc ống Dầu khí Việt Nam (PVB). Tỷ lệ sở hữu 52.9352%.
+GAS (GAS) có công ty con Công ty TNHH Khí nhiên liệu Giao thông vận tải PVGazprom. Tỷ lệ sở hữu 29.0000%.
+GAS (GAS) có công ty con CTCP Đầu tư Phát triển Gas Đô thị (PCG). Tỷ lệ sở hữu 0.0000%.
+GAS (GAS) có công ty con CTCP LNG VietNam. Tỷ lệ sở hữu 0.0000%.
+GAS (GAS) có công ty con PetroVietnam Gas International Trading Company Pte. Ltd. Tỷ lệ sở hữu 100.0000%.
+PVS (PVS) có công ty con Công ty TNHH Khảo sát Địa Vật lý PTSC CGGV. Tỷ lệ sở hữu 51.0000%.
+PVS (PVS) có công ty con Công ty TNHH MTV Dịch vụ Cơ khí Hàng hải PTSC. Tỷ lệ sở hữu 100.0000%.
+PVS (PVS) có công ty con CTCP Chế tạo Giàn khoan Dầu khí (PVY). Tỷ lệ sở hữu 28.7539%.
+PVS (PVS) có công ty con CTCP Đầu tư PVR Hà Nội (PVR). Tỷ lệ sở hữu 0.0000%.
+PVS (PVS) có công ty con CTCP Đầu tư Dầu khí Sao Mai - Bến Đình (PSB). Tỷ lệ sở hữu 51.0000%.
+PVS (PVS) có công ty con CTCP Vận hành và Xây lắp PTSC (POS). Tỷ lệ sở hữu 84.9518%.
+PVS (PVS) có công ty con CTCP Cảng dịch vụ Dầu khí Đình Vũ (PSP). Tỷ lệ sở hữu 51.0000%.
+PVS (PVS) có công ty con CTCP Dịch vụ kỹ thuật PTSC Thanh Hóa (PSN). Tỷ lệ sở hữu 54.6933%.
+PVS (PVS) có công ty con CTCP Cảng dịch vụ Dầu khí Tổng hợp Phú Mỹ. Tỷ lệ sở hữu 59.6100%.
+PVS (PVS) có công ty con Công ty TNHH MTV Dịch vụ Khảo sát và Công trình ngầm PTSC. Tỷ lệ sở hữu 100.0000%.
+PVS (PVS) có công ty con CTCP Dịch vụ dầu khí Quảng Ngãi PTSC (PQN). Tỷ lệ sở hữu 95.1937%.
+PVS (PVS) có công ty con CTCP Vận tải đa phương thức Vietranstimex (VTX). Tỷ lệ sở hữu 0.0000%.
+PVS (PVS) có công ty con CTCP Dịch vụ Khai thác Dầu khí PTSC. Tỷ lệ sở hữu 51.0000%.
+PVS (PVS) có công ty con CTCP Vận tải Dầu khí Đông Dương (PTT). Tỷ lệ sở hữu 0.0000%.
+PVS (PVS) có công ty con CTCP Du lịch Dầu khí Phương Đông (PDC). Tỷ lệ sở hữu 0.0000%.
+PVS (PVS) có công ty con CTCP Dịch vụ Bảo vệ An ninh Dầu khí Việt Nam. Tỷ lệ sở hữu 51.0000%.
+PVS (PVS) có công ty con Công ty TNHH Khách sạn Dầu khí PTSC. Tỷ lệ sở hữu 100.0000%.
+PVS (PVS) có công ty con Rong Doi MV12 Private Limited. Tỷ lệ sở hữu 33.0000%.
+PVS (PVS) có công ty con Malaysia VietNam Offshore Terminal Limited. Tỷ lệ sở hữu 49.0000%.
+PVS (PVS) có công ty con PTSC Asia Pacific Pte Ltd. Tỷ lệ sở hữu 51.0000%.
+PVS (PVS) có công ty con PTSC South East Asia Pte Ltd. Tỷ lệ sở hữu 51.0000%.
+PVS (PVS) có công ty con Vietnam Offshore Floating Ternminal (Ruby) Limited. Tỷ lệ sở hữu 60.0000%.
+PVS (PVS) có công ty con Công ty TNHH MTV Dịch vụ Kỹ thuật Dầu khí Labuan. Tỷ lệ sở hữu 100.0000%.
+PVD (PVD) có công ty con CTCP Victory Capital (PTL). Tỷ lệ sở hữu 0.0000%.
+PVD (PVD) có công ty con Công ty TNHH MTV Khoan dầu khí Nước sâu PVD. Tỷ lệ sở hữu 100.0000%.
+PVD (PVD) có công ty con CTCP Thương mại và Dịch vụ Kỹ thuật khoan Dầu khí PVD. Tỷ lệ sở hữu 97.0000%.
+PVD (PVD) có công ty con Công ty TNHH Liên doanh Kỹ thuật Giếng khoan PV Drilling và Baker Hughes. Tỷ lệ sở hữu 51.0000%.
+PVD (PVD) có công ty con Công ty TNHH MTV Dịch vụ Kỹ thuật Dầu khí Biển PVD. Tỷ lệ sở hữu 100.0000%.
+PVD (PVD) có công ty con Công ty TNHH Liên Doanh Dịch Vụ BJ - PV Drilling. Tỷ lệ sở hữu 49.0000%.
+PVD (PVD) có công ty con Công ty TNHH MTV Địa Vật lý Giếng khoan Dầu khí. Tỷ lệ sở hữu 100.0000%.
+PVD (PVD) có công ty con Công ty TNHH MTV Dịch vụ Giếng khoan Dầu khí PVD. Tỷ lệ sở hữu 100.0000%.
+PVD (PVD) có công ty con Công ty TNHH Vietubes. Tỷ lệ sở hữu 51.0000%.
+PVD (PVD) có công ty con Công ty TNHH Cần ống khoan Dầu khí Việt Nam. Tỷ lệ sở hữu 51.0001%.
+PVD (PVD) có công ty con CTCP Đào tạo Kỹ thuật PVD. Tỷ lệ sở hữu 51.8000%.
+PVD (PVD) có công ty con PV Drilling Overseas Company Private Limited. Tỷ lệ sở hữu 81.6000%.
+BSR (BSR) có công ty con CTCP Nhiên liệu sinh học Dầu khí Miền Trung. Tỷ lệ sở hữu 0.0000%.
+BSR (BSR) có công ty con CTCP Bao bì và Thương mại Dầu khí Bình Sơn (PBT). Tỷ lệ sở hữu 83.2613%.
+REE (REE) có công ty con Ngân hàng TMCP Sài Gòn Thương Tín (STB). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con Tổng Công ty Phát điện 3 - CTCP (PGV). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con Công ty TNHH Năng lượng REE. Tỷ lệ sở hữu 100.0000%.
+REE (REE) có công ty con CTCP Nhiệt điện Quảng Ninh (QTP). Tỷ lệ sở hữu 6.5745%.
+REE (REE) có công ty con CTCP Nhiệt điện Phả Lại (PPC). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Thủy điện Vĩnh Sơn - Sông Hinh (VSH). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con Công ty TNHH Nước sạch REE. Tỷ lệ sở hữu 100.0000%.
+REE (REE) có công ty con CTCP Thuỷ điện Miền Trung (CHP). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Thủy điện Sông Ba Hạ (SBH). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Cấp nước Đồng Nai (DNW). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Thuỷ Điện Miền Nam (SHP). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con Công ty TNHH Bất động sản REE. Tỷ lệ sở hữu 100.0000%.
+REE (REE) có công ty con CTCP Đầu tư nước sạch Sông Đà (VCW). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Thủy điện Thác Mơ (TMP). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con Tổng CTCP Địa ốc Sài Gòn (SGR). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Thủy điện Thác Bà (TBC). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Đầu tư và Phát triển Đô thị Dầu khí Cửu Long (CCL). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP B.O.O Nước Thủ Đức. Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Thủy điện Mường Hum. Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Phong điện Thuận Bình. Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Đầu tư và Phát triển điện Miền Bắc 2 (ND2). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP VIWACO (VAV). Tỷ lệ sở hữu 1.5625%.
+REE (REE) có công ty con CTCP Thủy điện Srok Phu Miêng IDICO (ISH). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Than Vàng Danh - Vinacomin (TVD). Tỷ lệ sở hữu 4.9563%.
+REE (REE) có công ty con CTCP Hạ tầng và Bất động sản Việt Nam. Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Than núi Béo - Vinacomin (NBC). Tỷ lệ sở hữu 4.6911%.
+REE (REE) có công ty con CTCP Xây lắp Dầu khí Hà Nội (PXH). Tỷ lệ sở hữu 5.0000%.
+REE (REE) có công ty con CTCP Than Đèo Nai - Vinacomin (TDN). Tỷ lệ sở hữu 4.0084%.
+REE (REE) có công ty con CTCP Cấp thoát nước Khánh Hòa (KHW). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Than Hà Tu - Vinacomin (THT). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Đầu tư Nước Tân Hiệp. Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Bất động sản REE New City. Tỷ lệ sở hữu 99.9900%.
+REE (REE) có công ty con CTCP Dịch vụ & Kỹ thuật Cơ Điện Lạnh R.E.E. Tỷ lệ sở hữu 90.9091%.
+REE (REE) có công ty con CTCP Thủy điện Bình Điền. Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Đầu tư và Kinh doanh Nước sạch Sài Gòn. Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Điện máy R.E.E. Tỷ lệ sở hữu 99.9900%.
+REE (REE) có công ty con CTCP Nhiệt điện Ninh Bình (NBP). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Cấp nước Nhà Bè (NBW). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Cấp nước Gia Định (GDW). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Cấp nước Thủ Đức (TDW). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Phát triển Điện Trà Vinh (DTV). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Cấp nước Trung An (TAW). Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con CTCP Năng Lượng Mặt Trời REE. Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con Công ty TNHH REE Digital. Tỷ lệ sở hữu 100.0000%.
+REE (REE) có công ty con Công ty TNHH Quản lý & Khai thác Bất Động Sản R.E.E. Tỷ lệ sở hữu 100.0000%.
+REE (REE) có công ty con Công ty TNHH Thương mại Dịch vụ Xây dựng Tín Hiệu Xanh. Tỷ lệ sở hữu 100.0000%.
+REE (REE) có công ty con CTCP Vĩnh Thịnh. Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con Trans Orient Pte Ltd.. Tỷ lệ sở hữu 0.0000%.
+REE (REE) có công ty con Công ty TNHH Điện gió REE Trà Vinh. Tỷ lệ sở hữu 0.0000%.
+GVR (GVR) có công ty con CTCP Chứng khoán Sài Gòn - Hà Nội (SHS). Tỷ lệ sở hữu 0.0000%.
+GVR (GVR) có công ty con Công ty TNHH MTV Tổng Công ty Cao su Đồng Nai. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao su Dầu Tiếng. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con CTCP Đầu tư Sài Gòn VRG (SIP). Tỷ lệ sở hữu 1.7343%.
+GVR (GVR) có công ty con CTCP Cao su Chư sê - Kampongthom. Tỷ lệ sở hữu 50.4800%.
+GVR (GVR) có công ty con CTCP Cao su Mang Yang - Ratanakiri. Tỷ lệ sở hữu 47.4900%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao su Phú Riềng. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao su Chư sê. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao su Mang Yang. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con CTCP Cao su Tân Biên - Kampong Thom. Tỷ lệ sở hữu 41.0000%.
+GVR (GVR) có công ty con CTCP Cao su Phước Hòa (PHR). Tỷ lệ sở hữu 66.6159%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao su Chư păh. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con CTCP Cao su Bà Rịa (BRR). Tỷ lệ sở hữu 97.4688%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao su Lộc Ninh. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao Su Chư Prông. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con CTCP Cao su Sơn La. Tỷ lệ sở hữu 69.0300%.
+GVR (GVR) có công ty con CTCP Gỗ MDF VRG Dongwha. Tỷ lệ sở hữu 49.0000%.
+GVR (GVR) có công ty con CTCP Cao su Lai Châu. Tỷ lệ sở hữu 83.5400%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao su Bình Long. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con CTCP Cao su Đồng Phú - Kratie. Tỷ lệ sở hữu 29.9600%.
+GVR (GVR) có công ty con CTCP Cao su Tân Biên (RTB). Tỷ lệ sở hữu 98.4599%.
+GVR (GVR) có công ty con CTCP Cao su Đồng Phú (DPR). Tỷ lệ sở hữu 55.2448%.
+GVR (GVR) có công ty con CTCP Cao su Đồng Nai - Kratie. Tỷ lệ sở hữu 20.7700%.
+GVR (GVR) có công ty con CTCP Quasa - Geruco. Tỷ lệ sở hữu 75.2300%.
+GVR (GVR) có công ty con CTCP Cao su Việt Lào. Tỷ lệ sở hữu 20.6600%.
+GVR (GVR) có công ty con CTCP Cao su Krông Buk - Ratanakiri. Tỷ lệ sở hữu 39.9800%.
+GVR (GVR) có công ty con CTCP Cao su Lai Châu II. Tỷ lệ sở hữu 88.4400%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao su Krông Buk. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con CTCP Cao su Bà Rịa - Kampong Thom. Tỷ lệ sở hữu 38.1772%.
+GVR (GVR) có công ty con CTCP Cao su Điện Biên. Tỷ lệ sở hữu 60.0000%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao Su Hà Tĩnh. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con CTCP Cao su Sa Thầy. Tỷ lệ sở hữu 59.0000%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao Su Quảng Nam. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao su Kon Tum. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao Su Hương khê - Hà Tĩnh. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con CTCP Cao su Chư Prông - Stung Treng. Tỷ lệ sở hữu 30.3100%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao su Eah'leo. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con CTCP Đầu tư phát triển cao su Nghệ An. Tỷ lệ sở hữu 93.0300%.
+GVR (GVR) có công ty con CTCP Gỗ MDF VRG Quảng Trị (MDF). Tỷ lệ sở hữu 84.8461%.
+GVR (GVR) có công ty con CTCP Gỗ MDF VRG Kiên Giang. Tỷ lệ sở hữu 99.5800%.
+GVR (GVR) có công ty con CTCP Cao su Dầu Tiếng Kratie. Tỷ lệ sở hữu 34.0000%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao Su Quảng Trị. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con CTCP Cao su Dầu Tiếng Campuchia. Tỷ lệ sở hữu 42.8100%.
+GVR (GVR) có công ty con CTCP Thương mại Dịch vụ và Du lịch Cao su. Tỷ lệ sở hữu 52.5100%.
+GVR (GVR) có công ty con CTCP Cao su Yên Bái. Tỷ lệ sở hữu 81.5200%.
+GVR (GVR) có công ty con CTCP Đầu tư và Phát triển VRG Long Thành. Tỷ lệ sở hữu 22.0000%.
+GVR (GVR) có công ty con CTCP Cao su Phú Riềng Kratie. Tỷ lệ sở hữu 0.0000%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao su Nam Giang - Quảng Nam. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con CTCP Thủy điện Geruco - Sông Côn (GSC). Tỷ lệ sở hữu 51.0109%.
+GVR (GVR) có công ty con CTCP EVN Quốc tế (EIC). Tỷ lệ sở hữu 11.7785%.
+GVR (GVR) có công ty con CTCP Đầu tư thủy điện VRG - Phú Yên. Tỷ lệ sở hữu 81.7700%.
+GVR (GVR) có công ty con CTCP Cao su Hà Giang. Tỷ lệ sở hữu 82.5900%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao su Bình Thuận. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con CTCP Cao su Thành phố Hồ Chí Minh. Tỷ lệ sở hữu 27.1400%.
+GVR (GVR) có công ty con CTCP Cao su Hòa Bình (HRC). Tỷ lệ sở hữu 55.0608%.
+GVR (GVR) có công ty con CTCP Cao su Tây Ninh (TRC). Tỷ lệ sở hữu 61.8000%.
+GVR (GVR) có công ty con CTCP VRG - Đăk Nông. Tỷ lệ sở hữu 68.6000%.
+GVR (GVR) có công ty con CTCP VRG Khải Hoàn. Tỷ lệ sở hữu 51.0400%.
+GVR (GVR) có công ty con CTCP VRG - Bảo Lộc. Tỷ lệ sở hữu 71.0300%.
+GVR (GVR) có công ty con CTCP Phát triển Đô thị và Khu công nghiệp Cao su Việt Nam (VRG). Tỷ lệ sở hữu 15.0913%.
+GVR (GVR) có công ty con CTCP Khu Công nghiệp Nam Tân Uyên (NTC). Tỷ lệ sở hữu 20.4188%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao Su Thanh Hóa. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con Tổng Công ty Xây dựng Thủy lợi 4 - CTCP (TL4). Tỷ lệ sở hữu 16.9487%.
+GVR (GVR) có công ty con Viện nghiên cứu Cao su Việt Nam. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con CTCP Cao su Bến Thành (BRC). Tỷ lệ sở hữu 48.8538%.
+GVR (GVR) có công ty con CTCP Chế biến Gỗ Thuận An (GTA). Tỷ lệ sở hữu 10.7468%.
+GVR (GVR) có công ty con CTCP Công nghiệp và Xuất nhập khẩu Cao su (RBC). Tỷ lệ sở hữu 69.1238%.
+GVR (GVR) có công ty con CTCP Công nghiệp An Điền. Tỷ lệ sở hữu 38.5000%.
+GVR (GVR) có công ty con CTCP Du lịch Quốc tế Vũng Tàu (VIR). Tỷ lệ sở hữu 3.7379%.
+GVR (GVR) có công ty con Công ty TNHH MTV Cao Su Quảng Ngãi. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con CTCP Khu công nghiệp Hố Nai (HIZ). Tỷ lệ sở hữu 0.0000%.
+GVR (GVR) có công ty con CTCP Xây dựng và Tư vấn đầu tư. Tỷ lệ sở hữu 0.0000%.
+GVR (GVR) có công ty con CTCP Đầu tư xây dựng Cao su. Tỷ lệ sở hữu 0.0000%.
+GVR (GVR) có công ty con CTCP Xây dựng - Địa ốc Cao su (RCD). Tỷ lệ sở hữu 0.0000%.
+GVR (GVR) có công ty con Công ty TNHH Nghiên cứu Khoa học và Sản xuất thực nghiệm Cao su Visorutex. Tỷ lệ sở hữu 27.5700%.
+GVR (GVR) có công ty con CTCP Cơ khí Cao su. Tỷ lệ sở hữu 60.0000%.
+GVR (GVR) có công ty con CTCP Thể thao Ngôi sao Geru (GER). Tỷ lệ sở hữu 64.3818%.
+GVR (GVR) có công ty con Trường Cao Đẳng Miền Đông. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con Tạp chí Cao su Việt Nam. Tỷ lệ sở hữu 100.0000%.
+GVR (GVR) có công ty con CTCP Xuất nhập khẩu cao su VRG Nhật Bản. Tỷ lệ sở hữu 50.0000%.
+GVR (GVR) có công ty con Trung tâm y tế Cao su. Tỷ lệ sở hữu 100.0000%.
+PC1 (PC1) có công ty con CTCP Western Pacific. Tỷ lệ sở hữu 30.0800%.
+PC1 (PC1) có công ty con CTCP Phát triển Khu công nghiệp Nhật Bản - Hải Phòng. Tỷ lệ sở hữu 70.0000%.
+PC1 (PC1) có công ty con CTCP Đầu tư Bất động sản CT2. Tỷ lệ sở hữu 49.0000%.
+PC1 (PC1) có công ty con CTCP Điện gió Liên Lập. Tỷ lệ sở hữu 55.5400%.
+PC1 (PC1) có công ty con CTCP Điện gió Phong Huy. Tỷ lệ sở hữu 54.7000%.
+PC1 (PC1) có công ty con CTCP Điện gió Phong Nguyên. Tỷ lệ sở hữu 54.7300%.
+PC1 (PC1) có công ty con CTCP Khoáng sản Tấn Phát. Tỷ lệ sở hữu 57.2700%.
+PC1 (PC1) có công ty con CTCP Gang thép Cao Bằng (CBI). Tỷ lệ sở hữu 25.0852%.
+PC1 (PC1) có công ty con CTCP KCN Quốc tế Hải Phòng. Tỷ lệ sở hữu 100.0000%.
+PC1 (PC1) có công ty con CTCP Thủy điện Trung Thu. Tỷ lệ sở hữu 60.0000%.
+PC1 (PC1) có công ty con CTCP Đầu tư năng lượng Miền Bắc. Tỷ lệ sở hữu 51.0000%.
+PC1 (PC1) có công ty con CTCP Thủy điện Sông Gâm. Tỷ lệ sở hữu 60.0000%.
+PC1 (PC1) có công ty con CTCP Thiết bị Thương mại. Tỷ lệ sở hữu 99.7500%.
+PC1 (PC1) có công ty con Asia Dragon Trading Pte. Ltd. Tỷ lệ sở hữu 100.0000%.
+PC1 (PC1) có công ty con CTCP Thương mại đầu tư Tiến Bộ. Tỷ lệ sở hữu 99.9500%.
+PC1 (PC1) có công ty con CTCP Cơ khí ô tô Hòa Bình. Tỷ lệ sở hữu 99.8300%.
+PC1 (PC1) có công ty con CTCP Đầu tư địa ốc Mỹ Đình. Tỷ lệ sở hữu 99.3900%.
+PC1 (PC1) có công ty con Công ty TNHH Chế tạo cột thép Đông Anh. Tỷ lệ sở hữu 90.0000%.
+PC1 (PC1) có công ty con CTCP KCN Quốc tế Vũng Tàu. Tỷ lệ sở hữu 36.0000%.
+PC1 (PC1) có công ty con CTCP Năng lượng Bảo Lâm. Tỷ lệ sở hữu 99.9000%.
+PC1 (PC1) có công ty con CTCP PC1 Miền Nam. Tỷ lệ sở hữu 80.0000%.
+PC1 (PC1) có công ty con CTCP PC1 Mỹ Đình. Tỷ lệ sở hữu 80.0000%.
+PC1 (PC1) có công ty con CTCP Cột thép mạ kẽm Thái Nguyên. Tỷ lệ sở hữu 0.0000%.
+PC1 (PC1) có công ty con CTCP Khu công nghiệp PC1 - Hải Phòng. Tỷ lệ sở hữu 98.0000%.
+PC1 (PC1) có công ty con CTCP PC1 Hà Nội. Tỷ lệ sở hữu 66.0000%.
+PC1 (PC1) có công ty con CTCP PC1 Thăng Long. Tỷ lệ sở hữu 66.0000%.
+PC1 (PC1) có công ty con CTCP Đầu tư và Dịch vụ công nghệ. Tỷ lệ sở hữu 51.0000%.
+PC1 (PC1) có công ty con Công ty TNHH MTV Xây lắp điện 1 - Từ Liêm. Tỷ lệ sở hữu 0.0000%.
+PC1 (PC1) có công ty con Công ty TNHH MTV Xây lắp điện 1 - Miền Bắc. Tỷ lệ sở hữu 0.0000%.
+PC1 (PC1) có công ty con CTCP PC1 Ninh Bình. Tỷ lệ sở hữu 66.0000%.
+PC1 (PC1) có công ty con CTCP Thí nghiệm điện PC1 - ETICH. Tỷ lệ sở hữu 0.0000%.
+PC1 (PC1) có công ty con Công ty TNHH MTV Xây lắp điện 1 - Hà Đông. Tỷ lệ sở hữu 99.9999%.
+PC1 (PC1) có công ty con PC1 Australia Pty Ltd. Tỷ lệ sở hữu 99.9999%.
+PC1 (PC1) có công ty con Công ty TNHH MTV Xây lắp điện 1 - Hà Nội. Tỷ lệ sở hữu 0.0000%.
+PC1 (PC1) có công ty con CTCP Lắp máy công nghiệp Việt Nam. Tỷ lệ sở hữu 51.0000%.
+PC1 (PC1) có công ty con CTCP Đầu tư An Phú. Tỷ lệ sở hữu 0.0000%.
+PC1 (PC1) có công ty con Công ty TNHH MTV PC1 - Nàng Hương. Tỷ lệ sở hữu 99.9986%.
+PC1 (PC1) có công ty con CTCP Tân Thanh. Tỷ lệ sở hữu 40.0000%.
+PC1 (PC1) có công ty con PC1 Philippines Inc.. Tỷ lệ sở hữu 99.9800%.
+PC1 (PC1) có công ty con CTCP PC1 Năng lượng xanh. Tỷ lệ sở hữu 60.0000%.
+PTB (PTB) có công ty con  CTCP Đầu tư Phú Tài Vân Hà. Tỷ lệ sở hữu 50.0000%.
+PTB (PTB) có công ty con Công ty TNHH MTV Gỗ Phú Tài Bình Định. Tỷ lệ sở hữu 100.0000%.
+PTB (PTB) có công ty con Công ty TNHH MTV Bất động sản Phú Tài. Tỷ lệ sở hữu 100.0000%.
+PTB (PTB) có công ty con Công ty TNHH MTV Đá thạch anh cao cấp Phú Tài. Tỷ lệ sở hữu 100.0000%.
+PTB (PTB) có công ty con Công ty TNHH Đầu tư Phú Tài Diêu Trì. Tỷ lệ sở hữu 60.0000%.
+PTB (PTB) có công ty con Công ty TNHH MTV Toyota Đà Nẵng. Tỷ lệ sở hữu 100.0000%.
+PTB (PTB) có công ty con Công ty TNHH MTV Đá thạch anh Phú Tài Bình Định. Tỷ lệ sở hữu 100.0000%.
+PTB (PTB) có công ty con Công ty TNHH MTV Đá Phú Tài Khánh Hòa. Tỷ lệ sở hữu 100.0000%.
+PTB (PTB) có công ty con CTCP Vina G7. Tỷ lệ sở hữu 75.0000%.
+PTB (PTB) có công ty con Công ty TNHH MTV Đá Phú Tài Đồng Nai. Tỷ lệ sở hữu 100.0000%.
+PTB (PTB) có công ty con Công ty TNHH MTV Nhôm sắt Cao cấp Phú Tài. Tỷ lệ sở hữu 100.0000%.
+PTB (PTB) có công ty con Công ty Sản xuất Đá Granit - TNHH. Tỷ lệ sở hữu 70.0000%.
+PTB (PTB) có công ty con Công ty TNHH MTV Phú Tài Đồng Nai. Tỷ lệ sở hữu 100.0000%.
+PTB (PTB) có công ty con Công ty TNHH MTV Toyota Bình Định. Tỷ lệ sở hữu 100.0000%.
+PTB (PTB) có công ty con Công ty TNHH Thương mại và Sản xuất Sơn Phát. Tỷ lệ sở hữu 99.0000%.
+PTB (PTB) có công ty con CTCP Vật liệu xây dựng Phú Yên. Tỷ lệ sở hữu 49.0000%.
+PTB (PTB) có công ty con Công ty TNHH Đá Granite Thành Châu Phú Yên. Tỷ lệ sở hữu 100.0000%.
+PTB (PTB) có công ty con Công ty TNHH MTV Đá Phú Tài Yên Bái. Tỷ lệ sở hữu 100.0000%.
+PTB (PTB) có công ty con Công ty TNHH MTV Phú Tài Home. Tỷ lệ sở hữu 100.0000%.
+PTB (PTB) có công ty con Công ty TNHH MTV Khoáng sản Tuấn Đạt. Tỷ lệ sở hữu 100.0000%.
+PTB (PTB) có công ty con CTCP Đá Universal. Tỷ lệ sở hữu 60.0000%.
+PTB (PTB) có công ty con CTCP Đá Phú Tài Ninh Thuận. Tỷ lệ sở hữu 98.0000%.
+FPT (FPT) có công ty con Ngân hàng TMCP Ngoại thương Việt Nam (VCB). Tỷ lệ sở hữu 1.1657%.
+FPT (FPT) có công ty con Ngân Hàng TMCP Tiên Phong (TPB). Tỷ lệ sở hữu 6.7722%.
+FPT (FPT) có công ty con CTCP Viễn thông FPT (FOX). Tỷ lệ sở hữu 45.6563%.
+FPT (FPT) có công ty con Công ty TNHH Giáo dục FPT. Tỷ lệ sở hữu 100.0000%.
+FPT (FPT) có công ty con CTCP Chứng khoán FPT (FTS). Tỷ lệ sở hữu 17.5793%.
+FPT (FPT) có công ty con Công ty TNHH Phần mềm FPT. Tỷ lệ sở hữu 100.0000%.
+FPT (FPT) có công ty con CTCP Bán lẻ Kỹ thuật số FPT (FRT). Tỷ lệ sở hữu 46.5352%.
+FPT (FPT) có công ty con Công ty TNHH Hệ thống Thông tin FPT. Tỷ lệ sở hữu 100.0000%.
+FPT (FPT) có công ty con CTCP Synnex FPT. Tỷ lệ sở hữu 48.0000%.
+FPT (FPT) có công ty con Công ty TNHH Đầu tư FPT. Tỷ lệ sở hữu 100.0000%.
+FPT (FPT) có công ty con Công ty TNHH FPT Smart Cloud. Tỷ lệ sở hữu 100.0000%.
+FPT (FPT) có công ty con CTCP Đô Thị FPT Đà Nẵng. Tỷ lệ sở hữu 0.0000%.
+FPT (FPT) có công ty con CTCP Dịch vụ Trực tuyến FPT (FOC). Tỷ lệ sở hữu 23.7920%.
+FPT (FPT) có công ty con Công ty TNHH FPT Digital. Tỷ lệ sở hữu 100.0000%.
+FPT (FPT) có công ty con Công ty TNHH Truyền thông giải trí FPT. Tỷ lệ sở hữu 0.0000%.
+FPT (FPT) có công ty con Quỹ Hy vọng. Tỷ lệ sở hữu 0.0000%.
+CMG (CMG) có công ty con CTCP Hạ tầng Viễn thông CMC. Tỷ lệ sở hữu 54.6300%.
+CMG (CMG) có công ty con Công ty TNHH Tổng công ty Công nghệ và Giải pháp CMC. Tỷ lệ sở hữu 100.0000%.
+CMG (CMG) có công ty con Công ty TNHH CMC Education. Tỷ lệ sở hữu 100.0000%.
+CMG (CMG) có công ty con Công ty TNHH CMC Global. Tỷ lệ sở hữu 100.0000%.
+CMG (CMG) có công ty con Công ty TNHH Sản xuất và Thương mại CMC. Tỷ lệ sở hữu 0.0000%.
+CMG (CMG) có công ty con Công ty TNHH CMC Đà Nẵng. Tỷ lệ sở hữu 100.0000%.
+CMG (CMG) có công ty con CTCP An ninh An toàn thông tin CMC. Tỷ lệ sở hữu 100.0000%.
+CMG (CMG) có công ty con Công ty TNHH Giải pháp Phần mềm CMC. Tỷ lệ sở hữu 0.0000%.
+CMG (CMG) có công ty con Công ty TNHH Sản xuất và dịch vụ CMC. Tỷ lệ sở hữu 0.0000%.
+CMG (CMG) có công ty con Công ty TNHH CMC Consulting. Tỷ lệ sở hữu 100.0000%.
+CMG (CMG) có công ty con CTCP Net Nam. Tỷ lệ sở hữu 41.1400%.
+CMG (CMG) có công ty con Viện nghiên cứu Ứng dụng công nghệ CMC. Tỷ lệ sở hữu 100.0000%.
+CMG (CMG) có công ty con Công ty TNHH CMC Blue France. Tỷ lệ sở hữu 100.0000%.
+VGI (VGI) có công ty con Myanmar National Tele And Communications Co., Ltd. Tỷ lệ sở hữu 49.0000%.
+VGI (VGI) có công ty con Công ty National Telecom S.A. Tỷ lệ sở hữu 60.0000%.
+VGI (VGI) có công ty con Công ty TNHH Viễn Thông Star. Tỷ lệ sở hữu 49.0000%.
+VGI (VGI) có công ty con Công ty TNHH Viettel Tanzania. Tỷ lệ sở hữu 99.9000%.
+VGI (VGI) có công ty con Công ty TNHH Viettel Cambodia. Tỷ lệ sở hữu 90.0000%.
+VGI (VGI) có công ty con Công ty Viettel Timor Leste. Tỷ lệ sở hữu 100.0000%.
+VGI (VGI) có công ty con Công ty TNHH Movitel. Tỷ lệ sở hữu 70.0000%.
+VGI (VGI) có công ty con Công ty Viettel Burundi S.A. Tỷ lệ sở hữu 85.0000%.
+VGI (VGI) có công ty con Công ty TNHH Viettel Overseas. Tỷ lệ sở hữu 0.0000%.
+VGI (VGI) có công ty con Công ty Viettel Cameroon S.A.R.L. Tỷ lệ sở hữu 0.0000%.
+VGI (VGI) có công ty con Công ty M-Mola S.A. Tỷ lệ sở hữu 0.0000%.
+VGI (VGI) có công ty con Công ty TNHH Viettel E-commerce. Tỷ lệ sở hữu 0.0000%.
+VGI (VGI) có công ty con Công ty TNHH Metcom. Tỷ lệ sở hữu 0.0000%.
+CTR (CTR) có công ty con Viettel Construction Myanmar Co., Ltd. Tỷ lệ sở hữu 99.9976%.
+CTR (CTR) có công ty con Viettel Construction Lao Co.,Ltd. Tỷ lệ sở hữu 0.0000%.
+CTR (CTR) có công ty con Viettel Construction Cameroun S.A. Tỷ lệ sở hữu 0.0000%.
+CTR (CTR) có công ty con Viettel Construction Mozambique, Lda. Tỷ lệ sở hữu 0.0000%.
+CTR (CTR) có công ty con Viettel Construction Cambodia Co.,Ltd. Tỷ lệ sở hữu 100.0000%.
+CTR (CTR) có công ty con Viettel Construction Peru S.A.C. Tỷ lệ sở hữu 0.0000%.
+CTR (CTR) có công ty con Viettel Construction Burundi S.A. Tỷ lệ sở hữu 0.0000%.
+CTR (CTR) có công ty con Viettel Construction Tanzania Ltd. Tỷ lệ sở hữu 0.0000%.
+CTR (CTR) có công ty con Viettel Construction Haiti S.A. Tỷ lệ sở hữu 0.0000%.
+MWG (MWG) có công ty con CTCP Công nghệ và Đầu tư Bách Hóa Xanh. Tỷ lệ sở hữu 94.9986%.
+MWG (MWG) có công ty con CTCP Thương mại Bách Hóa Xanh. Tỷ lệ sở hữu 0.0000%.
+MWG (MWG) có công ty con CTCP Thế giới di động. Tỷ lệ sở hữu 99.9500%.
+MWG (MWG) có công ty con CTCP Thế giới số Trần Anh (TAG). Tỷ lệ sở hữu 99.3300%.
+MWG (MWG) có công ty con Công ty TNHH MTV Công nghệ thông tin Thế giới di động. Tỷ lệ sở hữu 100.0000%.
+MWG (MWG) có công ty con CTCP 4K Farm. Tỷ lệ sở hữu 0.0000%.
+MWG (MWG) có công ty con CTCP Logistics Toàn Tín. Tỷ lệ sở hữu 0.0000%.
+MWG (MWG) có công ty con CTCP Dịch vụ lắp đặt - Sửa chữa - Bảo hành Tận Tâm. Tỷ lệ sở hữu 99.9989%.
+MWG (MWG) có công ty con CTCP Bán lẻ An Khang. Tỷ lệ sở hữu 0.0000%.
+FRT (FRT) có công ty con CTCP Dược phẩm FPT Long Châu. Tỷ lệ sở hữu 0.0000%.
+FRT (FRT) có công ty con CTCP Hữu Nghị Việt Hàn. Tỷ lệ sở hữu 99.9799%.
+FRT (FRT) có công ty con CTCP Đầu tư FPT Long Châu. Tỷ lệ sở hữu 80.7400%.
+PNJ (PNJ) có công ty con Công ty TNHH MTV Chế tác và Kinh doanh trang sức PNJ. Tỷ lệ sở hữu 100.0000%.
+PNJ (PNJ) có công ty con Công ty TNHH MTV Thời trang CAO. Tỷ lệ sở hữu 100.0000%.
+PNJ (PNJ) có công ty con CTCP Nhiên liệu Sài Gòn (SFC). Tỷ lệ sở hữu 0.0000%.
+PNJ (PNJ) có công ty con Công ty TNHH MTV Kỷ nguyên Khách hàng. Tỷ lệ sở hữu 0.0000%.
+PNJ (PNJ) có công ty con Công ty TNHH MTV Giám định PNJ. Tỷ lệ sở hữu 100.0000%.
+DCM (DCM) có công ty con Công ty TNHH Phân bón Hàn - Việt. Tỷ lệ sở hữu 100.0000%.
+DCM (DCM) có công ty con CTCP Bao bì dầu khí Việt Nam (PBP). Tỷ lệ sở hữu 51.0295%.
+VNM (VNM) có công ty con CTCP Thành Thành Công - Biên Hòa (SBT). Tỷ lệ sở hữu 0.0000%.
+VNM (VNM) có công ty con CTCP Hàng tiêu dùng Biên Hòa (BHS). Tỷ lệ sở hữu 0.0000%.
+VNM (VNM) có công ty con CTCP GTNFOODS (GTN). Tỷ lệ sở hữu 0.0000%.
+VNM (VNM) có công ty con Công ty TNHH MTV Bò Sữa Việt Nam. Tỷ lệ sở hữu 100.0000%.
+VNM (VNM) có công ty con Tổng Công ty Chăn nuôi Việt Nam - CTCP (VLC). Tỷ lệ sở hữu 68.9365%.
+VNM (VNM) có công ty con Công ty TNHH MTV Bò sữa Thống Nhất Thanh Hóa. Tỷ lệ sở hữu 100.0000%.
+VNM (VNM) có công ty con CTCP Giống Bò sữa Mộc Châu (MCM). Tỷ lệ sở hữu 8.8525%.
+VNM (VNM) có công ty con Angkor Dairy Products Co, Ltd.. Tỷ lệ sở hữu 100.0000%.
+VNM (VNM) có công ty con Driftwood Dairy Holdings Corporation. Tỷ lệ sở hữu 100.0000%.
+VNM (VNM) có công ty con CTCP SEAREFICO (SRF). Tỷ lệ sở hữu 0.0000%.
+VNM (VNM) có công ty con CTCP Chế biến dừa Á Châu. Tỷ lệ sở hữu 24.9600%.
+VNM (VNM) có công ty con CTCP Bao bì Dầu thực vật (VPK). Tỷ lệ sở hữu 0.0000%.
+VNM (VNM) có công ty con CTCP Nguyên liệu Thực phẩm Á Châu Sài Gòn. Tỷ lệ sở hữu 15.0000%.
+VNM (VNM) có công ty con CTCP Đường Việt Nam. Tỷ lệ sở hữu 65.0000%.
+VNM (VNM) có công ty con CTCP Cấp nước Gia Định (GDW). Tỷ lệ sở hữu 0.0000%.
+VNM (VNM) có công ty con CTCP Cấp nước Thủ Đức (TDW). Tỷ lệ sở hữu 0.0000%.
+VNM (VNM) có công ty con CTCP APIS. Tỷ lệ sở hữu 20.0000%.
+VNM (VNM) có công ty con Miraka Holdings Limited. Tỷ lệ sở hữu 13.5500%.
+VNM (VNM) có công ty con Vinamilk Europe Spóstka Z Organiczonna Odpowiedzialnoscia. Tỷ lệ sở hữu 0.0000%.
+VNM (VNM) có công ty con Lao-Jagro Development Xiengkhouang Co.,Ltd. Tỷ lệ sở hữu 92.0700%.
+VNM (VNM) có công ty con Công ty TNHH Liên doanh Thực phẩm và Đồ uống Vibev. Tỷ lệ sở hữu 0.0000%.
+VNM (VNM) có công ty con Del Monte - Vinamilk Dairy Inc., Philippines. Tỷ lệ sở hữu 0.0000%.
+MSN (MSN) có công ty con Ngân hàng TMCP Kỹ thương Việt Nam (TCB). Tỷ lệ sở hữu 14.7981%.
+MSN (MSN) có công ty con Công ty TNHH The Sherpa. Tỷ lệ sở hữu 100.0000%.
+MSN (MSN) có công ty con CTCP Masan MeatLife (MML). Tỷ lệ sở hữu 0.0000%.
+MSN (MSN) có công ty con Công ty TNHH Zenith Investment. Tỷ lệ sở hữu 100.0000%.
+MSN (MSN) có công ty con Công ty TNHH MasanConsumerHoldings. Tỷ lệ sở hữu 0.0000%.
+MSN (MSN) có công ty con Công ty TNHH Tầm nhìn Masan. Tỷ lệ sở hữu 0.0000%.
+SAB (SAB) có công ty con Tập đoàn Bảo Việt (BVH). Tỷ lệ sở hữu 0.0000%.
+SAB (SAB) có công ty con CTCP Thuỷ Điện Miền Nam (SHP). Tỷ lệ sở hữu 0.0000%.
+SAB (SAB) có công ty con CTCP Tập đoàn Bia Sài Gòn Bình Tây (SBB). Tỷ lệ sở hữu 59.6258%.
+SAB (SAB) có công ty con Công ty TNHH MTV Thương mại Bia Sài Gòn. Tỷ lệ sở hữu 100.0000%.
+SAB (SAB) có công ty con CTCP Bia Sài Gòn - Quảng Ngãi (BSQ). Tỷ lệ sở hữu 66.5556%.
+SAB (SAB) có công ty con CTCP Bia Sài Gòn - Sông Lam (BSL). Tỷ lệ sở hữu 68.7778%.
+SAB (SAB) có công ty con Công ty TNHH Thủy tinh Malaya - Việt Nam. Tỷ lệ sở hữu 30.0000%.
+SAB (SAB) có công ty con CTCP Bia Sài Gòn - Miền Trung (SMB). Tỷ lệ sở hữu 32.2226%.
+SAB (SAB) có công ty con Công ty Liên doanh TNHH Crown Sài Gòn. Tỷ lệ sở hữu 30.0000%.
+SAB (SAB) có công ty con CTCP Chứng khoán Đại Việt (DVSC). Tỷ lệ sở hữu 7.2000%.
+SAB (SAB) có công ty con Công ty TNHH Đầu tư Thương mại Tân Thành. Tỷ lệ sở hữu 29.0000%.
+SAB (SAB) có công ty con Công ty TNHH Trung tâm Mê Linh. Tỷ lệ sở hữu 25.0000%.
+SAB (SAB) có công ty con CTCP Bia Sài Gòn - Lâm Đồng. Tỷ lệ sở hữu 52.9100%.
+SAB (SAB) có công ty con CTCP Bia - Nước giải khát Sài Gòn - Tây Đô (STD). Tỷ lệ sở hữu 14.4075%.
+SAB (SAB) có công ty con CTCP Bia Sài Gòn - Hà Nội (BSH). Tỷ lệ sở hữu 52.1111%.
+SAB (SAB) có công ty con Công ty TNHH MTV Bia Sài Gòn - Phủ Lý. Tỷ lệ sở hữu 0.0000%.
+SAB (SAB) có công ty con CTCP Du lịch Dầu khí Phương Đông (PDC). Tỷ lệ sở hữu 9.8000%.
+SAB (SAB) có công ty con CTCP Bia Sài Gòn - Vĩnh Long. Tỷ lệ sở hữu 20.0000%.
+SAB (SAB) có công ty con CTCP Bia Sài Gòn - Miền Tây (WSB). Tỷ lệ sở hữu 86.3245%.
+SAB (SAB) có công ty con CTCP Rượu Bình Tây. Tỷ lệ sở hữu 91.7500%.
+SAB (SAB) có công ty con CTCP Bia Sài Gòn - Phú Thọ (BSP). Tỷ lệ sở hữu 27.0300%.
+SAB (SAB) có công ty con CTCP Bia Sài Gòn - Bạc Liêu (SBL). Tỷ lệ sở hữu 20.0000%.
+SAB (SAB) có công ty con Công ty TNHH MTV Bia Sài Gòn - Hà Tĩnh. Tỷ lệ sở hữu 100.0000%.
+SAB (SAB) có công ty con CTCP Bia Sài Gòn - Kiên Giang. Tỷ lệ sở hữu 20.0000%.
+SAB (SAB) có công ty con CTCP Bia Sài Gòn - Nghệ Tĩnh (SB1). Tỷ lệ sở hữu 54.7333%.
+SAB (SAB) có công ty con CTCP Bia Sài Gòn - Bến Tre. Tỷ lệ sở hữu 20.0000%.
+SAB (SAB) có công ty con CTCP Bia Sài Gòn - Khánh Hòa. Tỷ lệ sở hữu 26.0000%.
+SAB (SAB) có công ty con CTCP Thương mại Bia Sài Gòn Trung Tâm. Tỷ lệ sở hữu 94.4700%.
+SAB (SAB) có công ty con CTCP Nước giải khát Chương Dương (SCD). Tỷ lệ sở hữu 62.0600%.
+SAB (SAB) có công ty con CTCP Vận tải và Giao nhận Bia Sài Gòn (SBC). Tỷ lệ sở hữu 13.5400%.
+SAB (SAB) có công ty con CTCP Bao bì Bia Sài Gòn. Tỷ lệ sở hữu 76.8100%.
+SAB (SAB) có công ty con Công ty TNHH Sản xuất Rượu và Cồn Việt Nam. Tỷ lệ sở hữu 45.0000%.
+SAB (SAB) có công ty con CTCP Thương mại Bia Sài Gòn miền Trung. Tỷ lệ sở hữu 91.2400%.
+SAB (SAB) có công ty con CTCP Thương mại Bia Sài Gòn Nam Trung Bộ. Tỷ lệ sở hữu 90.1400%.
+SAB (SAB) có công ty con Công ty TNHH MTV Cơ khí SABECO. Tỷ lệ sở hữu 100.0000%.
+SAB (SAB) có công ty con Công ty TNHH Bao bì San Miguel Yamamura Phú Thọ. Tỷ lệ sở hữu 35.0000%.
+SAB (SAB) có công ty con CTCP Thương mại Bia Sài Gòn Sông Hậu. Tỷ lệ sở hữu 90.0000%.
+SAB (SAB) có công ty con CTCP Thương mại Bia Sài Gòn miền Đông. Tỷ lệ sở hữu 90.6800%.
+SAB (SAB) có công ty con CTCP Thương mại Bia Sài Gòn Bắc Trung Bộ. Tỷ lệ sở hữu 95.0700%.
+SAB (SAB) có công ty con CTCP Thương mại Bia Sài Gòn Đông Bắc. Tỷ lệ sở hữu 90.4500%.
+SAB (SAB) có công ty con CTCP Thương mại Bia Sài Gòn Miền Bắc. Tỷ lệ sở hữu 90.0000%.
+SAB (SAB) có công ty con CTCP Thương mại Bia Sài Gòn Sông Tiền (SST). Tỷ lệ sở hữu 90.0000%.
+SAB (SAB) có công ty con Công ty TNHH MTV Tập đoàn Bia Sài Gòn. Tỷ lệ sở hữu 100.0000%.
+SAB (SAB) có công ty con CTCP Thương mại Bia Sài Gòn Tây Nguyên. Tỷ lệ sở hữu 90.0000%.
+SAB (SAB) có công ty con CTCP Cơ khí và Xây lắp Công nghiệp (IME). Tỷ lệ sở hữu 0.0000%.
+SAB (SAB) có công ty con CTCP Bia, Rượu Sài Gòn - Đồng Xuân (BSD). Tỷ lệ sở hữu 51.2350%.
+SAB (SAB) có công ty con CTCP Kinh doanh Lương thực - Thực phẩm Trường Sa. Tỷ lệ sở hữu 28.3500%.
+SAB (SAB) có công ty con Công ty TNHH MTV Bia Sài Gòn. Tỷ lệ sở hữu 100.0000%.
+KDC (KDC) có công ty con CTCP Thành Thành Công - Biên Hòa (SBT). Tỷ lệ sở hữu 0.0000%.
+KDC (KDC) có công ty con Tổng Công ty Công nghiệp dầu thực vật Việt Nam - CTCP (VOC). Tỷ lệ sở hữu 87.2988%.
+KDC (KDC) có công ty con CTCP Tập đoàn Thiên Long (TLG). Tỷ lệ sở hữu 0.0000%.
+KDC (KDC) có công ty con CTCP Đầu tư Lavenue. Tỷ lệ sở hữu 50.0000%.
+KDC (KDC) có công ty con CTCP Thực phẩm Đông lạnh KIDO (KDF). Tỷ lệ sở hữu 48.9987%.
+KDC (KDC) có công ty con CTCP Thọ Phát Quốc Tế. Tỷ lệ sở hữu 68.0000%.
+KDC (KDC) có công ty con CTCP Dầu thực vật Tường An (TAC). Tỷ lệ sở hữu 72.3900%.
+KDC (KDC) có công ty con Công ty TNHH Nam Đô Long An. Tỷ lệ sở hữu 100.0000%.
+KDC (KDC) có công ty con CTCP Hùng Vương. Tỷ lệ sở hữu 75.3900%.
+KDC (KDC) có công ty con CTCP Chế biến thực phẩm Dabaco. Tỷ lệ sở hữu 50.0000%.
+KDC (KDC) có công ty con Công ty TNHH MTV Thực phẩm Kiến Hưng. Tỷ lệ sở hữu 0.0000%.
+KDC (KDC) có công ty con CTCP Đầu tư Thương mại TTV. Tỷ lệ sở hữu 0.0000%.
+KDC (KDC) có công ty con Công ty TNHH Kido - Nhà Bè. Tỷ lệ sở hữu 51.0000%.
+KDC (KDC) có công ty con Công ty TNHH MTV Thực phẩm KIDO. Tỷ lệ sở hữu 100.0000%.
+KDC (KDC) có công ty con Công ty TNHH Thương mại và Dịch vụ KIDO. Tỷ lệ sở hữu 100.0000%.
+KDC (KDC) có công ty con Công ty TNHH MTV Quốc Tế Nhất Hảo. Tỷ lệ sở hữu 0.0000%.
+KDC (KDC) có công ty con CTCP Đầu tư phát triển Phong Thịnh. Tỷ lệ sở hữu 0.0000%.
+KDC (KDC) có công ty con CTCP Thương mại và Hợp tác Quốc tế Hà Nội. Tỷ lệ sở hữu 0.0000%.
+KDC (KDC) có công ty con Công ty TNHH Địa ốc Tân An Phước. Tỷ lệ sở hữu 0.0000%.
+KDC (KDC) có công ty con Công ty TNHH Liên doanh Thực phẩm và Đồ uống Vibev. Tỷ lệ sở hữu 0.0000%.
+VHC (VHC) có công ty con Công ty TNHH Chế biến thực phẩm xuất khẩu Vạn Đức Tiền Giang. Tỷ lệ sở hữu 0.0000%.
+VHC (VHC) có công ty con Công ty TNHH MTV Thực phẩm Vĩnh Phước. Tỷ lệ sở hữu 100.0000%.
+VHC (VHC) có công ty con CTCP Nông sản Thực phẩm Thành Ngọc. Tỷ lệ sở hữu 81.6000%.
+VHC (VHC) có công ty con Công ty TNHH MTV Thanh Bình Đồng Tháp. Tỷ lệ sở hữu 100.0000%.
+VHC (VHC) có công ty con Công ty TNHH Thức ăn thủy sản Feed One. Tỷ lệ sở hữu 75.0000%.
+VHC (VHC) có công ty con Công ty TNHH Sản xuất giống cá tra Vĩnh Hoàn. Tỷ lệ sở hữu 99.3300%.
+VHC (VHC) có công ty con Công ty TNHH MTV Vĩnh Hoàn Collagen. Tỷ lệ sở hữu 100.0000%.
+VHC (VHC) có công ty con Công ty TNHH Lương thực Vĩnh Hoàn 2. Tỷ lệ sở hữu 0.0000%.
+VHC (VHC) có công ty con CTCP Xuất nhập khẩu Sa Giang (SGC). Tỷ lệ sở hữu 76.7159%.
+VHC (VHC) có công ty con Octogone Holdings Pte. Ltd. Tỷ lệ sở hữu 0.0000%.
+VHC (VHC) có công ty con Vinh Technology Pte. Ltd. Tỷ lệ sở hữu 100.0000%.
+VHC (VHC) có công ty con CTCP Thủy sản Thanh Bình. Tỷ lệ sở hữu 0.0000%.
+VHC (VHC) có công ty con Octogone (Guangzhou) Trading Co., Ltd.. Tỷ lệ sở hữu 0.0000%.
+MPC (MPC) có công ty con Tổng CTCP Vận tải Dầu khí (PVT). Tỷ lệ sở hữu 0.0000%.
+MPC (MPC) có công ty con Công ty TNHH Thủy hải sản Minh Phú - Kiên Giang. Tỷ lệ sở hữu 99.8900%.
+MPC (MPC) có công ty con CTCP Thủy sản Minh Phú Hậu Giang. Tỷ lệ sở hữu 98.2700%.
+MPC (MPC) có công ty con Công ty TNHH Nuôi trồng thủy sản Minh Phú - Lộc An. Tỷ lệ sở hữu 100.0000%.
+MPC (MPC) có công ty con Công ty TNHH Nông nghiệp công nghệ cao Minh Phú. Tỷ lệ sở hữu 100.0000%.
+MPC (MPC) có công ty con Công ty TNHH Chế biến thủy sản Minh Phát. Tỷ lệ sở hữu 99.1700%.
+MPC (MPC) có công ty con Công ty TNHH Sản xuất giống thủy sản Minh Phú. Tỷ lệ sở hữu 99.8300%.
+MPC (MPC) có công ty con Công ty TNHH Chế biến thủy sản Minh Quí. Tỷ lệ sở hữu 99.5000%.
+MPC (MPC) có công ty con Công ty TNHH Thức ăn Tôm xanh Minh Phú. Tỷ lệ sở hữu 50.0000%.
+MPC (MPC) có công ty con CTCP Mekong Logistic. Tỷ lệ sở hữu 0.0000%.
+MPC (MPC) có công ty con Công ty TNHH Thực phẩm xanh Minh Phú. Tỷ lệ sở hữu 100.0000%.
+MPC (MPC) có công ty con Công ty TNHH MTV Chuỗi cung ứng Thủy sản Minh Phú. Tỷ lệ sở hữu 100.0000%.
+MPC (MPC) có công ty con Ebisumo Logistics Co., Ltd. Tỷ lệ sở hữu 100.0000%.
+MPC (MPC) có công ty con Công ty TNHH Sản xuất chế phẩm sinh học Minh Phú. Tỷ lệ sở hữu 100.0000%.
+MPC (MPC) có công ty con Công ty TNHH Dịch vụ kỹ thuật nuôi trồng thủy sản Minh Phú Aquamekong. Tỷ lệ sở hữu 49.0000%.
+MPC (MPC) có công ty con Công ty TNHH Xã hội Tôm chứng nhận Minh Phú. Tỷ lệ sở hữu 66.6700%.
+MPC (MPC) có công ty con Công ty TNHH Xuất khẩu Thủy sản Minh Phú. Tỷ lệ sở hữu 100.0000%.
+MPC (MPC) có công ty con CTCP Công nghệ Otanics. Tỷ lệ sở hữu 51.0000%.
+MPC (MPC) có công ty con Mseafood Corporation. Tỷ lệ sở hữu 90.0000%.
+NSC (NSC) có công ty con Công ty TNHH Lúa gạo Việt Nam. Tỷ lệ sở hữu 98.9200%.
+NSC (NSC) có công ty con CTCP Giống cây trồng Miền Nam (SSC). Tỷ lệ sở hữu 96.4100%.
+NSC (NSC) có công ty con CTCP Đầu tư và Phát triển nông nghiệp công nghệ cao Hà Nam. Tỷ lệ sở hữu 94.0000%.
+NSC (NSC) có công ty con CTCP Đầu tư và Phát triển Vinaseed Hà Nội. Tỷ lệ sở hữu 53.8030%.
+NSC (NSC) có công ty con CTCP Giống cây trồng Trung ương Quảng Nam. Tỷ lệ sở hữu 90.0200%.
+GMD (GMD) có công ty con Ngân hàng TMCP Quốc Dân (NVB). Tỷ lệ sở hữu 0.0000%.
+GMD (GMD) có công ty con CTCP Cảng Cái Mép Gemadept - Terminal Link. Tỷ lệ sở hữu 41.6700%.
+GMD (GMD) có công ty con CTCP Dịch vụ Hàng hóa Sài Gòn (SCS). Tỷ lệ sở hữu 33.4228%.
+GMD (GMD) có công ty con CTCP Hoa Sen Thái Bình Dương. Tỷ lệ sở hữu 100.0000%.
+GMD (GMD) có công ty con CTCP Hòn ngọc Thái Bình Dương. Tỷ lệ sở hữu 100.0000%.
+GMD (GMD) có công ty con CTCP Niềm kiêu hãnh Thái Bình Dương. Tỷ lệ sở hữu 100.0000%.
+GMD (GMD) có công ty con Công ty TNHH Cảng Phước Long. Tỷ lệ sở hữu 100.0000%.
+GMD (GMD) có công ty con Công ty TNHH CJ - Gemadept Logistics Holdings. Tỷ lệ sở hữu 49.1000%.
+GMD (GMD) có công ty con Công ty TNHH Golden Globe. Tỷ lệ sở hữu 40.0000%.
+GMD (GMD) có công ty con Công ty TNHH Tiếp vận "K" Line - Gemadept. Tỷ lệ sở hữu 50.0000%.
+GMD (GMD) có công ty con Công ty TNHH CJ - Gemadept Shipping Holdings. Tỷ lệ sở hữu 51.0000%.
+GMD (GMD) có công ty con Công ty TNHH MTV Tiếp vận Gemadept. Tỷ lệ sở hữu 0.0000%.
+GMD (GMD) có công ty con CTCP ICD Nam Hải. Tỷ lệ sở hữu 65.0000%.
+GMD (GMD) có công ty con Công ty TNHH Thương mại Quả cầu vàng. Tỷ lệ sở hữu 45.0000%.
+GMD (GMD) có công ty con CTCP Thép Thủ Đức - VNSTEEL (TDS). Tỷ lệ sở hữu 4.8056%.
+GMD (GMD) có công ty con CTCP Đầu tư xây dựng và phát triển hạ tầng Gemadept. Tỷ lệ sở hữu 50.0000%.
+GMD (GMD) có công ty con Công ty TNHH MTV Công nghiệp cao su Thái Bình Dương. Tỷ lệ sở hữu 100.0000%.
+GMD (GMD) có công ty con CTCP Dịch vụ Cảng Nam Đình vũ. Tỷ lệ sở hữu 48.5000%.
+GMD (GMD) có công ty con CTCP Gemadept - Vũng Tàu. Tỷ lệ sở hữu 70.0000%.
+GMD (GMD) có công ty con Công ty TNHH MTV Vận tải biển Gemadept. Tỷ lệ sở hữu 0.0000%.
+GMD (GMD) có công ty con CTCP Dịch vụ vận tải Trường Thọ. Tỷ lệ sở hữu 46.0000%.
+GMD (GMD) có công ty con CTCP Liên hợp thực phẩm (FCC). Tỷ lệ sở hữu 26.5613%.
+GMD (GMD) có công ty con CTCP Cảng quốc tế Gemadept - Dung Quất. Tỷ lệ sở hữu 80.4000%.
+GMD (GMD) có công ty con Công ty TNHH Dịch vụ vận tải tổng hợp V.N.M. Tỷ lệ sở hữu 100.0000%.
+GMD (GMD) có công ty con CTCP Khoáng sản Mangan (MMC). Tỷ lệ sở hữu 0.0000%.
+GMD (GMD) có công ty con Công ty TNHH MTV Gemadept Hải Phòng. Tỷ lệ sở hữu 0.0000%.
+GMD (GMD) có công ty con CTCP Gemadept Miền Trung. Tỷ lệ sở hữu 75.0000%.
+GMD (GMD) có công ty con Công ty TNHH MTV Vận tải hàng hải Thái Bình Dương. Tỷ lệ sở hữu 100.0000%.
+GMD (GMD) có công ty con Công ty TNHH Thiết bị và dịch vụ Hàng hải Thái Bình Dương. Tỷ lệ sở hữu 100.0000%.
+GMD (GMD) có công ty con Công ty TNHH ISS - Gemadept. Tỷ lệ sở hữu 50.9999%.
+GMD (GMD) có công ty con CTCP Cảng Nam Đình Vũ. Tỷ lệ sở hữu 60.0000%.
+GMD (GMD) có công ty con Công ty TNHH Dịch vụ tin học Vĩ Tín. Tỷ lệ sở hữu 0.0000%.
+GMD (GMD) có công ty con CTCP Du lịch - Minh Đạm. Tỷ lệ sở hữu 40.0000%.
+GMD (GMD) có công ty con CTCP Thương cảng Vũng Tàu. Tỷ lệ sở hữu 26.7800%.
+GMD (GMD) có công ty con CTCP Tiếp vận và Cảng Quốc Tế Hoa Sen - Gemadept. Tỷ lệ sở hữu 0.0000%.
+GMD (GMD) có công ty con CTCP Vận tải và Dịch vụ điện lực. Tỷ lệ sở hữu 0.0000%.
+GMD (GMD) có công ty con Công ty TNHH MTV Logistics Biển Sáng. Tỷ lệ sở hữu 0.0000%.
+GMD (GMD) có công ty con CTCP Cảng Nam Hải. Tỷ lệ sở hữu 0.0000%.
+GMD (GMD) có công ty con CTCP Cảng Nam Hải Đình Vũ. Tỷ lệ sở hữu 0.0000%.
+GMD (GMD) có công ty con CTCP Cảng quốc tế Gemadept Nhơn Hội. Tỷ lệ sở hữu 0.0000%.
+GMD (GMD) có công ty con Gemadept Malaysia Ltd. Tỷ lệ sở hữu 0.0000%.
+GMD (GMD) có công ty con Gemadept Singapore Ltd. Tỷ lệ sở hữu 0.0000%.
+PHP (PHP) có công ty con Công ty TNHH Smart Logistics Service (Hải Phòng). Tỷ lệ sở hữu 28.7500%.
+PHP (PHP) có công ty con CTCP Đầu tư và Phát triển Cảng Đình Vũ (DVP). Tỷ lệ sở hữu 51.0000%.
+PHP (PHP) có công ty con Công  ty TNHH MTV Cảng Hoàng Diệu Chùa Vẽ. Tỷ lệ sở hữu 100.0000%.
+PHP (PHP) có công ty con CTCP VIMC Logistics (VLG). Tỷ lệ sở hữu 0.0000%.
+PHP (PHP) có công ty con CTCP Đầu tư phát triển dịch vụ Cảng Hải Phòng. Tỷ lệ sở hữu 30.5243%.
+PHP (PHP) có công ty con CTCP Đầu tư và Thương mại Hàng hải Hải Phòng. Tỷ lệ sở hữu 27.6100%.
+PHP (PHP) có công ty con CTCP Lai dắt và Vận tải Cảng Hải Phòng (TUG). Tỷ lệ sở hữu 60.2782%.
+PHP (PHP) có công ty con Công ty TNHH KM Cargo Services Hải Phòng. Tỷ lệ sở hữu 36.0000%.
+PHP (PHP) có công ty con CTCP Vận tải Container Đông Đô - Cảng Hải Phòng. Tỷ lệ sở hữu 0.0000%.
+PHP (PHP) có công ty con CTCP HPH Logistics. Tỷ lệ sở hữu 38.8100%.
+PHP (PHP) có công ty con CTCP Vinalines Đông Bắc. Tỷ lệ sở hữu 25.0000%.
+PHP (PHP) có công ty con CTCP Logistics Cảng Sài Gòn. Tỷ lệ sở hữu 20.0000%.
+PHP (PHP) có công ty con Công ty TNHH MTV Trung tâm y tế Cảng Hải Phòng. Tỷ lệ sở hữu 100.0000%.
+PHP (PHP) có công ty con CTCP Dịch vụ kỹ thuật và Đào tạo cảng Hải Phòng. Tỷ lệ sở hữu 100.0000%.
+VTP (VTP) có công ty con Công ty TNHH MTV Dịch vụ và Thương mại Viettelpost. Tỷ lệ sở hữu 100.0000%.
+VTP (VTP) có công ty con Công ty TNHH MTV Dịch vụ kho vận Vietel. Tỷ lệ sở hữu 100.0000%.
+VTP (VTP) có công ty con Công ty TNHH MTV Logistics Viettel. Tỷ lệ sở hữu 100.0000%.
+VTP (VTP) có công ty con Công ty TNHH Mygo Campuchia. Tỷ lệ sở hữu 100.0000%.
+VTP (VTP) có công ty con Công ty TNHH VTP Myanmar. Tỷ lệ sở hữu 100.0000%.
+VTP (VTP) có công ty con Công ty TNHH MTV Viettel Post Lào. Tỷ lệ sở hữu 100.0000%.
+SSI (SSI) có công ty con Ngân hàng TMCP Quân Đội (MBB). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Tập đoàn Hòa Phát (HPG). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con Ngân hàng TMCP Đầu tư và Phát triển Việt Nam (BID). Tỷ lệ sở hữu 0.0179%.
+SSI (SSI) có công ty con Ngân hàng TMCP Á Châu (ACB). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con Ngân Hàng TMCP Tiên Phong (TPB). Tỷ lệ sở hữu 0.7465%.
+SSI (SSI) có công ty con Tổng Công ty khí Việt Nam - CTCP (GAS). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con Tổng CTCP Khoan và Dịch vụ Khoan Dầu khí (PVD). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con Tổng CTCP Dịch vụ Kỹ thuật Dầu khí Việt Nam (PVS). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Tập đoàn Dabaco Việt Nam (DBC). Tỷ lệ sở hữu 2.1610%.
+SSI (SSI) có công ty con CTCP Thủy điện Vĩnh Sơn - Sông Hinh (VSH). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Hùng Vương (HVG). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Chứng khoán APG (APG). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Tập đoàn PAN (PAN). Tỷ lệ sở hữu 12.3113%.
+SSI (SSI) có công ty con CTCP Lizen (LCG). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Transimex (TMS). Tỷ lệ sở hữu 0.1092%.
+SSI (SSI) có công ty con CTCP Vicostone (VCS). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Dược phẩm Imexpharm (IMP). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Supe Phốt phát và Hóa chất Lâm Thao (LAS). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Công nghệ - Viễn thông ELCOM (ELC). Tỷ lệ sở hữu 4.2737%.
+SSI (SSI) có công ty con Tổng CTCP Dịch vụ Tổng hợp Dầu khí (PET). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Thức ăn chăn nuôi Việt Thắng (VTF). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Sản xuất kinh doanh Xuất nhập khẩu Bình Thạnh (GIL). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Đông Hải Bến Tre (DHC). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Vận tải và Thuê tàu biển Việt Nam (VST). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Ánh Dương Việt Nam (VNS). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Dược phẩm OPC (OPC). Tỷ lệ sở hữu 0.1739%.
+SSI (SSI) có công ty con CTCP Đại Thiên Lộc (DTL). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Tập đoàn EDX (DCS). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Cảng Đồng Nai (PDN). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con Quỹ Đầu tư thành viên SSI. Tỷ lệ sở hữu 76.1500%.
+SSI (SSI) có công ty con CTCP Chương Dương (CDC). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Khoáng sản và Vật liệu Xây dựng Lâm Đồng (LBM). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Đầu tư và Phát triển dự án Hạ tầng Thái Bình Dương (PPI). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Khử trùng Việt Nam (VFG). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Vận tải Biển và Bất động sản Việt Hải (VSP). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Phân lân nung chảy Văn Điển (VAF). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Ô tô TMT (TMT). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Phục vụ mặt đất Sài Gòn (SGN). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Kính Đáp Cầu (DSG). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Tư vấn Xây dựng Điện 1 (TV1). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Đầu tư Phát triển Hạ tầng IDICO (HTI). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Chế biến và Xuất nhập khẩu Thủy sản Cadovimex (CAD). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con Quỹ ETF SSIAM VNFIN LEAD (FUESSVFL). Tỷ lệ sở hữu 0.0449%.
+SSI (SSI) có công ty con CTCP Bibica (BBC). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Tập đoàn Giống cây trồng Việt Nam (NSC). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Xây dựng và Kinh doanh Địa ốc Tân Kỷ (TKC). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Chế biến Hàng xuất khẩu Long An (LAF). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Bao bì Nhựa Tân Tiến (TTP). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Giống cây trồng Miền Nam (SSC). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Xuất nhập khẩu Thuỷ sản Bến Tre (ABT). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Vật tư - Xăng dầu (COM). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Nhiệt điện Ninh Bình (NBP). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Dược phẩm Viễn Đông (DVD). Tỷ lệ sở hữu 0.0241%.
+SSI (SSI) có công ty con CTCP Xây dựng công nghiệp - DCC (DCC). Tỷ lệ sở hữu 6.0640%.
+SSI (SSI) có công ty con Công ty TNHH Quản lý quỹ SSI. Tỷ lệ sở hữu 100.0000%.
+SSI (SSI) có công ty con Quỹ ETF SSIAM VNX50 (FUESSV50). Tỷ lệ sở hữu 10.0719%.
+SSI (SSI) có công ty con CTCP Nhựa Sam Phú (NSP). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con Quỹ Đầu tư công nghệ số và Y tế Việt Nam. Tỷ lệ sở hữu 20.0000%.
+SSI (SSI) có công ty con CTCP Bao bì PP (HPB). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Xuất Nhập khẩu Hàng Không (ARM). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Đầu tư xây dựng và Phát triển Hạ tầng Viễn thông (QCC). Tỷ lệ sở hữu 0.0000%.
+SSI (SSI) có công ty con CTCP Lắp máy - Thí nghiệm Cơ Điện (LCD). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con Ngân hàng TMCP An Bình (ABB). Tỷ lệ sở hữu 1.8712%.
+VND (VND) có công ty con Ngân hàng TMCP Ngoại thương Việt Nam (VCB). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con Ngân hàng TMCP Quân Đội (MBB). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con Tập đoàn Vingroup - CTCP (VIC). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Sữa Việt Nam (VNM). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP FPT (FPT). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Tập đoàn GELEX (GEX). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Đầu tư Hạ tầng Kỹ thuật Thành phố Hồ Chí Minh (CII). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con Tổng CTCP Dịch vụ Kỹ thuật Dầu khí Việt Nam (PVS). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Đầu tư Nam Long (NLG). Tỷ lệ sở hữu 0.6770%.
+VND (VND) có công ty con Tổng CTCP Vận tải Dầu khí (PVT). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Tập đoàn CIENCO4 (C4G). Tỷ lệ sở hữu 7.7231%.
+VND (VND) có công ty con CTCP Nhiệt điện Phả Lại (PPC). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Tập đoàn Đầu tư I.P.A (IPA). Tỷ lệ sở hữu 0.0095%.
+VND (VND) có công ty con CTCP Phát triển Nhà Bà Rịa - Vũng Tàu (HDC). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Cao Su Đà Nẵng (DRC). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Tập đoàn Nam Mê Kông (VC3). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Đầu tư Tổng hợp Hà Nội (SHN). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Ẩm thực Mặt trời vàng. Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con Tổng CTCP Bảo hiểm Bưu điện (PTI). Tỷ lệ sở hữu 20.0002%.
+VND (VND) có công ty con CTCP Dệt may - Đầu tư - Thương mại Thành Công (TCM). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Tập đoàn BGI (VC7). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Đầu tư Phát triển Cường Thuận IDICO (CTI). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Cảng Đồng Nai (PDN). Tỷ lệ sở hữu 4.6431%.
+VND (VND) có công ty con CTCP Kinh doanh Khí Miền Nam (PGS). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Sông Đà 9 (SD9). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Chiếu xạ An Phú (APC). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Đầu tư Xây dựng và Phát triển Đô thị Sông Đà (SDU). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con Tổng Công ty Xây dựng Thủy lợi 4 - CTCP (TL4). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con Công ty TNHH MTV Quản lý Quỹ Đầu tư Chứng khoán I.P.A. Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con CTCP Du lịch - Dịch vụ Hội An (HOT). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con Quỹ ETF SSIAM VNX50 (FUESSV50). Tỷ lệ sở hữu 0.0000%.
+VND (VND) có công ty con Quỹ ETF IPAAM VN100 (FUEIP100). Tỷ lệ sở hữu 80.1137%.
+HCM (HCM) có công ty con CTCP Hàng không VIETJET (VJC). Tỷ lệ sở hữu 0.0000%.
+HCM (HCM) có công ty con CTCP Đầu tư Nam Long (NLG). Tỷ lệ sở hữu 0.0000%.
+HCM (HCM) có công ty con Quỹ ETF DCVFMVN DIAMOND (FUEVFVND). Tỷ lệ sở hữu 3.2900%.
+HCM (HCM) có công ty con CTCP GTNFOODS (GTN). Tỷ lệ sở hữu 0.0000%.
+HCM (HCM) có công ty con CTCP PVI (PVI). Tỷ lệ sở hữu 1.9698%.
+HCM (HCM) có công ty con Quỹ ETF DCVFMVN30 (E1VFVN30). Tỷ lệ sở hữu 0.1100%.
+HCM (HCM) có công ty con CTCP Phát triển Nhà Thủ Đức (TDH). Tỷ lệ sở hữu 0.0000%.
+HCM (HCM) có công ty con Tổng CTCP Dịch vụ Tổng hợp Dầu khí (PET). Tỷ lệ sở hữu 0.0000%.
+HCM (HCM) có công ty con CTCP Xi măng VICEM Hoàng Mai (HOM). Tỷ lệ sở hữu 0.0000%.
+HCM (HCM) có công ty con CTCP Ánh Dương Việt Nam (VNS). Tỷ lệ sở hữu 0.0000%.
+HCM (HCM) có công ty con CTCP Thủy điện Thác Bà (TBC). Tỷ lệ sở hữu 0.0000%.
+HCM (HCM) có công ty con CTCP Chứng khoán Phố Wall (WSS). Tỷ lệ sở hữu 0.0000%.
+HCM (HCM) có công ty con CTCP Hợp tác kinh tế và Xuất nhập khẩu Savimex (SAV). Tỷ lệ sở hữu 0.0000%.
+HCM (HCM) có công ty con Quỹ ETF DCVFM VNMIDCAP (FUEDCMID). Tỷ lệ sở hữu 1.0638%.
+HCM (HCM) có công ty con CTCP Đầu tư và Xây dựng HUD3 (HU3). Tỷ lệ sở hữu 0.0001%.
+HCM (HCM) có công ty con CTCP Công trình 6 (CT6). Tỷ lệ sở hữu 0.0000%.
+HCM (HCM) có công ty con CTCP Xuất Nhập khẩu Hàng Không (ARM). Tỷ lệ sở hữu 0.0000%.
+VCI (VCI) có công ty con CTCP Đầu tư và Kinh doanh Nhà Khang Điền (KDH). Tỷ lệ sở hữu 3.8245%.
+VCI (VCI) có công ty con CTCP Tập đoàn GELEX (GEX). Tỷ lệ sở hữu 0.0000%.
+VCI (VCI) có công ty con Tổng CTCP Đầu tư Phát triển Xây dựng (DIG). Tỷ lệ sở hữu 0.0000%.
+VCI (VCI) có công ty con CTCP Thép Nam Kim (NKG). Tỷ lệ sở hữu 0.0000%.
+VCI (VCI) có công ty con CTCP Địa ốc Sài Gòn Thương Tín (SCR). Tỷ lệ sở hữu 0.0000%.
+VCI (VCI) có công ty con CTCP Xi Măng Vicem Hà Tiên (HT1). Tỷ lệ sở hữu 0.0000%.
+VCI (VCI) có công ty con CTCP Tập đoàn Hà Đô (HDG). Tỷ lệ sở hữu 4.8500%.
+VCI (VCI) có công ty con CTCP GTNFOODS (GTN). Tỷ lệ sở hữu 0.0000%.
+VCI (VCI) có công ty con CTCP Nước Thủ Dầu Một (TDM). Tỷ lệ sở hữu 13.9591%.
+VCI (VCI) có công ty con CTCP Camimex Group (CMX). Tỷ lệ sở hữu 0.0000%.
+VCI (VCI) có công ty con CTCP Kho vận Miền Nam (STG). Tỷ lệ sở hữu 0.0000%.
+VCI (VCI) có công ty con CTCP Sữa Quốc Tế Lof (IDP). Tỷ lệ sở hữu 14.3061%.
+VCI (VCI) có công ty con CTCP Mirae (KMR). Tỷ lệ sở hữu 0.0000%.
+VCI (VCI) có công ty con CTCP Vinacafé Biên Hòa (VCF). Tỷ lệ sở hữu 0.0000%.
+VCI (VCI) có công ty con CTCP Hợp tác kinh tế và Xuất nhập khẩu Savimex (SAV). Tỷ lệ sở hữu 0.0000%.
+VCI (VCI) có công ty con CTCP Quản lý Quỹ Đầu tư Chứng khoán Bản Việt. Tỷ lệ sở hữu 14.9000%.
+VCI (VCI) có công ty con CTCP Đầu tư và Phát triển giáo dục Hà Nội (EID). Tỷ lệ sở hữu 0.0000%.
+VCI (VCI) có công ty con CTCP Đầu tư và Dịch vụ Khánh Hội (KHA). Tỷ lệ sở hữu 0.0000%.
+VCI (VCI) có công ty con CTCP Lắp máy - Thí nghiệm Cơ Điện (LCD). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con Ngân hàng TMCP Quân Đội (MBB). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Tập đoàn Hòa Phát (HPG). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Hoàng Anh Gia Lai (HAG). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Tasco (HUT). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con Tổng Công ty Phát triển Đô Thị Kinh Bắc - CTCP (KBC). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Tập đoàn C.E.O (CEO). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con Tổng CTCP Khoan và Dịch vụ Khoan Dầu khí (PVD). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Cơ điện lạnh (REE). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con Tổng CTCP Xây lắp Dầu khí Việt Nam (PVX). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Nhiệt điện Phả Lại (PPC). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP SJ Group (SJS). Tỷ lệ sở hữu 0.4818%.
+MBS (MBS) có công ty con CTCP Đầu tư và Phát triển Đa quốc gia I.D.I (IDI). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Quốc tế Sơn Hà (SHI). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP FECON (FCN). Tỷ lệ sở hữu 0.9278%.
+MBS (MBS) có công ty con CTCP Phát triển đô thị Từ Liêm (NTL). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Nhựa Hà Nội (NHH). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Dicera Holdings (DC4). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Phú Tài (PTB). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Ống thép Việt - Đức VG PIPE (VGS). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Năng lượng và Bất động sản MCG (MCG). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Đầu tư và Phát triển Bất động sản HUDLAND (HLD). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Tập đoàn Thành Nam (TNI). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Phân bón Miền Nam (SFG). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Tập đoàn Cotana (CSC). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP ICD Tân Cảng - Long Bình (ILB). Tỷ lệ sở hữu 1.3265%.
+MBS (MBS) có công ty con CTCP Vinaconex 39 (PVV). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Bọc ống Dầu khí Việt Nam (PVB). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Chiếu xạ An Phú (APC). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Sông Đà 3 (SD3). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Thương mại và Đầu tư Vi na ta ba (VTJ). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Cà phê An Giang (AGC). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con Tổng CTCP Y tế Danameco (DNM). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Dược thú y Cai Lậy (MKV). Tỷ lệ sở hữu 0.0000%.
+MBS (MBS) có công ty con CTCP Chế tạo máy - Vinacomin (CTT). Tỷ lệ sở hữu 0.0011%.
+MBS (MBS) có công ty con CTCP Cơ khí Lắp máy Lilama (L35). Tỷ lệ sở hữu 0.0000%.
+CTS (CTS) có công ty con CTCP Tập đoàn Trường Hải (THA). Tỷ lệ sở hữu 0.0000%.
+CTS (CTS) có công ty con Tổng Công ty Thép Việt Nam - CTCP (TVN). Tỷ lệ sở hữu 0.0000%.
+CTS (CTS) có công ty con CTCP Phát triển Nhà Bà Rịa - Vũng Tàu (HDC). Tỷ lệ sở hữu 2.9096%.
+CTS (CTS) có công ty con CTCP Kinh doanh LPG Việt Nam (PVG). Tỷ lệ sở hữu 0.0000%.
+CTS (CTS) có công ty con CTCP CMC (CVT). Tỷ lệ sở hữu 0.0000%.
+CTS (CTS) có công ty con CTCP Nước giải khát Sanest Khánh Hòa (SKH). Tỷ lệ sở hữu 0.0000%.
+CTS (CTS) có công ty con CTCP Than Hà Tu - Vinacomin (THT). Tỷ lệ sở hữu 0.0000%.
+CTS (CTS) có công ty con CTCP Nước giải khát Yến sào Khánh Hòa (SKV). Tỷ lệ sở hữu 4.2609%.
+CTS (CTS) có công ty con CTCP Nhựa Việt Nam (VNP). Tỷ lệ sở hữu 0.0000%.
+CTS (CTS) có công ty con CTCP Chế biến Hàng xuất khẩu Long An (LAF). Tỷ lệ sở hữu 0.0000%.
+CTS (CTS) có công ty con CTCP Đầu tư và Dịch vụ Khánh Hội (KHA). Tỷ lệ sở hữu 0.0000%.
+CTS (CTS) có công ty con CTCP Kiên Hùng (KHS). Tỷ lệ sở hữu 4.3834%.
+CTS (CTS) có công ty con CTCP Máy - Thiết bị Dầu khí Đà Nẵng (DAS). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Tập đoàn Hòa Phát (HPG). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Sữa Việt Nam (VNM). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP FPT (FPT). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Xi Măng Vicem Hà Tiên (HT1). Tỷ lệ sở hữu 0.8596%.
+BSI (BSI) có công ty con CTCP Tập đoàn Xây dựng Hòa Bình (HBC). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Nhiệt điện Phả Lại (PPC). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Đầu tư và Thương mại TNG (TNG). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Đầu tư và Phát triển Đô thị Long Giang (LGL). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Việt An (AVF). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Đầu tư và Xây dựng Tiền Giang (THG). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Bao bì Nhựa Sài Gòn (SPP). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Cơ khí và Khoáng sản Hà Giang (HGM). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Bia Hà Nội - Thanh Hóa (THB). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Đầu tư và Xây dựng HUD1 (HU1). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Đầu tư và Xây dựng HUD3 (HU3). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Cấp nước Phú Hoà Tân (PJS). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Nước giải khát Chương Dương (SCD). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Xuất nhập khẩu Sa Giang (SGC). Tỷ lệ sở hữu 0.0000%.
+BSI (BSI) có công ty con CTCP Bia Hà Nội - Hải Dương (HAD). Tỷ lệ sở hữu 0.0000%.
+FTS (FTS) có công ty con CTCP May Sông Hồng (MSH). Tỷ lệ sở hữu 10.6647%.
+FTS (FTS) có công ty con CTCP Đầu tư và Phát triển Bất động sản HUDLAND (HLD). Tỷ lệ sở hữu 0.0000%.
+FTS (FTS) có công ty con CTCP Tư vấn Xây dựng Điện 1 (TV1). Tỷ lệ sở hữu 0.0000%.
+FTS (FTS) có công ty con CTCP Đầu tư và Xây dựng HUD3 (HU3). Tỷ lệ sở hữu 0.0000%.
+FTS (FTS) có công ty con CTCP Chế tạo máy - Vinacomin (CTT). Tỷ lệ sở hữu 0.0005%.
+FTS (FTS) có công ty con CTCP Mỹ thuật và Truyền Thông (ADC). Tỷ lệ sở hữu 0.0000%.
+ORS (ORS) có công ty con CTCP Tập đoàn Bamboo Capital (BCG). Tỷ lệ sở hữu 3.0007%.
+ORS (ORS) có công ty con CTCP Dịch vụ Du lịch Phú Thọ (DSP). Tỷ lệ sở hữu 0.0521%.
+ORS (ORS) có công ty con CTCP Dịch vụ xuất khẩu lao động và chuyên gia (SLC). Tỷ lệ sở hữu 0.0000%.
+AAS (AAS) có công ty con CTCP AAV Group (AAV). Tỷ lệ sở hữu 2.0392%.
+AAS (AAS) có công ty con CTCP Đầu tư Sao Thăng Long (DST). Tỷ lệ sở hữu 0.0000%.
+AAS (AAS) có công ty con CTCP Xăng dầu Dầu khí Hưng Yên (POB). Tỷ lệ sở hữu 14.6789%.
+BMI (BMI) có công ty con Ngân hàng TMCP Quân Đội (MBB). Tỷ lệ sở hữu 0.0003%.
+BMI (BMI) có công ty con CTCP Sữa Việt Nam (VNM). Tỷ lệ sở hữu 0.0000%.
+BMI (BMI) có công ty con CTCP FPT (FPT). Tỷ lệ sở hữu 0.0000%.
+BMI (BMI) có công ty con Tổng CTCP Tái bảo hiểm Quốc gia Việt Nam (VNR). Tỷ lệ sở hữu 0.6430%.
+BMI (BMI) có công ty con Tổng CTCP Bảo hiểm Bưu điện (PTI). Tỷ lệ sở hữu 0.0000%.
+BMI (BMI) có công ty con Công ty Tài chính cổ phần Sông Đà (SDF). Tỷ lệ sở hữu 0.0000%.
+BMI (BMI) có công ty con CTCP Vận tải Sản phẩm khí Quốc tế (GSP). Tỷ lệ sở hữu 0.0000%.
+BMI (BMI) có công ty con Công ty Bảo hiểm Liên Hiệp. Tỷ lệ sở hữu 48.4500%.
+BMI (BMI) có công ty con CTCP Vận tải Biển và Thương mại Phương Đông (NOS). Tỷ lệ sở hữu 9.9721%.
+BMI (BMI) có công ty con CTCP Thương mại và Dịch vụ Dầu khí Vũng Tàu (VMG). Tỷ lệ sở hữu 0.0000%.
+BVH (BVH) có công ty con Tổng CTCP Bia - Rượu - Nước giải khát Sài Gòn (SAB). Tỷ lệ sở hữu 0.0000%.
+BVH (BVH) có công ty con Tổng Công ty Bảo Việt Nhân Thọ. Tỷ lệ sở hữu 100.0000%.
+BVH (BVH) có công ty con Ngân hàng TMCP Bảo Việt (BAOVIETBANK). Tỷ lệ sở hữu 49.5200%.
+BVH (BVH) có công ty con Tổng Công ty Bảo hiểm Bảo Việt. Tỷ lệ sở hữu 100.0000%.
+BVH (BVH) có công ty con CTCP Tập đoàn Công nghệ CMC (CMG). Tỷ lệ sở hữu 3.4077%.
+BVH (BVH) có công ty con Tổng CTCP Tái bảo hiểm Quốc gia Việt Nam (VNR). Tỷ lệ sở hữu 1.0093%.
+BVH (BVH) có công ty con Quỹ đầu tư giá trị Bảo Việt. Tỷ lệ sở hữu 0.0000%.
+BVH (BVH) có công ty con CTCP Chứng khoán Bảo Việt (BVS). Tỷ lệ sở hữu 59.9181%.
+BVH (BVH) có công ty con Công ty TNHH Bảo hiểm Tokio Marine Việt Nam. Tỷ lệ sở hữu 49.0000%.
+BVH (BVH) có công ty con CTCP Tập đoàn HIPT (HIG). Tỷ lệ sở hữu 8.8081%.
+BVH (BVH) có công ty con CTCP Trung Nam Phú Quốc. Tỷ lệ sở hữu 49.0000%.
+BVH (BVH) có công ty con Công ty TNHH MTV Đầu tư Bảo Việt. Tỷ lệ sở hữu 100.0000%.
+BVH (BVH) có công ty con CTCP Du lịch Lâm Đồng. Tỷ lệ sở hữu 0.0000%.
+BVH (BVH) có công ty con CTCP Đầu tư và Xây dựng Quốc tế VIGEBA. Tỷ lệ sở hữu 0.0000%.
+BVH (BVH) có công ty con CTCP Đầu tư SCIC - Bảo Việt. Tỷ lệ sở hữu 0.0000%.
+BVH (BVH) có công ty con CTCP Đầu  tư SCIC - Bảo Việt. Tỷ lệ sở hữu 0.0000%.
+BVH (BVH) có công ty con Công ty TNHH Quản lý Quỹ Bảo Việt. Tỷ lệ sở hữu 100.0000%.
+BVH (BVH) có công ty con CTCP Dịch vụ Giải trí Hà Nội (HES). Tỷ lệ sở hữu 19.3601%.
+BVH (BVH) có công ty con CTCP Khách sạn và Du lịch Bảo Việt. Tỷ lệ sở hữu 0.0000%.
+BVH (BVH) có công ty con CTCP Đầu tư Xây dựng Long Việt. Tỷ lệ sở hữu 0.0000%.
+BVH (BVH) có công ty con Công ty TNHH Bảo Việt - Âu Lạc. Tỷ lệ sở hữu 60.0000%.
+BVH (BVH) có công ty con CTCP Công nghệ thông tin PLT. Tỷ lệ sở hữu 0.0000%.
+PVI (PVI) có công ty con Tổng CTCP Dịch vụ Kỹ thuật Dầu khí Việt Nam (PVS). Tỷ lệ sở hữu 0.0000%.
+PVI (PVI) có công ty con Tổng Công ty bảo hiểm PVI. Tỷ lệ sở hữu 100.0000%.
+PVI (PVI) có công ty con Quỹ Đầu tư Cơ hội PVI. Tỷ lệ sở hữu 41.3636%.
+PVI (PVI) có công ty con Quỹ Đầu tư Hạ tầng PVI. Tỷ lệ sở hữu 34.6667%.
+PVI (PVI) có công ty con Công ty TNHH Bảo hiểm Nhân thọ Sun Life Việt Nam. Tỷ lệ sở hữu 0.0000%.
+PVI (PVI) có công ty con Tổng CTCP Tái bảo hiểm Hà Nội (PRE). Tỷ lệ sở hữu 81.0858%.
+PVI (PVI) có công ty con CTCP Đầu tư PVR Hà Nội (PVR). Tỷ lệ sở hữu 0.0000%.
+PVI (PVI) có công ty con CTCP Đầu tư Dầu khí Sao Mai - Bến Đình (PSB). Tỷ lệ sở hữu 0.0000%.
+PVI (PVI) có công ty con CTCP Đầu tư PV2 (PV2). Tỷ lệ sở hữu 0.0000%.
+PVI (PVI) có công ty con CTCP Vận tải Dầu khí Đông Dương (PTT). Tỷ lệ sở hữu 0.0000%.
+PVI (PVI) có công ty con CTCP Quản lý quỹ PVI. Tỷ lệ sở hữu 61.9600%.
+PVI (PVI) có công ty con CTCP In Sách Giáo Khoa tại Thành phố Hà Nội (TPH). Tỷ lệ sở hữu 0.0000%.
+SVC (SVC) có công ty con CTCP Chứng khoán Tiên Phong (ORS). Tỷ lệ sở hữu 0.0000%.
+SVC (SVC) có công ty con CTCP Đầu tư Kinh doanh Điện lực Thành phố Hồ Chí Minh (HTE). Tỷ lệ sở hữu 5.7184%.
+SVC (SVC) có công ty con CTCP Toyota Đông Sài Gòn. Tỷ lệ sở hữu 0.0000%.
+SVC (SVC) có công ty con Công ty TNHH Đầu tư Savico. Tỷ lệ sở hữu 100.0000%.
+SVC (SVC) có công ty con CTCP Savico Hà Nội. Tỷ lệ sở hữu 70.0000%.
+SVC (SVC) có công ty con CTCP Thương mại - Dịch vụ Bến Thành (BTT). Tỷ lệ sở hữu 0.0000%.
+SVC (SVC) có công ty con CTCP Dịch vụ Sài Gòn Ô tô. Tỷ lệ sở hữu 52.0500%.
+SVC (SVC) có công ty con CTCP Dây cáp điện Việt Thái (VTH). Tỷ lệ sở hữu 0.0000%.
+SVC (SVC) có công ty con CTCP Đầu tư Đà Nẵng Sơn Trà. Tỷ lệ sở hữu 98.2800%.
+SVC (SVC) có công ty con CTCP Đầu tư Tri Thức Tương Lai. Tỷ lệ sở hữu 47.1287%.
+SVC (SVC) có công ty con Công ty TNHH ComfortDelgro Savico Taxi. Tỷ lệ sở hữu 0.0000%.
+SVC (SVC) có công ty con CTCP Savico Đà Nẵng. Tỷ lệ sở hữu 70.0000%.
+SVC (SVC) có công ty con CTCP Ô tô Âu Việt. Tỷ lệ sở hữu 31.6400%.
+SVC (SVC) có công ty con Công ty TNHH Toyota Lý Thường Kiệt. Tỷ lệ sở hữu 65.0000%.
+SVC (SVC) có công ty con CTCP Ô tô Bắc Âu. Tỷ lệ sở hữu 32.0000%.
+SVC (SVC) có công ty con CTCP Dịch vụ Ô tô Thành phố mới Bình Dương. Tỷ lệ sở hữu 81.9100%.
+SVC (SVC) có công ty con CTCP Ô tô Nam Sông Hậu. Tỷ lệ sở hữu 51.0000%.
+SVC (SVC) có công ty con Công ty TNHH Toyota Cần Thơ. Tỷ lệ sở hữu 64.0000%.
+SVC (SVC) có công ty con CTCP Ô tô Sao Tây Nam. Tỷ lệ sở hữu 69.9900%.
+SVC (SVC) có công ty con CTCP Ô tô Tây Bắc Sài Gòn. Tỷ lệ sở hữu 99.9000%.
+SVC (SVC) có công ty con CTCP Sài Gòn Ngôi Sao. Tỷ lệ sở hữu 57.3500%.
+SVC (SVC) có công ty con CTCP Ô tô Bà Rịa - Vũng Tàu. Tỷ lệ sở hữu 51.0000%.
+SVC (SVC) có công ty con Công ty TNHH Thương mại và Dịch vụ ô tô Đồng Hiệp. Tỷ lệ sở hữu 60.0000%.
+SVC (SVC) có công ty con CTCP Ô tô Vĩnh Thịnh. Tỷ lệ sở hữu 90.0000%.
+SVC (SVC) có công ty con Công ty TNHH Xe và Thiết bị chuyên dùng Vĩnh Thịnh. Tỷ lệ sở hữu 55.0000%.
+SVC (SVC) có công ty con Công ty TNHH Toyota Giải Phóng. Tỷ lệ sở hữu 64.0000%.
+SVC (SVC) có công ty con CTCP Dịch vụ ô tô Cần Thơ. Tỷ lệ sở hữu 0.0000%.
+SVC (SVC) có công ty con CTCP OtoS. Tỷ lệ sở hữu 0.0000%.
+SVC (SVC) có công ty con CTCP Đầu tư phát triển Savico Miền Nam. Tỷ lệ sở hữu 98.0000%.
+SVC (SVC) có công ty con CTCP Ô tô Sài Gòn Cửu Long. Tỷ lệ sở hữu 84.1700%.
+SVC (SVC) có công ty con Công ty TNHH Thương Mại Dịch Vụ Sài Gòn. Tỷ lệ sở hữu 0.0000%.
+SVC (SVC) có công ty con Công ty TNHH Ô tô Lâm Đồng. Tỷ lệ sở hữu 52.0000%.
+SVC (SVC) có công ty con CTCP Ô tô New Energy. Tỷ lệ sở hữu 0.0000%.
+SAM (SAM) có công ty con CTCP Tập đoàn Hòa Phát (HPG). Tỷ lệ sở hữu 0.0000%.
+SAM (SAM) có công ty con CTCP Tập đoàn Kỹ nghệ Gỗ Trường Thành (TTF). Tỷ lệ sở hữu 2.4025%.
+SAM (SAM) có công ty con Tổng Công ty Sản xuất - Xuất nhập khẩu Bình Dương - CTCP (PRT). Tỷ lệ sở hữu 8.0000%.
+SAM (SAM) có công ty con CTCP SJ Group (SJS). Tỷ lệ sở hữu 0.0000%.
+SAM (SAM) có công ty con Tổng Công ty Dược Việt Nam - CTCP (DVN). Tỷ lệ sở hữu 4.8000%.
+SAM (SAM) có công ty con CTCP DNP Holding (DNP). Tỷ lệ sở hữu 0.0000%.
+SAM (SAM) có công ty con CTCP Sacom - Tuyền Lâm. Tỷ lệ sở hữu 64.0929%.
+SAM (SAM) có công ty con CTCP Dịch vụ Du lịch Phú Thọ (DSP). Tỷ lệ sở hữu 34.9579%.
+SAM (SAM) có công ty con CTCP Địa ốc Sacom (SLD). Tỷ lệ sở hữu 85.7103%.
+SAM (SAM) có công ty con CTCP Capella Quảng Nam. Tỷ lệ sở hữu 92.8600%.
+SAM (SAM) có công ty con CTCP Chứng khoán Phố Wall (WSS). Tỷ lệ sở hữu 0.0000%.
+SAM (SAM) có công ty con CTCP Đầu tư và Phát triển hạ tầng An Việt. Tỷ lệ sở hữu 0.0000%.
+SAM (SAM) có công ty con CTCP Dây và Cáp Sacom. Tỷ lệ sở hữu 99.9200%.
+SAM (SAM) có công ty con CTCP Phân lân nung chảy Văn Điển (VAF). Tỷ lệ sở hữu 0.0000%.
+SAM (SAM) có công ty con CTCP Tập đoàn Capella. Tỷ lệ sở hữu 0.9151%.
+SAM (SAM) có công ty con CTCP Cáp Sài Gòn (CSG). Tỷ lệ sở hữu 0.0000%.
+SAM (SAM) có công ty con CTCP Đầu tư phát triển Nam Tây Nguyên. Tỷ lệ sở hữu 0.0000%.
+SAM (SAM) có công ty con Công ty TNHH Sacom - Chíp Sáng. Tỷ lệ sở hữu 73.7500%.
+SAM (SAM) có công ty con CTCP Viễn thông Thăng Long (TLC). Tỷ lệ sở hữu 0.0000%.
+SAM (SAM) có công ty con CTCP Sam Nông nghiệp công nghệ cao. Tỷ lệ sở hữu 0.0000%.
+SAM (SAM) có công ty con CTCP Sametel (SMT). Tỷ lệ sở hữu 0.0000%.
+SAM (SAM) có công ty con CTCP Nhựa Sam Phú (NSP). Tỷ lệ sở hữu 0.0000%.
+SAM (SAM) có công ty con CTCP Phú Hữu Gia. Tỷ lệ sở hữu 45.2800%.
+SAM (SAM) có công ty con CTCP Liên doanh Cảng quốc tế Mỹ Thủy. Tỷ lệ sở hữu 36.0000%.
+GIL (GIL) có công ty con CTCP Dệt may Gia Định (GID). Tỷ lệ sở hữu 0.0000%.
+GIL (GIL) có công ty con CTCP Khu công nghiệp Gilimex Vĩnh Long. Tỷ lệ sở hữu 30.0000%.
+GIL (GIL) có công ty con CTCP Khu công nghiệp Gilimex. Tỷ lệ sở hữu 90.0000%.
+GIL (GIL) có công ty con CTCP Garmex Sài Gòn (GMC). Tỷ lệ sở hữu 7.0836%.
+GIL (GIL) có công ty con CTCP May Hàng Gia Dụng Gilimex - PPJ. Tỷ lệ sở hữu 99.4500%.
+GIL (GIL) có công ty con Công ty TNHH MTV Kho vận Gilimex. Tỷ lệ sở hữu 100.0000%.
+GIL (GIL) có công ty con CTCP Đầu tư Mỹ Khang. Tỷ lệ sở hữu 99.9941%.
+GIL (GIL) có công ty con Công ty TNHH May Thạnh Mỹ. Tỷ lệ sở hữu 100.0000%.
+GIL (GIL) có công ty con CTCP Bất động sản Hưng Khang. Tỷ lệ sở hữu 99.9977%.
+GIL (GIL) có công ty con Công ty TNHH MTV Gilimex Đồng Nai. Tỷ lệ sở hữu 100.0000%.
+GIL (GIL) có công ty con Công ty TNHH MTV Bất động sản Gia Định. Tỷ lệ sở hữu 100.0000%.
+GIL (GIL) có công ty con CTCP Gilimex Long Khánh. Tỷ lệ sở hữu 99.9700%.
+GIL (GIL) có công ty con Công ty TNHH Lưu Công Hiệu. Tỷ lệ sở hữu 100.0000%.
+GIL (GIL) có công ty con CTCP Sản xuất Kinh doanh Kim khí Đại Tây Dương. Tỷ lệ sở hữu 99.9600%.
+GIL (GIL) có công ty con CTCP Sản xuất và Kinh doanh Thiết bị Chiếu sáng Thái Bình Dương. Tỷ lệ sở hữu 99.9000%.
+GIL (GIL) có công ty con CTCP Đầu tư hạ tầng BT. Tỷ lệ sở hữu 100.0000%.
+GIL (GIL) có công ty con CTCP Đầu tư và Phát triển Hoàng An. Tỷ lệ sở hữu 35.0000%.
+GIL (GIL) có công ty con CTCP Ichiban Star. Tỷ lệ sở hữu 99.9898%.
+TDC (TDC) có công ty con CTCP Đầu tư và Xây dựng Bình Dương ACC (ACC). Tỷ lệ sở hữu 0.0000%.
+TDC (TDC) có công ty con CTCP Khoáng sản Miền Đông AHP (BMJ). Tỷ lệ sở hữu 0.0000%.
+TDC (TDC) có công ty con CTCP Dược Enlie (BCP). Tỷ lệ sở hữu 0.0000%.
+TDC (TDC) có công ty con CTCP Vật liệu xây dựng Becamex. Tỷ lệ sở hữu 81.0000%.
+TDC (TDC) có công ty con Trường Đại học Quốc tế Miền Đông. Tỷ lệ sở hữu 24.0000%.
+TDC (TDC) có công ty con Công ty TNHH MTV Tư vấn đầu tư xây dựng Việt. Tỷ lệ sở hữu 0.0000%.
+TDC (TDC) có công ty con Công ty TNHH MTV Cửa sổ mùa xuân. Tỷ lệ sở hữu 0.0000%.
+TDC (TDC) có công ty con CTCP Xi măng Hà Tiên Kiên Giang - Becamex. Tỷ lệ sở hữu 58.0000%.
+TDC (TDC) có công ty con Công ty liên doanh TNHH SinViet. Tỷ lệ sở hữu 50.0000%.
+DTD (DTD) có công ty con CTCP Đầu tư phát triển hạ tầng KCN Đồng Văn III Tỉnh Hà Nam. Tỷ lệ sở hữu 65.0000%.
+DTD (DTD) có công ty con CTCP Tân Cảng - Đồng Văn Hà Nam. Tỷ lệ sở hữu 39.0000%.
+DTD (DTD) có công ty con Công ty TNHH Dịch vụ thương mại Bến xe Thành Đạt. Tỷ lệ sở hữu 0.0000%.
+DTD (DTD) có công ty con CTCP Chăn nuôi Thanh Tân. Tỷ lệ sở hữu 0.0000%.
+HBC (HBC) có công ty con CTCP Đầu tư Địa ốc Tiến Phát. Tỷ lệ sở hữu 0.0000%.
+HBC (HBC) có công ty con CTCP Nhà Hòa Bình. Tỷ lệ sở hữu 99.9600%.
+HBC (HBC) có công ty con CTCP Đầu tư xây dựng hạ tầng Hòa Bình. Tỷ lệ sở hữu 97.9700%.
+HBC (HBC) có công ty con CTCP 479 Hòa Bình. Tỷ lệ sở hữu 49.2500%.
+HBC (HBC) có công ty con CTCP Chứng khoán Sen Vàng (GLSC). Tỷ lệ sở hữu 0.0000%.
+HBC (HBC) có công ty con CTCP Đầu tư & Năng lượng tái tạo Hòa Bình. Tỷ lệ sở hữu 0.0000%.
+HBC (HBC) có công ty con CTCP Kỹ thuật Jesco Hòa Bình. Tỷ lệ sở hữu 0.0000%.
+HBC (HBC) có công ty con Công ty TNHH Sản xuất và trang trí Mộc Hòa Bình. Tỷ lệ sở hữu 0.0000%.
+HBC (HBC) có công ty con CTCP Cơ khí và Nhôm kính Anh Việt. Tỷ lệ sở hữu 0.0000%.
+HBC (HBC) có công ty con Công ty TNHH MTV Máy xây dựng Matec. Tỷ lệ sở hữu 0.0000%.
+HBC (HBC) có công ty con CTCP Trang trí nội thất ONWA TECH. Tỷ lệ sở hữu 15.3800%.
+HBC (HBC) có công ty con CTCP Sơn và Chất phủ Hòa Bình. Tỷ lệ sở hữu 74.5800%.
+HBC (HBC) có công ty con Công ty TNHH MTV Trung tâm đổi mới sáng tạo Hòa Bình. Tỷ lệ sở hữu 0.0000%.
+HBC (HBC) có công ty con Công ty TNHH Tư vấn thiết kế Hòa Bình. Tỷ lệ sở hữu 75.0000%.
+HBC (HBC) có công ty con Công ty TNHH Quy hoạch và Kiến trúc Hòa Bình. Tỷ lệ sở hữu 51.0000%.
+HBC (HBC) có công ty con Công ty TNHH Hòa Bình Myanmar. Tỷ lệ sở hữu 100.0000%.
+HBC (HBC) có công ty con Công ty TNHH Sài Gòn Ngày Mới. Tỷ lệ sở hữu 0.0000%.
+HBC (HBC) có công ty con Công ty TNHH MTV Xây dựng và Địa ốc Hòa Bình Hà Nội. Tỷ lệ sở hữu 0.0000%.
+HBC (HBC) có công ty con CTCP Thực phẩm quốc tế Vị Tâm. Tỷ lệ sở hữu 0.0000%.
+HBC (HBC) có công ty con CTCP Đầu tư phát triển Hòa Bình - Huế. Tỷ lệ sở hữu 0.0000%.
+HBC (HBC) có công ty con CTCP Đầu tư phát triển Hòa Yên. Tỷ lệ sở hữu 0.0000%.
+HBC (HBC) có công ty con CTCP Hòa Bình Oseven. Tỷ lệ sở hữu 0.0000%.
+HBC (HBC) có công ty con Công ty TNHH Tiến Phát Đông Bắc. Tỷ lệ sở hữu 0.0000%.
+HBC (HBC) có công ty con CTCP Thương mại và Đầu tư Pax. Tỷ lệ sở hữu 98.5900%.
+DPM (DPM) có công ty con CTCP Hóa dầu và Xơ sợi Việt Nam. Tỷ lệ sở hữu 25.9900%.
+DPM (DPM) có công ty con Tổng Công ty Hóa chất và Dịch vụ dầu khí - CTCP (PVC). Tỷ lệ sở hữu 0.0000%.
+DPM (DPM) có công ty con CTCP Chế biến Thủy sản Út Xi (UXC). Tỷ lệ sở hữu 6.7797%.
+DPM (DPM) có công ty con CTCP Phát triển Đô thị Dầu khí (PXC). Tỷ lệ sở hữu 35.6266%.
+DPM (DPM) có công ty con CTCP Phân bón và Hóa chất dầu khí Tây Nam Bộ (PSW). Tỷ lệ sở hữu 75.0000%.
+DPM (DPM) có công ty con CTCP Phân bón và Hóa chất dầu khí Đông Nam Bộ (PSE). Tỷ lệ sở hữu 75.0000%.
+DPM (DPM) có công ty con CTCP Phân bón và Hóa chất Dầu khí Miền Bắc (PMB). Tỷ lệ sở hữu 75.0000%.
+DPM (DPM) có công ty con CTCP Phân bón và Hóa chất Dầu khí Miền Trung (PCE). Tỷ lệ sở hữu 75.0000%.
+DPM (DPM) có công ty con CTCP Công nghệ thông tin, Viễn thông và Tự động hóa Dầu Khí (PAI). Tỷ lệ sở hữu 8.5000%.
+DPM (DPM) có công ty con CTCP Bao bì đạm Phú Mỹ (PMP). Tỷ lệ sở hữu 43.3405%.
+DGC (DGC) có công ty con Công ty TNHH MTV Hóa chất Đức Giang Nghi Sơn. Tỷ lệ sở hữu 100.0000%.
+DGC (DGC) có công ty con Công ty TNHH MTV Bất động sản Đức Giang. Tỷ lệ sở hữu 100.0000%.
+DGC (DGC) có công ty con Công ty TNHH MTV Hóa chất Đức Giang - Lào Cai (DGL). Tỷ lệ sở hữu 100.0000%.
+DGC (DGC) có công ty con Công ty TNHH MTV Hóa chất Đức Giang - Đắk Nông. Tỷ lệ sở hữu 100.0000%.
+DGC (DGC) có công ty con CTCP Hóa chất Phân bón Lào Cai. Tỷ lệ sở hữu 0.0000%.
+DGC (DGC) có công ty con CTCP Hóa chất Bảo Thắng. Tỷ lệ sở hữu 0.0000%.
+DGC (DGC) có công ty con Công ty TNHH MTV Apatit Đức Giang. Tỷ lệ sở hữu 0.0000%.
+DGC (DGC) có công ty con CTCP Ắc quy Tia Sáng (TSB). Tỷ lệ sở hữu 51.0008%.
+DGC (DGC) có công ty con Công ty TNHH MTV Hóa chất Đức Giang - Đình Vũ. Tỷ lệ sở hữu 100.0000%.
+DGC (DGC) có công ty con Công ty TNHH MTV Thể thao hóa chất Đức Giang. Tỷ lệ sở hữu 100.0000%.
+SHS (SHS) có công ty con Ngân hàng TMCP Ngoại thương Việt Nam (VCB). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con Tập đoàn Vingroup - CTCP (VIC). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Tập đoàn Hòa Phát (HPG). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con Ngân hàng TMCP Á Châu (ACB). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con Ngân hàng TMCP Sài Gòn - Hà Nội (SHB). Tỷ lệ sở hữu 1.4630%.
+SHS (SHS) có công ty con CTCP Sữa Việt Nam (VNM). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP FPT (FPT). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Đầu tư Thế giới Di động (MWG). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Tập đoàn Đất Xanh (DXG). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Chứng khoán Thành phố Hồ Chí Minh (HCM). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Tập đoàn Bamboo Capital (BCG). Tỷ lệ sở hữu 1.8745%.
+SHS (SHS) có công ty con Tổng CTCP Đầu tư Phát triển Xây dựng (DIG). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Đầu tư Hạ tầng Kỹ thuật Thành phố Hồ Chí Minh (CII). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con Tổng CTCP Xuất nhập khẩu và Xây dựng Việt Nam (VCG). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con Tổng CTCP Khoan và Dịch vụ Khoan Dầu khí (PVD). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Cơ điện lạnh (REE). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con Tổng CTCP Dịch vụ Kỹ thuật Dầu khí Việt Nam (PVS). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Địa ốc Sài Gòn Thương Tín (SCR). Tỷ lệ sở hữu 0.1752%.
+SHS (SHS) có công ty con CTCP Gemadept (GMD). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Điện Gia Lai (GEG). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Tập đoàn Dabaco Việt Nam (DBC). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Container Việt Nam (VSC). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Tập đoàn Xây dựng Hòa Bình (HBC). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Tập đoàn KIDO (KDC). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Chứng khoán BIDV (BSI). Tỷ lệ sở hữu 2.5338%.
+SHS (SHS) có công ty con CTCP Thủy điện Vĩnh Sơn - Sông Hinh (VSH). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP PVI (PVI). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Chứng khoán APG (APG). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con Quỹ ETF DCVFMVN30 (E1VFVN30). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Phát triển đô thị Từ Liêm (NTL). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Năng lượng và Bất động sản Trường Thành (TEG). Tỷ lệ sở hữu 1.8295%.
+SHS (SHS) có công ty con CTCP Supe Phốt phát và Hóa chất Lâm Thao (LAS). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Dệt may - Đầu tư - Thương mại Thành Công (TCM). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Công nghiệp cao su Miền Nam (CSM). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP TTBGROUP (TTB). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con Tổng CTCP Bảo hiểm Sài Gòn - Hà Nội (BHI). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Dịch vụ Tổng hợp Sài Gòn (SVC). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Sản xuất và Công nghệ Nhựa Pha Lê (PLP). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Đầu tư và Phát triển Đô thị Sài Đồng (SDI). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Vận tải Sản phẩm khí Quốc tế (GSP). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Đầu tư và Phát triển Đô thị Long Giang (LGL). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Xây dựng Phục Hưng Holdings (PHC). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Bất động sản và Đầu tư VRC (VRC). Tỷ lệ sở hữu 14.5420%.
+SHS (SHS) có công ty con CTCP Rạng Đông Holding (RDP). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCPA Tập đoàn Macstar (MAC). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Đầu tư Xây dựng và Khai thác công trình giao thông 584 (NTB). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Máy - Thiết bị Dầu Khí (PVM). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP CMC (CVT). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Tập đoàn Điện Quang (DQC). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Tổng Công ty Công trình Đường sắt (RCC). Tỷ lệ sở hữu 9.6859%.
+SHS (SHS) có công ty con CTCP Năng lượng và Môi trường VICEM (VTV). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con Công ty TNHH MTV Thép Phúc Tiến (PHT). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Thép DANA - Ý (DNY). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Dịch vụ Hàng hóa Nội Bài (NCT). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Tổng Công ty Xây lắp Dầu khí Nghệ An (PVA). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Bọc ống Dầu khí Việt Nam (PVB). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Xây lắp Dầu khí Thanh Hóa (PVH). Tỷ lệ sở hữu 14.7619%.
+SHS (SHS) có công ty con CTCP In và Bao bì Mỹ Châu (MCP). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Kim khí Thăng Long (KTL). Tỷ lệ sở hữu 14.4189%.
+SHS (SHS) có công ty con CTCP Đầu tư và Phát triển Nhà số 6 Hà Nội (HD6). Tỷ lệ sở hữu 1.3271%.
+SHS (SHS) có công ty con CTCP Lương thực Thực phẩm Safoco (SAF). Tỷ lệ sở hữu 0.0249%.
+SHS (SHS) có công ty con CTCP Đầu tư Tài chính Giáo dục (EFI). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Đầu tư và Dịch vụ Hạ tầng Xăng dầu (PLA). Tỷ lệ sở hữu 9.8000%.
+SHS (SHS) có công ty con CTCP Dược phẩm dược liệu Pharmedic (PMC). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Cảng Rau Quả (VGP). Tỷ lệ sở hữu 0.0000%.
+SHS (SHS) có công ty con CTCP Trang trí Nội thất Dầu khí (PID). Tỷ lệ sở hữu 6.2500%.
+SHS (SHS) có công ty con CTCP Cơ khí Lắp máy Lilama (L35). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con Ngân hàng TMCP Xuất Nhập Khẩu Việt Nam (EIB). Tỷ lệ sở hữu 3.5688%.
+VIX (VIX) có công ty con CTCP Tập đoàn GELEX (GEX). Tỷ lệ sở hữu 3.5232%.
+VIX (VIX) có công ty con Tổng Công ty Viglacera - CTCP (VGC). Tỷ lệ sở hữu 1.3874%.
+VIX (VIX) có công ty con CTCP Tập đoàn PC1 (PC1). Tỷ lệ sở hữu 4.9491%.
+VIX (VIX) có công ty con CTCP GTNFOODS (GTN). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con Tổng Công ty Chăn nuôi Việt Nam - CTCP (VLC). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP Đầu tư và Phát triển Việt Trung Nam (VHG). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP DAP - VINACHEM (DDV). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP Kinh doanh và Phát triển Bình Dương (TDC). Tỷ lệ sở hữu 2.4762%.
+VIX (VIX) có công ty con CTCP Nhựa Hà Nội (NHH). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP SCI (S99). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP Kho vận Miền Nam (STG). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP Du lịch Thành Thành Công (VNG). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP Vận tải biển Global Pacific (PCT). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP Xuất nhập khẩu Quảng Bình (QBS). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP Viglacera Tiên Sơn (VIT). Tỷ lệ sở hữu 13.3678%.
+VIX (VIX) có công ty con Tổng CTCP Đường Sông Miền Nam (SWC). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP Bê tông Phan Vũ Hà Nam (FCM). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP MHC (MHC). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP SCI E&C (SCI). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP Everpia (EVE). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con Tổng Công ty Thiết bị điện Đông Anh - CTCP (TBD). Tỷ lệ sở hữu 0.4231%.
+VIX (VIX) có công ty con CTCP Viglacera Hạ Long (VHL). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP Thủy điện Nậm Mu (HJS). Tỷ lệ sở hữu 4.7865%.
+VIX (VIX) có công ty con CTCP Tập đoàn Vinacontrol (VNC). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP Vận tải đa phương thức Vietranstimex (VTX). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP Sông Đà 3 (SD3). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP Vận tải và Thuê tàu (VFR). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP K.I.P Việt Nam (KIP). Tỷ lệ sở hữu 2.7755%.
+VIX (VIX) có công ty con CTCP Cơ điện Miền Trung (CJC). Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP Quản lý quỹ IB. Tỷ lệ sở hữu 0.0000%.
+VIX (VIX) có công ty con CTCP Vải sợi May mặc Miền Bắc (TET). Tỷ lệ sở hữu 0.0000%.
+NDN (NDN) có công ty con Tổng CTCP Vận tải Dầu khí (PVT). Tỷ lệ sở hữu 0.0000%.
+NDN (NDN) có công ty con CTCP Chứng khoán DSC (DSC). Tỷ lệ sở hữu 0.0000%.
+NDN (NDN) có công ty con CTCP Xây lắp Phát triển Nhà Đà Nẵng (NDX). Tỷ lệ sở hữu 44.1249%.
+NDN (NDN) có công ty con CTCP VICEM Vật liệu Xây dựng Đà Nẵng (DXV). Tỷ lệ sở hữu 0.0000%.
+NDN (NDN) có công ty con CTCP Nước Sài Gòn - An Khê. Tỷ lệ sở hữu 0.0000%.
+NDN (NDN) có công ty con CTCP Đầu tư Tia sáng Mới. Tỷ lệ sở hữu 3.3431%.
+NDN (NDN) có công ty con CTCP Công nghệ Nước và Môi trường NDN. Tỷ lệ sở hữu 0.0000%.
+NDN (NDN) có công ty con CTCP Cấp nước Đà Nẵng Ngọc Hồi. Tỷ lệ sở hữu 36.9030%.
+PVC (PVC) có công ty con Công ty TNHH Dung dịch khoan M-I Việt Nam. Tỷ lệ sở hữu 51.0000%.
+PVC (PVC) có công ty con Công ty TNHH Dịch vụ hóa chất dầu khí. Tỷ lệ sở hữu 100.0000%.
+PVC (PVC) có công ty con Công ty TNHH Dung dịch khoan và Dịch vụ Dầu khí. Tỷ lệ sở hữu 100.0000%.
+PVC (PVC) có công ty con Công ty TNHH PVChem - Tech. Tỷ lệ sở hữu 100.0000%.
+PVC (PVC) có công ty con Công ty TNHH Dịch vụ kỹ thuật công nghiệp PVChem. Tỷ lệ sở hữu 100.0000%.
+PVC (PVC) có công ty con CTCP Hóa phẩm Dầu khí DMC - Miền Nam (DMS). Tỷ lệ sở hữu 51.0000%.
+PVC (PVC) có công ty con CTCP Hóa phẩm dầu khí DMC - Miền Bắc (PCN). Tỷ lệ sở hữu 0.0000%.
+PVC (PVC) có công ty con Công ty TNHH Liên doanh DMC - VTS. Tỷ lệ sở hữu 38.6100%.
+PVC (PVC) có công ty con CTCP Hóa phẩm Dầu khí DMC - Miền Trung (PVCMIDDLE). Tỷ lệ sở hữu 0.0000%.
+PVT (PVT) có công ty con CTCP Vận tải Nhật Việt. Tỷ lệ sở hữu 51.0000%.
+PVT (PVT) có công ty con CTCP Vận tải Dầu khí Thái Bình Dương (PVP). Tỷ lệ sở hữu 64.9165%.
+PVT (PVT) có công ty con CTCP Vận tải biển Global Pacific (PCT). Tỷ lệ sở hữu 0.0000%.
+PVT (PVT) có công ty con CTCP Vận tải và Tiếp vận Phương Đông Việt (PDV). Tỷ lệ sở hữu 51.8721%.
+PVT (PVT) có công ty con CTCP Vận tải Sản phẩm khí Quốc tế (GSP). Tỷ lệ sở hữu 67.9801%.
+PVT (PVT) có công ty con CTCP Vận tải Xăng dầu Phương Nam. Tỷ lệ sở hữu 69.6286%.
+PVT (PVT) có công ty con CTCP Vận tải Dầu khí Hà Nội. Tỷ lệ sở hữu 50.5001%.
+PVT (PVT) có công ty con CTCP Hàng hải Thăng Long. Tỷ lệ sở hữu 99.8478%.
+PVT (PVT) có công ty con CTCP Dịch vụ Khai thác Dầu khí PTSC. Tỷ lệ sở hữu 48.5000%.
+PVT (PVT) có công ty con CTCP Vận tải Dầu khí Đông Dương (PTT). Tỷ lệ sở hữu 54.0824%.
+PVT (PVT) có công ty con CTCP Dịch vụ hàng hải Thăng Long. Tỷ lệ sở hữu 0.0000%.
+PVT (PVT) có công ty con CTCP Vận tải Dầu khí Quảng Ngãi. Tỷ lệ sở hữu 50.6667%.
+TCD (TCD) có công ty con CTCP BCG Land (BCR). Tỷ lệ sở hữu 9.4348%.
+TCD (TCD) có công ty con CTCP Đầu tư và Dịch vụ Helios. Tỷ lệ sở hữu 9.0000%.
+TCD (TCD) có công ty con CTCP Đầu tư và Phát triển Sơn Long. Tỷ lệ sở hữu 40.6250%.
+TCD (TCD) có công ty con CTCP Indoba Trading. Tỷ lệ sở hữu 0.0000%.
+TCD (TCD) có công ty con CTCP TCD Plus. Tỷ lệ sở hữu 80.0000%.
+TCD (TCD) có công ty con Công ty TNHH Đầu tư và Phát triển năng lượng Thành Nguyên. Tỷ lệ sở hữu 49.0000%.
+TCD (TCD) có công ty con Công ty TNHH B.O.T ĐT 830. Tỷ lệ sở hữu 0.0000%.
+TCD (TCD) có công ty con Công ty Taxi Việt Nam. Tỷ lệ sở hữu 51.0000%.
+TCD (TCD) có công ty con CTCP 3K Plus Việt Nam. Tỷ lệ sở hữu 0.0000%.
+TCD (TCD) có công ty con Công ty TNHH Tracodi E&C. Tỷ lệ sở hữu 99.8000%.
+TCD (TCD) có công ty con CTCP Băng Dương E&C. Tỷ lệ sở hữu 0.0000%.
+TCD (TCD) có công ty con CTCP Nước sạch Life Purity. Tỷ lệ sở hữu 51.0000%.
+TCD (TCD) có công ty con CTCP Plus Investment. Tỷ lệ sở hữu 0.0000%.
+TCD (TCD) có công ty con CTCP Tapiotek. Tỷ lệ sở hữu 0.0000%.
+TCD (TCD) có công ty con Công ty TNHH Liên doanh khai thác chế biến vật liệu xây dựng An Giang. Tỷ lệ sở hữu 51.0000%.
+TCD (TCD) có công ty con CTCP Xuất khẩu lao động Tracodi. Tỷ lệ sở hữu 0.0000%.
+TCD (TCD) có công ty con CTCP Tracodi Power. Tỷ lệ sở hữu 0.0000%.
+TCD (TCD) có công ty con CTCP Sản xuất kinh doanh phân bón Vinacafe. Tỷ lệ sở hữu 0.0000%.
+TCD (TCD) có công ty con CTCP White Magnolia. Tỷ lệ sở hữu 0.0000%.
+VCS (VCS) có công ty con CTCP Chế tác đá Việt Nam (STV). Tỷ lệ sở hữu 0.0000%.
+VCS (VCS) có công ty con Công ty TNHH MTV Đầu tư và Chế biến khoáng sản Phenikaa Huế. Tỷ lệ sở hữu 100.0000%.
+NTP (NTP) có công ty con CTCP Nhựa Thiếu niên Tiền Phong Phía Nam. Tỷ lệ sở hữu 27.3900%.
+NTP (NTP) có công ty con CTCP Cấp nước Nam Định (NDW). Tỷ lệ sở hữu 13.5000%.
+NTP (NTP) có công ty con Công ty TNHH Nhựa Thiếu niên Tiền Phong Miền Trung. Tỷ lệ sở hữu 100.0000%.
+NTP (NTP) có công ty con Công ty TNHH Liên doanh Nhựa Tiền Phong - SMP. Tỷ lệ sở hữu 51.0000%.
+NTP (NTP) có công ty con Công ty TNHH Bất động sản Tiền Phong. Tỷ lệ sở hữu 100.0000%.
+NTP (NTP) có công ty con CTCP Bao bì Tiền Phong. Tỷ lệ sở hữu 49.9775%.
+NTP (NTP) có công ty con CTCP Thiết kế chế tạo thiết bị. Tỷ lệ sở hữu 0.0000%.
+TVC (TVC) có công ty con CTCP Chứng khoán T-Cap (TVB). Tỷ lệ sở hữu 70.3975%.
+TVC (TVC) có công ty con CTCP Kinh doanh Bất động sản Trí Việt. Tỷ lệ sở hữu 0.0000%.
+TNG (TNG) có công ty con Công ty TNHH Golf Yên Bình TNG. Tỷ lệ sở hữu 0.0000%.
+TNG (TNG) có công ty con CTCP TNG Land. Tỷ lệ sở hữu 48.8145%.
+TNG (TNG) có công ty con Công ty TNHH MTV TNG Eco Green. Tỷ lệ sở hữu 0.0000%.
+TNG (TNG) có công ty con Công ty TNHH TNG Fashion. Tỷ lệ sở hữu 0.0000%.
+TNG (TNG) có công ty con CTCP Thời trang TNG. Tỷ lệ sở hữu 0.0000%.
+TNG (TNG) có công ty con Công ty Xây lắp điện Bắc Thái. Tỷ lệ sở hữu 0.0000%.
+TNG (TNG) có công ty con CTCP Đầu tư và Xây dựng Bắc Thái. Tỷ lệ sở hữu 48.0001%.
+D2D (D2D) có công ty con Ngân hàng TMCP Đại Á (DAB). Tỷ lệ sở hữu 0.7767%.
+D2D (D2D) có công ty con CTCP Dịch vụ Sonadezi (SDV). Tỷ lệ sở hữu 5.0000%.
+D2D (D2D) có công ty con Công ty TNHH Berjaya - D2D. Tỷ lệ sở hữu 0.0000%.
+VGC (VGC) có công ty con CTCP Đầu tư VIHOCE Tiên Dương. Tỷ lệ sở hữu 55.0000%.
+VGC (VGC) có công ty con Công ty TNHH Kính nổi siêu trắng Phú Mỹ. Tỷ lệ sở hữu 65.0000%.
+VGC (VGC) có công ty con CTCP Viglacera Vân Hải. Tỷ lệ sở hữu 98.1700%.
+VGC (VGC) có công ty con CTCP Viglacera Tiên Sơn (VIT). Tỷ lệ sở hữu 51.0106%.
+VGC (VGC) có công ty con CTCP Viglacera Thái Nguyên. Tỷ lệ sở hữu 51.0000%.
+VGC (VGC) có công ty con Công ty TNHH Kính nổi Việt Nam. Tỷ lệ sở hữu 100.0000%.
+VGC (VGC) có công ty con CTCP Viglacera Hưng Yên. Tỷ lệ sở hữu 51.0000%.
+VGC (VGC) có công ty con CTCP Kính Đáp Cầu (DSG). Tỷ lệ sở hữu 86.4083%.
+VGC (VGC) có công ty con CTCP Phát triển Khu công nghiệp Viglacera Yên Mỹ. Tỷ lệ sở hữu 60.0000%.
+VGC (VGC) có công ty con CTCP Viglacera Hạ Long (VHL). Tỷ lệ sở hữu 50.4800%.
+VGC (VGC) có công ty con CTCP Viglacera Đông Triều (DTC). Tỷ lệ sở hữu 0.0000%.
+VGC (VGC) có công ty con CTCP Đầu tư và Xuất nhập khẩu Viglacera. Tỷ lệ sở hữu 25.0000%.
+VGC (VGC) có công ty con CTCP Viglacera Thăng Long (TLT). Tỷ lệ sở hữu 51.0744%.
+VGC (VGC) có công ty con CTCP Bê tông khí Viglacera. Tỷ lệ sở hữu 96.1900%.
+VGC (VGC) có công ty con CTCP Sứ Viglacera Thanh Trì (TVA). Tỷ lệ sở hữu 0.0000%.
+VGC (VGC) có công ty con CTCP Viglacera Hà Nội (VIH). Tỷ lệ sở hữu 51.0000%.
+VGC (VGC) có công ty con CTCP Thương mại Viglacera. Tỷ lệ sở hữu 76.2300%.
+VGC (VGC) có công ty con CTCP Việt Trì Viglacera. Tỷ lệ sở hữu 92.8200%.
+VGC (VGC) có công ty con CTCP Gạch Ngói Từ Sơn (VTS). Tỷ lệ sở hữu 24.9330%.
+VGC (VGC) có công ty con CTCP Từ Liêm. Tỷ lệ sở hữu 55.9200%.
+VGC (VGC) có công ty con CTCP Visaho. Tỷ lệ sở hữu 0.0000%.
+VGC (VGC) có công ty con CTCP Khoáng sản Viglacera (VIM). Tỷ lệ sở hữu 51.0000%.
+VGC (VGC) có công ty con CTCP 382 Đông Anh (DAC). Tỷ lệ sở hữu 51.0013%.
+VGC (VGC) có công ty con CTCP Bá Hiến (BHV). Tỷ lệ sở hữu 0.0000%.
+VGC (VGC) có công ty con CTCP Gốm Xây dựng Yên Hưng (HLY). Tỷ lệ sở hữu 26.0000%.
+VGC (VGC) có công ty con CTCP Bao bì và Má phanh Viglacera. Tỷ lệ sở hữu 51.0000%.
+VGC (VGC) có công ty con CTCP Gốm xây dựng Hữu Hưng. Tỷ lệ sở hữu 51.0000%.
+VGC (VGC) có công ty con CTCP Đầu tư cơ khí và Xây dựng Hà Nội. Tỷ lệ sở hữu 0.0000%.
+VGC (VGC) có công ty con CTCP Gạch chịu lửa Cầu Đuống. Tỷ lệ sở hữu 25.0000%.
+VGC (VGC) có công ty con CTCP Vinafacade. Tỷ lệ sở hữu 0.0000%.
+VGC (VGC) có công ty con Công ty TNHH Chao - Viglacera. Tỷ lệ sở hữu 100.0000%.
+VGC (VGC) có công ty con CTCP Tư vấn Viglacera. Tỷ lệ sở hữu 76.8900%.
+VGC (VGC) có công ty con Công ty ViMariel - CTCP. Tỷ lệ sở hữu 99.9400%.
+VGC (VGC) có công ty con Công ty SANVIG - CTCP. Tỷ lệ sở hữu 21.4300%.
+S99 (S99) có công ty con CTCP DAP - VINACHEM (DDV). Tỷ lệ sở hữu 0.0000%.
+S99 (S99) có công ty con Công ty TNHH SCI Năng lượng. Tỷ lệ sở hữu 100.0000%.
+S99 (S99) có công ty con CTCP Kho vận Miền Nam (STG). Tỷ lệ sở hữu 0.0000%.
+S99 (S99) có công ty con CTCP Vận tải biển Global Pacific (PCT). Tỷ lệ sở hữu 0.0000%.
+S99 (S99) có công ty con Tổng CTCP Đường Sông Miền Nam (SWC). Tỷ lệ sở hữu 0.0000%.
+S99 (S99) có công ty con CTCP SCI Lai Châu. Tỷ lệ sở hữu 0.0000%.
+S99 (S99) có công ty con CTCP Chứng khoán Phố Wall (WSS). Tỷ lệ sở hữu 0.0000%.
+S99 (S99) có công ty con CTCP MHC (MHC). Tỷ lệ sở hữu 0.0000%.
+S99 (S99) có công ty con CTCP SCI E&C (SCI). Tỷ lệ sở hữu 55.5385%.
+S99 (S99) có công ty con CTCP Đầu tư Fecon. Tỷ lệ sở hữu 0.0000%.
+S99 (S99) có công ty con CTCP Điện gió Hướng Linh 8. Tỷ lệ sở hữu 0.0000%.
+S99 (S99) có công ty con CTCP SCI Nghệ An. Tỷ lệ sở hữu 0.0000%.
+S99 (S99) có công ty con CTCP SCI Điện Biên. Tỷ lệ sở hữu 0.0000%.
+S99 (S99) có công ty con CTCP Vận tải đa phương thức Vietranstimex (VTX). Tỷ lệ sở hữu 0.0000%.
+S99 (S99) có công ty con CTCP SCI Quảng Trị. Tỷ lệ sở hữu 0.0000%.
+S99 (S99) có công ty con CTCP Tư vấn SCI. Tỷ lệ sở hữu 65.0000%.
+S99 (S99) có công ty con Quỹ Đầu tư khám phá giá trị Ngân hàng Công thương Việt Nam. Tỷ lệ sở hữu 0.0000%.
+TIG (TIG) có công ty con CTCP Đầu tư Thăng Long Phú Thọ. Tỷ lệ sở hữu 94.3000%.
+TIG (TIG) có công ty con CTCP Chứng khoán Đầu tư Tài chính Việt Nam (VIG). Tỷ lệ sở hữu 0.0000%.
+TIG (TIG) có công ty con CTCP Đầu tư HDE Holdings. Tỷ lệ sở hữu 0.0000%.
+TIG (TIG) có công ty con CTCP Đầu tư phát triển Bất động sản và Năng lượng tái tạo Việt Nam. Tỷ lệ sở hữu 0.0000%.
+TIG (TIG) có công ty con CTCP Bất động sản Hoa Anh Đào. Tỷ lệ sở hữu 80.0000%.
+TIG (TIG) có công ty con CTCP Phân phối HDE. Tỷ lệ sở hữu 0.0000%.
+TIG (TIG) có công ty con CTCP Đầu tư Bất động sản Hà Thành. Tỷ lệ sở hữu 0.0000%.
+TIG (TIG) có công ty con CTCP Đầu tư Tòa nhà công nghệ xanh TIG - HDE. Tỷ lệ sở hữu 0.0000%.
+TIG (TIG) có công ty con CTCP Điện gió Thăng Long - Hướng Sơn 1. Tỷ lệ sở hữu 0.0000%.
+TIG (TIG) có công ty con CTCP Tòa nhà Công nghệ Thông tin - Truyền thông Hà Nội. Tỷ lệ sở hữu 0.0000%.
+TIG (TIG) có công ty con CTCP Điện gió Thăng Long - Hướng Sơn 2. Tỷ lệ sở hữu 0.0000%.
+TIG (TIG) có công ty con Công ty TNHH Điện tử và Hàng gia dụng Hyundai Việt Nam. Tỷ lệ sở hữu 0.0000%.
+TIG (TIG) có công ty con Công ty TNHH Liên doanh Đầu tư quản lý khách sạn Tih Holiday. Tỷ lệ sở hữu 0.0000%.
+TIG (TIG) có công ty con CTCP Đầu tư thời báo chứng khoán Việt Nam. Tỷ lệ sở hữu 0.0000%.
+TIG (TIG) có công ty con Công ty TNHH Quốc tế TLG. Tỷ lệ sở hữu 100.0000%.
+TIG (TIG) có công ty con Công ty TNHH Sử dụng bất động sản RE-G. Tỷ lệ sở hữu 100.0000%.
+VFS (VFS) có công ty con Tổng CTCP Vận tải Dầu khí (PVT). Tỷ lệ sở hữu 0.0000%.
+VFS (VFS) có công ty con CTCP CENCON Việt Nam (CEN). Tỷ lệ sở hữu 0.0000%.
+VFS (VFS) có công ty con CTCP Bánh kẹo Hải Hà (HHC). Tỷ lệ sở hữu 0.9686%.
+VFS (VFS) có công ty con CTCP Thương mại và Đầu tư Vi na ta ba (VTJ). Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con Tổng Công ty Thăng Long - CTCP (TTL). Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con Công ty TNHH MTV Tasco Hải Phòng. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con Công ty TNHH MTV Tasco Nam Định. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con Công ty TNHH MTV Tasco Quảng Bình. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con CTCP Tasco Nam Thái. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con CTCP VETC. Tỷ lệ sở hữu 99.2600%.
+HUT (HUT) có công ty con Công ty TNHH BOT Hùng Thắng - Phú Thọ. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con Công ty TNHH T'Hospital. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con CTCP Đầu tư phát triển nhà và đô thị HUD8 (HD8). Tỷ lệ sở hữu 9.0000%.
+HUT (HUT) có công ty con Công ty TNHH MTV TASCO 6. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con CTCP Bệnh viện mắt Hà Nội cơ sở 2. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con CTCP Bất động sản Thái An. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con CTCP Thành Công TSC. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con CTCP D-Tech. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con CTCP Tasco Năng Lượng. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con Công ty TNHH An Nhiên Foods. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con CTCP Tasco Thăng Long. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con Công ty TNHH Ana Services. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con Công ty TNHH Đào tạo và tư vấn Tasedu. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con CTCP Bệnh viện Ban Mai. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con CTCP Tasco Auto. Tỷ lệ sở hữu 96.4500%.
+HUT (HUT) có công ty con CTCP Bất động sản Quảng Phú. Tỷ lệ sở hữu 0.0000%.
+HUT (HUT) có công ty con Công ty TNHH Tasco Land. Tỷ lệ sở hữu 100.0000%.
+HUT (HUT) có công ty con Công ty TNHH Bảo hiểm Tasco. Tỷ lệ sở hữu 100.0000%.
+HUT (HUT) có công ty con Công ty TNHH MTV Tasco BOT. Tỷ lệ sở hữu 100.0000%.
+HUT (HUT) có công ty con Công ty TNHH Dịch vụ Tài chính Tasso. Tỷ lệ sở hữu 100.0000%.
+CEO (CEO) có công ty con CTCP Đầu tư và Phát triển Du lịch Vân Đồn. Tỷ lệ sở hữu 95.7200%.
+CEO (CEO) có công ty con Công ty TNHH C.E.O Quốc Tế. Tỷ lệ sở hữu 100.0000%.
+CEO (CEO) có công ty con CTCP Đầu tư và Phát triển Nam Cần Thơ. Tỷ lệ sở hữu 0.0000%.
+CEO (CEO) có công ty con CTCP Đầu tư và Phát triển Phú Quốc. Tỷ lệ sở hữu 60.0000%.
+CEO (CEO) có công ty con CTCP Đầu tư và Phát triển Nha Trang. Tỷ lệ sở hữu 99.0000%.
+CEO (CEO) có công ty con CTCP Phát triển Nhà và Đô thị Phú Quốc. Tỷ lệ sở hữu 69.3600%.
+CEO (CEO) có công ty con Trường Cao đẳng Công thương Quốc tế. Tỷ lệ sở hữu 100.0000%.
+CEO (CEO) có công ty con CTCP Xây dựng C.E.O. Tỷ lệ sở hữu 67.5500%.
+CEO (CEO) có công ty con CTCP Phát triển dịch vụ C.E.O. Tỷ lệ sở hữu 0.0000%.
+CEO (CEO) có công ty con Công ty TNHH C.E.O Hospitality. Tỷ lệ sở hữu 100.0000%.
+CEO (CEO) có công ty con CTCP Du lịch C.E.O. Tỷ lệ sở hữu 0.0000%.
+CEO (CEO) có công ty con CTCP Đầu tư BMC - CEO. Tỷ lệ sở hữu 0.0000%.
+CEO (CEO) có công ty con Công ty TNHH MTV Tư vấn thiết kế C.E.O. Tỷ lệ sở hữu 100.0000%.
+CEO (CEO) có công ty con Công ty TNHH Green Phú Quốc. Tỷ lệ sở hữu 0.0000%.
+CEO (CEO) có công ty con Công ty TNHH MTV Hải Thi Phú Quốc. Tỷ lệ sở hữu 0.0000%.
+CEO (CEO) có công ty con Công ty TNHH MTV Xây dựng C.E.O Phú Quốc. Tỷ lệ sở hữu 0.0000%.
+CEO (CEO) có công ty con CTCP Phát triển khu Công nghiệp C.E.O. Tỷ lệ sở hữu 99.0000%.
+RCL (RCL) có công ty con CTCP Cấp nước Chợ Lớn (CLW). Tỷ lệ sở hữu 2.3077%.
+RCL (RCL) có công ty con CTCP Địa ốc Đà Lạt (DLR). Tỷ lệ sở hữu 0.0000%.
+RCL (RCL) có công ty con CTCP Địa ốc Chợ Lớn - Đà Nẵng. Tỷ lệ sở hữu 0.0000%.
+RCL (RCL) có công ty con CTCP Đầu tư xây dựng RCL. Tỷ lệ sở hữu 49.0000%.
+RCL (RCL) có công ty con CTCP Quản lý Bất động sản Hưng Phú. Tỷ lệ sở hữu 0.0000%.
+L14 (L14) có công ty con CTCP Đầu tư tài chính Licogi 14. Tỷ lệ sở hữu 48.5700%.
+DNT (DNT) có công ty con CTCP Khách sạn Vĩnh An. Tỷ lệ sở hữu 36.8700%.
+DTA (DTA) có công ty con CTCP DTA Bắc Ninh. Tỷ lệ sở hữu 0.0000%.
+DTA (DTA) có công ty con CTCP Xây lắp Kinh doanh vật liệu xây dựng Investco - DTA. Tỷ lệ sở hữu 0.0000%.
+EVF (EVF) có công ty con CTCP Tập đoàn Đầu tư Địa ốc No Va (NVL). Tỷ lệ sở hữu 0.0000%.
+EVF (EVF) có công ty con CTCP Nhiệt điện Quảng Ninh (QTP). Tỷ lệ sở hữu 2.4481%.
+EVF (EVF) có công ty con CTCP Nhiệt điện Phả Lại (PPC). Tỷ lệ sở hữu 0.0000%.
+EVF (EVF) có công ty con CTCP Chứng khoán APG (APG). Tỷ lệ sở hữu 0.0000%.
+EVF (EVF) có công ty con CTCP One Capital Hospitality (OCH). Tỷ lệ sở hữu 0.0000%.
+EVF (EVF) có công ty con CTCP Thuỷ điện Miền Trung (CHP). Tỷ lệ sở hữu 0.0000%.
+EVF (EVF) có công ty con CTCP FECON (FCN). Tỷ lệ sở hữu 0.0000%.
+EVF (EVF) có công ty con CTCP Chứng khoán Nhất Việt (VFS). Tỷ lệ sở hữu 9.9228%.
+EVF (EVF) có công ty con CTCP Damsan (ADS). Tỷ lệ sở hữu 3.1759%.
+EVF (EVF) có công ty con CTCP Thủy điện Thác Mơ (TMP). Tỷ lệ sở hữu 0.0000%.
+EVF (EVF) có công ty con CTCP Thủy điện Thác Bà (TBC). Tỷ lệ sở hữu 0.0000%.
+EVF (EVF) có công ty con CTCP Chứng Khoán Eurocapital (EECS). Tỷ lệ sở hữu 0.0000%.
+EVF (EVF) có công ty con CTCP Hồng Hà Việt Nam (PHH). Tỷ lệ sở hữu 0.0000%.
+EVF (EVF) có công ty con CTCP Bánh kẹo Hải Hà (HHC). Tỷ lệ sở hữu 4.9924%.
+EVF (EVF) có công ty con CTCP Sông Đà 505 (S55). Tỷ lệ sở hữu 0.0000%.
+EVF (EVF) có công ty con CTCP Group Bắc Việt (BVG). Tỷ lệ sở hữu 4.5196%.
+EVF (EVF) có công ty con CTCP Địa ốc Tân Bình (TBR). Tỷ lệ sở hữu 5.4902%.
+EVF (EVF) có công ty con CTCP Viglacera Thăng Long (TLT). Tỷ lệ sở hữu 0.0000%.
+EVF (EVF) có công ty con CTCP Xuất nhập khẩu Thủy sản Năm Căn (SNC). Tỷ lệ sở hữu 0.0000%.
+ACV (ACV) có công ty con CTCP Dịch vụ Hàng không Sân bay Tân Sơn Nhất (SAS). Tỷ lệ sở hữu 49.0737%.
+ACV (ACV) có công ty con CTCP Dịch vụ Hàng hóa Sài Gòn (SCS). Tỷ lệ sở hữu 13.6898%.
+ACV (ACV) có công ty con CTCP Phục vụ mặt đất Sài Gòn (SGN). Tỷ lệ sở hữu 48.0263%.
+ACV (ACV) có công ty con CTCP Dịch vụ hàng hóa Hàng không Việt Nam. Tỷ lệ sở hữu 0.0000%.
+ACV (ACV) có công ty con CTCP Phục vụ mặt đất Hà Nội. Tỷ lệ sở hữu 20.0000%.
+ACV (ACV) có công ty con CTCP Dịch vụ Nhiên liệu hàng không Nội Bài. Tỷ lệ sở hữu 60.0000%.
+ACV (ACV) có công ty con CTCP Vận tải Hàng không Miền Nam. Tỷ lệ sở hữu 30.0000%.
+ACV (ACV) có công ty con Công ty TNHH Dịch vụ bảo dưỡng máy bay Cảng hàng không Miền Nam. Tỷ lệ sở hữu 51.0000%.
+ACV (ACV) có công ty con CTCP Thương mại Hàng không Miền Nam. Tỷ lệ sở hữu 29.5300%.
+QNS (QNS) có công ty con Công ty TNHH MTV Thương mại Thành Phát. Tỷ lệ sở hữu 100.0000%.
+BWE (BWE) có công ty con Tổng Công ty Sản xuất - Xuất nhập khẩu Bình Dương - CTCP (PRT). Tỷ lệ sở hữu 4.0000%.
+BWE (BWE) có công ty con CTCP Cấp nước Đồng Nai (DNW). Tỷ lệ sở hữu 18.9843%.
+BWE (BWE) có công ty con CTCP Nước Thủ Dầu Một (TDM). Tỷ lệ sở hữu 0.0000%.
+BWE (BWE) có công ty con Công ty TNHH MTV Liên hợp Khoa học - Công nghệ - Môi trường Biwase. Tỷ lệ sở hữu 100.0000%.
+BWE (BWE) có công ty con CTCP Nước Biwase - Long An. Tỷ lệ sở hữu 94.5353%.
+BWE (BWE) có công ty con CTCP Đầu tư Xây dựng Chánh Phú Hòa. Tỷ lệ sở hữu 43.4500%.
+BWE (BWE) có công ty con CTCP Cấp nước Gia Tân. Tỷ lệ sở hữu 35.0993%.
+BWE (BWE) có công ty con Công ty TNHH MTV Nước Biwase Bình Phước. Tỷ lệ sở hữu 100.0000%.
+BWE (BWE) có công ty con CTCP Cấp nước Vĩnh Long (VLW). Tỷ lệ sở hữu 33.6535%.
+BWE (BWE) có công ty con CTCP Đầu tư Nước Tân Hiệp. Tỷ lệ sở hữu 43.0000%.
+BWE (BWE) có công ty con CTCP Đầu tư và Xây dựng BIWELCO. Tỷ lệ sở hữu 0.0000%.
+BWE (BWE) có công ty con CTCP Cấp nước Quảng Bình (NQB). Tỷ lệ sở hữu 41.0036%.
+BWE (BWE) có công ty con CTCP Cấp thoát nước Long An (LAW). Tỷ lệ sở hữu 38.0634%.
+BWE (BWE) có công ty con CTCP Biwase Quảng Bình. Tỷ lệ sở hữu 33.2750%.
+BWE (BWE) có công ty con CTCP Cấp nước Cần Thơ 2. Tỷ lệ sở hữu 48.8612%.
+BWE (BWE) có công ty con CTCP Cấp nước Ninh Thuận (NNT). Tỷ lệ sở hữu 24.7607%.
+BWE (BWE) có công ty con CTCP Nước Biwase Cần Thơ - BICAWA. Tỷ lệ sở hữu 47.0000%.
+BWE (BWE) có công ty con Công ty TNHH MTV Sản xuất - Thương mại - Dịch vụ Biwase. Tỷ lệ sở hữu 100.0000%.
+BWE (BWE) có công ty con Công ty TNHH MTV Xử lý nước thải và thoát nước Biwase. Tỷ lệ sở hữu 100.0000%.
+BWE (BWE) có công ty con CTCP Công trình đô thị Thủ Thừa. Tỷ lệ sở hữu 48.2500%.
+BWE (BWE) có công ty con CTCP Nước và Môi trường Bằng Tâm. Tỷ lệ sở hữu 84.6389%.
+BWE (BWE) có công ty con CTCP Tái chế - Vật Liệu Xanh. Tỷ lệ sở hữu 0.0000%.
+BWE (BWE) có công ty con Công ty TNHH MTV Tư vấn Biwase. Tỷ lệ sở hữu 100.0000%.
+BWE (BWE) có công ty con CTCP Công trình đô thị Châu Thành. Tỷ lệ sở hữu 96.0639%.
+BWE (BWE) có công ty con CTCP Công trình đô thị Cần Giuộc. Tỷ lệ sở hữu 97.2700%.
+PHC (PHC) có công ty con Công ty TNHH Phát triển nhà Phước Trường Hưng. Tỷ lệ sở hữu 47.0000%.
+PHC (PHC) có công ty con Công ty TNHH Đầu tư địa ốc An Thịnh Phát. Tỷ lệ sở hữu 32.4400%.
+PHC (PHC) có công ty con CTCP Đầu tư kinh doanh An Phú Hưng. Tỷ lệ sở hữu 46.0000%.
+PHC (PHC) có công ty con CTCP Machino An Phú. Tỷ lệ sở hữu 30.0000%.
+PHC (PHC) có công ty con CTCP Phú Lâm. Tỷ lệ sở hữu 73.7500%.
+PHC (PHC) có công ty con CTCP Nhà Mỹ Xuân Hà Nội. Tỷ lệ sở hữu 0.0000%.
+PHC (PHC) có công ty con CTCP Đầu tư kinh doanh An Phú Việt Nam. Tỷ lệ sở hữu 0.0000%.
+PHC (PHC) có công ty con Công ty TNHH Đầu tư đô thị Vạn Phú. Tỷ lệ sở hữu 0.0000%.
+PHC (PHC) có công ty con Công ty TNHH Đầu tư PHK. Tỷ lệ sở hữu 0.0000%.
+PHC (PHC) có công ty con CTCP Đầu tư Xây dựng Phục Hưng số 7. Tỷ lệ sở hữu 0.0000%.
+PHC (PHC) có công ty con Công ty TNHH MTV Quản lý thiết bị xây dựng Phục Hưng. Tỷ lệ sở hữu 100.0000%.
+PHC (PHC) có công ty con CTCP Xây dựng PHCONS. Tỷ lệ sở hữu 0.0000%.
+PHC (PHC) có công ty con CTCP Xây dựng Phục Hưng số 8. Tỷ lệ sở hữu 0.0000%.
+PHC (PHC) có công ty con CTCP Cơ điện Phục Hưng. Tỷ lệ sở hữu 70.0000%.
+CJC (CJC) có công ty con CTCP Lizen (LCG). Tỷ lệ sở hữu 4.1792%.
+CJC (CJC) có công ty con Công ty TNHH Thương mại Trường Thông. Tỷ lệ sở hữu 49.0000%.
+TST (TST) có công ty con CTCP Cáp quang Việt Nam Vina - OFC. Tỷ lệ sở hữu 25.0000%.
+TST (TST) có công ty con CTCP Công nghệ HTSV Việt Nam. Tỷ lệ sở hữu 50.5413%.
+TST (TST) có công ty con CTCP Công nghệ TST. Tỷ lệ sở hữu 0.0000%.
+VE1 (VE1) có công ty con CTCP Dịch vụ Hàng không sân bay Đà Nẵng (MAS). Tỷ lệ sở hữu 6.1743%.
+VE2 (VE2) có công ty con Tổng CTCP Xây dựng điện Việt Nam (VNE). Tỷ lệ sở hữu 0.6306%.
+CCV (CCV) có công ty con CTCP Tư vấn đầu tư Xây dựng VCC Việt Nam. Tỷ lệ sở hữu 67.2995%.
+CCV (CCV) có công ty con CTCP Tư vấn Xây dựng VCC Hà Nội. Tỷ lệ sở hữu 75.0000%.

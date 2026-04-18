@@ -77,18 +77,18 @@
   flex-shrink: 0;
 }
 
-/* Search */
-.topbar-search {
-  flex: 1;
-  max-width: 380px;
-  margin: 0 auto;
-  position: relative;
-}
-
 .search-wrap {
   position: relative;
   display: flex;
   align-items: center;
+}
+
+.entity-search-shell {
+  position: relative;
+}
+
+.search-wrap-panel {
+  width: 100%;
 }
 
 .search-ico {
@@ -159,6 +159,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.search-results-panel {
+  z-index: 120;
 }
 
 /* Right actions */
@@ -325,12 +329,29 @@
   min-width: 0;
 }
 
+/* Chỉ rộng bằng panel kết quả (center), pointer-events: auto — tránh full-width + pointer-events:none
+   khiến một số engine bỏ qua hit-test lên nút con; vùng hai bên panel vẫn click xuống graph */
+#graph-top-overlay {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(920px, calc(100% - 24px));
+  box-sizing: border-box;
+  z-index: 150;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
 #mynetwork {
   position: absolute !important;
   inset: 0;
   width:  100% !important;
   height: 100% !important;
   background: var(--bg);
+  z-index: 50;
 }
 
 #graph-legend {
@@ -413,6 +434,16 @@
   padding: var(--s-3) var(--s-3) var(--s-2);
   border-bottom: 1px solid var(--bd);
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.rp-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-2);
 }
 
 .rp-title {
@@ -421,22 +452,31 @@
   color: var(--tx-2);
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  margin-bottom: var(--s-2);
+  margin: 0;
 }
 
 .rp-toolbar {
   display: flex;
   align-items: center;
   gap: var(--s-2);
+  min-width: 0;
 }
 
 .rp-sessions {
   display: flex;
   align-items: center;
   gap: var(--s-1);
-  padding: var(--s-2) var(--s-3);
-  border-bottom: 1px solid var(--bd);
+  min-width: 0;
   flex-shrink: 0;
+}
+
+.rp-sessions-compact {
+  max-width: min(100%, 220px);
+  margin-left: auto;
+}
+
+.rp-sessions-compact .select-sm {
+  min-width: 0;
 }
 
 #rp-content {
@@ -452,10 +492,95 @@
   border-bottom: 1px solid var(--bd);
   flex-shrink: 0;
   background: var(--surface);
+  max-height: min(28vh, 240px);
+  overflow: hidden;
+}
+
+.qresult-area-graph {
+  width: 100%;
+  max-width: 100%;
+  max-height: min(62vh, 620px);
+  border: 1px solid var(--bd-em);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  backdrop-filter: blur(8px);
+  pointer-events: auto;
+  position: relative;
+  z-index: 1;
+  /* Ghi đè .qresult-area { overflow: hidden } — tránh cắt vùng tương tác / nút */
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .qresult-inner {
   padding: var(--s-2) var(--s-3) var(--s-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Thu gọn: ẩn hoàn toàn khối Cypher + bước xử lý — !important thắng .qresult-inner { display:flex } nếu [hidden] bị ghi đè */
+.qresult-area-graph.is-collapsed #qresult-body {
+  display: none !important;
+  flex: none !important;
+  max-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+.qresult-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border: 0;
+  border-top: 1px solid var(--bd);
+  background: color-mix(in srgb, var(--surface) 90%, var(--bg) 10%);
+  color: var(--tx-2);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  pointer-events: auto;
+  touch-action: manipulation;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  /* Khi mở rộng: nút nằm dưới cùng khối nội dung; khi thu gọn chỉ còn nút, panel co lại phía trên */
+  margin-top: auto;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.qresult-toggle:hover {
+  background: color-mix(in srgb, var(--surface) 82%, var(--bg) 18%);
+  color: var(--tx);
+}
+
+.qresult-toggle:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: -2px;
+}
+
+.qresult-toggle-icon {
+  font-size: 13px;
+  line-height: 1;
+  transition: transform 0.18s ease;
+}
+
+.qresult-area-graph.is-collapsed .qresult-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.qresult-area-graph.is-collapsed .qresult-toggle {
+  border-top: none;
 }
 
 .cypher-block-label {
@@ -484,7 +609,7 @@
   white-space: pre-wrap;
   overflow-wrap: break-word;
   word-break: break-word;
-  max-height: min(38vh, 280px);
+  max-height: min(24vh, 220px);
   min-height: 56px;
   overflow-y: auto;
   tab-size: 2;
@@ -492,13 +617,10 @@
 }
 
 .process-steps-wrap {
-  margin-top: var(--s-2);
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  max-height: 140px;
-  overflow-y: auto;
-  scrollbar-width: thin;
+  gap: 6px;
+  min-height: 220px;
 }
 
 .process-step {
@@ -511,6 +633,7 @@
 
 #chatHistory {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   padding: var(--s-3);
   display: flex;
@@ -887,13 +1010,136 @@
 /* ══════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════ */
+@media (max-width: 1200px) {
+  :root { --left-w: 240px; --right-w: 320px; }
+
+  #graph-legend {
+    gap: var(--s-3);
+    padding-inline: 12px;
+  }
+}
+
 @media (max-width: 900px) {
-  :root { --left-w: 220px; --right-w: 280px; }
+  :root { --left-w: 200px; --right-w: 300px; }
   .brand-sub { display: none; }
+
+  #topbar {
+    gap: var(--s-2);
+    padding-inline: var(--s-3);
+  }
+
+  #graph-legend {
+    max-width: calc(100% - 24px);
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 6px;
+    white-space: normal;
+  }
+
+  .qresult-area-graph {
+    max-height: min(56vh, 540px);
+  }
 }
 
 @media (max-width: 700px) {
-  #right-panel { display: none; }
-  .topbar-search { max-width: 160px; }
-  .stats-chip { display: none; }
+  #topbar {
+    height: auto;
+    min-height: 0;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: var(--s-2) var(--s-3);
+  }
+
+  .brand-sep,
+  .brand-sub,
+  .topbar-divider,
+  .stats-chip {
+    display: none;
+  }
+
+  .topbar-actions {
+    margin-left: 0;
+  }
+
+  #workspace {
+    flex-direction: column;
+  }
+
+  #left-panel,
+  .resizer,
+  #left-panel + .resizer,
+  #resizer-left,
+  #resizer-right,
+  #left-panel .panel-toggle,
+  #right-panel .panel-toggle {
+    display: none !important;
+  }
+
+  #graph-area {
+    min-height: 48vh;
+  }
+
+  #right-panel,
+  #right-panel.collapsed {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    height: 42vh;
+    min-height: 280px;
+    border-left: none;
+    border-top: 1px solid var(--bd);
+  }
+
+  #right-panel.collapsed #rp-content {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .rp-header {
+    padding-inline: var(--s-2);
+  }
+
+  .rp-header-top,
+  .rp-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .rp-sessions-compact {
+    max-width: 100%;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .qresult-area {
+    max-height: min(24vh, 210px);
+  }
+
+  .qresult-area-graph {
+    width: 100%;
+    max-height: min(46vh, 420px);
+  }
+
+  .process-steps-wrap {
+    min-height: 160px;
+  }
+
+  #chatHistory {
+    padding: var(--s-2);
+  }
+
+  .chat-input-row {
+    padding: var(--s-2);
+  }
+
+  #graph-hint {
+    max-width: calc(100% - 24px);
+    text-align: center;
+    white-space: normal;
+  }
+
+  #graph-legend {
+    bottom: 10px;
+    padding: 8px 10px;
+    gap: 8px 12px;
+  }
 }

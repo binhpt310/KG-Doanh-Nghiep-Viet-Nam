@@ -2,6 +2,8 @@ import os
 import sys
 import shutil
 import json
+import unicodedata
+import html
 from datetime import datetime, timezone
 from dotenv import load_dotenv
 
@@ -44,10 +46,18 @@ else:
 LLMWareConfig().set_active_db("sqlite")
 LLMWareConfig().set_vector_db("chromadb")
 
+BASE_DIR = os.path.dirname(__file__)
+DATA_DIR = os.path.join(BASE_DIR, "data")
+DOCS_DIR = os.path.join(BASE_DIR, "docs")
+RAG_LIBRARY_NAME = "kg_demo_vn"
+
 # Setup Neo4j Driver (safer to create after load_dotenv)
 NEO4J_URI = os.getenv("NEO4J_URI", "neo4j://localhost:7687")
 NEO4J_USERNAME = os.getenv("NEO4J_USERNAME", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "password123")
+# Neo4j Community của project chạy single-node, nên ép về bolt:// để tránh lỗi routing.
+if NEO4J_URI.startswith("neo4j://"):
+    NEO4J_URI = "bolt://" + NEO4J_URI[len("neo4j://"):]
 neo4j_driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
 
 # Crawl progress tracker (shared between thread and API)
@@ -83,10 +93,14 @@ os.environ["LLM_BASE_URL"] = LLM_BASE_URL
 
 import re as _re
 import requests
+import xml.etree.ElementTree as ET
+from urllib.parse import quote_plus
 
 LLM_INFERENCE_TIMEOUT = int(os.getenv("LLM_INFERENCE_TIMEOUT", "300"))
 OLLAMA_NUM_CTX = 10000
 LLM_MAX_TOKENS = int(os.getenv("LLM_MAX_TOKENS", "8192"))
+LIVE_NEWS_TIMEOUT = float(os.getenv("LIVE_NEWS_TIMEOUT", "4.0"))
+LIVE_NEWS_MAX_ITEMS = int(os.getenv("LIVE_NEWS_MAX_ITEMS", "5"))
 
 _THINK_RE = _re.compile(r"<think>.*?</think>", _re.DOTALL)
 
@@ -295,19 +309,24 @@ def process_new_files():
     # Bước 0: LLM Preprocessor - Đọc file thô và xuất file chuẩn vào data/ingest/
     import llm_preprocessor
     llm_preprocessor.process_raw_files()
-    
-    lib_name = "kg_demo_vn"
-    lib = Library().create_new_library(lib_name)
-    
-    ingest_path = os.path.abspath("data/ingest")
-    processed_path = os.path.abspath("data/processed")
+
+    ingest_path = os.path.join(DATA_DIR, "ingest")
+    processed_path = os.path.join(DATA_DIR, "processed")
     os.makedirs(ingest_path, exist_ok=True)
     os.makedirs(processed_path, exist_ok=True)
-    
+
     new_files = os.listdir(ingest_path)
     if not new_files:
         print("✅ [Trạng thái]: Không có file mới trong thư mục ingest.")
-        return False, lib
+        try:
+            return False, Library().load_library(RAG_LIBRARY_NAME)
+        except Exception:
+            return False, None
+
+    try:
+        lib = Library().load_library(RAG_LIBRARY_NAME)
+    except Exception:
+        lib = Library().create_new_library(RAG_LIBRARY_NAME)
         
     print(f"🚀 [Bắt đầu]: Tìm thấy {len(new_files)} file mới. Bắt đầu xử lý...")
     
@@ -540,8 +559,19 @@ def extract_target_entity(query_text):
                     res = session.run(
                         """
                         MATCH (ent:Entity) 
-                        WHERE toLower(ent.name) = $phrase OR toLower(ent.id) = $phrase
-                        RETURN ent.id as eid, ent.name as ename, ent.type as etype LIMIT 1
+                        WHERE toLower(ent.name) = $phrase
+                           OR toLower(ent.id) = $phrase
+                           OR toLower(ent.name) CONTAINS $phrase
+                        RETURN ent.id as eid, ent.name as ename, ent.type as etype
+                        ORDER BY
+                            CASE
+                                WHEN toLower(ent.name) = $phrase THEN 0
+                                WHEN toLower(ent.id) = $phrase THEN 1
+                                WHEN toLower(ent.name) STARTS WITH $phrase THEN 2
+                                ELSE 3
+                            END,
+                            size(coalesce(ent.name, ent.id))
+                        LIMIT 1
                         """, phrase=phrase
                     )
                     rec = res.single()
@@ -588,6 +618,623 @@ def _relationship_display_label(rel):
         return getattr(rel, "type", "") or ""
 
 
+def _normalize_vn_text(text):
+    """Chuẩn hóa text tiếng Việt để match rule name ổn định cả có dấu và không dấu."""
+    if not text:
+        return ""
+    text = str(text).replace("đ", "d").replace("Đ", "D")
+    text = unicodedata.normalize("NFKD", text)
+    text = "".join(ch for ch in text if not unicodedata.combining(ch))
+    return " ".join(text.lower().strip().split())
+
+
+_HIDDEN_RULE_QUERIES = [
+    {
+        "rule_id": "R01",
+        "name": "Gộp sở hữu vợ chồng",
+        "labels": ["KIỂM_SOÁT_GIA_ĐÌNH"],
+    },
+    {
+        "rule_id": "R02",
+        "name": "Sở hữu gián tiếp qua công ty con",
+        "labels": ["SỞ_HỮU_GIÁN_TIẾP"],
+    },
+    {
+        "rule_id": "R07",
+        "name": "Ảnh hưởng gián tiếp theo ngưỡng 5/25/50",
+        "labels": [
+            "CÓ_LỢI_ÍCH_GIÁN_TIẾP",
+            "ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI",
+            "KIỂM_SOÁT_GIÁN_TIẾP",
+        ],
+    },
+    {
+        "rule_id": "R12",
+        "name": "Liên kết qua cùng cổ đông lớn",
+        "labels": ["CÙNG_CỔ_ĐÔNG_LỚN"],
+    },
+]
+
+_RAG_STOPWORDS = {
+    "co", "có", "nhung", "những", "nao", "nào", "la", "là", "cua", "của", "trong",
+    "the", "thể", "thuc", "thực", "quan", "hệ", "quan hệ", "an", "ẩn", "gioi", "giới",
+    "hay", "đây", "day", "theo", "cho", "biet", "biết", "ve", "về", "mot", "một",
+    "tai", "tại", "giua", "giữa", "khong", "không", "coi", "hoi", "hỏi", "duoc", "được",
+}
+
+_LIVE_NEWS_SOURCES = [
+    {"name": "Google News", "kind": "google", "site": None},
+    {"name": "CafeF", "kind": "google", "site": "cafef.vn"},
+    {"name": "Vietstock", "kind": "google", "site": "vietstock.vn"},
+    {"name": "VnBusiness", "kind": "google", "site": "vnbusiness.vn"},
+    {"name": "VnExpress Kinh doanh", "kind": "google", "site": "vnexpress.net"},
+]
+
+_PROJECT_DOMAIN_PHRASES = {
+    "co dong",
+    "lanh dao",
+    "chu tich",
+    "tong giam doc",
+    "nguoi than",
+    "cong ty con",
+    "quan he an",
+    "quan he huu",
+    "so huu",
+    "so huu gian tiep",
+    "thi truong chung khoan",
+    "co phieu",
+    "ma chung khoan",
+    "niem yet",
+    "fireant",
+    "neo4j",
+    "rag",
+    "kg",
+    "hose",
+    "hnx",
+    "upcom",
+    "vn-index",
+    "vn index",
+}
+
+_LIVE_NEWS_NOISE_TOKENS = _RAG_STOPWORDS | {
+    "tin",
+    "tuc",
+    "news",
+    "thi",
+    "truong",
+    "chung",
+    "khoan",
+    "viet",
+    "nam",
+    "hom",
+    "nay",
+    "moi",
+    "nhat",
+    "cho",
+    "biet",
+    "bao",
+    "nhieu",
+    "gi",
+    "nao",
+}
+
+_ENTITY_NEWS_STOPWORDS = {
+    "anh",
+    "ba",
+    "bank",
+    "chi",
+    "co",
+    "company",
+    "cong",
+    "cp",
+    "ctcp",
+    "doan",
+    "fund",
+    "group",
+    "hang",
+    "holdings",
+    "jsc",
+    "nam",
+    "ngan",
+    "ong",
+    "securities",
+    "tap",
+    "thi",
+    "tmcp",
+    "tong",
+    "ty",
+    "van",
+    "viet",
+}
+
+_OUT_OF_SCOPE_REPLY = (
+    "Mình chỉ hỗ trợ câu hỏi về công ty niêm yết, cổ đông, lãnh đạo, quan hệ sở hữu và tin chứng khoán Việt Nam."
+)
+
+for _rule in _HIDDEN_RULE_QUERIES:
+    _rule["name_norm"] = _normalize_vn_text(_rule["name"])
+
+
+def _detect_hidden_rule_query(query_text):
+    """
+    Nhận diện câu hỏi đang hỏi trực tiếp theo tên rule quan hệ ẩn.
+    Đây là fast-path để tránh fallback sang tìm kiếm tên thực thể rồi bỏ sót cạnh inferred.
+    """
+    q_norm = _normalize_vn_text(query_text)
+    if not q_norm:
+        return None
+
+    for rule in _HIDDEN_RULE_QUERIES:
+        if rule["name_norm"] in q_norm:
+            return rule
+    return None
+
+
+def _tokenize_normalized_words(text):
+    norm = _normalize_vn_text(text)
+    norm = _re.sub(r"[^a-z0-9\s]+", " ", norm)
+    return [tok for tok in norm.split() if tok]
+
+
+def _news_query_terms(text):
+    return {
+        tok
+        for tok in _tokenize_normalized_words(text)
+        if len(tok) >= 2 and tok not in _LIVE_NEWS_NOISE_TOKENS
+    }
+
+
+def _extract_symbol_tokens(text):
+    raw = str(text or "")
+    symbols = set()
+    for part in _re.findall(r"\(([A-Z0-9]{2,8})\)", raw):
+        symbols.add(part.lower())
+    for token in raw.split():
+        clean = token.strip(" ,.?;:()[]{}\"'")
+        if 2 <= len(clean) <= 8 and clean.isupper() and any(ch.isalpha() for ch in clean):
+            symbols.add(clean.lower())
+    return symbols
+
+
+def _entity_focus_terms(text):
+    return {
+        tok
+        for tok in _tokenize_normalized_words(text)
+        if len(tok) >= 2 and tok not in _ENTITY_NEWS_STOPWORDS
+    }
+
+
+def _is_project_domain_query(query_text, target_entity_id=None, hidden_rule_query=None):
+    if target_entity_id or hidden_rule_query:
+        return True
+
+    q_norm = _normalize_vn_text(query_text)
+    if not q_norm:
+        return False
+
+    if any(phrase in q_norm for phrase in _PROJECT_DOMAIN_PHRASES):
+        return True
+
+    raw_lower = str(query_text or "").lower()
+    for key in sorted(ENTITY_MAP.keys(), key=len, reverse=True):
+        if len(key) >= 3 and key in raw_lower:
+            return True
+
+    return False
+
+
+def _looks_like_named_entity_query(query_text):
+    raw = str(query_text or "").strip()
+    if not raw:
+        return False
+
+    if _re.search(r"\b[A-Z]{2,5}\b", raw):
+        return True
+
+    titled_words = 0
+    for token in raw.split():
+        clean = token.strip(" ,.?;:()[]{}\"'")
+        if len(clean) < 2:
+            continue
+        if clean[:1].isupper():
+            titled_words += 1
+    return titled_words >= 2
+
+
+def _is_relevant_news_item(title, query_text, target_display=None):
+    title_norm = _normalize_vn_text(title)
+    if not title_norm:
+        return False
+
+    title_terms = set(_tokenize_normalized_words(title_norm))
+    if not title_terms:
+        return False
+
+    target_raw = str(target_display or "").strip()
+    target_norm = _normalize_vn_text(target_raw) if target_raw else ""
+    target_terms = _entity_focus_terms(target_raw)
+    target_symbols = _extract_symbol_tokens(target_raw)
+    if target_norm:
+        if target_norm in title_norm:
+            return True
+        if target_symbols and (title_terms & target_symbols):
+            return True
+        overlap = title_terms & target_terms
+        if len(target_terms) >= 2 and len(overlap) >= 2:
+            return True
+        if len(target_terms) == 1 and len(overlap) >= 1:
+            return True
+
+        return False
+
+    query_terms = _news_query_terms(query_text)
+    overlap = title_terms & query_terms
+    if len(overlap) >= (1 if len(query_terms) <= 2 else 2):
+        return True
+
+    return False
+
+
+def _library_has_searchable_content(lib):
+    """
+    Library llmware hợp lệ tối thiểu phải có block NLP để tra cứu.
+    Embedding có thể chưa sẵn sàng; khi đó sẽ fallback sang keyword search.
+    """
+    if lib is None:
+        return False
+    nlp_path = getattr(lib, "nlp_path", "") or ""
+    if not nlp_path or not os.path.isdir(nlp_path):
+        return False
+    return any(name.endswith((".json", ".jsonl")) for name in os.listdir(nlp_path))
+
+
+def _library_has_embedding_index(lib):
+    embedding_path = getattr(lib, "embedding_path", "") or ""
+    embedding_model = getattr(lib, "embedding_model_name", None)
+    if not embedding_model or not embedding_path or not os.path.isdir(embedding_path):
+        return False
+    return any(os.scandir(embedding_path))
+
+
+def _ensure_rag_text_corpus():
+    """
+    Tự phục hồi corpus text từ processed_raw khi các file processed hiện chỉ là placeholder.
+    Việc này giúp lớp RAG vẫn hoạt động được cả khi vector library bị rỗng.
+    """
+    try:
+        import llm_preprocessor
+        llm_preprocessor.rebuild_rag_corpus_from_processed_raw(force=False)
+    except Exception as e:
+        print(f"⚠️ [RAG] rebuild corpus failed: {e}")
+
+
+def _bootstrap_rag_library_documents():
+    """
+    Nếu library llmware đang rỗng, nạp lại block NLP từ data/processed.
+    Bước này nhẹ hơn nhiều so với build embedding, nhưng đủ để giữ library không còn ở trạng thái trống.
+    """
+    _ensure_rag_text_corpus()
+    processed_dir = os.path.join(DATA_DIR, "processed")
+    if not os.path.isdir(processed_dir):
+        return None
+
+    txt_files = [name for name in os.listdir(processed_dir) if name.endswith(".txt")]
+    if not txt_files:
+        return None
+
+    try:
+        lib = Library().load_library(RAG_LIBRARY_NAME)
+    except Exception:
+        lib = Library().create_new_library(RAG_LIBRARY_NAME)
+
+    if _library_has_searchable_content(lib):
+        return lib
+
+    try:
+        lib.add_files(processed_dir)
+    except Exception as e:
+        print(f"⚠️ [RAG] bootstrap library documents failed: {e}")
+    return lib
+
+
+def _fallback_rag_documents():
+    """
+    Gom tài liệu text cục bộ để dùng cho keyword retrieval khi semantic vector search không sẵn sàng.
+    Ưu tiên docs/ và các file normalized đã rebuild từ processed_raw.
+    """
+    _ensure_rag_text_corpus()
+    docs = []
+    candidates = [
+        os.path.join(DOCS_DIR, "inference_rules.md"),
+        os.path.join(DOCS_DIR, "cypher_reference.md"),
+        os.path.join(BASE_DIR, "entities_schema.md"),
+    ]
+
+    processed_dir = os.path.join(DATA_DIR, "processed")
+    if os.path.isdir(processed_dir):
+        for name in sorted(os.listdir(processed_dir)):
+            if name.endswith(".txt"):
+                candidates.append(os.path.join(processed_dir, name))
+
+    for path in candidates:
+        if not os.path.isfile(path):
+            continue
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                text = f.read().strip()
+            if text and text != "Dữ liệu JSON đã được parse trực tiếp vào Graph.":
+                docs.append({"path": path, "text": text})
+        except Exception:
+            continue
+    return docs
+
+
+def _keyword_rag_search(query_text, result_count=5):
+    """
+    Fallback retrieval đơn giản nhưng ổn định:
+    - chuẩn hóa tiếng Việt
+    - chấm điểm theo overlap token
+    - trả về top đoạn text phù hợp nhất
+    """
+    q_norm = _normalize_vn_text(query_text)
+    q_tokens = {tok for tok in q_norm.split() if len(tok) >= 2 and tok not in _RAG_STOPWORDS}
+    if not q_tokens:
+        return []
+
+    scored = []
+    for doc in _fallback_rag_documents():
+        text = doc["text"]
+        chunks = [part.strip() for part in text.split("\n\n") if part.strip()]
+        if len(chunks) <= 1:
+            line_chunks = [line.strip() for line in text.splitlines() if line.strip()]
+            chunks = line_chunks or [text]
+        for chunk in chunks:
+            chunk_norm = _normalize_vn_text(chunk)
+            chunk_tokens = {tok for tok in chunk_norm.split() if len(tok) >= 2 and tok not in _RAG_STOPWORDS}
+            if not chunk_tokens:
+                continue
+            overlap = q_tokens & chunk_tokens
+            if not overlap:
+                continue
+
+            # Điểm ưu tiên chunk có nhiều token trùng hơn và chứa nguyên cụm query nếu có.
+            score = len(overlap)
+            if q_norm in chunk_norm:
+                score += max(3, len(q_tokens))
+            scored.append((score, chunk))
+
+    scored.sort(key=lambda item: item[0], reverse=True)
+    results = []
+    seen = set()
+    for _, chunk in scored:
+        if chunk in seen:
+            continue
+        seen.add(chunk)
+        results.append(chunk)
+        if len(results) >= result_count:
+            break
+    return results
+
+
+def _build_live_news_query(query_text, target_display=None):
+    """
+    Tạo cụm tìm kiếm gọn để lấy tin nóng theo truy vấn hiện tại.
+    Nếu nhận diện được thực thể đích thì ưu tiên thực thể đó.
+    """
+    if target_display:
+        raw = str(target_display).strip()
+        base_name = _re.sub(r"\s*\([^)]+\)\s*$", "", raw).strip()
+        symbols = sorted(_extract_symbol_tokens(raw))
+        if symbols:
+            return f'"{base_name}" OR "{symbols[0].upper()}"'
+        return f'"{base_name}"'
+
+    q_norm = " ".join(str(query_text or "").strip().split())
+    if not q_norm:
+        return "chứng khoán Việt Nam"
+
+    tokens = [tok for tok in q_norm.split() if len(tok) > 2]
+    short = " ".join(tokens[:8]).strip()
+    if not short:
+        short = q_norm
+    return f"{short} chứng khoán Việt Nam"
+
+
+def _google_news_rss_url(search_query, site=None):
+    query = search_query.strip()
+    if site:
+        query = f"{query} site:{site}"
+    return (
+        "https://news.google.com/rss/search?q="
+        + quote_plus(query)
+        + "&hl=vi&gl=VN&ceid=VN:vi"
+    )
+
+
+def _parse_rss_datetime(value):
+    if not value:
+        return None
+    value = value.strip()
+    fmts = [
+        "%a, %d %b %Y %H:%M:%S %z",
+        "%Y-%m-%dT%H:%M:%SZ",
+        "%Y-%m-%dT%H:%M:%S%z",
+    ]
+    for fmt in fmts:
+        try:
+            return datetime.strptime(value, fmt)
+        except ValueError:
+            continue
+    return None
+
+
+def _fetch_rss_items(feed_url, source_name, max_items=2):
+    try:
+        resp = requests.get(
+            feed_url,
+            timeout=LIVE_NEWS_TIMEOUT,
+            headers={"User-Agent": "Mozilla/5.0 KG-News-Augment/1.0"},
+        )
+        resp.raise_for_status()
+        root = ET.fromstring(resp.content)
+    except Exception as e:
+        return [], f"{source_name}: {e}"
+
+    items = []
+    seen = set()
+    for item in root.findall(".//item"):
+        title = html.unescape((item.findtext("title") or "").strip())
+        link = (item.findtext("link") or "").strip()
+        pub_date = item.findtext("pubDate") or item.findtext("published") or ""
+        if not title or not link:
+            continue
+        dedupe_key = (title, link)
+        if dedupe_key in seen:
+            continue
+        seen.add(dedupe_key)
+        dt = _parse_rss_datetime(pub_date)
+        items.append(
+            {
+                "source": source_name,
+                "title": title,
+                "link": link,
+                "published_at": dt.isoformat() if dt else "",
+                "published_label": dt.strftime("%d/%m %H:%M") if dt else "",
+            }
+        )
+        if len(items) >= max_items:
+            break
+    return items, None
+
+
+def _collect_live_news(query_text, target_display, graph_context, steps):
+    """
+    Lấy tin thời gian thực từ 5 nguồn tin uy tín/ổn định.
+    Dùng RSS/Google News RSS để tránh HTML scraping dễ vỡ.
+    """
+    search_query = _build_live_news_query(query_text, target_display=target_display)
+    steps.append("📰 Đang lấy tin tức chứng khoán thời gian thực từ 5 nguồn web...")
+
+    news_items = []
+    errors = []
+    for spec in _LIVE_NEWS_SOURCES:
+        if spec["kind"] == "rss":
+            feed_url = spec["url"]
+        else:
+            feed_url = _google_news_rss_url(search_query, site=spec.get("site"))
+
+        items, err = _fetch_rss_items(feed_url, spec["name"], max_items=2)
+        if err:
+            errors.append(err)
+            continue
+        relevant_items = [
+            item
+            for item in items
+            if _is_relevant_news_item(item["title"], query_text, target_display=target_display)
+        ]
+        if relevant_items:
+            news_items.extend(relevant_items[:1])
+
+    # Ưu tiên tin mới hơn nếu có timestamp, sau đó cắt còn tối đa 5 nguồn / tin.
+    news_items.sort(key=lambda item: item.get("published_at") or "", reverse=True)
+    news_items = news_items[:LIVE_NEWS_MAX_ITEMS]
+
+    if news_items:
+        steps.append(f"✅ Tìm thấy {len(news_items)} nguồn tin thời gian thực liên quan.")
+    else:
+        steps.append("ℹ️ Chưa lấy được tin tức thời gian thực phù hợp cho truy vấn này.")
+        if errors:
+            print("[LIVE_NEWS] errors:", errors)
+
+    graph_text_norm = _normalize_vn_text("\n".join(graph_context[:80]))
+    unseen_titles = 0
+    for item in news_items:
+        title_norm = _normalize_vn_text(item["title"])
+        if title_norm and title_norm not in graph_text_norm:
+            unseen_titles += 1
+
+    diff_lines = []
+    if graph_context:
+        diff_lines.append(
+            "- Dữ liệu KG/FireAnt hiện thiên về cấu trúc quan hệ, sở hữu và hồ sơ doanh nghiệp; phần tin tức dưới đây phản ánh diễn biến thời gian thực."
+        )
+    else:
+        diff_lines.append(
+            "- KG/FireAnt chưa trả về nhiều dữ liệu cấu trúc cho truy vấn này; các tin dưới đây bổ sung bối cảnh thời gian thực từ báo chí."
+        )
+    if unseen_titles:
+        diff_lines.append(
+            f"- Có khoảng {unseen_titles} tiêu đề tin mới chưa xuất hiện trực tiếp trong phần dữ liệu Graph/Cypher vừa truy vấn."
+        )
+    else:
+        diff_lines.append(
+            "- Các tin mới chủ yếu bổ sung diễn giải thị trường/sự kiện, không thay thế dữ liệu quan hệ đang có trong KG."
+        )
+
+    return news_items, diff_lines
+
+
+def _format_live_news_markdown(news_items, diff_lines):
+    if not news_items:
+        return ""
+
+    lines = ["", "## Tin Tức Thị Trường Mới Nhất"]
+    for item in news_items:
+        label = f" [{item['published_label']}]" if item.get("published_label") else ""
+        lines.append(f"- **{item['source']}**{label}: [{item['title']}]({item['link']})")
+
+    if diff_lines:
+        lines.extend(["", "## Khác Biệt So Với FireAnt/KG"])
+        lines.extend(diff_lines)
+    return "\n".join(lines)
+
+
+def _format_live_news_context(news_items):
+    if not news_items:
+        return "Không lấy được tin thời gian thực phù hợp."
+
+    lines = []
+    for item in news_items[:5]:
+        label = f" | {item['published_label']}" if item.get("published_label") else ""
+        lines.append(f"- [{item['source']}{label}] {item['title']}")
+    return "\n".join(lines)
+
+
+def _collect_rag_contexts(query_text, steps):
+    """
+    Ưu tiên semantic search của llmware nếu library còn tốt.
+    Nếu vector layer rỗng/hỏng thì fallback sang keyword retrieval cục bộ thay vì đẩy lỗi ra UI.
+    """
+    contexts = []
+    try:
+        retriever = _bootstrap_rag_library_documents() or Library().load_library(RAG_LIBRARY_NAME)
+        if _library_has_searchable_content(retriever) and _library_has_embedding_index(retriever):
+            from llmware.retrieval import Query as LWQuery
+            search_results = LWQuery(retriever).semantic_query(query_text, result_count=5)
+            for res in search_results:
+                txt = (res.get("text") or "").strip()
+                if txt:
+                    contexts.append(txt)
+        elif _library_has_searchable_content(retriever):
+            steps.append("ℹ️ Semantic index chưa được build, chuyển sang keyword retrieval cục bộ.")
+        else:
+            steps.append("ℹ️ Semantic library đang rỗng, chuyển sang keyword retrieval cục bộ.")
+    except Exception as e:
+        print(f"⚠️ [RAG] semantic search fallback: {e}")
+        steps.append("ℹ️ Semantic search chưa sẵn sàng, chuyển sang keyword retrieval cục bộ.")
+
+    if contexts:
+        steps.append(f"✅ Tìm thấy {len(contexts)} đoạn liên quan từ vector/semantic search.")
+        return contexts
+
+    fallback_contexts = _keyword_rag_search(query_text, result_count=5)
+    if fallback_contexts:
+        steps.append(f"✅ Tìm thấy {len(fallback_contexts)} đoạn liên quan từ corpus cục bộ.")
+    else:
+        steps.append("ℹ️ Không tìm thấy tài liệu bổ trợ phù hợp trong corpus cục bộ.")
+    return fallback_contexts
+
+
 def _build_symbol_exchange_map():
     """HOSE/HNX/UPCOM từ pipeline — trùng logic api_stats_exchange."""
     from pipeline import HOSE, HNX, UPCOM
@@ -625,11 +1272,11 @@ def _listed_company_ids(session):
     """Tập id Entity công ty (C_) đang niêm yết HOSE/HNX/UPCOM."""
     q = """
     MATCH (n:Entity) WHERE n.id STARTS WITH 'C_'
-    RETURN n.id AS nid, n.symbol AS symbol, n.exchange AS exchange
+    RETURN n.id AS nid, n.symbol AS symbol
     """
     out = set()
     for rec in session.run(q):
-        if _resolve_vn_listing(rec.get("exchange"), rec.get("symbol"), rec.get("nid")):
+        if _resolve_vn_listing(None, rec.get("symbol"), rec.get("nid")):
             out.add(rec["nid"])
     return out
 
@@ -1214,6 +1861,7 @@ def api_query():
     if not query_text:
         return jsonify({"error": "Query rỗng"}), 400
 
+    hidden_rule_query = _detect_hidden_rule_query(query_text)
     model = (data.get("model") or "").strip() or MODEL_NAME
     reasoning_enabled = data.get("reasoning", True)
     if reasoning_enabled:
@@ -1221,8 +1869,35 @@ def api_query():
     else:
         steps = ["Bắt đầu xử lý truy vấn (Reasoning: Tắt)"]
 
+    quick_scope_match = _is_project_domain_query(
+        query_text,
+        hidden_rule_query=hidden_rule_query,
+    )
+    if not quick_scope_match and not _looks_like_named_entity_query(query_text):
+        return jsonify({
+            "answer": _OUT_OF_SCOPE_REPLY,
+            "nodes": [],
+            "edges": [],
+            "graphs": [],
+            "steps": [],
+            "cypher": "",
+        })
+
     # --- Bước 1: Phát hiện entity mục tiêu ---
     target_entity_id, target_display = extract_target_entity(query_text)
+    if not _is_project_domain_query(
+        query_text,
+        target_entity_id=target_entity_id,
+        hidden_rule_query=hidden_rule_query,
+    ):
+        return jsonify({
+            "answer": _OUT_OF_SCOPE_REPLY,
+            "nodes": [],
+            "edges": [],
+            "graphs": [],
+            "steps": [],
+            "cypher": "",
+        })
     if target_entity_id:
         steps.append(f"🔍 Phát hiện thực thể: {target_display} ({target_entity_id})")
     else:
@@ -1230,18 +1905,7 @@ def api_query():
 
     # --- Bước 2: Semantic Search (RAG) ---
     steps.append("⏳ Đang tìm kiếm ngữ nghĩa trong Vector DB (RAG)...")
-    from llmware.library import Library
-    from llmware.retrieval import Query as LWQuery
-    contexts = []
-    try:
-        retriever = Library().load_library("kg_demo_vn")
-        search_results = LWQuery(retriever).semantic_query(query_text, result_count=5)
-        for res in search_results:
-            txt = res.get("text", "").strip()
-            if txt: contexts.append(txt)
-        steps.append(f"✅ Tìm thấy {len(contexts)} đoạn văn bản liên quan.")
-    except Exception as e:
-        steps.append(f"⚠️ Lỗi tìm kiếm semantic: {str(e)}")
+    contexts = _collect_rag_contexts(query_text, steps)
 
     # --- Bước 3: Graph Search (Agentic Loop) ---
     steps.append("⏳ Đang truy vấn Knowledge Graph (Neo4j)...")
@@ -1249,6 +1913,8 @@ def api_query():
     edges = []
     graph_context = []
     cypher_used = ""
+    hidden_rule_answer_lines = []
+    hidden_rule_match_count = 0
 
     def execute_cypher(cypher_str, params=None):
         import traceback
@@ -1274,7 +1940,12 @@ def api_query():
                         inf = rec["inferred"] if "inferred" in keys else False
                         nodes_dict[s_id] = {"id": s_id, "label": s_display, "group": s_grp}
                         nodes_dict[t_id] = {"id": t_id, "label": t_display, "group": t_grp}
-                        edges.append({"from": s_id, "to": t_id, "label": e_label, "dashes": bool(inf)})
+                        edge_obj = {"from": s_id, "to": t_id, "label": e_label, "dashes": bool(inf)}
+                        if "inferred_from" in keys:
+                            edge_obj["inferred_from"] = rec["inferred_from"]
+                        if "influence_level" in keys:
+                            edge_obj["influence_level"] = rec["influence_level"]
+                        edges.append(edge_obj)
                         ctx_line = f"{s_display} --[{e_label}]--> {t_display}"
                         if e_label == "LÀ_CỔ_ĐÔNG_CỦA" or (e_label and "CỔ_ĐÔNG" in e_label):
                             sh = rec.get("sh")
@@ -1292,6 +1963,24 @@ def api_query():
                                     pass
                             if bits:
                                 ctx_line = f"{s_display} --[{e_label}; {', '.join(bits)}]--> {t_display}"
+                        elif inf:
+                            bits = []
+                            if rec.get("inferred_from"):
+                                bits.append(f"rule={rec['inferred_from']}")
+                            if rec.get("influence_level"):
+                                bits.append(f"level={rec['influence_level']}")
+                            if rec.get("indirect_pct") is not None:
+                                try:
+                                    bits.append(f"tỷ_lệ_gián_tiếp={float(rec['indirect_pct']):.4f}%")
+                                except (TypeError, ValueError):
+                                    pass
+                            if rec.get("combined_pct") is not None:
+                                try:
+                                    bits.append(f"tỷ_lệ_gộp={float(rec['combined_pct']):.4f}%")
+                                except (TypeError, ValueError):
+                                    pass
+                            if bits:
+                                ctx_line = f"{s_display} --[{e_label}; {', '.join(bits)}]--> {t_display}"
                         graph_context.append(ctx_line)
                     elif "n" in keys:
                         n = rec["n"]
@@ -1303,6 +1992,89 @@ def api_query():
             return 0
 
     # Lượt 1: Fast Path (WITH tách rõ để tránh lỗi "RETURN only at end" trên Neo4j 5)
+    if hidden_rule_query:
+        steps.append(
+            f"🎯 Nhận diện truy vấn theo rule quan hệ ẩn: {hidden_rule_query['name']} ({hidden_rule_query['rule_id']})"
+        )
+        if hidden_rule_query["rule_id"] == "R01":
+            extra_return = "r.combined_ownership_pct AS combined_pct, NULL AS indirect_pct"
+        elif hidden_rule_query["rule_id"] in ("R02", "R07"):
+            extra_return = "NULL AS combined_pct, r.indirect_ownership_pct AS indirect_pct"
+        else:
+            extra_return = "NULL AS combined_pct, NULL AS indirect_pct"
+
+        hidden_q = f"""
+        MATCH (n:Entity)-[r]->(m:Entity)
+        WHERE coalesce(r.inferred, false) = true
+          AND (
+            r.inferred_from = $rule_id
+            OR coalesce(r.label, type(r)) IN $labels
+            OR type(r) IN $labels
+          )
+        RETURN n.id AS source_id, n.name AS source_name, n.type AS source_group, n.symbol AS source_symbol,
+               m.id AS target_id, m.name AS target_name, m.type AS target_group, m.symbol AS target_symbol,
+               coalesce(r.label, type(r)) AS edge_label,
+               coalesce(r.inferred, false) AS inferred,
+               r.inferred_from AS inferred_from,
+               r.influence_level AS influence_level,
+               {extra_return}
+        ORDER BY source_name, target_name
+        LIMIT 100
+        """
+        cypher_used += f"\n\n{hidden_q.strip()}"
+        with neo4j_driver.session() as session:
+            hidden_records = list(
+                session.run(
+                    hidden_q,
+                    rule_id=hidden_rule_query["rule_id"],
+                    labels=hidden_rule_query["labels"],
+                )
+            )
+
+        hidden_rule_match_count = len(hidden_records)
+        for rec in hidden_records:
+            s_id, s_name = rec["source_id"], rec["source_name"]
+            t_id, t_name = rec["target_id"], rec["target_name"]
+            s_sym = rec.get("source_symbol")
+            t_sym = rec.get("target_symbol")
+            s_display = f"{s_name} ({s_sym})" if s_sym else (s_name or s_id)
+            t_display = f"{t_name} ({t_sym})" if t_sym else (t_name or t_id)
+
+            nodes_dict[s_id] = {"id": s_id, "label": s_display, "group": rec.get("source_group") or "DEFAULT"}
+            nodes_dict[t_id] = {"id": t_id, "label": t_display, "group": rec.get("target_group") or "DEFAULT"}
+            edges.append(
+                {
+                    "from": s_id,
+                    "to": t_id,
+                    "label": rec.get("edge_label") or "",
+                    "dashes": True,
+                    "inferred_from": rec.get("inferred_from"),
+                    "influence_level": rec.get("influence_level"),
+                }
+            )
+
+            details = []
+            if rec.get("combined_pct") is not None:
+                try:
+                    details.append(f"tỷ lệ gộp {float(rec['combined_pct']):.4f}%")
+                except (TypeError, ValueError):
+                    pass
+            if rec.get("indirect_pct") is not None:
+                try:
+                    details.append(f"tỷ lệ gián tiếp {float(rec['indirect_pct']):.4f}%")
+                except (TypeError, ValueError):
+                    pass
+            if rec.get("influence_level"):
+                details.append(f"mức {rec['influence_level']}")
+
+            ctx_line = f"{s_display} --[{rec.get('edge_label') or ''}]--> {t_display}"
+            if details:
+                ctx_line = f"{ctx_line} ({'; '.join(details)})"
+            graph_context.append(ctx_line)
+            hidden_rule_answer_lines.append(ctx_line)
+
+        steps.append(f"🕵️ Tìm thấy {hidden_rule_match_count} quan hệ ẩn khớp rule được hỏi.")
+
     if target_entity_id:
         q_out = """
         MATCH (n:Entity {id: $eid})-[r]->(m:Entity)
@@ -1326,7 +2098,7 @@ def api_query():
         execute_cypher(q_out.strip(), {"eid": target_entity_id})
         print(f"[Neo4j] Chạy q_in cho entity: {target_entity_id}")
         execute_cypher(q_in.strip(), {"eid": target_entity_id})
-    else:
+    elif not hidden_rule_query:
         tokens = [w for w in query_text.split() if len(w) > 3]
         for kw in tokens[:2]:
             q = "MATCH (n:Entity)-[r]->(m:Entity) WHERE toLower(n.name) CONTAINS toLower($kw) OR toLower(m.name) CONTAINS toLower($kw) RETURN n.id as source_id, n.name as source_name, n.type as source_group, n.symbol as source_symbol, m.id as target_id, m.name as target_name, m.type as target_group, m.symbol as target_symbol, r.label as edge_label, r.inferred as inferred, r.shares AS sh, r.ownership AS ow LIMIT 50"
@@ -1383,6 +2155,14 @@ def api_query():
     steps.append(f"✅ Hoàn tất Graph search: {len(edges)} quan hệ.")
     print(f"[Graph] Đã thu thập {len(edges)} quan hệ, {len(graph_context)} dòng context.")
 
+    live_news_items, live_news_diff_lines = _collect_live_news(
+        query_text,
+        target_display,
+        graph_context,
+        steps,
+    )
+    live_news_md = _format_live_news_markdown(live_news_items, live_news_diff_lines)
+
     # --- Xây graphs theo thực thể chính (multi-KG) ---
     main_entities = extract_main_entities(query_text, target_entity_id, target_display)
     seen = set()
@@ -1400,10 +2180,37 @@ def api_query():
     if not graphs:
         graphs = [{"center": None, "centerLabel": None, "nodes": list(nodes_dict.values()), "edges": edges}]
 
+    if hidden_rule_query:
+        if hidden_rule_match_count == 0:
+            ans = f'Không có thực thể nào trong dữ liệu hiện tại có quan hệ ẩn "{hidden_rule_query["name"]}".'
+        else:
+            answer_lines = [
+                f'Các thực thể có quan hệ ẩn "{hidden_rule_query["name"]}":'
+            ]
+            answer_lines.extend(f"- {line}" for line in hidden_rule_answer_lines[:30])
+            if hidden_rule_match_count > 30:
+                answer_lines.append(f"- ... và còn {hidden_rule_match_count - 30} quan hệ khác.")
+            ans = "\n".join(answer_lines)
+
+        if live_news_md:
+            ans = f"{ans}\n{live_news_md}"
+
+        steps.append("🎉 Thành công.")
+        payload = {
+            "answer": ans.strip(),
+            "nodes": list(nodes_dict.values()),
+            "edges": edges,
+            "graphs": graphs,
+            "steps": steps,
+            "cypher": cypher_used.strip()
+        }
+        return jsonify(payload)
+
     # --- Bước 4: Tổng hợp LLM ---
     steps.append("🧠 Đang tổng hợp câu trả lời cuối cùng...")
     doc_text = "\n".join(contexts[:5])
     graph_text = "\n".join(list(set(graph_context))[:150])
+    live_news_text = _format_live_news_context(live_news_items)
     history_ctx = "\n".join([f"{h['role']}: {h['content']}" for h in history[-3:]])
     instruct = (
         "Bạn là trợ lý AI chuyên gia về các công ty đã niêm yết trên sàn chứng khoán Việt Nam. Trả lời bằng tiếng Việt, ngắn gọn, DỰA TRÊN DỮ LIỆU ĐƯỢC CUNG CẤP từ query của Neo4j.\n"
@@ -1412,8 +2219,18 @@ def api_query():
         "Trong 1 công ty, người lãnh đạo cao nhất là Chủ tịch HĐQT (LÃNH_ĐẠO_CAO_NHẤT). Trích xuất đúng tên người tương ứng chức vụ.\n"
         "Khi hỏi về quan hệ của 1 người, trình bày người thân từ hướng người được hỏi.\n"
         "Khi hỏi top cổ đông / khối lượng cổ phiếu: bắt buộc dùng các dòng 'Top cổ đông' hoặc cạnh có số_CP trong Dữ liệu Graph. Không được nói không có dữ liệu nếu các dòng đó tồn tại.\n"
+        "Khi người dùng hỏi theo tên rule quan hệ ẩn, bắt buộc ưu tiên các cạnh inferred trong Dữ liệu Graph. Nếu đã có dòng inferred khớp rule thì phải liệt kê thực thể/quan hệ tương ứng, không được trả lời là không có.\n"
+        "Nếu câu hỏi nhắc tới tin mới, diễn biến hiện tại, sự kiện gần đây, hãy dùng mục 'Tin tức thời gian thực' để trả lời ngắn gọn. Không được tự bịa tin, và không được nói là không có tin nếu mục đó đang có dữ liệu.\n"
+        "Nếu mục 'Tin tức thời gian thực' ghi rõ là không lấy được tin phù hợp, chỉ khi đó mới nói là chưa có/không lấy được tin mới.\n"
+        "Sau câu trả lời chính về KG/Cypher, có thể có thêm phần tin tức thời gian thực. Phần đó chỉ dùng để bổ sung bối cảnh mới, không được mâu thuẫn với dữ liệu Graph.\n"
     )
-    prompt = f"{instruct}\n\n=== Lịch sử ===\n{history_ctx}\n\n=== Dữ liệu Graph ===\n{graph_text}\n\n=== Tài liệu ===\n{doc_text}\n\nCâu hỏi: {query_text}"
+    prompt = (
+        f"{instruct}\n\n=== Lịch sử ===\n{history_ctx}"
+        f"\n\n=== Dữ liệu Graph ===\n{graph_text}"
+        f"\n\n=== Tài liệu ===\n{doc_text}"
+        f"\n\n=== Tin tức thời gian thực ===\n{live_news_text}"
+        f"\n\nCâu hỏi: {query_text}"
+    )
     try:
         print("[LLM] Đang tổng hợp câu trả lời...")
         response = llm_inference(prompt, model=model)
@@ -1428,6 +2245,8 @@ def api_query():
         ans = str(response)
 
     print("--- Trả kết quả ---")
+    if live_news_md:
+        ans = f"{ans.strip()}\n{live_news_md}"
     steps.append("🎉 Thành công.")
     payload = {
         "answer": ans.strip(),
@@ -1817,6 +2636,11 @@ if __name__ == "__main__":
             )
         except Exception as e:
             print(f"⚠️ generate_entity_map (bỏ qua): {e}")
+    try:
+        import llm_preprocessor
+        llm_preprocessor.rebuild_rag_corpus_from_processed_raw(force=False)
+    except Exception as e:
+        print(f"⚠️ rebuild_rag_corpus_from_processed_raw (bỏ qua): {e}")
     has_new_files, library = process_new_files()
     if has_new_files:
         run_ner_and_relation_extraction(library)

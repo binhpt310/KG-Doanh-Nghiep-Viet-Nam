@@ -154,17 +154,17 @@
   position: absolute;
   top: var(--s-4);
   left: var(--s-4);
-  width: min(320px, calc(100% - var(--s-4) * 2));
+  width: clamp(340px, 38vw, 540px);
   max-width: calc(100% - var(--s-4) * 2);
-  max-height: 75%;
-  max-height: 85vh;
+  max-height: min(85vh, calc(100% - var(--s-4) * 2));
   overflow-y: auto;
   overflow-x: hidden;
   background: var(--card);
   border: 1px solid var(--bd-em);
   border-radius: var(--r-lg);
   box-shadow: 0 12px 48px rgba(0,0,0,0.5);
-  z-index: 100;
+  /* Cao hơn #graph-top-overlay (150) để panel chi tiết node vẫn nổi trên overlay kết quả truy vấn */
+  z-index: 200;
   font-size: 12px;
   font-family: 'Inter', system-ui, sans-serif;
   animation: fadeIn 0.2s ease-out;
@@ -188,8 +188,9 @@
 }
 
 .maximized-popup {
-  width: 600px !important;
-  max-height: 90% !important;
+  width: min(880px, calc(100vw - 32px)) !important;
+  max-width: calc(100vw - 32px) !important;
+  max-height: calc(100vh - 32px) !important;
   top: 50% !important;
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
@@ -319,6 +320,7 @@
 
 .ndp-share-table {
   width: 100%;
+  min-width: 520px;
   border-collapse: collapse;
   font-size: 11px;
   color: var(--tx-2);
@@ -335,6 +337,21 @@
   border-bottom: 1px solid var(--bd-em);
   padding: 8px 10px;
   white-space: nowrap;
+}
+
+.ndp-share-table thead th:first-child,
+.ndp-share-table tbody td:first-child {
+  min-width: 180px;
+}
+
+.ndp-share-table thead th:nth-child(2),
+.ndp-share-table tbody td:nth-child(2) {
+  min-width: 110px;
+}
+
+.ndp-share-table thead th:nth-child(3),
+.ndp-share-table tbody td:nth-child(3) {
+  min-width: 84px;
 }
 
 .ndp-share-table tbody td {
@@ -375,6 +392,42 @@
   justify-content: center;
 }
 .ndp-expand-btn:hover { background: rgba(88,166,255,0.18); }
+
+@media (max-width: 1024px) {
+  #node-detail-panel {
+    width: min(460px, calc(100% - 24px));
+    top: 12px;
+    left: 12px;
+    max-width: calc(100% - 24px);
+  }
+}
+
+@media (max-width: 700px) {
+  #node-detail-panel {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    max-width: none;
+    max-height: min(70vh, calc(100% - 24px));
+    border-radius: var(--r-lg);
+  }
+
+  .maximized-popup {
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
+    max-height: calc(100vh - 24px) !important;
+  }
+
+  .ndp-title {
+    font-size: 14px;
+  }
+
+  .ndp-share-table {
+    min-width: 480px;
+  }
+}
 
 /* ─── Legacy compat ─── */
 .btn-primary {

@@ -5,12 +5,16 @@ import csv
 from dotenv import load_dotenv
 
 # 1. SETUP THƯ MỤC
-RAW_DIR = os.path.abspath("data/raw")
-INGEST_DIR = os.path.abspath("data/ingest")
-PROCESSED_RAW_DIR = os.path.abspath("data/processed_raw")
+BASE_DIR = os.path.dirname(__file__)
+DATA_DIR = os.path.join(BASE_DIR, "data")
+RAW_DIR = os.path.join(DATA_DIR, "raw")
+INGEST_DIR = os.path.join(DATA_DIR, "ingest")
+PROCESSED_DIR = os.path.join(DATA_DIR, "processed")
+PROCESSED_RAW_DIR = os.path.join(DATA_DIR, "processed_raw")
 
 os.makedirs(RAW_DIR, exist_ok=True)
 os.makedirs(INGEST_DIR, exist_ok=True)
+os.makedirs(PROCESSED_DIR, exist_ok=True)
 os.makedirs(PROCESSED_RAW_DIR, exist_ok=True)
 
 load_dotenv()
@@ -30,6 +34,131 @@ BẮT BUỘC ĐỊNH DẠNG đầu ra thành các dòng văn bản đơn giản 
 
 Tuyệt đối không sử dụng bảng markdown. Chỉ xuất ra các câu văn tiếng Việt, mỗi câu 1 dòng.
 """
+
+PLACEHOLDER_RAG_TEXT = "Dữ liệu JSON đã được parse trực tiếp vào Graph."
+
+
+def _format_pct(value):
+    try:
+        return f"{float(value) * 100:.4f}%"
+    except (TypeError, ValueError):
+        return None
+
+
+def _append_unique(lines, seen, text):
+    text = (text or "").strip()
+    if not text or text in seen:
+        return
+    seen.add(text)
+    lines.append(text)
+
+
+def _structured_json_to_text(filename, data):
+    """
+    Chuyển JSON cấu trúc thành văn bản phẳng có ý nghĩa để RAG / keyword retrieval dùng được.
+    Không còn trả về placeholder vô nghĩa như trước.
+    """
+    name = os.path.basename(filename).lower()
+    lines = []
+    seen = set()
+
+    if name == "crawler_state.json":
+        return ""
+
+    if name == "banks.json":
+        for bank in data:
+            symbol = bank.get("Symbol") or bank.get("symbol") or ""
+            full_name = bank.get("FullName") or bank.get("companyName") or bank.get("name") or symbol
+            exchange = bank.get("Exchange") or bank.get("exchange") or "không rõ sàn"
+            industry = bank.get("Industry") or bank.get("industry")
+            line = f"{full_name} ({symbol}) niêm yết trên {exchange}."
+            if industry:
+                line += f" Ngành: {industry}."
+            _append_unique(lines, seen, line)
+
+    elif name == "holders.json":
+        for item in data:
+            symbol = item.get("symbol") or ""
+            company_name = item.get("companyName") or symbol
+            for holder in item.get("holders", []):
+                holder_name = holder.get("name") or "Cổ đông chưa rõ tên"
+                shares = holder.get("shares")
+                pct = _format_pct(holder.get("ownership"))
+                parts = [f"{holder_name} là cổ đông của {company_name} ({symbol})."]
+                if shares:
+                    parts.append(f"Nắm {shares} cổ phiếu.")
+                if pct:
+                    parts.append(f"Tỷ lệ sở hữu {pct}.")
+                _append_unique(lines, seen, " ".join(parts))
+
+    elif name == "officers.json":
+        for item in data:
+            symbol = item.get("symbol") or ""
+            company_name = item.get("companyName") or symbol
+            for officer in item.get("officers", []):
+                person_name = officer.get("name") or "Nhân sự chưa rõ tên"
+                position = officer.get("position") or "Lãnh đạo"
+                _append_unique(
+                    lines,
+                    seen,
+                    f"{person_name} giữ chức vụ {position} tại {company_name} ({symbol}).",
+                )
+
+    elif name == "subsidiaries.json":
+        for item in data:
+            parent_symbol = item.get("symbol") or ""
+            parent_name = item.get("companyName") or parent_symbol
+            for sub in item.get("subsidiaries", []):
+                sub_name = sub.get("companyName") or sub.get("name") or sub.get("symbol") or "Công ty con chưa rõ tên"
+                sub_symbol = sub.get("symbol") or ""
+                pct = _format_pct(sub.get("ownership"))
+                line = f"{parent_name} ({parent_symbol}) có công ty con {sub_name}"
+                if sub_symbol:
+                    line += f" ({sub_symbol})"
+                line += "."
+                if pct:
+                    line += f" Tỷ lệ sở hữu {pct}."
+                _append_unique(lines, seen, line)
+
+    elif name == "individuals.json":
+        for item in data:
+            profile = item.get("profile", {})
+            person_name = profile.get("name") or "Cá nhân chưa rõ tên"
+            dob = profile.get("dateOfBirth")
+            home_town = profile.get("homeTown")
+            place_of_birth = profile.get("placeOfBirth")
+            bio_parts = [f"{person_name} là một cá nhân trong dữ liệu."]
+            if dob:
+                bio_parts.append(f"Ngày sinh: {dob}.")
+            if home_town:
+                bio_parts.append(f"Quê quán: {home_town}.")
+            if place_of_birth:
+                bio_parts.append(f"Nơi sinh: {place_of_birth}.")
+            _append_unique(lines, seen, " ".join(bio_parts))
+
+            for rel in item.get("relations", []):
+                rel_person = rel.get("relatedIndividual", {})
+                rel_name = rel_person.get("name") or "người thân chưa rõ tên"
+                relation_name = rel.get("relationName") or "người thân"
+                _append_unique(
+                    lines,
+                    seen,
+                    f"{person_name} có quan hệ {relation_name} với {rel_name}.",
+                )
+
+            for job in item.get("jobs", []):
+                company_name = job.get("institutionName") or job.get("institutionSymbol") or "đơn vị chưa rõ tên"
+                symbol = job.get("institutionSymbol") or ""
+                position = job.get("positionName") or "nhân sự"
+                line = f"{person_name} là {position} của {company_name}"
+                if symbol:
+                    line += f" ({symbol})"
+                line += "."
+                _append_unique(lines, seen, line)
+
+    if not lines:
+        return f"{PLACEHOLDER_RAG_TEXT}\n"
+    return "\n".join(lines) + "\n"
 
 def get_prompter():
     global prompter
@@ -77,7 +206,7 @@ def process_structured_json(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
         
-    kg_dir = os.path.abspath("data/kg_data")
+    kg_dir = os.path.join(DATA_DIR, "kg_data")
     os.makedirs(kg_dir, exist_ok=True)
     
     nodes_file = os.path.join(kg_dir, "kg_nodes.json")
@@ -230,8 +359,8 @@ def process_structured_json(file_path):
                                 "ownership": h_ownership
                             })
                         
-    # Convert old structured raw back to text for simple LLM text ingestion (so search works)
-    output_text = "Dữ liệu JSON đã được parse trực tiếp vào Graph.\n"
+    # Xuất thêm văn bản phẳng để tầng RAG/keyword retrieval có dữ liệu thật để tra cứu.
+    output_text = _structured_json_to_text(filename, data)
     
     with open(nodes_file, 'w', encoding='utf-8') as f:
         json.dump(list(nodes_dict.values()), f, ensure_ascii=False, indent=2)
@@ -239,6 +368,50 @@ def process_structured_json(file_path):
         json.dump(edges, f, ensure_ascii=False, indent=2)
         
     return output_text
+
+
+def rebuild_rag_corpus_from_processed_raw(force=False):
+    """
+    Tự phục hồi corpus văn bản cho RAG từ processed_raw khi:
+    - ingest đã trống sau khi pipeline chạy xong
+    - processed đang chỉ chứa placeholder
+    """
+    rebuilt = 0
+    if not os.path.exists(PROCESSED_RAW_DIR):
+        return rebuilt
+
+    for filename in os.listdir(PROCESSED_RAW_DIR):
+        source_path = os.path.join(PROCESSED_RAW_DIR, filename)
+        if not os.path.isfile(source_path) or not filename.lower().endswith(".json"):
+            continue
+
+        base_name = os.path.splitext(filename)[0]
+        target_path = os.path.join(PROCESSED_DIR, f"{base_name}_normalized.txt")
+
+        if not force and os.path.exists(target_path):
+            try:
+                with open(target_path, "r", encoding="utf-8") as existing:
+                    current = existing.read().strip()
+                if current and current != PLACEHOLDER_RAG_TEXT:
+                    continue
+            except Exception:
+                pass
+
+        try:
+            with open(source_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            text = _structured_json_to_text(filename, data)
+            if not text.strip():
+                continue
+            with open(target_path, "w", encoding="utf-8") as out:
+                out.write(text.strip() + "\n")
+            rebuilt += 1
+        except Exception as e:
+            print(f"⚠️ Không thể rebuild corpus từ {filename}: {e}")
+
+    if rebuilt:
+        print(f"✅ Đã rebuild {rebuilt} file corpus văn bản từ processed_raw.")
+    return rebuilt
 
 def process_raw_files():
     files = [f for f in os.listdir(RAW_DIR) if os.path.isfile(os.path.join(RAW_DIR, f))]
@@ -249,7 +422,7 @@ def process_raw_files():
     print(f"🚀 Tìm thấy {len(files)} file thô. Bắt đầu tiền xử lý (LLM Preprocessor)...")
     
     # Xoá file kg cũ nếu chạy lại từ đầu với data raw
-    kg_dir = os.path.abspath("data/kg_data")
+    kg_dir = os.path.join(DATA_DIR, "kg_data")
     if os.path.exists(kg_dir):
         shutil.rmtree(kg_dir)
     

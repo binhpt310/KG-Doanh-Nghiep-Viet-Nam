@@ -16,6 +16,38 @@ Trọng tâm hiện tại của repo là pipeline chuẩn hóa dữ liệu từ 
 - Cung cấp Flask Web UI + REST API
 - Hỗ trợ backend LLM qua `ollama` hoặc OpenAI-compatible / vLLM
 
+## Dashboard (Web UI)
+
+Giao diện tại `GET /` (cổng mặc định `5001`) là bố cục ba cột: **sidebar trái**, **đồ thị giữa**, **trợ lý chat phải**. Có thanh kéo resize giữa các cột và nút thu gọn/mở rộng từng panel.
+
+**Thanh trên (topbar):** hiển thị số node và cạnh đang xem, nút **Update dữ liệu mới nhất** (kích hoạt crawl FireAnt + thanh tiến trình), đổi **sáng/tối**, và liên kết **Neo4j Browser** khi backend cấu hình URL.
+
+**Sidebar trái**
+
+- **Xem theo:** đồ thị **Công ty** (hub listed) hoặc **Cá nhân** (lãnh đạo / mạng quan hệ người tùy chế độ).
+- **Tổng quan KG:** số công ty, cá nhân, cạnh trong DB, cạnh suy diễn (quan hệ ẩn), thời điểm crawl thành công gần nhất.
+- **Sàn giao dịch:** phân bố công ty theo sàn (từ API thống kê).
+- **Top thực thể:** xếp hạng theo tiêu chí (nhiều liên kết, nhiều cổ đông, nhiều công ty con, chức danh lãnh đạo, vốn hoá proxy…).
+- **Quan hệ ẩn (Rules):** liệt kê rule inference đang bật (đồng bộ với `GET /api/rules`).
+- **Câu hỏi gợi ý:** thẻ câu hỏi mẫu — bấm để đưa vào ô chat.
+
+**Khu vực đồ thị (giữa)**
+
+- Render bằng **vis-network**: kéo, zoom, click **công ty** để lazy-load và mở **panel chi tiết node** (phóng to/thu, đóng, **mở rộng mối quan hệ** để expand láng giềng).
+- Chú thích loại node (công ty / cá nhân / tổ chức) và cạnh **quan hệ ẩn** (nét đứt).
+- **Overlay kết quả truy vấn** (khi chat trả về bước xử lý): hiển thị **Cypher** đã dùng và **chuỗi bước** (phát hiện thực thể, RAG/Vector DB, Neo4j, tin thời sự nếu có). Có nút **thu gọn / mở rộng** để chỉnh diện tích xem.
+
+**Trợ lý Chat (RAG) — panel phải**
+
+- Hội thoại Markdown (marked + DOMPurify), lưu lịch sử cục bộ trong trình duyệt.
+- **Phiên hội thoại:** chọn phiên, **lưu**, **xóa tất cả** (localStorage).
+- **Chọn model** từ danh sách `GET /api/ollama/models` hoặc `GET /api/vllm/models` (tùy backend).
+- **Reasoning:** bật/tắt — ảnh hưởng nhật ký bước xử lý gửi về UI.
+- **Tìm công ty/cá nhân** trong panel (gợi ý kết quả từ API search), phím tắt gợi ý trong placeholder (Ctrl+K).
+- Gửi câu hỏi → `POST /api/query`; đồ thị cập nhật khi API trả về `nodes`/`edges` liên quan.
+
+**Luồng truy vấn (tóm tắt):** kiểm tra phạm vi câu hỏi → trích thực thể → **RAG** (semantic nếu có embedding corpus, fallback keyword cục bộ) → sinh/truy vấn **Cypher** trên Neo4j → có thể bổ sung **tin RSS / thời sự** so với graph — chi tiết trong `script.py` (`api_query`).
+
 ## Giải thích các hàm
 
 ### `kg_from_scratch/pipeline.py`
@@ -343,7 +375,10 @@ curl -X POST http://localhost:5001/api/inference/run
 
 ### Graph and Stats
 
-- `GET /api/graph`
+- `GET /api/graph` — tham số query:
+  - `mode`: `companies` (mặc định) hoặc `persons`
+  - `view`: chỉ khi `mode=persons` — `leaders` (mặc định, một lãnh đạo ưu tiên mỗi công ty niêm yết / fallback cổ đông) hoặc `full` (subgraph có cạnh liên quan Person)
+  - `limit`: giới hạn số cạnh tải (trần môi trường: `GRAPH_MAX_EDGES`)
 - `GET /api/stats`
 - `GET /api/stats/exchange`
 - `GET /api/stats/top`
@@ -362,7 +397,7 @@ curl -X POST http://localhost:5001/api/inference/run
 
 ### LLM and Query
 
-- `POST /api/query`
+- `POST /api/query` — body JSON gồm `query`, `history` (tùy chọn), `reasoning` (bool), `model` (chuỗi id model). Trả về `answer`, `steps`, `cypher`, `nodes`/`edges` (hoặc `graphs`) khi có subgraph.
 - `GET /api/vllm/models`
 - `GET /api/ollama/models`
 
