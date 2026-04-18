@@ -159,8 +159,18 @@ def run_r02_indirect_ownership(driver, batch_size: int = 500) -> int:
 
     while True:
         query = """
-        MATCH (a:Entity)-[r1:LÀ_CỔ_ĐÔNG_CỦA]->(b:Entity)
-        MATCH (b:Entity)-[r2:CÓ_CÔNG_TY_CON]->(c:Entity)
+        CALL () {
+          MATCH (a:Entity)-[r1:LÀ_CỔ_ĐÔNG_CỦA]->(b:Entity)
+          MATCH (b:Entity)-[r2:CÓ_CÔNG_TY_CON]->(c:Entity)
+          WHERE r2.ownership IS NOT NULL
+          RETURN a, b, c, r1, r2
+          UNION
+          MATCH (a:Entity)-[r1:LÀ_CỔ_ĐÔNG_CỦA]->(b:Entity)
+          MATCH (c:Entity)-[r2:LÀ_CÔNG_TY_CON_CỦA]->(b:Entity)
+          WHERE r2.ownership IS NOT NULL
+          RETURN a, b, c, r1, r2
+        }
+        WITH a, b, c, r1, r2
         WHERE r1.ownership IS NOT NULL
           AND a <> c
           AND NOT EXISTS { (a)-[:SỞ_HỮU_GIÁN_TIẾP]->(c) }
@@ -262,11 +272,21 @@ def run_r07_indirect_influence(driver, batch_size: int = 500) -> int:
 
     while True:
         query = """
-        MATCH (a:Entity)-[r1]->(b:Entity)-[r2:CÓ_CÔNG_TY_CON]->(c:Entity)
+        CALL () {
+          MATCH (a:Entity)-[r1]->(b:Entity)-[r2:CÓ_CÔNG_TY_CON]->(c:Entity)
+          WHERE type(r1) <> 'CÓ_CÔNG_TY_CON'
+            AND r2.ownership IS NOT NULL
+            AND r2.ownership > 0
+          RETURN a, b, c, r1, r2
+          UNION
+          MATCH (a:Entity)-[r1]->(b:Entity)<-[r2:LÀ_CÔNG_TY_CON_CỦA]-(c:Entity)
+          WHERE type(r1) <> 'LÀ_CÔNG_TY_CON_CỦA'
+            AND r2.ownership IS NOT NULL
+            AND r2.ownership > 0
+          RETURN a, b, c, r1, r2
+        }
+        WITH a, b, c, r1, r2
         WHERE a <> c
-          AND type(r1) <> 'CÓ_CÔNG_TY_CON'
-          AND r2.ownership IS NOT NULL
-          AND r2.ownership > 0
           AND NOT EXISTS { (a)-[:CÓ_LỢI_ÍCH_GIÁN_TIẾP]->(c) }
           AND NOT EXISTS { (a)-[:ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI]->(c) }
           AND NOT EXISTS { (a)-[:KIỂM_SOÁT_GIÁN_TIẾP]->(c) }
@@ -351,6 +371,68 @@ def run_r07_indirect_influence(driver, batch_size: int = 500) -> int:
 
 
 # ============================================================================
+# SECTION 5b — Rule R12: Shared major shareholder (cùng cổ đông lớn)
+# ============================================================================
+#
+# Cùng một cá nhân là cổ đông ≥5% tại hai công ty niêm yết → liên kết giữa hai DN
+# (Luật Chứng khoán 2019 — ngưỡng công bố cổ đông lớn; quan hệ “ẩn” thường phân tích
+# chéo sở hữu / liên quan).
+# ============================================================================
+
+def run_r12_shared_major_shareholder(driver, batch_size: int = 500) -> int:
+    """Tạo cạnh CÙNG_CỔ_ĐÔNG_LỚN giữa hai công ty khi cùng một P_ là cổ đông ≥5% tại cả hai."""
+    total_created = 0
+    rel_type = "CÙNG_CỔ_ĐÔNG_LỚN"
+    while True:
+        query = """
+        MATCH (n:Entity)-[r1:LÀ_CỔ_ĐÔNG_CỦA]->(c:Entity)
+        MATCH (n)-[r2:LÀ_CỔ_ĐÔNG_CỦA]->(d:Entity)
+        WHERE c.id STARTS WITH 'C_' AND d.id STARTS WITH 'C_'
+          AND c.id < d.id
+          AND n.id STARTS WITH 'P_'
+          AND r1.ownership IS NOT NULL AND r2.ownership IS NOT NULL
+          AND toFloat(r1.ownership) >= 0.05 AND toFloat(r2.ownership) >= 0.05
+          AND NOT EXISTS { (c)-[x]->(d) WHERE type(x) = 'CÙNG_CỔ_ĐÔNG_LỚN' }
+        RETURN c.id AS cid, d.id AS did, n.id AS nid, n.name AS nname,
+               toFloat(r1.ownership) AS o1, toFloat(r2.ownership) AS o2
+        LIMIT $batch
+        """
+        with driver.session() as session:
+            records = list(session.run(query, batch=batch_size))
+        if not records:
+            break
+        created_this = 0
+        for rec in records:
+            cid, did = rec["cid"], rec["did"]
+            nid = rec["nid"]
+            with driver.session() as session:
+                session.run(
+                    f"""
+                    MATCH (c:Entity {{id: $cid}})
+                    MATCH (d:Entity {{id: $did}})
+                    MERGE (c)-[r:`{rel_type}`]->(d)
+                    ON CREATE SET r.inferred = true,
+                      r.inferred_from = 'R12',
+                      r.label = $label,
+                      r.shared_holder_id = $nid,
+                      r.shared_holder_name = $nname,
+                      r.ownership_c = $o1,
+                      r.ownership_d = $o2
+                    """,
+                    cid=cid,
+                    did=did,
+                    nid=nid,
+                    nname=rec.get("nname") or nid,
+                    o1=rec["o1"],
+                    o2=rec["o2"],
+                    label=rel_type,
+                )
+            created_this += 1
+        total_created += created_this
+    return total_created
+
+
+# ============================================================================
 # SECTION 6 — Master: Run All Inference Rules
 # ============================================================================
 
@@ -403,8 +485,18 @@ def run_all_inference_rules(driver, batch_size: int = 500) -> dict:
         results["R07_indirect_influence"] = 0
         print(f"   ⚠️ R07 error: {e}")
 
+    # R12 — Shared major shareholder (≥5% at two companies)
+    print("\n📌 R12: Shared major shareholder (R12)...")
+    try:
+        r12_count = run_r12_shared_major_shareholder(driver, batch_size)
+        results["R12_shared_major_shareholder"] = r12_count
+        print(f"   ✅ R12: Created {r12_count} shared-major-shareholder links")
+    except Exception as e:
+        results["R12_shared_major_shareholder"] = 0
+        print(f"   ⚠️ R12 error: {e}")
+
     elapsed = time.time() - start_time
-    results["total"] = sum(v for k, v in results.items() if k.startswith("R"))
+    results["total"] = sum(v for k, v in results.items() if isinstance(v, int) and k.startswith("R"))
     results["elapsed_seconds"] = round(elapsed, 2)
 
     print(f"\n{'='*60}")

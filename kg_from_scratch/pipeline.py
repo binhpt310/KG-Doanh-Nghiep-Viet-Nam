@@ -551,11 +551,28 @@ def _process_structured_json(file_path):
 
     filename = os.path.basename(file_path).lower()
 
+    # Build static exchange map from HOSE/HNX/UPCOM lists as fallback
+    _exchange_map = {}
+    for _s in HOSE:
+        _exchange_map.setdefault(_s, "HOSE")
+    for _s in HNX:
+        _exchange_map.setdefault(_s, "HNX")
+    for _s in UPCOM:
+        _exchange_map.setdefault(_s, "UPCOM")
+
     if filename == "banks.json":
         for b in data:
             symbol = b.get("Symbol")
             if symbol:
-                add_node(f"C_{symbol}", "Company", b.get("FullName", symbol), {"symbol": symbol, "price": b.get("Price")})
+                exchange = (b.get("Exchange") or "").strip().upper()
+                if not exchange or exchange in ("", "NONE"):
+                    exchange = _exchange_map.get(symbol, "")
+                add_node(f"C_{symbol}", "Company", b.get("FullName", symbol), {
+                    "symbol": symbol,
+                    "price": b.get("Price"),
+                    "exchange": exchange,
+                    "industry": b.get("Industry", ""),
+                })
 
     elif filename == "individuals.json":
         for item in data:
@@ -614,9 +631,12 @@ def _process_structured_json(file_path):
                     if sub_symbol:
                         sub_cid = f"C_{sub_symbol}"
                         add_node(sub_cid, "Company", sub.get("companyName", sub_symbol), {"symbol": sub_symbol})
-                        add_edge(parent_cid, sub_cid, "CÓ_CÔNG_TY_CON")
-                        # FILTER: Bỏ qua công ty con có ownership = 0 hoặc None (thực thể ma, không sở hữu thực sự)
                         sub_ownership = sub.get("ownership")
+                        parent_props = {}
+                        if sub_ownership and sub_ownership != 0:
+                            parent_props["ownership"] = sub_ownership
+                        add_edge(parent_cid, sub_cid, "CÓ_CÔNG_TY_CON", parent_props)
+                        # Giữ thêm cạnh ngược để tương thích dữ liệu cũ và các truy vấn hiện có.
                         if sub_ownership and sub_ownership != 0:
                             add_edge(sub_cid, parent_cid, "LÀ_CÔNG_TY_CON_CỦA", {"ownership": sub_ownership})
                     else:

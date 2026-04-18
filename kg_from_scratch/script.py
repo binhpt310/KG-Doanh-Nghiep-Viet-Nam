@@ -177,35 +177,77 @@ else:
 
 # --- Cấu trúc Graph để LLM hiểu và tự sinh Cypher ---
 NEO4J_SCHEMA = """
-Các Nodes:
-- (Entity): Có các thuộc tính: name (tên), type (loại: BANK, PERSON, COMPANY), id (mã định danh). Labes bổ sung: Person, Company.
-Các Relationships tiêu biểu:
-- [:LÃNH_ĐẠO_CAO_NHẤT]: Người đứng đầu (Chủ tịch).
-- [:CHA_MẸ], [:ANH_CHỊ], [:ÔNG_BÀ_BÁC_CHÚ], [:VỢ_CHỒNG]: Quan hệ gia đình (luôn từ người lớn đến người nhỏ).
-- [:LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO]: Người thân (cha/mẹ/anh/chị,...) của lãnh đạo công ty. Có thuộc tính leaderRelationship, leaderName, position.
-- [:LÀ_CỔ_ĐÔNG_CỦA]: Người/tổ chức sở hữu cổ phần. Thuộc tính trên cạnh: `shares` (số cổ phiếu, số nguyên), `ownership` (phần nhỏ 0–1, ví dụ 0.052 = 5.2%). Xếp hạng cổ đông theo `shares` hoặc `ownership`.
-- [:LÀ_CÔNG_TY_CON_CỦA]: Quan hệ giữa 2 công ty.
-- [:CÓ_CHỨC_VỤ]: Quan hệ giữa người và công ty (thuộc tính: positionName).
-Lưu ý: Luôn dùng MATCH (n:Entity {id: '...'}), đừng dùng (n:Person) đơn lẻ nếu đã có ID.
+Các Nodes (Thực thể):
+- (Entity): Có các thuộc tính: name (tên), type (loại: BANK, PERSON, COMPANY), id (mã định danh). Labels bổ sung: Person, Company.
+- Công ty luôn có id bắt đầu bằng 'C_' (ví dụ: 'C_VIC', 'C_TCB'). Người luôn có id bắt đầu bằng 'P_' (ví dụ: 'P_123').
+Các Relationships (Trọng tâm truy vấn):
+- [:LÃNH_ĐẠO_CAO_NHẤT]: Người đứng đầu/Chủ tịch HĐQT của công ty. Luôn ưu tiên dùng cạnh này khi hỏi "Ai là lãnh đạo/chủ tịch/đứng đầu". (VD: (p:Entity)-[:LÃNH_ĐẠO_CAO_NHẤT]->(c:Entity {symbol: 'VIC'}))
+- [:LÀ_CỔ_ĐÔNG_CỦA]: Người/tổ chức sở hữu cổ phần công ty. Có thuộc tính: `shares` (số CP), `ownership` (tỷ lệ sở hữu).
+- [:CÓ_CÔNG_TY_CON]: Khi hỏi công ty con. (VD: MATCH (p:Entity)-[:CÓ_CÔNG_TY_CON]->(c:Entity))
+- [:CHA_MẸ], [:ANH_CHỊ], [:VỢ_CHỒNG]: Quan hệ gia đình.
+- [:LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO]: Người thân của lãnh đạo công ty. Có các thuộc tính trên cạnh (relationship properties): `leaderName` (tên lãnh đạo), `position` (chức vụ lãnh đạo), `familyRelation` (quan hệ với lãnh đạo).
+
+Luật viết Cypher (BẮT BUỘC):
+1. Phải DÙNG MATCH (n:Entity) HẠN CHẾ SỬ DỤNG (n:Person) hay (n:Company) để tránh lỗi label. Thay vào đó dùng n.type = 'Person'.
+2. Luôn dùng toLower(n.name) CONTAINS toLower('Từ khóa') thay vì so sánh bằng name = 'Từ khóa'. Nếu biết mã chứng khoán (symbol), TỐT NHẤT LÀ so sánh c.symbol = 'MÃ_CQ' thay vì name.
+3. Khi trả kết quả (RETURN), bắt buộc phải có các trường: source_id, source_name, source_group, source_symbol, target_id, target_name, target_group, target_symbol, edge_label, inferred.
 """
 
 def generate_cypher_with_llm(user_query, history_context, schema, steps_list, model=None):
-    """Sử dụng LLM để sinh câu lệnh Cypher dựa trên schema."""
+    """Sử dụng LLM để sinh câu lệnh Cypher bằng kĩ thuật Grounded Reasoning."""
     use_model = model or MODEL_NAME
-    steps_list.append("🧠 AI đang tự suy nghĩ câu lệnh truy vấn graph (Agentic mode)...")
-    prompt = f"""
-Bạn là chuyên gia Neo4j. Hãy viết MỘT câu lệnh Cypher duy nhất để trả lời câu hỏi sau.
-{schema}
-Lịch sử: {history_context}
-Câu hỏi: {user_query}
+    steps_list.append("🧠 AI đang phân tích logic và quy tắc truy vấn (Grounded Reasoning)...")
+    
+    # Load grounding document
+    grounding_doc = ""
+    try:
+        ref_path = os.path.join(os.path.dirname(__file__), "docs", "cypher_reference.md")
+        if os.path.exists(ref_path):
+            with open(ref_path, "r", encoding="utf-8") as f:
+                grounding_doc = f.read()
+    except Exception as e:
+        print(f"Warning: Could not load cypher_reference.md: {e}")
 
-Chỉ trả về câu lệnh Cypher, không giải thích gì thêm. Giới hạn LIMIT 50.
-Câu lệnh Cypher:
+    prompt = f"""
+Bạn là chuyên gia thiết kế Cypher cho Neo4j. Hãy phân tích yêu cầu của người dùng dựa trên tài liệu tham khảo dưới đây.
+
+TÀI LIỆU THAM KHẢO CYPHER:
+{grounding_doc}
+
+SƠ ĐỒ GRAPH (SCHEMA):
+{schema}
+
+YÊU CẦU:
+- Thực hiện suy luận từng bước (THOUGHT) trước khi viết câu lệnh Cypher.
+- Chú ý đặc biệt đến các quan hệ ẩn (inferred) và quy tắc sở hữu chéo.
+- Câu trả lời của bạn phải tuân thủ định dạng sau:
+# THOUGHT
+[Phân tích logic của bạn ở đây, sử dụng các pattern từ tài liệu tham khảo]
+
+# CYPHER
+[Câu lệnh Cypher duy nhất, KHÔNG markdown]
+
+Lịch sử phiên: {history_context}
+Câu hỏi: {user_query}
 """
     try:
-        print("[LLM] Đang gửi prompt sinh Cypher...")
+        print("[LLM] Đang thực hiện Grounded Reasoning...")
         response = llm_inference(prompt, model=use_model)
-        cypher = response.get("llm_response", "").strip().replace("```cypher", "").replace("```", "").strip()
+        full_res = response.get("llm_response", "").strip()
+        
+        thought = ""
+        cypher = ""
+        
+        if "# CYPHER" in full_res:
+            parts = full_res.split("# CYPHER")
+            thought = parts[0].replace("# THOUGHT", "").strip()
+            cypher = parts[1].strip().replace("```cypher", "").replace("```", "").strip()
+        else:
+            cypher = full_res.strip().replace("```cypher", "").replace("```", "").strip()
+            
+        if thought:
+            steps_list.append(f"🔍 Suy luận: {thought[:300]}...")
+            
         print(f"Generated Cypher: {cypher}")
         return cypher
     except Exception as e:
@@ -546,6 +588,85 @@ def _relationship_display_label(rel):
         return getattr(rel, "type", "") or ""
 
 
+def _build_symbol_exchange_map():
+    """HOSE/HNX/UPCOM từ pipeline — trùng logic api_stats_exchange."""
+    from pipeline import HOSE, HNX, UPCOM
+
+    m = {}
+    for _s in HOSE:
+        m.setdefault(_s, "HOSE")
+    for _s in HNX:
+        m.setdefault(_s, "HNX")
+    for _s in UPCOM:
+        m.setdefault(_s, "UPCOM")
+    return m
+
+
+def _resolve_vn_listing(exchange, symbol, nid):
+    """
+    Trả về 'HOSE' | 'HNX' | 'UPCOM' nếu niêm yết VN; None nếu bucket 'Khác'.
+    Trùng quy tắc GET /api/stats/exchange.
+    """
+    _static_map = _build_symbol_exchange_map()
+    ex = (exchange or "").strip().upper() if exchange else ""
+    if not ex or ex in ("", "NONE"):
+        sym = (symbol or "").strip()
+        if not sym and isinstance(nid, str) and nid.startswith("C_"):
+            sym = nid.replace("C_", "", 1)
+        ex = _static_map.get(sym, "")
+    if not ex:
+        return None
+    if ex in ("HOSE", "HNX", "UPCOM"):
+        return ex
+    return None
+
+
+def _listed_company_ids(session):
+    """Tập id Entity công ty (C_) đang niêm yết HOSE/HNX/UPCOM."""
+    q = """
+    MATCH (n:Entity) WHERE n.id STARTS WITH 'C_'
+    RETURN n.id AS nid, n.symbol AS symbol, n.exchange AS exchange
+    """
+    out = set()
+    for rec in session.run(q):
+        if _resolve_vn_listing(rec.get("exchange"), rec.get("symbol"), rec.get("nid")):
+            out.add(rec["nid"])
+    return out
+
+
+def _append_graph_edge(nodes, links, n, m, r, seen_pairs, mode_persons_dedupe):
+    """Thêm một cạnh và hai node vào nodes/links."""
+    n_props = dict(n)
+    m_props = dict(m)
+    n_id = n_props.get("id", str(getattr(n, "element_id", "")))
+    m_id = m_props.get("id", str(getattr(m, "element_id", "")))
+    if mode_persons_dedupe:
+        pair = tuple(sorted([n_id, m_id]))
+        if pair in seen_pairs:
+            return
+        seen_pairs.add(pair)
+    n_sym = n_props.get("symbol", "")
+    m_sym = m_props.get("symbol", "")
+    n_label = f"{n_props.get('name', n_id)} ({n_sym})" if n_sym else (n_props.get("name") or n_id)
+    m_label = f"{m_props.get('name', m_id)} ({m_sym})" if m_sym else (m_props.get("name") or m_id)
+    nodes[n_id] = {"id": n_id, "label": n_label, "group": n_props.get("type", "DEFAULT")}
+    nodes[m_id] = {"id": m_id, "label": m_label, "group": m_props.get("type", "DEFAULT")}
+    rel_label = _relationship_display_label(r)
+    try:
+        inf = bool(dict(r).get("inferred", False))
+    except Exception:
+        inf = False
+    links.append(
+        {
+            "from": n_id,
+            "to": m_id,
+            "label": rel_label,
+            "dashes": inf,
+            "inferred": inf,
+        }
+    )
+
+
 # Một lần tải toàn bộ subgraph (không phân trang); giới hạn cạnh để tránh treo trình duyệt
 GRAPH_MAX_EDGES = min(100000, max(500, int(os.getenv("GRAPH_MAX_EDGES", "25000"))))
 
@@ -555,6 +676,10 @@ def api_graph():
     mode = request.args.get("mode", "companies").lower()
     if mode not in ("companies", "persons"):
         mode = "companies"
+    # persons: view=leaders (mặc định) = lãnh đạo cao nhất tại công ty listed; view=full = toàn bộ subgraph person
+    view = (request.args.get("view") or "leaders").lower()
+    if mode == "persons" and view not in ("leaders", "full"):
+        view = "leaders"
 
     try:
         lim = min(GRAPH_MAX_EDGES, max(100, int(request.args.get("limit", GRAPH_MAX_EDGES))))
@@ -562,80 +687,178 @@ def api_graph():
         lim = GRAPH_MAX_EDGES
 
     with neo4j_driver.session() as session:
-        if mode == "companies":
-            count_q = """
-            MATCH (n:Entity)-[r]->(m:Entity)
-            WHERE n.id STARTS WITH 'C_' AND m.id STARTS WITH 'C_'
-            RETURN count(r) AS ecnt
-            """
-            data_q = """
-            MATCH (n:Entity)-[r]->(m:Entity)
-            WHERE n.id STARTS WITH 'C_' AND m.id STARTS WITH 'C_'
-            RETURN n, r, m
-            LIMIT $lim
-            """
-        else:
-            # Mọi cạnh có ít nhất một đầu là cá nhân (Person–Company, Person–Person, ...)
-            count_q = """
-            MATCH (n:Entity)-[r]->(m:Entity)
-            WHERE (n.id STARTS WITH 'P_' OR n.type = 'Person'
-               OR m.id STARTS WITH 'P_' OR m.type = 'Person')
-            RETURN count(r) AS ecnt
-            """
-            data_q = """
-            MATCH (n:Entity)-[r]->(m:Entity)
-            WHERE (n.id STARTS WITH 'P_' OR n.type = 'Person'
-               OR m.id STARTS WITH 'P_' OR m.type = 'Person')
-            RETURN n, r, m
-            LIMIT $lim
-            """
-        cr = session.run(count_q).single()
-        total_edges = int(cr["ecnt"]) if cr and cr.get("ecnt") is not None else 0
-
-        result = session.run(data_q, lim=lim)
         nodes = {}
         links = []
         seen_pairs = set()
-        for record in result:
-            n, m, r = record["n"], record["m"], record["r"]
-            n_props = dict(n)
-            m_props = dict(m)
-            if mode == "companies" and (not _is_company(n_props) or not _is_company(m_props)):
-                continue
-            n_id = n_props.get("id", str(n.element_id))
-            m_id = m_props.get("id", str(m.element_id))
-            if mode == "persons":
-                pair = tuple(sorted([n_id, m_id]))
-                if pair in seen_pairs:
-                    continue
-                seen_pairs.add(pair)
-            n_sym = n_props.get("symbol", "")
-            m_sym = m_props.get("symbol", "")
-            n_label = f"{n_props.get('name', n_id)} ({n_sym})" if n_sym else (n_props.get("name") or n_id)
-            m_label = f"{m_props.get('name', m_id)} ({m_sym})" if m_sym else (m_props.get("name") or m_id)
-            nodes[n_id] = {"id": n_id, "label": n_label, "group": n_props.get("type", "DEFAULT")}
-            nodes[m_id] = {"id": m_id, "label": m_label, "group": m_props.get("type", "DEFAULT")}
-            rel_label = _relationship_display_label(r)
-            try:
-                inf = bool(dict(r).get("inferred", False))
-            except Exception:
-                inf = False
-            links.append({"from": n_id, "to": m_id, "label": rel_label, "dashes": inf})
+        total_edges_db = 0
+
+        if mode == "companies":
+            listed = list(_listed_company_ids(session))
+            if not listed:
+                total_edges_db = 0
+            else:
+                count_q = """
+                MATCH (n:Entity)-[r]->(m:Entity)
+                WHERE n.id IN $listed AND m.id IN $listed
+                RETURN count(r) AS ecnt
+                """
+                cr = session.run(count_q, listed=listed).single()
+                total_edges_db = int(cr["ecnt"]) if cr and cr.get("ecnt") is not None else 0
+                data_q = """
+                MATCH (n:Entity)-[r]->(m:Entity)
+                WHERE n.id IN $listed AND m.id IN $listed
+                RETURN n, r, m
+                LIMIT $lim
+                """
+                result = session.run(data_q, listed=listed, lim=lim)
+                for record in result:
+                    n, m, r = record["n"], record["m"], record["r"]
+                    n_props, m_props = dict(n), dict(m)
+                    if not _is_company(n_props) or not _is_company(m_props):
+                        continue
+                    _append_graph_edge(nodes, links, n, m, r, seen_pairs, False)
+                # Hiển thị mọi mã listed dưới dạng node (kể cả chưa có cạnh C–C tới listed khác trong KG)
+                missing_ids = [nid for nid in listed if nid not in nodes]
+                if missing_ids:
+                    _batch = 500
+                    for _off in range(0, len(missing_ids), _batch):
+                        sub = missing_ids[_off : _off + _batch]
+                        q_iso = """
+                        MATCH (n:Entity) WHERE n.id IN $ids
+                        RETURN n
+                        """
+                        for rec in session.run(q_iso, ids=sub):
+                            np = dict(rec["n"])
+                            if not _is_company(np):
+                                continue
+                            nid = np.get("id")
+                            if not nid or nid in nodes:
+                                continue
+                            sym = np.get("symbol", "")
+                            lab = (
+                                f"{np.get('name', nid)} ({sym})"
+                                if sym
+                                else (np.get("name") or nid)
+                            )
+                            nodes[nid] = {
+                                "id": nid,
+                                "label": lab,
+                                "group": np.get("type", "DEFAULT"),
+                            }
+
+        elif mode == "persons" and view == "full":
+            count_q = """
+            MATCH (n:Entity)-[r]->(m:Entity)
+            WHERE (n.id STARTS WITH 'P_' OR n.type = 'Person'
+               OR m.id STARTS WITH 'P_' OR m.type = 'Person')
+            RETURN count(r) AS ecnt
+            """
+            data_q = """
+            MATCH (n:Entity)-[r]->(m:Entity)
+            WHERE (n.id STARTS WITH 'P_' OR n.type = 'Person'
+               OR m.id STARTS WITH 'P_' OR m.type = 'Person')
+            RETURN n, r, m
+            LIMIT $lim
+            """
+            cr = session.run(count_q).single()
+            total_edges_db = int(cr["ecnt"]) if cr and cr.get("ecnt") is not None else 0
+            result = session.run(data_q, lim=lim)
+            for record in result:
+                n, m, r = record["n"], record["m"], record["r"]
+                _append_graph_edge(nodes, links, n, m, r, seen_pairs, True)
+
+        else:
+            # persons + leaders: một (ưu tiên) lãnh đạo / công ty listed
+            listed = list(_listed_company_ids(session))
+            rels = LEADER_RELS
+            if not listed:
+                total_edges_db = 0
+            else:
+                count_q = """
+                MATCH (p:Entity)-[r]->(c:Entity)
+                WHERE c.id IN $listed AND type(r) IN $rels
+                RETURN count(r) AS ecnt
+                """
+                cr = session.run(count_q, listed=listed, rels=rels).single()
+                total_edges_db = int(cr["ecnt"]) if cr and cr.get("ecnt") is not None else 0
+                data_q = """
+                MATCH (p:Entity)-[r]->(c:Entity)
+                WHERE c.id IN $listed AND type(r) IN $rels
+                RETURN p, r, c
+                LIMIT $lim
+                """
+                raw_rows = list(
+                    session.run(data_q, listed=listed, rels=rels, lim=min(lim, 500000))
+                )
+                best_by_company = {}
+                for record in raw_rows:
+                    p, r, c = record["p"], record["r"], record["c"]
+                    c_props = dict(c)
+                    cid = c_props.get("id")
+                    if not cid:
+                        continue
+                    try:
+                        rt = r.type
+                    except Exception:
+                        rt = ""
+                    pri = rels.index(rt) if rt in rels else 99
+                    cur = best_by_company.get(cid)
+                    if cur is None or pri < cur[0]:
+                        best_by_company[cid] = (pri, p, r, c)
+                if not best_by_company:
+                    # Neo4j có thể chưa có cạnh LÃNH_ĐẠO_* — fallback: cổ đông cá nhân có ownership cao nhất / công ty listed
+                    count_fb = """
+                    MATCH (p:Entity)-[r:LÀ_CỔ_ĐÔNG_CỦA]->(c:Entity)
+                    WHERE c.id IN $listed AND (p.id STARTS WITH 'P_' OR p.type = 'Person')
+                    RETURN count(r) AS ecnt
+                    """
+                    cr_fb = session.run(count_fb, listed=listed).single()
+                    total_edges_db = int(cr_fb["ecnt"]) if cr_fb and cr_fb.get("ecnt") is not None else 0
+                    fb_q = """
+                    MATCH (p:Entity)-[r:LÀ_CỔ_ĐÔNG_CỦA]->(c:Entity)
+                    WHERE c.id IN $listed AND (p.id STARTS WITH 'P_' OR p.type = 'Person')
+                    RETURN p, r, c
+                    LIMIT $lim
+                    """
+                    fb_rows = list(session.run(fb_q, listed=listed, lim=min(lim, 500000)))
+                    best_sh = {}
+                    for record in fb_rows:
+                        p, r, c = record["p"], record["r"], record["c"]
+                        cid = dict(c).get("id")
+                        if not cid:
+                            continue
+                        try:
+                            ow = float(dict(r).get("ownership") or 0)
+                        except (TypeError, ValueError):
+                            ow = 0.0
+                        cur = best_sh.get(cid)
+                        if cur is None or ow > cur[0]:
+                            best_sh[cid] = (ow, p, r, c)
+                    for _cid, tup in best_sh.items():
+                        _ow, p, r, c = tup
+                        _append_graph_edge(nodes, links, p, c, r, seen_pairs, False)
+                else:
+                    for _cid, tup in best_by_company.items():
+                        _pri, p, r, c = tup
+                        _append_graph_edge(nodes, links, p, c, r, seen_pairs, False)
 
         total_nodes = len(nodes)
 
-    response = jsonify({
-        "nodes": list(nodes.values()),
-        "edges": links,
-        "total": total_nodes,
-        "total_edges": total_edges,
-        "pagination_row_count": total_edges,
-        "current_page": 1,
-        "page_size": lim,
-        "loaded_edges": len(links),
-        "truncated": total_edges > len(links),
-    })
-    response.headers['Cache-Control'] = 'public, max-age=60'
+    response = jsonify(
+        {
+            "nodes": list(nodes.values()),
+            "edges": links,
+            "total": total_nodes,
+            "total_edges": total_edges_db,
+            "pagination_row_count": total_edges_db,
+            "current_page": 1,
+            "page_size": lim,
+            "loaded_edges": len(links),
+            "truncated": total_edges_db > len(links),
+            "view": view if mode == "persons" else None,
+        }
+    )
+    response.headers["Cache-Control"] = "public, max-age=60"
     return response
 
 # ==================== CRAWL API ENDPOINTS ====================
@@ -742,7 +965,12 @@ def api_crawl_progress():
 
 @app.route("/api/stats", methods=["GET"])
 def api_stats():
-    """Lấy thống kê hiện tại của KG."""
+    """Lấy thống kê hiện tại của KG.
+
+    inferred_relationships: số *cạnh* có coalesce(r.inferred,false)=true (không phải số node).
+    Nếu = 0: chưa chạy suy luận trên Neo4j hoặc không có pattern thỏa điều kiện (xem inference_rules.py).
+    Để tạo quan hệ ẩn: POST /api/inference hoặc POST /api/inference/run, hoặc crawl với run_inference=True.
+    """
     with neo4j_driver.session() as session:
         node_count = session.run("MATCH (n) RETURN count(n) as cnt").single()["cnt"]
         edge_count = session.run("MATCH ()-[r]->() RETURN count(r) as cnt").single()["cnt"]
@@ -867,6 +1095,15 @@ def api_inferred_relations():
         stats = dict(stats_rec) if stats_rec else {"total": 0, "low": 0, "medium": 0, "high": 0}
 
     return jsonify({"relations": relations, "stats": stats})
+
+@app.route("/api/rules", methods=["GET"])
+def api_rules():
+    """Returns the logic rules of the system."""
+    rules = [
+        {"name": "Công ty con của Công ty con", "logic": "A -[CÓ_CÔNG_TY_CON]-> B -[CÓ_CÔNG_TY_CON]-> C", "inferred": "A -[ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI]-> C"},
+        {"name": "Người thân Của Lãnh Đạo", "logic": "A -[LÃNH_ĐẠO]-> B, C -[NGƯỜI_THÂN]-> A", "inferred": "C -[LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO]-> B"}
+    ]
+    return jsonify(rules)
 
 @app.route("/api/vllm/models", methods=["GET"])
 @app.route("/api/ollama/models", methods=["GET"])
@@ -1125,7 +1362,177 @@ def api_query():
     return jsonify(payload)
 
 
+@app.route("/api/node/<path:node_id>/neighbors", methods=["GET"])
+def get_node_neighbors(node_id):
+    """Get 1-hop neighbors of a node for lazy graph expansion."""
+    limit = min(200, int(request.args.get("limit", 100)))
+    nodes = {}
+    edges = []
+    try:
+        with neo4j_driver.session() as session:
+            # Outgoing edges
+            q_out = """
+            MATCH (n:Entity {id: $eid})-[r]->(m:Entity)
+            WITH n, m, r LIMIT $lim
+            RETURN n.id AS sid, n.name AS sname, n.type AS sgrp, n.symbol AS ssym,
+                   m.id AS tid, m.name AS tname, m.type AS tgrp, m.symbol AS tsym,
+                   r.label AS elabel, coalesce(r.inferred, false) AS inf
+            """
+            # Incoming edges
+            q_in = """
+            MATCH (n:Entity)-[r]->(m:Entity {id: $eid})
+            WITH n, m, r LIMIT $lim
+            RETURN n.id AS sid, n.name AS sname, n.type AS sgrp, n.symbol AS ssym,
+                   m.id AS tid, m.name AS tname, m.type AS tgrp, m.symbol AS tsym,
+                   r.label AS elabel, coalesce(r.inferred, false) AS inf
+            """
+            for rec in list(session.run(q_out, eid=node_id, lim=limit)) + list(session.run(q_in, eid=node_id, lim=limit)):
+                s_sym = rec.get("ssym") or ""
+                t_sym = rec.get("tsym") or ""
+                s_label = f"{rec['sname']} ({s_sym})" if s_sym else (rec["sname"] or rec["sid"])
+                t_label = f"{rec['tname']} ({t_sym})" if t_sym else (rec["tname"] or rec["tid"])
+                nodes[rec["sid"]] = {"id": rec["sid"], "label": s_label, "group": rec["sgrp"] or "DEFAULT"}
+                nodes[rec["tid"]] = {"id": rec["tid"], "label": t_label, "group": rec["tgrp"] or "DEFAULT"}
+                edges.append({
+                    "from": rec["sid"], "to": rec["tid"],
+                    "label": rec["elabel"] or "",
+                    "inferred": bool(rec["inf"]),
+                    "dashes": bool(rec["inf"])
+                })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    return jsonify({"nodes": list(nodes.values()), "edges": edges})
+
+
+@app.route("/api/stats/exchange", methods=["GET"])
+def api_stats_exchange():
+    """Exchange distribution of company nodes (by exchange property or static mapping)."""
+    try:
+        # Import static lists for fallback mapping
+        from pipeline import HOSE, HNX, UPCOM
+        _static_map = {}
+        for _s in HOSE:
+            _static_map.setdefault(_s, "HOSE")
+        for _s in HNX:
+            _static_map.setdefault(_s, "HNX")
+        for _s in UPCOM:
+            _static_map.setdefault(_s, "UPCOM")
+
+        counts = {}
+        with neo4j_driver.session() as session:
+            q = """
+            MATCH (n:Entity) WHERE n.id STARTS WITH 'C_'
+            RETURN n.id AS nid, n.symbol AS symbol, n.exchange AS exchange
+            """
+            for rec in session.run(q):
+                ex = (rec["exchange"] or "").strip().upper() if rec["exchange"] else ""
+                if not ex or ex in ("", "NONE"):
+                    sym = rec["symbol"] or ""
+                    if not sym:
+                        nid = rec["nid"] or ""
+                        sym = nid.replace("C_", "", 1) if nid.startswith("C_") else ""
+                    ex = _static_map.get(sym, "")
+                if not ex:
+                    ex = "Khác"
+                counts[ex] = counts.get(ex, 0) + 1
+
+        breakdown = sorted(
+            [{"exchange": k, "count": v} for k, v in counts.items()],
+            key=lambda x: -x["count"]
+        )
+        total = sum(r["count"] for r in breakdown)
+        return jsonify({"breakdown": breakdown, "total": total})
+    except Exception as e:
+        return jsonify({"breakdown": [], "total": 0, "error": str(e)})
+
+
+@app.route("/api/stats/top", methods=["GET"])
+def api_stats_top():
+    """Return top entities based on criteria."""
+    criteria = request.args.get("criteria", "degree")
+    try:
+        with neo4j_driver.session() as session:
+            if criteria == "shareholders":
+                q = """
+                MATCH (n)-[r:LÀ_CỔ_ĐÔNG_CỦA]->(c:Entity)
+                RETURN c.id AS id, c.name AS name, count(r) AS value
+                ORDER BY value DESC LIMIT 10
+                """
+                result = session.run(q)
+            elif criteria == "subsidiaries":
+                q_fwd = """
+                MATCH (p:Entity)-[r:CÓ_CÔNG_TY_CON]->(c:Entity)
+                WHERE p.id STARTS WITH 'C_' AND c.id STARTS WITH 'C_'
+                RETURN p.id AS id, p.name AS name, count(r) AS value
+                ORDER BY value DESC LIMIT 10
+                """
+                rows = list(session.run(q_fwd))
+                if not rows:
+                    q_rev = """
+                    MATCH (c:Entity)-[r:LÀ_CÔNG_TY_CON_CỦA]->(p:Entity)
+                    WHERE c.id STARTS WITH 'C_' AND p.id STARTS WITH 'C_'
+                    RETURN p.id AS id, p.name AS name, count(r) AS value
+                    ORDER BY value DESC LIMIT 10
+                    """
+                    result = session.run(q_rev)
+                else:
+                    result = iter(rows)
+            elif criteria == "leadership":
+                q = """
+                MATCH (n:Entity)-[r]->(c:Entity)
+                WHERE c.id STARTS WITH 'C_'
+                  AND type(r) IN ['LÃNH_ĐẠO_CAO_NHẤT', 'CHỦ_TỊCH_HĐQT', 'TỔNG_GIÁM_ĐỐC']
+                RETURN c.id AS id, c.name AS name, count(r) AS value
+                ORDER BY value DESC LIMIT 10
+                """
+                result = session.run(q)
+            elif criteria == "market_cap":
+                # Proxy vốn hóa: tổng số cổ phiếu ghi nhận từ các cạnh cổ đông (khi chưa có marketCap trên node)
+                q = """
+                MATCH ()-[r:LÀ_CỔ_ĐÔNG_CỦA]->(c:Entity)
+                WHERE c.id STARTS WITH 'C_' AND r.shares IS NOT NULL
+                WITH c, sum(toFloat(r.shares)) AS total
+                WHERE total > 0
+                RETURN c.id AS id, c.name AS name, total AS value
+                ORDER BY value DESC LIMIT 10
+                """
+                rows = list(session.run(q))
+                if not rows:
+                    q2 = """
+                    MATCH ()-[r:LÀ_CỔ_ĐÔNG_CỦA]->(c:Entity)
+                    WHERE c.id STARTS WITH 'C_' AND r.ownership IS NOT NULL
+                    WITH c, sum(toFloat(r.ownership)) AS total
+                    WHERE total > 0
+                    RETURN c.id AS id, c.name AS name, total AS value
+                    ORDER BY value DESC LIMIT 10
+                    """
+                    result = session.run(q2)
+                else:
+                    result = iter(rows)
+            else:  # default: degree
+                q = """
+                MATCH (n:Entity)-[r]-()
+                WHERE n.id STARTS WITH 'C_'
+                RETURN n.id AS id, n.name AS name, count(r) AS value
+                ORDER BY value DESC LIMIT 10
+                """
+                result = session.run(q)
+
+            data = [
+                {
+                    "id": rec["id"],
+                    "name": rec["name"],
+                    "value": round(rec["value"], 4) if isinstance(rec["value"], float) else rec["value"],
+                }
+                for rec in result
+            ]
+            return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/node/<path:node_id>", methods=["GET"])
+
 def get_node_details(node_id):
     with neo4j_driver.session() as session:
         props = {}
@@ -1180,6 +1587,17 @@ def get_node_details(node_id):
                         props["Số công ty con"] = rel_rec["sub_count"]
                     if rel_rec["share_count"] and rel_rec["share_count"] > 0:
                         props["Số cổ đông"] = rel_rec["share_count"]
+
+                # Fetch Chủ tịch HĐQT (LÃNH_ĐẠO_CAO_NHẤT)
+                chairman_res = session.run(
+                    """
+                    MATCH (p:Entity)-[r:LÃNH_ĐẠO_CAO_NHẤT]->(c:Entity {id: $nid})
+                    RETURN p.name as chairman_name LIMIT 1
+                    """, nid=target_original_id
+                )
+                c_rec = chairman_res.single()
+                if c_rec and c_rec["chairman_name"]:
+                    props = {"Chủ tịch HĐQT": c_rec["chairman_name"], **props}
 
                 top_sh = session.run(
                     """

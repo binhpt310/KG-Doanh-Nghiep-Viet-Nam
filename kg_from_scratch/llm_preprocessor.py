@@ -190,9 +190,12 @@ def process_structured_json(file_path):
                     if sub_symbol:
                         sub_cid = f"C_{sub_symbol}"
                         add_node(sub_cid, "Company", sub.get("companyName", sub_symbol), {"symbol": sub_symbol})
-                        add_edge(parent_cid, sub_cid, "CÓ_CÔNG_TY_CON")
-                        # FILTER: Bỏ qua công ty con có ownership = 0 hoặc None (thực thể ma, không sở hữu thực sự)
                         sub_ownership = sub.get("ownership")
+                        parent_props = {}
+                        if sub_ownership and sub_ownership != 0:
+                            parent_props["ownership"] = sub_ownership
+                        add_edge(parent_cid, sub_cid, "CÓ_CÔNG_TY_CON", parent_props)
+                        # Giữ thêm cạnh ngược để tương thích dữ liệu cũ và các truy vấn hiện có.
                         if sub_ownership and sub_ownership != 0:
                             add_edge(sub_cid, parent_cid, "LÀ_CÔNG_TY_CON_CỦA", {"ownership": sub_ownership})
                     else:

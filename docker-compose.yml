@@ -34,6 +34,10 @@ services:
     volumes:
       # Mount data directories để crawl data được persist trên host
       - ./kg_from_scratch/data:/app/kg_from_scratch/data
+      # Mount source code để script.py và các frontend files tự động reload
+      - ./kg_from_scratch:/app/kg_from_scratch
+      # Mount ChromaDB vector data để semantic search không bị mất sau khi restart
+      - llmware_data:/root/llmware_data
     depends_on:
       neo4j:
         condition: service_healthy
@@ -43,3 +47,4 @@ services:
 volumes:
   neo4j_data:
   neo4j_logs:
+  llmware_data:

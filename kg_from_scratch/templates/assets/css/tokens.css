@@ -1,104 +1,187 @@
 /* ============================================================
-   CSS Custom Properties — Design Tokens
-   Light / Dark themes via [data-theme] on <html>
+   Design Tokens — KG Explorer  (Flat, No Gradients)
+   Inspired by: GitHub Dark, Linear, Bloomberg Terminal
    ============================================================ */
 
-/* ---------- DARK MODE (default) ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── Dark Mode ── */
 :root,
 :root[data-theme="dark"] {
-  /* Backgrounds */
-  --bg-primary: #0A0A0F;
-  --bg-surface: #12121A;
-  --bg-elevated: #1A1A24;
-  --bg-overlay: #22222E;
+  /* Backgrounds — layered, NOT gradients */
+  --bg:       #0D1117;
+  --surface:  #161B22;
+  --card:     #1C2128;
+  --hover:    #21262D;
+  --active:   #2D333B;
 
   /* Borders */
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-medium: rgba(255, 255, 255, 0.12);
+  --bd:    #30363D;
+  --bd-em: #484F58;
 
   /* Text */
-  --text-primary: #E8E8F0;
-  --text-secondary: #9494A8;
-  --text-muted: #5C5C72;
+  --tx:     #E6EDF3;
+  --tx-2:   #8B949E;
+  --tx-3:   #484F58;
 
-  /* Accent */
-  --accent-primary: #6C5CE7;
-  --accent-hover: #7C6EF7;
-  --accent-secondary: #00D2FF;
+  /* Accents — one blue, NO purple gradient */
+  --blue:    #58A6FF;
+  --blue-bg: rgba(88,166,255,0.10);
+  --blue-bd: rgba(88,166,255,0.30);
 
-  /* Semantic */
-  --success: #00B894;
-  --warning: #FDCB6E;
-  --error: #CF6679;
+  --green:    #3FB950;
+  --green-bg: rgba(63,185,80,0.10);
+  --green-bd: rgba(63,185,80,0.30);
 
-  /* Graph node colors */
-  --graph-company: #6C5CE7;
-  --graph-person: #00D2FF;
-  --graph-institution: #FDCB6E;
+  --amber:    #E3B341;
+  --amber-bg: rgba(227,179,65,0.10);
+  --amber-bd: rgba(227,179,65,0.30);
 
-  /* Graph inferred edge colors */
-  --graph-edge-inferred-low: #FDCB6E;
-  --graph-edge-inferred-medium: #E17055;
-  --graph-edge-inferred-high: #CF6679;
+  --red:    #F85149;
+  --red-bg: rgba(248,81,73,0.10);
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  /* Graph */
+  --g-company:       #58A6FF;
+  --g-person:        #3FB950;
+  --g-institution:   #E3B341;
+  --g-edge:          rgba(48,54,61,0.9);
+  --g-edge-inferred: #E3B341;
 
-  /* Radii */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  /* Dimensions */
+  --topbar-h:   56px;
+  --left-w:    260px;
+  --right-w:   340px;
+  --progress-h:  2px;
+
+  /* Radii — keep small for professional look */
+  --r-sm:   4px;
+  --r-md:   6px;
+  --r-lg:   8px;
+  --r-full: 9999px;
 
   /* Spacing */
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-}
-
-/* ---------- LIGHT MODE ---------- */
-:root[data-theme="light"] {
-  /* Backgrounds */
-  --bg-primary: #F5F5F7;
-  --bg-surface: #FFFFFF;
-  --bg-elevated: #FFFFFF;
-  --bg-overlay: #F0F0F5;
-
-  /* Borders */
-  --border-subtle: rgba(0, 0, 0, 0.06);
-  --border-medium: rgba(0, 0, 0, 0.12);
-
-  /* Text */
-  --text-primary: #1A1A2E;
-  --text-secondary: #5C5C72;
-  --text-muted: #9494A8;
-
-  /* Accent */
-  --accent-primary: #5A4BD1;
-  --accent-hover: #6C5CE7;
-  --accent-secondary: #0099CC;
-
-  /* Semantic */
-  --success: #00A383;
-  --warning: #E5A800;
-  --error: #B00020;
-
-  /* Graph node colors */
-  --graph-company: #5A4BD1;
-  --graph-person: #0099CC;
-  --graph-institution: #E5A800;
-
-  /* Graph inferred edge colors — same as dark (visual distinction) */
-  --graph-edge-inferred-low: #FDCB6E;
-  --graph-edge-inferred-medium: #E17055;
-  --graph-edge-inferred-high: #CF6679;
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-sm: 0 1px 3px rgba(1,4,9,0.6);
+  --shadow-md: 0 4px 12px rgba(1,4,9,0.7);
+  --shadow-lg: 0 8px 24px rgba(1,4,9,0.8);
+
+  /* ── Compat aliases for old CSS ── */
+  --bg-base:     var(--bg);
+  --bg-surface:  var(--surface);
+  --bg-card:     var(--card);
+  --bg-elevated: var(--card);
+  --bg-hover:    var(--hover);
+  --bg-overlay:  var(--card);
+  --bg-primary:  var(--bg);
+
+  --border-subtle: var(--bd);
+  --border-light:  var(--bd);
+  --border-med:    var(--bd-em);
+  --border-medium: var(--bd-em);
+
+  --text-primary:   var(--tx);
+  --text-secondary: var(--tx-2);
+  --text-muted:     var(--tx-3);
+  --text-sub:       var(--tx-2);
+
+  --accent-primary:   var(--blue);
+  --accent-secondary: var(--green);
+  --accent-hover:     var(--blue);
+  --cyan:     var(--blue);
+  --cyan-mid: var(--blue);
+  --cyan-dim: var(--blue-bg);
+  --cyan-glow: var(--blue-bg);
+  --purple:     var(--green);
+  --purple-dim: var(--green-bg);
+  --purple-glow: var(--green-bg);
+
+  --success: var(--green);
+  --warning: var(--amber);
+  --error:   var(--red);
+
+  --graph-company:     var(--g-company);
+  --graph-person:      var(--g-person);
+  --graph-institution: var(--g-institution);
+  --graph-edge-inferred-low:    var(--amber);
+  --graph-edge-inferred-medium: #E17055;
+  --graph-edge-inferred-high:   var(--red);
+
+  --space-xs: var(--s-1);
+  --space-sm: var(--s-2);
+  --space-md: var(--s-4);
+  --space-lg: var(--s-6);
+  --space-xl: var(--s-8);
+
+  --radius-sm: var(--r-sm);
+  --radius-md: var(--r-md);
+  --radius-lg: var(--r-lg);
+  --radius-xl: var(--r-lg);
+}
+
+/* ── Light Mode ── */
+:root[data-theme="light"] {
+  --bg:      #F6F8FA;
+  --surface: #FFFFFF;
+  --card:    #F6F8FA;
+  --hover:   #EFF0F2;
+  --active:  #E1E4E8;
+
+  --bd:    #D0D7DE;
+  --bd-em: #AFB8C1;
+
+  --tx:   #1F2328;
+  --tx-2: #57606A;
+  --tx-3: #9CA3AF;
+
+  --blue:    #0969DA;
+  --blue-bg: rgba(9,105,218,0.08);
+  --blue-bd: rgba(9,105,218,0.25);
+
+  --green:    #1A7F37;
+  --green-bg: rgba(26,127,55,0.08);
+  --green-bd: rgba(26,127,55,0.25);
+
+  --amber:    #9A6700;
+  --amber-bg: rgba(154,103,0,0.08);
+  --amber-bd: rgba(154,103,0,0.25);
+
+  --red:    #CF222E;
+  --red-bg: rgba(207,34,46,0.08);
+
+  --g-company:       #0969DA;
+  --g-person:        #1A7F37;
+  --g-institution:   #9A6700;
+  --g-edge:          rgba(208,215,222,0.9);
+  --g-edge-inferred: #9A6700;
+
+  --shadow-sm: 0 1px 3px rgba(31,35,40,0.08);
+  --shadow-md: 0 4px 12px rgba(31,35,40,0.12);
+  --shadow-lg: 0 8px 24px rgba(31,35,40,0.15);
+
+  --bg-base: var(--bg); --bg-surface: var(--surface); --bg-card: var(--card);
+  --bg-elevated: var(--card); --bg-hover: var(--hover); --bg-primary: var(--bg);
+  --bg-overlay: var(--card);
+  --border-subtle: var(--bd); --border-light: var(--bd); --border-med: var(--bd-em);
+  --border-medium: var(--bd-em);
+  --text-primary: var(--tx); --text-secondary: var(--tx-2); --text-muted: var(--tx-3);
+  --text-sub: var(--tx-2);
+  --accent-primary: var(--blue); --accent-secondary: var(--green); --accent-hover: var(--blue);
+  --cyan: var(--blue); --cyan-mid: var(--blue); --cyan-dim: var(--blue-bg);
+  --cyan-glow: var(--blue-bg); --purple: var(--green); --purple-dim: var(--green-bg);
+  --success: var(--green); --warning: var(--amber); --error: var(--red);
+  --graph-company: var(--g-company); --graph-person: var(--g-person);
+  --graph-institution: var(--g-institution);
+  --graph-edge-inferred-low: var(--amber); --graph-edge-inferred-medium: #E17055;
+  --graph-edge-inferred-high: var(--red);
+  --space-xs: var(--s-1); --space-sm: var(--s-2); --space-md: var(--s-4);
+  --space-lg: var(--s-6); --space-xl: var(--s-8);
+  --radius-sm: var(--r-sm); --radius-md: var(--r-md); --radius-lg: var(--r-lg);
 }
