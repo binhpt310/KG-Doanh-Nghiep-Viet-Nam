@@ -87,17 +87,14 @@ def get_all_symbols(include_banks_first=True):
 # SECTION 2 — Fireant Crawler (from fireant_crawler.py)
 # ============================================================================
 
-FIREANT_TOKEN = os.getenv(
-    "FIREANT_TOKEN",
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IkdYdExONzViZlZQakdvNERWdjV4QkRITHpnSSIsImtpZCI6IkdYdExONzViZlZQakdvNERWdjV4QkRITHpnSSJ9.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmZpcmVhbnQudm4iLCJhdWQiOiJodHRwczovL2FjY291bnRzLmZpcmVhbnQudm4vcmVzb3VyY2VzIiwiZXhwIjoxODg5NjIyNTMwLCJuYmYiOjE1ODk2MjI1MzAsImNsaWVudF9pZCI6ImZpcmVhbnQudHJhZGVzdGF0aW9uIiwic2NvcGUiOlsiYWNhZGVteS1yZWFkIiwiYWNhZGVteS13cml0ZSIsImFjY291bnRzLXJlYWQiLCJhY2NvdW50cy13cml0ZSIsImJsb2ctcmVhZCIsImNvbXBhbmllcy1yZWFkIiwiZmluYW5jZS1yZWFkIiwiaW5kaXZpZHVhbHMtcmVhZCIsImludmVzdG9wZWRpYS1yZWFkIiwib3JkZXJzLXJlYWQiLCJvcmRlcnMtd3JpdGUiLCJwb3N0cy1yZWFkIiwicG9zdHMtd3JpdGUiLCJzZWFyY2giLCJzeW1ib2xzLXJlYWQiLCJ1c2VyLWRhdGEtcmVhZCIsInVzZXItZGF0YS13cml0ZSIsInVzZXJzLXJlYWQiXSwianRpIjoiMjYxYTZhYWQ2MTQ5Njk1ZmJiYzcwODM5MjM0Njc1NWQifQ.dA5-HVzWv-BRfEiAd24uNBiBxASO-PAyWeWESovZm_hj4aXMAZA1-bWNZeXt88dqogo18AwpDQ-h6gefLPdZSFrG5umC1dVWaeYvUnGm62g4XS29fj6p01dhKNNqrsu5KrhnhdnKYVv9VdmbmqDfWR8wDgglk5cJFqalzq6dJWJInFQEPmUs9BW_Zs8tQDn-i5r4tYq2U8vCdqptXoM7YgPllXaPVDeccC9QNu2Xlp9WUvoROzoQXg25lFub1IYkTrM66gJ6t9fJRZToewCt495WNEOQFa_rwLCZ1QwzvL0iYkONHS_jZ0BOhBCdW9dWSawD6iF1SIQaFROvMDH1rg"
-)
+FIREANT_TOKEN = os.getenv("FIREANT_TOKEN", "").strip()
+CRAWLER_BASE_URL = os.getenv("FIREANT_BASE_URL", "https://restv2.fireant.vn").rstrip("/")
 
 CRAWLER_HEADERS = {
-    "Authorization": f"Bearer {FIREANT_TOKEN}",
     "Content-Type": "application/json",
 }
-
-CRAWLER_BASE_URL = "https://restv2.fireant.vn"
+if FIREANT_TOKEN:
+    CRAWLER_HEADERS["Authorization"] = f"Bearer {FIREANT_TOKEN}"
 
 # Use the same RAW_DIR as the preprocessor so files are shared
 RAW_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "data", "raw"))
@@ -156,6 +153,8 @@ def _save_json_file(filepath, data):
 
 
 def _api_get(endpoint, params=None):
+    if not FIREANT_TOKEN:
+        raise RuntimeError("Missing FIREANT_TOKEN. Set it in your local .env before crawling.")
     url = f"{CRAWLER_BASE_URL}/{endpoint}"
     for attempt in range(MAX_RETRIES):
         try:

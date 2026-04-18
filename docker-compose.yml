@@ -31,6 +31,9 @@ services:
     # Một file env duy nhất (đồng bộ với symlink .env ở thư mục gốc cho Compose)
     env_file:
       - ./kg_from_scratch/.env.docker
+    environment:
+      - FIREANT_BASE_URL=${FIREANT_BASE_URL:-https://restv2.fireant.vn}
+      - FIREANT_TOKEN=${FIREANT_TOKEN:-}
     volumes:
       # Mount data directories để crawl data được persist trên host
       - ./kg_from_scratch/data:/app/kg_from_scratch/data

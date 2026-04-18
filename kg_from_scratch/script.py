@@ -1100,8 +1100,86 @@ def api_inferred_relations():
 def api_rules():
     """Returns the logic rules of the system."""
     rules = [
-        {"name": "Công ty con của Công ty con", "logic": "A -[CÓ_CÔNG_TY_CON]-> B -[CÓ_CÔNG_TY_CON]-> C", "inferred": "A -[ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI]-> C"},
-        {"name": "Người thân Của Lãnh Đạo", "logic": "A -[LÃNH_ĐẠO]-> B, C -[NGƯỜI_THÂN]-> A", "inferred": "C -[LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO]-> B"}
+        {
+            "id": "R01",
+            "name": "Gộp sở hữu vợ chồng",
+            "logic": "A -[VỢ_CHỒNG]- B, A/B cùng -[LÀ_CỔ_ĐÔNG_CỦA]-> C",
+            "inferred": "A -[KIỂM_SOÁT_GIA_ĐÌNH]-> C",
+            "explanation": "Nếu hai vợ chồng cùng nắm cổ phần tại một doanh nghiệp, hệ thống cộng tỷ lệ sở hữu để nhận diện mức kiểm soát gia đình thay vì nhìn từng cá nhân riêng lẻ.",
+            "example": "Ông A nắm 18% và bà B nắm 12% tại Công ty C. Hệ thống suy ra gia đình A-B có 30% ảnh hưởng tại C.",
+            "legal_refs": [
+                {
+                    "title": "Thông tư 96/2020/TT-BTC - Hướng dẫn công bố thông tin trên thị trường chứng khoán",
+                    "url": "https://vanban.chinhphu.vn/default.aspx?docid=201902&pageid=27160"
+                },
+                {
+                    "title": "Nghị định 168/2025/NĐ-CP - Về đăng ký doanh nghiệp",
+                    "url": "https://vanban.chinhphu.vn/?docid=214334&pageid=27160"
+                },
+                {
+                    "title": "Luật số 76/2025/QH15 - Luật sửa đổi, bổ sung một số điều của Luật Doanh nghiệp",
+                    "url": "https://vanban.chinhphu.vn/?classid=1&docid=214562&pageid=27160&typegroupid=3"
+                }
+            ]
+        },
+        {
+            "id": "R02",
+            "name": "Sở hữu gián tiếp qua công ty con",
+            "logic": "A -[LÀ_CỔ_ĐÔNG_CỦA:x]-> B, B/C có quan hệ công ty con với tỷ lệ y",
+            "inferred": "A -[SỞ_HỮU_GIÁN_TIẾP:(x*y)]-> C",
+            "explanation": "Khi A sở hữu B và B kiểm soát hoặc sở hữu công ty con C, hệ thống nhân chuỗi tỷ lệ để tính phần sở hữu gián tiếp của A tại C.",
+            "example": "A nắm 40% ở B, còn B nắm 60% ở C. Hệ thống suy ra A sở hữu gián tiếp 24% ở C.",
+            "legal_refs": [
+                {
+                    "title": "Luật số 54/2019/QH14 - Luật Chứng khoán",
+                    "url": "https://vanban.chinhphu.vn/default.aspx?docid=198541&pageid=27160"
+                },
+                {
+                    "title": "Thông tư 96/2020/TT-BTC - Hướng dẫn công bố thông tin trên thị trường chứng khoán",
+                    "url": "https://vanban.chinhphu.vn/default.aspx?docid=201902&pageid=27160"
+                }
+            ]
+        },
+        {
+            "id": "R07",
+            "name": "Ảnh hưởng gián tiếp theo ngưỡng 5/25/50",
+            "logic": "A -[r1]-> B, B/C có quan hệ công ty con với tỷ lệ sở hữu; tính tỷ lệ gián tiếp rồi phân loại mức ảnh hưởng",
+            "inferred": "A -[CÓ_LỢI_ÍCH_GIÁN_TIẾP | ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI | KIỂM_SOÁT_GIÁN_TIẾP]-> C",
+            "explanation": "Sau khi tính được tỷ lệ sở hữu gián tiếp, hệ thống gán nhãn theo ngưỡng pháp lý: từ 5% là lợi ích gián tiếp, từ 25% là ảnh hưởng đáng kể, từ 50% là kiểm soát.",
+            "example": "A nắm 30% ở B, B nắm 51% ở C. Tỷ lệ gián tiếp của A ở C là 15.3%, nên hệ thống gán nhãn CÓ_LỢI_ÍCH_GIÁN_TIẾP.",
+            "legal_refs": [
+                {
+                    "title": "Thông tư 96/2020/TT-BTC - Hướng dẫn công bố thông tin trên thị trường chứng khoán",
+                    "url": "https://vanban.chinhphu.vn/default.aspx?docid=201902&pageid=27160"
+                },
+                {
+                    "title": "Nghị định 168/2025/NĐ-CP - Về đăng ký doanh nghiệp",
+                    "url": "https://vanban.chinhphu.vn/?docid=214334&pageid=27160"
+                },
+                {
+                    "title": "Luật số 54/2019/QH14 - Luật Chứng khoán",
+                    "url": "https://vanban.chinhphu.vn/default.aspx?docid=198541&pageid=27160"
+                }
+            ]
+        },
+        {
+            "id": "R12",
+            "name": "Liên kết qua cùng cổ đông lớn",
+            "logic": "Một cá nhân là cổ đông >= 5% tại hai doanh nghiệp niêm yết khác nhau",
+            "inferred": "Công ty X -[CÙNG_CỔ_ĐÔNG_LỚN]-> Công ty Y",
+            "explanation": "Nếu cùng một cá nhân là cổ đông lớn ở hai công ty, hệ thống tạo liên kết để giúp phát hiện mạng lưới ảnh hưởng chéo giữa các doanh nghiệp.",
+            "example": "Ông A nắm 8% ở X và 6% ở Y. Hệ thống suy ra X và Y có liên hệ qua cùng cổ đông lớn là ông A.",
+            "legal_refs": [
+                {
+                    "title": "Thông tư 96/2020/TT-BTC - Hướng dẫn công bố thông tin trên thị trường chứng khoán",
+                    "url": "https://vanban.chinhphu.vn/default.aspx?docid=201902&pageid=27160"
+                },
+                {
+                    "title": "Luật số 54/2019/QH14 - Luật Chứng khoán",
+                    "url": "https://vanban.chinhphu.vn/default.aspx?docid=198541&pageid=27160"
+                }
+            ]
+        }
     ]
     return jsonify(rules)
 

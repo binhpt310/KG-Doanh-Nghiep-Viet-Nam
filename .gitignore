@@ -1,0 +1,6 @@
+.env
+fireant_api_list.txt
+**/.agents/
+**/.cursor/
+**/__pycache__/
+*.pyc

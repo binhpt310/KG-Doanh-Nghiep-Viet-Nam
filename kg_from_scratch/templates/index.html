@@ -1199,10 +1199,26 @@ function loadRules() {
       }
       var html = '';
       d.forEach(function(rule) {
+        var legalLinks = '';
+        if (rule.legal_refs && rule.legal_refs.length) {
+          legalLinks = '<div style="margin-top:5px;font-size:10.5px;color:var(--tx-2);">' +
+            '<div style="margin-bottom:2px;font-weight:600;">Căn cứ pháp lý chính thức</div>' +
+            rule.legal_refs.map(function(ref) {
+              return '<div><a href="' + ref.url + '" target="_blank" rel="noopener noreferrer" style="color:var(--blue);text-decoration:none;">' + ref.title + '</a></div>';
+            }).join('') +
+            '</div>';
+        }
         html += '<div style="background:var(--card);border:1px solid var(--bd);padding:6px;border-radius:var(--r-md);margin-bottom:6px;font-size:11.5px;color:var(--tx);">';
         html += '<div style="font-weight:600;color:var(--blue);margin-bottom:2px;">' + rule.name + '</div>';
         html += '<div style="color:var(--tx-2);font-size:10.5px;margin-bottom:1px;">Điều Kiện: <span style="font-family:var(--font-mono);">' + rule.logic + '</span></div>';
         html += '<div style="color:var(--green);font-size:10.5px;">= <span style="font-family:var(--font-mono);">' + rule.inferred + '</span></div>';
+        if (rule.explanation) {
+          html += '<div style="margin-top:4px;font-size:10.5px;color:var(--tx-2);"><strong>Giải thích:</strong> ' + rule.explanation + '</div>';
+        }
+        if (rule.example) {
+          html += '<div style="margin-top:3px;font-size:10.5px;color:var(--amber);"><strong>Ví dụ:</strong> ' + rule.example + '</div>';
+        }
+        html += legalLinks;
         html += '</div>';
       });
       container.innerHTML = html;
