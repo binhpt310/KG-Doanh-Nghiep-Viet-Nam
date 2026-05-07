@@ -28,18 +28,14 @@ services:
     restart: unless-stopped
     ports:
       - "5001:5001"
-    # Một file env duy nhất (đồng bộ với symlink .env ở thư mục gốc cho Compose)
     env_file:
       - ./kg_from_scratch/.env.docker
     environment:
       - FIREANT_BASE_URL=${FIREANT_BASE_URL:-https://restv2.fireant.vn}
       - FIREANT_TOKEN=${FIREANT_TOKEN:-}
     volumes:
-      # Mount data directories để crawl data được persist trên host
       - ./kg_from_scratch/data:/app/kg_from_scratch/data
-      # Mount source code để script.py và các frontend files tự động reload
       - ./kg_from_scratch:/app/kg_from_scratch
-      # Mount ChromaDB vector data để semantic search không bị mất sau khi restart
       - llmware_data:/root/llmware_data
     depends_on:
       neo4j:

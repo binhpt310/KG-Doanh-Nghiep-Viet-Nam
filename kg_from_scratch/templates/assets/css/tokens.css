@@ -1,77 +1,90 @@
 /* ============================================================
-   Design Tokens — KG Explorer  (Flat, No Gradients)
-   Inspired by: GitHub Dark, Linear, Bloomberg Terminal
+   Design Tokens — KG Explorer
+   Graph-first editorial intelligence shell
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
 
 /* ── Dark Mode ── */
 :root,
 :root[data-theme="dark"] {
-  /* Backgrounds — layered, NOT gradients */
-  --bg:       #0D1117;
-  --surface:  #161B22;
-  --card:     #1C2128;
-  --hover:    #21262D;
-  --active:   #2D333B;
+  /* Backgrounds */
+  --bg:       #08111f;
+  --surface:  #101a2a;
+  --card:     #132238;
+  --hover:    #182b45;
+  --active:   #1f3553;
+  --surface-2:#0d1624;
+  --glass:    rgba(11, 22, 37, 0.72);
+  --glass-strong: rgba(15, 30, 49, 0.88);
 
   /* Borders */
-  --bd:    #30363D;
-  --bd-em: #484F58;
+  --bd:    rgba(145, 177, 214, 0.16);
+  --bd-em: rgba(145, 177, 214, 0.28);
+  --bd-strong: rgba(145, 177, 214, 0.42);
 
   /* Text */
-  --tx:     #E6EDF3;
-  --tx-2:   #8B949E;
-  --tx-3:   #484F58;
+  --tx:     #eef5ff;
+  --tx-2:   #a7b7cc;
+  --tx-3:   #6f829b;
+  --tx-soft:#c9d6e7;
 
-  /* Accents — one blue, NO purple gradient */
-  --blue:    #58A6FF;
-  --blue-bg: rgba(88,166,255,0.10);
-  --blue-bd: rgba(88,166,255,0.30);
+  /* Accents */
+  --blue:    #6cb6ff;
+  --blue-strong: #8bc8ff;
+  --blue-bg: rgba(108,182,255,0.14);
+  --blue-bd: rgba(108,182,255,0.35);
 
-  --green:    #3FB950;
-  --green-bg: rgba(63,185,80,0.10);
-  --green-bd: rgba(63,185,80,0.30);
+  --green:    #59d68c;
+  --green-bg: rgba(89,214,140,0.12);
+  --green-bd: rgba(89,214,140,0.32);
 
-  --amber:    #E3B341;
-  --amber-bg: rgba(227,179,65,0.10);
-  --amber-bd: rgba(227,179,65,0.30);
+  --amber:    #f2bb69;
+  --amber-bg: rgba(242,187,105,0.12);
+  --amber-bd: rgba(242,187,105,0.32);
 
-  --red:    #F85149;
-  --red-bg: rgba(248,81,73,0.10);
+  --red:    #ff7b72;
+  --red-bg: rgba(255,123,114,0.12);
 
   /* Graph */
-  --g-company:       #58A6FF;
-  --g-person:        #3FB950;
-  --g-institution:   #E3B341;
-  --g-edge:          rgba(48,54,61,0.9);
-  --g-edge-inferred: #E3B341;
+  --g-company:       #78beff;
+  --g-person:        #59d68c;
+  --g-institution:   #f2bb69;
+  --g-edge:          rgba(126, 155, 191, 0.28);
+  --g-edge-inferred: #f2bb69;
 
   /* Dimensions */
-  --topbar-h:   56px;
-  --left-w:    260px;
-  --right-w:   340px;
+  --topbar-h:   74px;
+  --left-w:    340px;
+  --right-w:   380px;
   --progress-h:  2px;
 
-  /* Radii — keep small for professional look */
-  --r-sm:   4px;
-  --r-md:   6px;
-  --r-lg:   8px;
+  /* Radii */
+  --r-sm:   8px;
+  --r-md:   14px;
+  --r-lg:   22px;
+  --r-xl:   30px;
   --r-full: 9999px;
 
   /* Spacing */
   --s-1:  4px;
-  --s-2:  8px;
-  --s-3: 12px;
-  --s-4: 16px;
-  --s-5: 20px;
-  --s-6: 24px;
-  --s-8: 32px;
+  --s-2: 10px;
+  --s-3: 16px;
+  --s-4: 24px;
+  --s-5: 32px;
+  --s-6: 40px;
+  --s-8: 56px;
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(1,4,9,0.6);
-  --shadow-md: 0 4px 12px rgba(1,4,9,0.7);
-  --shadow-lg: 0 8px 24px rgba(1,4,9,0.8);
+  --shadow-sm: 0 12px 28px rgba(3, 8, 18, 0.26);
+  --shadow-md: 0 18px 42px rgba(3, 8, 18, 0.36);
+  --shadow-lg: 0 28px 80px rgba(2, 6, 14, 0.48);
+  --shadow-glow: 0 0 0 1px rgba(108,182,255,0.16), 0 24px 60px rgba(26, 98, 176, 0.18);
+
+  /* Typography */
+  --font-sans: 'Manrope', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', ui-monospace, monospace;
 
   /* ── Compat aliases for old CSS ── */
   --bg-base:     var(--bg);
@@ -123,48 +136,55 @@
   --radius-sm: var(--r-sm);
   --radius-md: var(--r-md);
   --radius-lg: var(--r-lg);
-  --radius-xl: var(--r-lg);
+  --radius-xl: var(--r-xl);
 }
 
 /* ── Light Mode ── */
 :root[data-theme="light"] {
-  --bg:      #F6F8FA;
-  --surface: #FFFFFF;
-  --card:    #F6F8FA;
-  --hover:   #EFF0F2;
-  --active:  #E1E4E8;
+  --bg:      #f4f7fb;
+  --surface: #ffffff;
+  --card:    #eef3f9;
+  --hover:   #e7eef8;
+  --active:  #d7e3f2;
+  --surface-2:#f7fafd;
+  --glass:    rgba(255,255,255,0.78);
+  --glass-strong: rgba(255,255,255,0.92);
 
-  --bd:    #D0D7DE;
-  --bd-em: #AFB8C1;
+  --bd:    rgba(65, 92, 128, 0.16);
+  --bd-em: rgba(65, 92, 128, 0.28);
+  --bd-strong: rgba(65, 92, 128, 0.4);
 
-  --tx:   #1F2328;
-  --tx-2: #57606A;
-  --tx-3: #9CA3AF;
+  --tx:   #132238;
+  --tx-2: #48607c;
+  --tx-3: #7a8fa8;
+  --tx-soft:#2d4763;
 
-  --blue:    #0969DA;
-  --blue-bg: rgba(9,105,218,0.08);
-  --blue-bd: rgba(9,105,218,0.25);
+  --blue:    #0f75d8;
+  --blue-strong: #2193ff;
+  --blue-bg: rgba(15,117,216,0.1);
+  --blue-bd: rgba(15,117,216,0.22);
 
-  --green:    #1A7F37;
-  --green-bg: rgba(26,127,55,0.08);
-  --green-bd: rgba(26,127,55,0.25);
+  --green:    #1d9852;
+  --green-bg: rgba(29,152,82,0.1);
+  --green-bd: rgba(29,152,82,0.22);
 
-  --amber:    #9A6700;
-  --amber-bg: rgba(154,103,0,0.08);
-  --amber-bd: rgba(154,103,0,0.25);
+  --amber:    #b76f09;
+  --amber-bg: rgba(183,111,9,0.1);
+  --amber-bd: rgba(183,111,9,0.22);
 
-  --red:    #CF222E;
-  --red-bg: rgba(207,34,46,0.08);
+  --red:    #d13e4b;
+  --red-bg: rgba(209,62,75,0.1);
 
-  --g-company:       #0969DA;
-  --g-person:        #1A7F37;
-  --g-institution:   #9A6700;
-  --g-edge:          rgba(208,215,222,0.9);
-  --g-edge-inferred: #9A6700;
+  --g-company:       #0f75d8;
+  --g-person:        #1d9852;
+  --g-institution:   #b76f09;
+  --g-edge:          rgba(84, 105, 131, 0.25);
+  --g-edge-inferred: #b76f09;
 
-  --shadow-sm: 0 1px 3px rgba(31,35,40,0.08);
-  --shadow-md: 0 4px 12px rgba(31,35,40,0.12);
-  --shadow-lg: 0 8px 24px rgba(31,35,40,0.15);
+  --shadow-sm: 0 10px 24px rgba(54, 74, 101, 0.08);
+  --shadow-md: 0 18px 42px rgba(54, 74, 101, 0.12);
+  --shadow-lg: 0 28px 72px rgba(54, 74, 101, 0.16);
+  --shadow-glow: 0 0 0 1px rgba(15,117,216,0.12), 0 16px 40px rgba(15,117,216,0.1);
 
   --bg-base: var(--bg); --bg-surface: var(--surface); --bg-card: var(--card);
   --bg-elevated: var(--card); --bg-hover: var(--hover); --bg-primary: var(--bg);
@@ -184,4 +204,5 @@
   --space-xs: var(--s-1); --space-sm: var(--s-2); --space-md: var(--s-4);
   --space-lg: var(--s-6); --space-xl: var(--s-8);
   --radius-sm: var(--r-sm); --radius-md: var(--r-md); --radius-lg: var(--r-lg);
+  --radius-xl: var(--r-xl);
 }

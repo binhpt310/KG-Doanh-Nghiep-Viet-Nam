@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KG Explorer Redesign Mockup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/cytoscape@3.28.1/dist/cytoscape.min.js"></script>
+  <script src="https://unpkg.com/cytoscape-gl@1.0.0/cytoscape-gl.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .glass { background: rgba(22,27,34,0.85); backdrop-filter: blur(12px); }
+    .node { width: 20px; height: 20px; border-radius: 50%; }
+    .edge { stroke-width: 2px; }
+  </style>
+</head>
+<body class="bg-[#0D1117] text-[#E6EDF3] h-screen flex flex-col overflow-hidden">
+  <!-- Topbar -->
+  <header class="h-14 min-h-14 flex items-center gap-4 px-4 bg-[#161B22] border-b border-[#30363D] z-50">
+    <div class="flex items-center gap-2">
+      <div class="w-7 h-7 bg-[#58A6FF] rounded-md flex items-center justify-center text-[#0D1117] font-bold text-xs">KG</div>
+      <span class="font-semibold text-sm">KG Explorer</span>
+      <span class="text-[#484F58]">·</span>
+      <span class="text-[#8B949E] text-xs">Công ty niêm yết VN</span>
+    </div>
+    <div class="ml-auto flex items-center gap-2">
+      <span class="text-xs text-[#8B949E] bg-[#1C2128] px-2 py-1 rounded border border-[#30363D] font-mono">1,240 node · 3,890 cạnh</span>
+      <button class="px-3 py-1.5 bg-[#58A6FF] text-[#0D1117] text-xs font-semibold rounded-md hover:opacity-90">Update dữ liệu</button>
+      <button class="w-7 h-7 flex items-center justify-center rounded-md border border-[#30363D] text-[#8B949E] hover:bg-[#21262D]">🌙</button>
+    </div>
+  </header>
+
+  <!-- Workspace -->
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Left Panel -->
+    <aside class="w-[260px] min-w-[260px] bg-[#161B22] border-r border-[#30363D] flex flex-col overflow-hidden">
+      <div class="flex-1 overflow-y-auto p-3 flex flex-col gap-2">
+        <!-- Overview Section -->
+        <div class="border border-[#30363D] rounded-lg overflow-hidden">
+          <div class="p-2 pl-3 border-l-4 border-[#58A6FF] bg-[#1C2128] font-semibold text-sm flex justify-between items-center cursor-pointer">
+            <span>📊 Tổng quan</span>
+            <span class="text-xs text-[#8B949E]">▼</span>
+          </div>
+          <div class="p-3 flex flex-col gap-2">
+            <div class="grid grid-cols-2 gap-2">
+              <div class="p-2 border border-[#30363D] rounded bg-[#1C2128]">
+                <div class="text-[10px] text-[#8B949E] uppercase">Công ty</div>
+                <div class="text-lg font-bold text-[#58A6FF]">1,042</div>
+              </div>
+              <div class="p-2 border border-[#30363D] rounded bg-[#1C2128]">
+                <div class="text-[10px] text-[#8B949E] uppercase">Cá nhân</div>
+                <div class="text-lg font-bold text-[#3FB950]">198</div>
+              </div>
+            </div>
+            <div class="flex justify-between text-xs">
+              <span class="text-[#8B949E]">Quan hệ (DB)</span>
+              <span class="font-semibold">3,890</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Explore Section -->
+        <div class="border border-[#30363D] rounded-lg overflow-hidden">
+          <div class="p-2 pl-3 border-l-4 border-[#58A6FF] bg-[#1C2128] font-semibold text-sm">🔍 Khám phá</div>
+          <div class="p-3 flex flex-col gap-2">
+            <div class="grid grid-cols-2 gap-1">
+              <button class="p-1.5 border border-[#58A6FF] bg-[rgba(88,166,255,0.1)] text-[#58A6FF] text-xs rounded font-medium">Công ty</button>
+              <button class="p-1.5 border border-[#30363D] text-[#8B949E] text-xs rounded hover:bg-[#21262D]">Cá nhân</button>
+            </div>
+            <div class="text-xs font-semibold text-[#8B949E] uppercase mt-1">Top thực thể (Nhiều liên kết)</div>
+            <div class="flex flex-col gap-1">
+              <div class="flex items-center gap-2 p-1.5 rounded hover:bg-[#21262D] cursor-pointer">
+                <span class="text-[10px] text-[#484F58] w-4 text-center">1</span>
+                <span class="text-xs flex-1 truncate">VIC</span>
+                <span class="text-[10px] text-[#8B949E]">142</span>
+              </div>
+              <div class="flex items-center gap-2 p-1.5 rounded hover:bg-[#21262D] cursor-pointer">
+                <span class="text-[10px] text-[#484F58] w-4 text-center">2</span>
+                <span class="text-xs flex-1 truncate">FPT</span>
+                <span class="text-[10px] text-[#8B949E]">128</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tools Section -->
+        <div class="border border-[#30363D] rounded-lg overflow-hidden">
+          <div class="p-2 pl-3 border-l-4 border-[#30363D] bg-[#1C2128] font-semibold text-sm flex justify-between items-center cursor-pointer">
+            <span>🛠️ Công cụ</span>
+            <span class="text-xs text-[#8B949E]">▶</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Graph Area -->
+    <main class="flex-1 relative bg-[#0D1117] min-w-0">
+      <div id="cy" class="absolute inset-0 w-full h-full"></div>
+      <!-- Legend -->
+      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 glass px-4 py-2 rounded-full border border-[#30363D] flex items-center gap-4 text-xs text-[#8B949E] z-10">
+        <div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-[#58A6FF]"></div>Công ty</div>
+        <div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-[#3FB950]"></div>Cá nhân</div>
+        <div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-[#E3B341]"></div>Tổ chức</div>
+        <div class="flex items-center gap-1.5"><div class="w-4 h-0.5 bg-[#E3B341]"></div>Quan hệ ẩn</div>
+      </div>
+      <!-- Hint -->
+      <div class="absolute top-4 left-1/2 -translate-x-1/2 glass px-3 py-1.5 rounded-full text-xs text-[#8B949E] z-10">Click vào công ty để xem mối quan hệ</div>
+    </main>
+
+    <!-- Right Panel -->
+    <aside class="w-[340px] min-w-[340px] bg-[#161B22] border-l border-[#30363D] flex flex-col overflow-hidden">
+      <div class="p-3 border-b border-[#30363D] flex flex-col gap-2">
+        <div class="flex justify-between items-center">
+          <span class="text-xs font-semibold text-[#8B949E] uppercase">Trợ lý Chat (RAG)</span>
+          <select class="text-xs bg-[#1C2128] border border-[#30363D] rounded px-2 py-1 text-[#E6EDF3]">
+            <option>GPT-4o</option>
+            <option>Claude 3.5</option>
+          </select>
+        </div>
+        <div class="relative">
+          <input type="text" placeholder="Tìm công ty, cá nhân… (Ctrl+K)" class="w-full pl-8 pr-3 py-1.5 text-xs bg-[#1C2128] border border-[#30363D] rounded text-[#E6EDF3] placeholder-[#484F58] focus:border-[#58A6FF] outline-none">
+          <svg class="absolute left-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#484F58]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto p-3 flex flex-col gap-2">
+        <div class="max-w-[85%] p-2.5 bg-[#1C2128] rounded-lg text-xs text-[#E6EDF3]">Chào bạn! Tôi có thể giúp bạn tìm hiểu về mối quan hệ giữa các công ty niêm yết.</div>
+        <div class="max-w-[85%] ml-auto p-2.5 bg-[#58A6FF] text-[#0D1117] rounded-lg text-xs">Cho tôi xem các công ty con của VIC</div>
+      </div>
+      <div class="p-3 border-t border-[#30363D] flex gap-2">
+        <input type="text" placeholder="Hỏi về công ty, cổ đông…" class="flex-1 px-3 py-1.5 text-xs bg-[#1C2128] border border-[#30363D] rounded text-[#E6EDF3] focus:border-[#58A6FF] outline-none">
+        <button class="px-3 py-1.5 bg-[#58A6FF] text-[#0D1117] text-xs font-semibold rounded hover:opacity-90">Gửi</button>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    // Initialize Cytoscape with WebGL
+    const cy = cytoscape({
+      container: document.getElementById('cy'),
+      elements: [
+        { data: { id: 'vic', label: 'VIC', group: 'company' } },
+        { data: { id: 'fpt', label: 'FPT', group: 'company' } },
+        { data: { id: 'vhm', label: 'VHM', group: 'company' } },
+        { data: { id: 'nguyen', label: 'Nguyễn Văn A', group: 'person' } },
+        { data: { source: 'vic', target: 'vhm', label: 'Công ty con' } },
+        { data: { source: 'vic', target: 'nguyen', label: 'Chủ tịch' } },
+        { data: { source: 'fpt', target: 'nguyen', label: 'Thành viên HĐQT' } }
+      ],
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'label': 'data(label)',
+            'font-family': 'Inter, sans-serif',
+            'font-size': '14px',
+            'text-color': '#E6EDF3',
+            'text-outline-color': '#0D1117',
+            'text-outline-width': '3px',
+            'width': '20px',
+            'height': '20px',
+            'background-color': (ele) => {
+              const g = ele.data('group');
+              return g === 'company' ? '#58A6FF' : g === 'person' ? '#3FB950' : '#E3B341';
+            },
+            'border-width': '1.5px',
+            'border-color': (ele) => {
+              const g = ele.data('group');
+              return g === 'company' ? '#1f6feb' : g === 'person' ? '#1a7f37' : '#9a6700';
+            }
+          }
+        },
+        {
+          selector: 'edge',
+          style: {
+            'width': '2px',
+            'line-color': 'rgba(72,79,88,0.9)',
+            'target-arrow-color': 'rgba(72,79,88,0.9)',
+            'target-arrow-shape': 'triangle',
+            'arrow-scale': '0.6',
+            'curve-style': 'bezier',
+            'label': 'data(label)',
+            'font-size': '12px',
+            'text-color': '#E6EDF3',
+            'text-outline-color': '#0D1117',
+            'text-outline-width': '2px',
+            'text-rotation': 'autorotate'
+          }
+        }
+      ],
+      layout: { name: 'cose', padding: 50 },
+      wheelSensitivity: 0.2,
+      minZoom: 0.3,
+      maxZoom: 3
+    });
+
+    // Enable WebGL rendering
+    cy.gl();
+  </script>
+</body>
+</html>

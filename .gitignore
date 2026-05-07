@@ -4,3 +4,5 @@ fireant_api_list.txt
 **/.cursor/
 **/__pycache__/
 *.pyc
+
+/screenshot_responsive/

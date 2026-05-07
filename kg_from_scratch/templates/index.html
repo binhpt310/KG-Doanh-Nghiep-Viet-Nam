@@ -23,13 +23,18 @@
 <header id="topbar">
   <div class="topbar-brand">
     <div class="brand-mark">KG</div>
-    <span class="brand-name">KG Explorer</span>
-    <span class="brand-sep">·</span>
-    <span class="brand-sub">Công ty niêm yết VN</span>
+    <div class="brand-copy">
+      <span class="brand-name">KG Explorer</span>
+      <span class="brand-sub">Intelligence console for listed companies in Vietnam</span>
+    </div>
+  </div>
+
+  <div class="topbar-status">
+    <span class="status-pill status-live">Live graph intelligence</span>
+    <span id="stats-display" class="stats-chip">— node · — cạnh</span>
   </div>
 
   <div class="topbar-actions">
-    <span id="stats-display" class="stats-chip">— node · — cạnh</span>
     <div class="topbar-divider"></div>
     <button id="btn-crawl" class="btn-crawl" onclick="startCrawl()">
       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -73,10 +78,88 @@
     </button>
 
     <div id="lp-content">
+      <section class="rail-hero">
+        <div class="rail-kicker">Relationship intelligence</div>
+        <h1 class="rail-title">Trace control, ownership, and hidden influence across the market.</h1>
+        <p class="rail-summary">
+          Explore the graph visually, inspect legal inference rules, and switch to AI-assisted investigation without losing context.
+        </p>
+        <div class="rail-hero-metrics">
+          <div class="hero-stat-card">
+            <span class="hero-stat-label">Thực thể</span>
+            <strong id="hero-total-entities">—</strong>
+          </div>
+          <div class="hero-stat-card">
+            <span class="hero-stat-label">Quan hệ</span>
+            <strong id="hero-total-links">—</strong>
+          </div>
+          <div class="hero-stat-card">
+            <span class="hero-stat-label">Suy luận</span>
+            <strong id="hero-total-inferred">—</strong>
+          </div>
+        </div>
+        <div class="rail-hero-actions">
+          <button class="hero-action-btn is-primary" onclick="loadHubsOnly()">Bắt đầu với công ty</button>
+          <button class="hero-action-btn" onclick="openAssistantPanel()">Mở trợ lý</button>
+        </div>
+      </section>
+
+      <div class="rail-section-intro">
+        <span class="rail-section-kicker">Snapshot</span>
+        <span class="rail-section-copy">Tín hiệu quan trọng nhất của đồ thị hiện tại</span>
+      </div>
+
+      <div class="side-section side-section-snapshot">
+        <div class="side-section-hd side-section-hd-rich">
+          <span>Tổng quan KG</span>
+          <span class="side-section-hd-meta" id="snapshot-last-sync">Đồng bộ: —</span>
+        </div>
+        <div class="side-section-body">
+          <div class="stat-grid">
+            <div class="stat-card stat-card-large">
+              <div class="stat-card-label">Công ty niêm yết</div>
+              <div class="stat-card-val company" id="stat-companies">—</div>
+            </div>
+            <div class="stat-card stat-card-large">
+              <div class="stat-card-label">Cá nhân</div>
+              <div class="stat-card-val person" id="stat-persons">—</div>
+            </div>
+          </div>
+          <div class="snapshot-lines">
+            <div class="stat-line">
+              <span class="stat-line-label">Quan hệ trong DB</span>
+              <span class="stat-line-val" id="stat-total-edges">—</span>
+            </div>
+            <div class="stat-line">
+              <span class="stat-line-label">Quan hệ suy luận</span>
+              <span class="stat-line-val stat-line-val-warm" id="stat-inferred-nodes">—</span>
+            </div>
+            <div class="stat-line">
+              <span class="stat-line-label">Cập nhật gần nhất</span>
+              <span class="stat-line-val stat-line-val-muted" id="sidebar-last-crawl-time">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-section side-section-market">
+        <div class="side-section-hd side-section-hd-rich">
+          <span>Market footprint</span>
+          <span id="exchange-total" class="side-section-hd-meta">— công ty</span>
+        </div>
+        <div class="side-section-body" id="exchange-bars">
+          <div style="color:var(--tx-3);font-size:12px;text-align:center;padding:4px 0;">Đang tải…</div>
+        </div>
+      </div>
+
+      <div class="rail-section-intro">
+        <span class="rail-section-kicker">Explore</span>
+        <span class="rail-section-copy">Chọn lăng kính điều tra trước khi đi sâu vào từng node</span>
+      </div>
 
       <!-- View mode -->
-      <div class="side-section">
-        <div class="side-section-hd">Xem theo</div>
+      <div class="side-section side-section-mode">
+        <div class="side-section-hd">Chế độ khám phá</div>
         <div class="side-section-body" style="padding:var(--s-2) var(--s-3);">
           <div class="filter-row">
             <button id="btnKgCompanies" class="filter-btn active-co"
@@ -91,50 +174,10 @@
         </div>
       </div>
 
-      <!-- KG Stats -->
-      <div class="side-section">
-        <div class="side-section-hd">Tổng quan KG</div>
-        <div class="side-section-body">
-          <div class="stat-grid">
-            <div class="stat-card">
-              <div class="stat-card-label">Công ty</div>
-              <div class="stat-card-val company" id="stat-companies">—</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-card-label">Cá nhân</div>
-              <div class="stat-card-val person" id="stat-persons">—</div>
-            </div>
-          </div>
-          <div class="stat-line" style="border-top:1px solid var(--bd);padding-top:6px;margin-top:2px;">
-            <span class="stat-line-label">Quan hệ (DB)</span>
-            <span class="stat-line-val" id="stat-total-edges">—</span>
-          </div>
-          <div class="stat-line">
-            <span class="stat-line-label">Quan hệ ẩn</span>
-            <span class="stat-line-val" id="stat-inferred-nodes" style="color:var(--amber);">—</span>
-          </div>
-          <div class="stat-line">
-            <span class="stat-line-label">Cập nhật lần cuối</span>
-            <span class="stat-line-val" id="sidebar-last-crawl-time" style="font-size:11px;font-weight:400;color:var(--tx-3);">—</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Exchange distribution -->
-      <div class="side-section">
-        <div class="side-section-hd">
-          Sàn giao dịch
-          <span id="exchange-total" class="side-section-hd-meta">— công ty</span>
-        </div>
-        <div class="side-section-body" id="exchange-bars">
-          <div style="color:var(--tx-3);font-size:12px;text-align:center;padding:4px 0;">Đang tải…</div>
-        </div>
-      </div>
-
       <!-- Top entities (dropdown criteria) -->
-      <div class="side-section">
-        <div class="side-section-hd">
-          Top thực thể
+      <div class="side-section side-section-toplist">
+        <div class="side-section-hd side-section-hd-rich">
+          <span>Điểm vào nhanh</span>
           <select id="topEntityCriteria" class="select-sm side-section-hd-select" onchange="buildTopEntities()">
             <option value="degree">Nhiều liên kết nhất</option>
             <option value="shareholders">Nhiều cổ đông nhất</option>
@@ -148,17 +191,22 @@
         </div>
       </div>
 
+      <div class="rail-section-intro">
+        <span class="rail-section-kicker">Inference</span>
+        <span class="rail-section-copy">Đọc ngữ cảnh pháp lý và kích hoạt điều tra từ các gợi ý sẵn có</span>
+      </div>
+
       <!-- Inferred Rules list -->
-      <div class="side-section">
-        <div class="side-section-hd">Quan hệ ẩn (Rules)</div>
+      <div class="side-section side-section-rules">
+        <div class="side-section-hd">Logic suy luận</div>
         <div class="side-section-body" id="rules-list" style="padding:var(--s-2);">
           <div style="color:var(--tx-3);font-size:12px;text-align:center;padding:4px 0;">Đang khởi tạo…</div>
         </div>
       </div>
 
       <!-- Suggested prompts -->
-      <div class="side-section">
-        <div class="side-section-hd">Câu hỏi gợi ý</div>
+      <div class="side-section side-section-prompts">
+        <div class="side-section-hd">Điều tra gợi ý</div>
         <div class="side-section-body" id="prompt-list">
           <!-- Populated by JS -->
         </div>
@@ -182,6 +230,22 @@
 
   <!-- ░░░░░░░░ GRAPH CANVAS ░░░░░░░░ -->
   <main id="graph-area">
+    <div class="graph-atmosphere"></div>
+    <div class="graph-hero">
+      <div class="graph-hero-copy">
+        <div class="graph-kicker">Graph-first market intelligence</div>
+        <h2 class="graph-title">See ownership structure, leadership ties, and inferred influence as one living system.</h2>
+        <p class="graph-summary">
+          Start from the listed-company view, pivot into leadership networks, then open the assistant only when you need narrative context or Cypher-backed explanation.
+        </p>
+      </div>
+      <div class="graph-hero-actions">
+        <button class="graph-action graph-action-primary" onclick="loadHubsOnly()">Khám phá công ty</button>
+        <button class="graph-action" onclick="loadPersonGraph()">Xem mạng lãnh đạo</button>
+        <button class="graph-action" onclick="openAssistantPanel()">Hỏi trợ lý</button>
+      </div>
+    </div>
+
     <div id="graph-top-overlay">
       <div id="qresult-area" class="qresult-area qresult-area-graph" style="display:none;">
         <div id="qresult-body" class="qresult-inner">
@@ -203,6 +267,17 @@
     </div>
 
     <div id="mynetwork"></div>
+
+    <div class="graph-command-strip">
+      <div class="command-chip">
+        <span class="command-label">Chế độ</span>
+        <strong id="command-mode-label">Company graph</strong>
+      </div>
+      <div class="command-chip">
+        <span class="command-label">Cảnh báo</span>
+        <strong id="command-alert-label">Theo dõi các cụm có suy luận</strong>
+      </div>
+    </div>
 
     <!-- Node Detail floating panel -->
     <div id="node-detail-panel" style="display:none">
@@ -255,9 +330,13 @@
     </button>
 
     <div id="rp-content">
+      <div class="assistant-intro">
+        <div class="assistant-kicker">AI copilot</div>
+        <div class="assistant-headline">Ask for narrative context after the graph reveals a lead.</div>
+      </div>
       <div class="rp-header">
         <div class="rp-header-top">
-          <div class="rp-title">Trợ lý Chat (RAG)</div>
+          <div class="rp-title">Trợ lý điều tra</div>
           <div class="rp-sessions rp-sessions-compact">
             <select id="sessionSelect" class="select-sm" onchange="loadSessionFromSelect()" style="flex:1"></select>
             <button onclick="saveChatSession()" class="btn-icon-sm" title="Lưu phiên">💾</button>
@@ -378,6 +457,24 @@ function expandRightPanel() {
   setTimeout(function () { if (network) network.fit(); }, 320);
 }
 
+function openAssistantPanel() {
+  var p = document.getElementById('right-panel');
+  if (p && p.classList.contains('collapsed')) toggleRight();
+  setTimeout(function() {
+    var inp = document.getElementById('queryInput');
+    if (inp) inp.focus();
+  }, 220);
+}
+
+function focusSearchInput() {
+  var p = document.getElementById('right-panel');
+  if (p && p.classList.contains('collapsed')) toggleRight();
+  setTimeout(function() {
+    var inp = document.getElementById('searchInput');
+    if (inp) inp.focus();
+  }, 220);
+}
+
 function setQueryResultPanelCollapsed(collapsed) {
   var area = document.getElementById('qresult-area');
   var body = document.getElementById('qresult-body');
@@ -473,52 +570,57 @@ var graphPaginationState = {
 // ─────────────────────────────────────────────────
 function getVisOptions(mode) {
   var isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-  var tx     = isDark ? '#E6EDF3' : '#1F2328';
-  var edgeC  = isDark ? 'rgba(48,54,61,0.85)' : 'rgba(208,215,222,0.85)';
+  var tx     = isDark ? '#EEF5FF' : '#132238';
+  var edgeC  = isDark ? 'rgba(126,155,191,0.30)' : 'rgba(84,105,131,0.24)';
   var isPersonMode = (mode === 'persons');
 
   return {
     nodes: {
       shape: 'dot',
-      size: 14,
+      size: 16,
       font: {
-        size: isPersonMode ? 13 : 15,
-        face: "'Inter', Arial, sans-serif",
+        size: isPersonMode ? 15 : 17,
+        face: "'Manrope', 'Inter', Arial, sans-serif",
         color: tx,
-        strokeWidth: isPersonMode ? 2 : 3,
-        strokeColor: isDark ? '#0D1117' : '#FFFFFF',
-        background: isDark ? 'rgba(13,17,23,0.7)' : 'rgba(246,248,250,0.75)',
+        strokeWidth: isPersonMode ? 4 : 5,
+        strokeColor: isDark ? '#08111F' : '#FFFFFF',
+        background: isDark ? 'rgba(8,17,31,0.84)' : 'rgba(255,255,255,0.88)',
         align: 'center'
       },
       scaling: {
-        min: 8,
-        max: 40,
+        min: 10,
+        max: 44,
         label: {
           enabled: true,
-          min: 11,
-          max: 30,
-          drawThreshold: 5,
-          maxVisible: 30
+          min: 12,
+          max: 32
         }
       },
-      borderWidth: 1.5,
-      borderWidthSelected: 4,
-      shadow: false
+      borderWidth: 2.5,
+      borderWidthSelected: 5,
+      shadow: {
+        enabled: true,
+        color: isDark ? 'rgba(7, 18, 31, 0.42)' : 'rgba(54,74,101,0.16)',
+        size: 10,
+        x: 0,
+        y: 4
+      }
     },
     edges: {
-      width: 1.0,
-      arrows: { to: { enabled: true, scaleFactor: 0.4 } },
+      width: 1.8,
+      color: { color: edgeC, highlight: '#6CB6FF', hover: '#59D68C' },
+      arrows: { to: { enabled: true, scaleFactor: 0.55 } },
       smooth: { enabled: true, type: 'continuous', roundness: 0.2 },
-      color: { color: edgeC, highlight: '#58A6FF', hover: '#3FB950' },
-      font: { size: 0, face: "'Inter', Arial, sans-serif", color: tx, align: 'middle' },
-      hoverWidth: 2,
-      selectionWidth: 3
+      font: { size: 11, face: "'IBM Plex Mono', 'Inter', Arial, sans-serif", color: tx, align: 'middle' },
+      hoverWidth: 2.5,
+      selectionWidth: 3,
+      dashes: false
     },
     groups: {
-      'Company':     { color: { background: '#58A6FF', border: '#1f6feb' }, size: 18 },
-      'Person':      { color: { background: '#3FB950', border: '#1a7f37' }, size: 12 },
-      'Institution': { color: { background: '#E3B341', border: '#9a6700' }, size: 16 },
-      'DEFAULT':     { color: { background: '#484F58', border: '#30363D' }, size: 10 }
+      'Company':     { color: { background: '#78BEFF', border: '#4A97E8' }, size: 20 },
+      'Person':      { color: { background: '#59D68C', border: '#2FA56B' }, size: 14 },
+      'Institution': { color: { background: '#F2BB69', border: '#D48D2C' }, size: 17 },
+      'DEFAULT':     { color: { background: '#73849B', border: '#4E6179' }, size: 11 }
     },
     physics: {
       enabled: true,
@@ -631,9 +733,10 @@ function edgeToVis(e) {
 
   if (e.inferred || e.dashes) {
     obj.color = { color: neonColor || '#E3B341', highlight: neonColor || '#F59E0B', hover: neonColor || '#F59E0B' };
-    obj.width = 2.0;
+    obj.width = 2.5;
+    obj.dashes = true;
     if (neonColor) {
-      obj.shadow = { enabled: true, color: neonColor, size: 8, x: 0, y: 0 };
+      obj.shadow = { enabled: true, color: neonColor, size: 10, x: 0, y: 0 };
     }
   }
   return obj;
@@ -757,7 +860,8 @@ function loadHubsOnly() {
 
       network.on('zoom', function() {
         var s = network.getScale();
-        network.setOptions({ edges: { font: { size: s < 0.5 ? 0 : s < 1.0 ? 8 : 10 } } });
+        // Show edge labels when zoomed in enough; keep visible at most zoom levels
+        network.setOptions({ edges: { font: { size: s < 0.4 ? 0 : s < 0.7 ? 9 : s < 1.2 ? 11 : 12 } } });
       });
 
       updateKPI(vnodes.length, companyEdges.length);
@@ -991,6 +1095,7 @@ function loadGlobalGraph() { loadHubsOnly(); }
 function drawGraph(graphData) {
   // Direct draw with all nodes + edges (used by chat query result)
   if (!graphData || !graphData.nodes) return;
+  graphStore.mode = 'all';
   var normalized = dedupeGraphPayload(graphData.nodes || [], graphData.edges || []);
   var container = document.getElementById('mynetwork');
   container.innerHTML =
@@ -1038,6 +1143,10 @@ function drawGraph(graphData) {
     else if (!p.edges.length) closeNodePanel();
   });
 
+  var modeLabel = document.getElementById('command-mode-label');
+  var alertLabel = document.getElementById('command-alert-label');
+  if (modeLabel) modeLabel.textContent = 'Query result graph';
+  if (alertLabel) alertLabel.textContent = 'Subgraph được tạo từ truy vấn trợ lý';
   updateKPI(vnodes.length, vedges.length);
 }
 
@@ -1206,6 +1315,10 @@ function updateKPI(nodes, edges) {
   if (sd) sd.textContent = nodes.toLocaleString('vi-VN') + ' node · ' + edges.toLocaleString('vi-VN') + ' cạnh';
   var kn = document.getElementById('kpi-nodes');   if (kn) kn.textContent = nodes;
   var ke = document.getElementById('kpi-edges');   if (ke) ke.textContent = edges;
+  var heroNodes = document.getElementById('hero-total-entities');
+  var heroEdges = document.getElementById('hero-total-links');
+  if (heroNodes) heroNodes.textContent = nodes.toLocaleString('vi-VN');
+  if (heroEdges) heroEdges.textContent = edges.toLocaleString('vi-VN');
 }
 
 // ─────────────────────────────────────────────────
@@ -1222,6 +1335,9 @@ function loadStats() {
       set('stat-total-edges',    fmt(d.total_edges));
       set('stat-total-nodes',    fmt(d.total_nodes));
       set('stat-inferred-nodes', fmt(d.inferred_relationships));
+      set('hero-total-entities', fmt(d.total_nodes));
+      set('hero-total-links',    fmt(d.total_edges));
+      set('hero-total-inferred', fmt(d.inferred_relationships));
       set('kpi-nodes',   d.total_nodes || 0);
       set('kpi-edges',   d.total_edges || 0);
       set('kpi-inferred',d.inferred_nodes || 0);
@@ -1292,17 +1408,23 @@ function loadRules() {
             }).join('') +
             '</div>';
         }
-        html += '<div style="background:var(--card);border:1px solid var(--bd);padding:6px;border-radius:var(--r-md);margin-bottom:6px;font-size:11.5px;color:var(--tx);">';
-        html += '<div style="font-weight:600;color:var(--blue);margin-bottom:2px;">' + rule.name + '</div>';
-        html += '<div style="color:var(--tx-2);font-size:10.5px;margin-bottom:1px;">Điều Kiện: <span style="font-family:var(--font-mono);">' + rule.logic + '</span></div>';
-        html += '<div style="color:var(--green);font-size:10.5px;">= <span style="font-family:var(--font-mono);">' + rule.inferred + '</span></div>';
+        html += '<div class="rule-card">';
+        html += '<div class="rule-name">' + rule.name + '</div>';
+        html += '<div class="rule-condition">Điều kiện: <span style="font-family:var(--font-mono);">' + rule.logic + '</span></div>';
+        html += '<div class="rule-inferred">= <strong>' + rule.inferred + '</strong></div>';
         if (rule.explanation) {
-          html += '<div style="margin-top:4px;font-size:10.5px;color:var(--tx-2);"><strong>Giải thích:</strong> ' + rule.explanation + '</div>';
+          html += '<div class="rule-explanation"><strong>Giải thích:</strong> ' + rule.explanation + '</div>';
         }
         if (rule.example) {
-          html += '<div style="margin-top:3px;font-size:10.5px;color:var(--amber);"><strong>Ví dụ:</strong> ' + rule.example + '</div>';
+          html += '<div class="rule-example"><strong>Ví dụ:</strong> ' + rule.example + '</div>';
         }
-        html += legalLinks;
+        if (rule.legal_refs && rule.legal_refs.length) {
+          html += '<div class="rule-legal"><div class="rule-legal-title">Căn cứ pháp lý chính thức</div>';
+          html += rule.legal_refs.map(function(ref) {
+            return '<a href="' + ref.url + '" target="_blank" rel="noopener noreferrer">' + ref.title + '</a>';
+          }).join('');
+          html += '</div>';
+        }
         html += '</div>';
       });
       container.innerHTML = html;
@@ -1338,7 +1460,7 @@ function buildTopEntities() {
         else if (criteria === 'market_cap') valStr = Math.round(item.value).toLocaleString('vi-VN') + ' CP';
 
         var div = document.createElement('div');
-        div.className = 'hub-item';
+        div.className = 'top-hub-item';
         div.innerHTML =
           '<span class="hub-rank">' + (idx + 1) + '</span>' +
           '<span class="hub-name" title="' + label + '">' + baseName + '</span>' +
@@ -1405,9 +1527,25 @@ function pastePrompt(text) {
 function setFilterUI(mode) {
   var bc = document.getElementById('btnKgCompanies');
   var bp = document.getElementById('btnKgPersons');
+  var modeLabel = document.getElementById('command-mode-label');
+  var alertLabel = document.getElementById('command-alert-label');
   if (!bc || !bp) return;
   bc.className = 'filter-btn' + (mode === 'companies' ? ' active-co' : '');
   bp.className = 'filter-btn' + (mode === 'persons'   ? ' active-pe' : '');
+  if (modeLabel) {
+    modeLabel.textContent =
+      mode === 'persons' ? 'Leadership graph' :
+      mode === 'result' ? 'Query result graph' :
+      'Company graph';
+  }
+  if (alertLabel) {
+    alertLabel.textContent =
+      mode === 'persons'
+        ? 'Mở rộng từng cá nhân để xem mạng liên quan'
+        : mode === 'result'
+          ? 'Subgraph được tạo từ truy vấn trợ lý'
+          : 'Theo dõi các cụm có quan hệ suy luận';
+  }
 }
 
 // ─────────────────────────────────────────────────
@@ -1501,9 +1639,12 @@ function refreshLastCrawlTime() {
     .then(function(r) { return r.json(); })
     .then(function(d) {
       var el = document.getElementById('sidebar-last-crawl-time');
+      var snap = document.getElementById('snapshot-last-sync');
       if (!el) return;
       var ls = d.last_success;
-      el.textContent = (ls && ls.completed_at) ? new Date(ls.completed_at).toLocaleString('vi-VN') : '—';
+      var text = (ls && ls.completed_at) ? new Date(ls.completed_at).toLocaleString('vi-VN') : '—';
+      el.textContent = text;
+      if (snap) snap.textContent = 'Đồng bộ: ' + text;
     }).catch(function(){});
 }
 
@@ -1674,7 +1815,7 @@ function applyChatGraphResult(data) {
   }
   if (!nodes || !nodes.length) return;
   drawGraph({ nodes: nodes, edges: edges });
-  setFilterUI(null);
+  setFilterUI('result');
   setTimeout(function() { if (network) network.fit(); }, 300);
 }
 

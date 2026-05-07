@@ -155,6 +155,25 @@ Mount quan trọng:
 
 Điều này giúp dữ liệu và source code đồng bộ giữa host và container.
 
+### Truy cập công cộng (Cloudflare Tunnel)
+Để mở truy cập Web UI của kg-app ra internet công cộng, sử dụng Cloudflare Quick Tunnels (không cần tài khoản cho các tunnel tạm thời):
+
+1. Cài đặt `cloudflared`:
+```bash
+wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+chmod +x cloudflared-linux-amd64
+```
+
+2. Khởi chạy tunnel đến kg-app (cổng 5001):
+```bash
+./cloudflared-linux-amd64 tunnel --url http://localhost:5001
+```
+
+Lệnh này sẽ tạo ra một đường dẫn HTTPS công cộng tạm thời (ví dụ: `https://<random-subdomain>.trycloudflare.com/`). Phiên bản hiện tại đang truy cập được tại:
+`https://stranger-strength-tuning-relating.trycloudflare.com/`
+
+Lưu ý: Đường dẫn của Quick Tunnel là ngẫu nhiên và sẽ thay đổi mỗi khi khởi động lại tunnel. Để có đường dẫn cố định, cấu hình Cloudflare Tunnel đầy đủ với một tên miền đã đăng ký (xem [tài liệu Cloudflare Tunnel](https://developers.cloudflare.com/tunnel/)).
+
 ### Local Dev
 
 Theo quy ước hiện tại của project, nên dùng conda env `kg`.
