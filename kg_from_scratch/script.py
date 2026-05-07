@@ -17,7 +17,7 @@ from llmware.models import ModelCatalog
 from llmware.gguf_configs import GGUFConfigs
 from itertools import combinations
 from neo4j import GraphDatabase
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, jsonify
 from pipeline import crawl_and_update
 import threading
 
@@ -90,6 +90,9 @@ _p = LLM_BASE_URL.replace("http://", "").replace("https://", "").rstrip("/").spl
 LLM_HTTP_HOST = _p[0]
 LLM_HTTP_PORT = int(_p[1]) if len(_p) > 1 else (9061 if LLM_BACKEND in ("openai", "vllm", "openai_compat") else 11434)
 os.environ["LLM_BASE_URL"] = LLM_BASE_URL
+LLM_API_KEY = (os.getenv("OPENAI_API_KEY") or os.getenv("LLM_API_KEY") or "").strip()
+
+ENV_DOCKER_PATH = os.path.join(BASE_DIR, ".env.docker")
 
 import re as _re
 import requests
@@ -102,7 +105,83 @@ LLM_MAX_TOKENS = int(os.getenv("LLM_MAX_TOKENS", "8192"))
 LIVE_NEWS_TIMEOUT = float(os.getenv("LIVE_NEWS_TIMEOUT", "4.0"))
 LIVE_NEWS_MAX_ITEMS = int(os.getenv("LIVE_NEWS_MAX_ITEMS", "5"))
 
+_ALLOWED_LLM_BACKENDS = frozenset({"openai", "vllm", "openai_compat", "ollama"})
+
+
+def _sync_llm_parsed_port():
+    """Cập nhật host/port parse sau khi đổi LLM_BASE_URL (Ollama ModelCatalog đã đăng ký lúc import có thể lệch)."""
+    global LLM_HTTP_HOST, LLM_HTTP_PORT
+    _p = LLM_BASE_URL.replace("http://", "").replace("https://", "").rstrip("/").split(":")
+    LLM_HTTP_HOST = _p[0]
+    LLM_HTTP_PORT = int(_p[1]) if len(_p) > 1 else (
+        9061 if LLM_BACKEND in ("openai", "vllm", "openai_compat") else 11434
+    )
+
+
+def _mask_api_key(key: str) -> str:
+    if not key:
+        return ""
+    if len(key) <= 4:
+        return "****"
+    return "***" + key[-4:]
+
+
+def _fetch_remote_models():
+    """Danh sách model từ OpenAI-compatible /v1/models hoặc Ollama /api/tags."""
+    models = []
+    try:
+        if LLM_BACKEND in ("openai", "vllm", "openai_compat"):
+            hdr = {}
+            if LLM_API_KEY:
+                hdr["Authorization"] = f"Bearer {LLM_API_KEY}"
+            r = requests.get(f"{LLM_BASE_URL}/v1/models", headers=hdr, timeout=8)
+            r.raise_for_status()
+            models = [m["id"] for m in r.json().get("data", []) if m.get("id")]
+        else:
+            r = requests.get(f"{LLM_BASE_URL}/api/tags", timeout=8)
+            r.raise_for_status()
+            models = [m["name"] for m in r.json().get("models", []) if m.get("name")]
+    except Exception as ex:
+        print(f"[LLM] models list error: {ex}")
+        models = []
+    if not models:
+        models = [MODEL_NAME]
+    return models
+
+
+def _write_env_docker_kv(updates: dict[str, str], remove_keys: set | None = None) -> None:
+    """Ghép biến vào .env.docker; bỏ các dòng có key thuộc remove_keys."""
+    remove_keys = set(remove_keys or [])
+    path = ENV_DOCKER_PATH
+    lines: list[str] = []
+    if os.path.isfile(path):
+        with open(path, "r", encoding="utf-8") as f:
+            lines = f.read().splitlines()
+    seen_update = {k: False for k in updates}
+    out: list[str] = []
+    for line in lines:
+        if not line.strip() or line.strip().startswith("#") or "=" not in line:
+            out.append(line)
+            continue
+        k = line.split("=", 1)[0].strip()
+        if k in remove_keys:
+            continue
+        if k in updates:
+            out.append(f"{k}={updates[k]}")
+            seen_update[k] = True
+        else:
+            out.append(line)
+    for k, v in updates.items():
+        if not seen_update.get(k):
+            out.append(f"{k}={v}")
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as wf:
+        wf.write("\n".join(out) + "\n")
+    os.replace(tmp, path)
+
+
 _THINK_RE = _re.compile(r"<think>.*?</think>", _re.DOTALL)
+
 
 def _strip_think_tags(text: str) -> str:
     """Loại bỏ toàn bộ block <think>...</think> khỏi output LLM."""
@@ -137,7 +216,10 @@ def openai_compatible_inference(prompt: str, model: str = MODEL_NAME) -> dict:
         "max_tokens": LLM_MAX_TOKENS,
         "stream": False,
     }
-    r = requests.post(url, json=payload, timeout=LLM_INFERENCE_TIMEOUT)
+    headers = {"Content-Type": "application/json"}
+    if LLM_API_KEY:
+        headers["Authorization"] = f"Bearer {LLM_API_KEY}"
+    r = requests.post(url, json=payload, headers=headers, timeout=LLM_INFERENCE_TIMEOUT)
     r.raise_for_status()
     out = r.json()
     choices = out.get("choices") or []
@@ -591,9 +673,12 @@ def add_ngrok_skip_header(response):
 
 @app.route("/")
 def index():
-    return render_template(
-        "index.html",
-        neo4j_browser_url=os.getenv("NEO4J_BROWSER_URL", "http://localhost:7474").strip(),
+    """HTML shell is served by the SPA (Nginx `kg-ui`); keep `/` for health checks."""
+    return jsonify(
+        service="kg-api",
+        neo4j_browser_url=os.getenv(
+            "NEO4J_BROWSER_URL", "http://localhost:7474"
+        ).strip(),
     )
 
 def _is_company(e):
@@ -1834,22 +1919,85 @@ def api_rules():
 @app.route("/api/ollama/models", methods=["GET"])
 def api_llm_models():
     """Danh sách model: Ollama /api/tags hoặc OpenAI-compatible /v1/models (vLLM)."""
-    models = []
-    try:
-        if LLM_BACKEND in ("openai", "vllm", "openai_compat"):
-            r = requests.get(f"{LLM_BASE_URL}/v1/models", timeout=8)
-            r.raise_for_status()
-            models = [m["id"] for m in r.json().get("data", []) if m.get("id")]
-        else:
-            r = requests.get(f"{LLM_BASE_URL}/api/tags", timeout=8)
-            r.raise_for_status()
-            models = [m["name"] for m in r.json().get("models", []) if m.get("name")]
-    except Exception as ex:
-        print(f"[LLM] models list error: {ex}")
-        models = []
-    if not models:
-        models = [MODEL_NAME]
+    models = _fetch_remote_models()
     return jsonify({"models": models, "current": MODEL_NAME, "backend": LLM_BACKEND})
+
+
+@app.route("/api/llm/settings", methods=["GET", "POST"])
+def api_llm_settings():
+    """
+    GET: cấu hình LLM hiện tại + models (masked API key).
+    POST: cập nhật runtime và ghi .env.docker — chỉ dùng trong mạng tin cậy (không có auth).
+    """
+    global MODEL_NAME, LLM_BACKEND, LLM_BASE_URL, LLM_API_KEY
+    if request.method == "GET":
+        models = _fetch_remote_models()
+        return jsonify({
+            "backend": LLM_BACKEND,
+            "base_url": LLM_BASE_URL,
+            "model": MODEL_NAME,
+            "models": models,
+            "api_key_masked": _mask_api_key(LLM_API_KEY),
+        })
+    data = request.get_json(force=True, silent=True) or {}
+    backend = str(data.get("backend") or LLM_BACKEND).strip().lower()
+    if backend not in _ALLOWED_LLM_BACKENDS:
+        return jsonify({"error": f"LLM_BACKEND không hợp lệ: {backend}"}), 400
+    base_url = str(data.get("base_url") or LLM_BASE_URL).strip().rstrip("/")
+    if base_url and not base_url.startswith("http"):
+        base_url = f"http://{base_url}"
+    model = str(data.get("model") or MODEL_NAME).strip()
+    if not model:
+        return jsonify({"error": "MODEL_NAME rỗng"}), 400
+
+    clear_api = bool(data.get("clear_api_key"))
+    new_key = str(data.get("api_key") or "").strip()
+    if clear_api:
+        api_key_new = ""
+        key_changed = True
+    elif new_key:
+        api_key_new = new_key
+        key_changed = True
+    else:
+        api_key_new = LLM_API_KEY
+        key_changed = False
+
+    LLM_BACKEND = backend
+    if base_url:
+        LLM_BASE_URL = base_url
+    os.environ["LLM_BASE_URL"] = LLM_BASE_URL
+    MODEL_NAME = model
+    if key_changed:
+        LLM_API_KEY = api_key_new
+        os.environ["OPENAI_API_KEY"] = LLM_API_KEY
+        os.environ["LLM_API_KEY"] = LLM_API_KEY
+    _sync_llm_parsed_port()
+
+    updates = {
+        "LLM_BACKEND": LLM_BACKEND,
+        "LLM_BASE_URL": LLM_BASE_URL,
+        "VLLM_BASE_URL": LLM_BASE_URL,
+        "MODEL_NAME": MODEL_NAME,
+    }
+    remove: set[str] = set()
+    if key_changed:
+        if api_key_new:
+            updates["OPENAI_API_KEY"] = api_key_new
+        else:
+            remove.update({"OPENAI_API_KEY", "LLM_API_KEY"})
+    try:
+        _write_env_docker_kv(updates, remove_keys=remove)
+    except OSError as ex:
+        print(f"[LLM] không ghi được .env.docker: {ex}")
+        return jsonify({"error": str(ex), "applied_runtime": True}), 500
+
+    return jsonify({
+        "ok": True,
+        "backend": LLM_BACKEND,
+        "base_url": LLM_BASE_URL,
+        "model": MODEL_NAME,
+        "models": _fetch_remote_models(),
+    })
 
 
 @app.route('/api/query', methods=['POST'])
