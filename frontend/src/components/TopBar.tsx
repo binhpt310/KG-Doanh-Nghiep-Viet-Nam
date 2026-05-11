@@ -3,8 +3,6 @@ import { BrandLogo } from './BrandLogo';
 
 interface Props {
   theme: 'dark' | 'light';
-  heroExpanded: boolean;
-  onToggleHero: () => void;
   onToggleTheme: () => void;
   onCrawl: () => void;
   crawlBusy: boolean;
@@ -13,8 +11,6 @@ interface Props {
 
 export function TopBar({
   theme,
-  heroExpanded,
-  onToggleHero,
   onToggleTheme,
   onCrawl,
   crawlBusy,
@@ -58,24 +54,9 @@ export function TopBar({
           </a>
         </div>
 
-        <section className="topbar-hero-wrap" aria-label={vi.heroKicker}>
-          <div
-            className={`topbar-hero neu-panel ${heroExpanded ? 'is-open' : 'is-collapsed'}`}
-          >
-            <div className="hero-row">
-              <div className="hero-row-left">
-                <span className="rail-kicker">{vi.heroKicker}</span>
-                <button
-                  type="button"
-                  className="hero-toggle neu-toggle"
-                  onClick={onToggleHero}
-                  aria-expanded={heroExpanded}
-                >
-                  {heroExpanded ? vi.heroToggleCollapse : vi.heroToggleExpand}
-                </button>
-              </div>
-              {metrics}
-            </div>
+        <section className="topbar-hero-wrap" aria-label={vi.heroMetricsAria}>
+          <div className="topbar-hero neu-panel topbar-hero--metrics">
+            <div className="hero-row hero-row--metrics">{metrics}</div>
           </div>
         </section>
 
@@ -109,12 +90,6 @@ export function TopBar({
         </aside>
       </header>
 
-      {heroExpanded ? (
-        <div className="hero-expand-panel neu-panel" role="region" aria-label={vi.heroKicker}>
-          <h1 className="hero-title">{vi.heroTitle}</h1>
-          <p className="hero-summary">{vi.heroSummary}</p>
-        </div>
-      ) : null}
     </>
   );
 }

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 820" role="img" aria-labelledby="t d">
+  <title id="t">Kiến trúc runtime KG</title>
+  <desc id="d">Luồng người dùng và luồng cập nhật dữ liệu</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f0f7ff"/>
+      <stop offset="100%" stop-color="#e2ecfc"/>
+    </linearGradient>
+    <filter id="sh" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.1"/>
+    </filter>
+    <marker id="ar" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto">
+      <path d="M0,0 L11,5.5 L0,11 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .cv{fill:url(#bg)}
+      .ln{fill:#c7d9f5}
+      .lnt{font:700 22px 'Segoe UI',Arial,sans-serif;fill:#1e3a8a}
+      .cd{fill:#fff;stroke:#94a3b8;stroke-width:1.2;rx:18;filter:url(#sh)}
+      .h{font:700 20px 'Segoe UI',Arial,sans-serif;fill:#0f172a}
+      .s{font:600 15px 'Segoe UI',Arial,sans-serif;fill:#334155}
+      .b{font:14px 'Segoe UI',Arial,sans-serif;fill:#475569}
+      .m{font:13px 'Segoe UI',Arial,sans-serif;fill:#64748b}
+      .a{stroke:#334155;stroke-width:2.8;fill:none;marker-end:url(#ar)}
+      .ad{stroke:#64748b;stroke-width:2.5;stroke-dasharray:9 7;fill:none;marker-end:url(#ar)}
+    </style>
+  </defs>
+  <rect class="cv" width="1800" height="820" rx="28"/>
+  <rect class="ln" x="40" y="36" width="1720" height="44" rx="22"/>
+  <text class="lnt" x="64" y="66">Luồng người dùng: trình duyệt → UI → API → Neo4j / LLM</text>
+  <rect class="ln" x="40" y="420" width="1720" height="44" rx="22"/>
+  <text class="lnt" x="64" y="450">Luồng cập nhật: FireAnt → pipeline → file → Neo4j</text>
+  <g transform="translate(56,108)">
+    <rect class="cd" width="240" height="168"/>
+    <circle cx="52" cy="44" r="24" fill="#2563eb"/>
+    <circle cx="40" cy="40" r="3.5" fill="#fff"/><circle cx="52" cy="32" r="3.5" fill="#fff"/><circle cx="64" cy="40" r="3.5" fill="#fff"/>
+    <path d="M42 52 Q52 62 62 52" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <text class="h" x="88" y="50">Trình duyệt</text>
+    <text class="s" x="20" y="88">Cổng chính</text>
+    <text class="b" x="20" y="112">http://localhost:5001</text>
+    <text class="m" x="20" y="138">Đồ thị, thống kê, tìm kiếm, trợ lý</text>
+  </g>
+  <g transform="translate(340,108)">
+    <rect class="cd" width="280" height="168"/>
+    <polygon points="52,24 76,38 76,62 52,76 28,62 28,38" fill="#16a34a"/>
+    <text x="52" y="52" text-anchor="middle" fill="#fff" font="700 18px Arial,sans-serif">N</text>
+    <circle cx="118" cy="48" r="18" fill="#61dafb"/>
+    <circle cx="118" cy="48" r="10" stroke="#20232a" stroke-width="2" fill="none"/>
+    <ellipse cx="118" cy="48" rx="18" ry="7" fill="none" stroke="#20232a" stroke-width="2" transform="rotate(-28 118 48)"/>
+    <text class="h" x="20" y="108">kg-ui</text>
+    <text class="s" x="20" y="132">Nginx + SPA đã build</text>
+    <text class="b" x="20" y="154">Proxy /api/* vào kg-app</text>
+  </g>
+  <g transform="translate(664,100)">
+    <rect class="cd" width="320" height="184"/>
+    <circle cx="56" cy="48" r="26" fill="#111827"/>
+    <path d="M48 58 L64 58 L60 42 L68 42 L54 26 L40 42 L48 42 Z" fill="#fff"/>
+    <text class="h" x="96" y="54">kg-app</text>
+    <text class="s" x="20" y="92">backend/script.py</text>
+    <text class="b" x="20" y="116">Flask: graph, crawl, query, LLM</text>
+    <text class="b" x="20" y="138">Trong container: cổng 5001</text>
+    <text class="b" x="20" y="160">Trên host: map 5002→5001</text>
+  </g>
+  <g transform="translate(1028,108)">
+    <rect class="cd" width="260" height="168"/>
+    <circle cx="48" cy="42" r="10" fill="#22c55e"/><circle cx="76" cy="34" r="10" fill="#16a34a"/><circle cx="76" cy="58" r="10" fill="#15803d"/>
+    <line x1="48" y1="42" x2="76" y2="34" stroke="#16a34a" stroke-width="3"/><line x1="48" y1="42" x2="76" y2="58" stroke="#16a34a" stroke-width="3"/><line x1="76" y1="34" x2="76" y2="58" stroke="#16a34a" stroke-width="3"/>
+    <text class="h" x="100" y="50">Neo4j</text>
+    <text class="s" x="20" y="96">Graph trung tâm</text>
+    <text class="b" x="20" y="120">Browser :7474</text>
+    <text class="b" x="20" y="142">Bolt :7687</text>
+  </g>
+  <g transform="translate(1328,108)">
+    <rect class="cd" width="416" height="168"/>
+    <rect x="24" y="28" width="56" height="56" rx="12" fill="#7c3aed"/>
+    <text x="52" y="64" text-anchor="middle" fill="#fff" font="700 16px Arial,sans-serif">AI</text>
+    <text class="h" x="96" y="48">LLM (ngoài compose)</text>
+    <text class="s" x="96" y="74">vLLM / Ollama / OpenAI-compatible</text>
+    <text class="b" x="24" y="108">Dùng cho /api/query và panel model</text>
+    <text class="b" x="24" y="130">backend/.env.docker</text>
+  </g>
+  <g transform="translate(56,492)">
+    <rect class="cd" width="240" height="156"/>
+    <circle cx="52" cy="44" r="22" fill="#ea580c"/>
+    <path d="M52 26 Q62 36 58 48 Q54 58 46 62 Q38 52 44 40 Q48 30 52 26" fill="#fff"/>
+    <text class="h" x="88" y="48">FireAnt API</text>
+    <text class="s" x="20" y="88">Nguồn crawl</text>
+    <text class="b" x="20" y="112">FIREANT_TOKEN</text>
+  </g>
+  <g transform="translate(340,484)">
+    <rect class="cd" width="300" height="172"/>
+    <circle cx="52" cy="50" r="24" fill="#2563eb"/>
+    <text x="52" y="58" text-anchor="middle" fill="#fff" font="700 15px Arial,sans-serif">Py</text>
+    <text class="h" x="92" y="52">pipeline.py</text>
+    <text class="s" x="20" y="92">CLI: crawl, update, push…</text>
+    <text class="b" x="20" y="116">POST /api/crawl/start</text>
+    <text class="m" x="20" y="142">(thread trong kg-app)</text>
+  </g>
+  <g transform="translate(676,484)">
+    <rect class="cd" width="340" height="172"/>
+    <circle cx="52" cy="50" r="24" fill="#4f46e5"/>
+    <text x="52" y="58" text-anchor="middle" fill="#fff" font="700 16px Arial,sans-serif">D</text>
+    <text class="h" x="92" y="52">backend/data/</text>
+    <text class="s" x="20" y="92">raw, processed_raw, ingest…</text>
+    <text class="b" x="20" y="116">kg_data/*.json</text>
+    <text class="b" x="20" y="138">entity_map.json</text>
+  </g>
+  <g transform="translate(1052,476)">
+    <rect class="cd" width="692" height="188"/>
+    <circle cx="52" cy="52" r="26" fill="#16a34a"/>
+    <text x="52" y="60" text-anchor="middle" fill="#fff" font="700 14px Arial,sans-serif">KG</text>
+    <text class="h" x="96" y="52">Neo4j: nạp lại + làm giàu</text>
+    <text class="s" x="20" y="88">push_to_neo4j(): xóa graph cũ, load JSON</text>
+    <text class="b" x="20" y="112">Sau đó: gia đình + inference rules</text>
+    <text class="b" x="20" y="136">script.py phục vụ API/UI</text>
+  </g>
+  <line class="a" x1="296" y1="192" x2="340" y2="192"/>
+  <line class="a" x1="620" y1="192" x2="664" y2="192"/>
+  <line class="a" x1="984" y1="192" x2="1028" y2="192"/>
+  <line class="a" x1="1288" y1="192" x2="1328" y2="192"/>
+  <line class="a" x1="296" y1="570" x2="340" y2="570"/>
+  <line class="a" x1="640" y1="570" x2="676" y2="570"/>
+  <line class="a" x1="1016" y1="570" x2="1052" y2="570"/>
+  <path class="ad" d="M824 284 C824 360 520 400 490 484"/>
+  <text class="m" x="520" y="392">POST /api/crawl/start → thread</text>
+  <text class="m" x="1000" y="178">Cypher</text>
+  <path class="a" d="M984 210 C1120 280 1240 260 1328 210"/>
+  <text class="m" x="1140" y="268">LLM_BASE_URL</text>
+  <path class="a" d="M1398 570 C1520 400 1400 320 984 220"/>
+  <text class="m" x="1280" y="340">/api/*</text>
+  <text class="h" x="56" y="788">Ghi nhớ</text>
+  <text class="b" x="56" y="808">1) 5001 = UI. 2) kg-app + pipeline cùng code. 3) push_to_neo4j xóa toàn bộ node trước khi load.</text>
+</svg>

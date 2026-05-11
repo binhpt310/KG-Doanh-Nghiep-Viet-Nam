@@ -12,7 +12,7 @@ export const vi = {
   metaTitle: 'KG Explorer — Công ty niêm yết Việt Nam',
 
   brandName: 'KG Explorer',
-  brandSub: 'Bảng điều khiển phân tích quan hệ giữa các công ty niêm yết tại Việt Nam',
+  brandSub: 'Đồ thị tri thức phân tích quan hệ giữa các công ty niêm yết tại Việt Nam',
   /** Attribution in header (mailto optional in UI) */
   designCredit: 'Designed by ptbinh@csc.hcmus.edu.vn',
 
@@ -22,15 +22,8 @@ export const vi = {
   themeDark: 'Tối',
   themeLight: 'Sáng',
 
-  /** Expandable hero inside top bar */
-  heroToggleExpand: 'Mở rộng giới thiệu',
-  heroToggleCollapse: 'Thu gọn giới thiệu',
-  heroKicker: 'Trí tuệ quan hệ doanh nghiệp',
-  heroTitle:
-    'Theo dõi quyền kiểm soát, sở hữu và ảnh hưởng tiềm ẩn trên thị trường.',
-  heroSummary:
-    'Khám phá đồ thị trực quan, đọc luật suy luận pháp lý và mở trợ lý khi cần giải thích ngữ cảnh hoặc truy vấn Cypher — luôn giữ nguyên ngữ cảnh bạn đang xem.',
-
+  /** Top bar metrics strip (no separate hero intro block) */
+  heroMetricsAria: 'Số liệu tổng quan KG',
   heroStatEntities: 'Thực thể',
   heroStatLinks: 'Quan hệ',
   /** Inferred / hidden ties count — replaces vague “Suy luận” label */
@@ -51,8 +44,8 @@ export const vi = {
   listedCompanies: 'Công ty niêm yết',
   persons: 'Cá nhân',
   edgesInDb: 'Quan hệ trong CSDL',
-  /** Was “Quan hệ suy luận” — clarified */
-  inferredEdgesLabel: 'Quan hệ được suy luận',
+  /** Inferred / hidden ties count in overview card — same label as graph legend */
+  inferredEdgesLabel: 'Quan hệ ẩn',
   lastUpdated: 'Cập nhật gần nhất',
 
   marketFootprint: 'Phân bố theo sàn',
@@ -74,6 +67,7 @@ export const vi = {
   inferenceRulesTitle: 'Quan hệ ẩn',
   ruleLogicLabel: 'Logic',
   ruleInferredLabel: 'Suy ra',
+  ruleLegalRefsTitle: 'VBPL',
   suggestedInvestigation: 'Gợi ý điều tra',
 
   graphLoaderCompanies: 'Đang tải công ty…',
@@ -87,6 +81,21 @@ export const vi = {
   modeLabelCompanies: 'Đồ thị công ty',
   modeLabelPersons: 'Đồ thị lãnh đạo',
   modeLabelQuery: 'Đồ thị từ truy vấn',
+  modeLabelInferred: 'Đồ thị quan hệ ẩn',
+  hiddenRelationsPopupTitle: 'Quan hệ ẩn (suy luận)',
+  hiddenRelationsPopupHint:
+    'Mở từng dòng để xem chuỗi quan hệ gốc; bấm Mở rộng để focus đồ thị chính vào đúng cặp đang xét.',
+  hiddenRelationsEmpty: 'Không có quan hệ ẩn nào trong dữ liệu hiện tại.',
+  hiddenRelationsLoadError: 'Không tải được danh sách quan hệ ẩn.',
+  hiddenRelationsLoading: 'Đang tải chuỗi quan hệ hỗ trợ...',
+  hiddenRelationsRule: 'Quy tắc',
+  hiddenRelationsWhy: 'Vì sao ẩn / suy luận',
+  hiddenRelationsLegal: 'Văn bản tham chiếu',
+  hiddenRelationsClose: 'Đóng',
+  hiddenRelationsExpandRow: 'Mở rộng',
+  hiddenRelationsCollapseRow: 'Thu gọn',
+  hiddenRelationsExpandGraph: 'Mở rộng',
+  alertInferred: 'Chỉ các cạnh có coalesce(r.inferred,true) trong Neo4j',
   alertCompanies: 'Theo dõi các cụm có quan hệ được suy luận',
   alertPersons: 'Mở rộng từng người để xem thêm liên quan',
   alertQuery: 'Đồ thị con do trợ lý tạo từ truy vấn',
@@ -151,6 +160,10 @@ export const vi = {
   llmSave: 'Lưu',
   llmCancel: 'Đóng',
   llmSettingsSaved: 'Đã lưu cấu hình.',
+  llmFetchModels: 'Lấy danh sách model',
+  llmFetchingModels: 'Đang lấy model…',
+  llmBaseUrlRequired: 'Vui lòng nhập Base URL',
+  llmNoModelsFound: 'Không tìm thấy model nào',
 
   loadingOverlay: 'Đang xử lý…',
   toastEmptyQuery: 'Vui lòng nhập câu hỏi',

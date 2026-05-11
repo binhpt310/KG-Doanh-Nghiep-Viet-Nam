@@ -8,7 +8,7 @@ export interface RuleRow {
   inferred: string;
   explanation?: string;
   example?: string;
-  legal_refs?: { title: string; url: string }[];
+  legal_refs?: { title: string; url: string; citation?: string }[];
 }
 
 interface ExchangeRow {
@@ -37,9 +37,13 @@ interface Props {
   topCriteria: string;
   onCriteriaChange: (v: string) => void;
   filterMode: 'companies' | 'persons';
+  /** Which segment shows "active" styling; null when graph is query/inferred so neither looks selected */
+  exploreSegmentVisual: 'companies' | 'persons' | null;
   onCompanies: () => void;
   onPersons: () => void;
   onPickEntity: (id: string) => void;
+  onInferredRelationsClick?: () => void;
+  inferredRelationsDisabled?: boolean;
   collapsed: boolean;
   onToggleCollapsed: () => void;
 }
@@ -52,10 +56,15 @@ export function LeftRail({
   topEntities,
   topCriteria,
   onCriteriaChange,
-  filterMode,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  filterMode: _filterMode,
+  exploreSegmentVisual,
   onCompanies,
   onPersons,
   onPickEntity,
+  onInferredRelationsClick,
+  inferredRelationsDisabled,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   collapsed: _collapsed,
   onToggleCollapsed,
 }: Props) {
@@ -110,12 +119,27 @@ export function LeftRail({
                 <span>{vi.edgesInDb}</span>
                 <span>{stats ? fmt(stats.total_edges) : '—'}</span>
               </div>
-              <div className="stat-line">
-                <span>{vi.inferredEdgesLabel}</span>
-                <span className="warm">
-                  {stats ? fmt(stats.inferred_relationships) : '—'}
-                </span>
-              </div>
+              {onInferredRelationsClick ? (
+                <button
+                  type="button"
+                  className="stat-line stat-line--action"
+                  onClick={onInferredRelationsClick}
+                  disabled={inferredRelationsDisabled}
+                  title={vi.inferredEdgesLabel}
+                >
+                  <span>{vi.inferredEdgesLabel}</span>
+                  <span className="warm">
+                    {stats ? fmt(stats.inferred_relationships) : '—'}
+                  </span>
+                </button>
+              ) : (
+                <div className="stat-line">
+                  <span>{vi.inferredEdgesLabel}</span>
+                  <span className="warm">
+                    {stats ? fmt(stats.inferred_relationships) : '—'}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -163,14 +187,22 @@ export function LeftRail({
             <div className="seg">
               <button
                 type="button"
-                className={filterMode === 'companies' ? 'seg-btn on' : 'seg-btn'}
+                className={
+                  exploreSegmentVisual === 'companies'
+                    ? 'seg-btn on'
+                    : 'seg-btn'
+                }
                 onClick={onCompanies}
               >
                 <span className="dot co" /> {vi.modeCompanies}
               </button>
               <button
                 type="button"
-                className={filterMode === 'persons' ? 'seg-btn on p' : 'seg-btn'}
+                className={
+                  exploreSegmentVisual === 'persons'
+                    ? 'seg-btn on p'
+                    : 'seg-btn'
+                }
                 onClick={onPersons}
               >
                 <span className="dot pe" /> {vi.modePersons}
@@ -237,8 +269,21 @@ export function LeftRail({
                       aria-expanded={open}
                       onClick={() => toggleRule(idx)}
                     >
-                      <span className="rule-acc-num">{idx + 1}</span>
                       <span className="rule-acc-title">{r.name}</span>
+                      {r.legal_refs?.length ? (
+                        <a
+                          className="rule-acc-law"
+                          href={r.legal_refs[0].url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title={r.legal_refs[0].title}
+                          onClick={(ev) => ev.stopPropagation()}
+                        >
+                          {vi.ruleLegalRefsTitle}
+                        </a>
+                      ) : (
+                        <span className="rule-acc-law-spacer" aria-hidden />
+                      )}
                       <span className="rule-acc-chev" aria-hidden>
                         {open ? '▾' : '▸'}
                       </span>
@@ -253,10 +298,40 @@ export function LeftRail({
                         </div>
                         <div className="rule-acc-row rule-acc-inf">
                           <span className="rule-acc-k">{vi.ruleInferredLabel}</span>
-                          <span className="rule-inf-inline">→ {r.inferred}</span>
+                          <div className="rule-meta rule-meta--wrap">
+                            <span className="rule-inf-inline">→ {r.inferred}</span>
+                          </div>
                         </div>
                         {r.explanation ? (
                           <p className="rule-exp">{r.explanation}</p>
+                        ) : null}
+                        {r.example ? (
+                          <p className="rule-exp rule-exp--muted">
+                            <strong>{vi.suggestedInvestigation}:</strong> {r.example}
+                          </p>
+                        ) : null}
+                        {r.legal_refs?.length ? (
+                          <div className="rule-legal-list">
+                            <span className="rule-acc-k">{vi.hiddenRelationsLegal}</span>
+                            <ul>
+                              {r.legal_refs.map((lr) => (
+                                <li key={lr.url}>
+                                  <a
+                                    href={lr.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    {lr.title}
+                                  </a>
+                                  {lr.citation ? (
+                                    <div className="rule-legal-cite">
+                                      {lr.citation}
+                                    </div>
+                                  ) : null}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
                         ) : null}
                       </div>
                     ) : null}

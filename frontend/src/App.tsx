@@ -14,6 +14,8 @@ import { NodeDetailPanel } from './components/NodeDetailPanel';
 import { TopBar } from './components/TopBar';
 import { vi } from './content/copy/vi';
 import { useKgGraph } from './graph/useKgGraph';
+import type { ApiEdge, ApiNode } from './graph/types';
+import { lawDisplay, influenceLevelVi, relationLabelVi } from './utils/lawLabels';
 
 /** Mirrors `/api/stats` JSON shape used across dashboard chips */
 interface StatsPayload {
@@ -22,6 +24,78 @@ interface StatsPayload {
   companies: number;
   persons: number;
   inferred_relationships: number;
+  inferred_hidden_edges_raw?: number;
+}
+
+/** Row shape from GET /api/inferred-relations */
+interface InferredRelationRow {
+  source: string;
+  source_name?: string | null;
+  source_type?: string | null;
+  target: string;
+  target_name?: string | null;
+  target_type?: string | null;
+  relation?: string | null;
+  ownership?: number | null;
+  level?: string | null;
+  rule?: string | null;
+}
+
+interface HiddenRelationContextPayload {
+  summary?: string;
+  explanation_lines?: string[];
+  graph?: {
+    nodes: ApiNode[];
+    edges: ApiEdge[];
+  };
+}
+
+function entityGroupFromRow(
+  id: string,
+  typ?: string | null
+): 'Company' | 'Person' | 'Institution' | 'DEFAULT' {
+  const t = (typ || '').trim();
+  if (t === 'Company' || t === 'Person' || t === 'Institution') return t;
+  if (id.startsWith('P_')) return 'Person';
+  if (id.startsWith('C_')) return 'Company';
+  return 'DEFAULT';
+}
+
+function buildGraphFromInferredRows(rows: InferredRelationRow[]): {
+  nodes: ApiNode[];
+  edges: ApiEdge[];
+} {
+  const nodeMap = new Map<string, ApiNode>();
+  const edges: ApiEdge[] = [];
+  for (const row of rows) {
+    const sid = row.source;
+    const tid = row.target;
+    if (!sid || !tid) continue;
+    const sl = row.source_name || sid;
+    const tl = row.target_name || tid;
+    const sg = entityGroupFromRow(sid, row.source_type);
+    const tg = entityGroupFromRow(tid, row.target_type);
+    if (!nodeMap.has(sid)) {
+      nodeMap.set(sid, { id: sid, label: sl, name: sl, group: sg });
+    }
+    if (!nodeMap.has(tid)) {
+      nodeMap.set(tid, { id: tid, label: tl, name: tl, group: tg });
+    }
+    edges.push({
+      from: sid,
+      to: tid,
+      label: relationLabelVi(row.relation, row.rule) || '',
+      inferred: true,
+      dashes: true,
+      inferred_from: row.rule || '',
+      influence_level: row.level || undefined,
+    });
+  }
+  return { nodes: Array.from(nodeMap.values()), edges };
+}
+
+function hiddenRowKey(row: InferredRelationRow) {
+  return `${row.source}|${row.target}|${row.relation || ''}|${row.rule || ''}`;
 }
 
 const LS_LEFT = 'kg_panel_left_w';
@@ -70,14 +144,12 @@ export default function App() {
     { id: string; name: string; value: number | string }[] | null
   >(null);
 
-  const [cmdMode, setCmdMode] = useState<'companies' | 'persons' | 'query'>(
-    'companies'
-  );
+  const [cmdMode, setCmdMode] = useState<
+    'companies' | 'persons' | 'query' | 'inferred'
+  >('companies');
   const [filterMode, setFilterMode] = useState<'companies' | 'persons'>(
     'companies'
   );
-
-  const [heroExpanded, setHeroExpanded] = useState(false);
 
   const [leftCollapsed, setLeftCollapsed] = useState(false);
   const [rightCollapsed, setRightCollapsed] = useState(false);
@@ -99,6 +171,22 @@ export default function App() {
   const [qSteps, setQSteps] = useState<string[]>([]);
   const [qCypher, setQCypher] = useState('');
 
+  const [hiddenPopupOpen, setHiddenPopupOpen] = useState(false);
+  const [hiddenRows, setHiddenRows] = useState<InferredRelationRow[]>([]);
+  const [hiddenExpandKey, setHiddenExpandKey] = useState<string | null>(null);
+  const [hiddenContextByKey, setHiddenContextByKey] = useState<
+    Record<
+      string,
+      {
+        loading?: boolean;
+        summary?: string;
+        explanationLines?: string[];
+        graph?: { nodes: ApiNode[]; edges: ApiEdge[] };
+        error?: string;
+      }
+    >
+  >({});
+
   const [crawlBusy, setCrawlBusy] = useState(false);
   const [crawlPct, setCrawlPct] = useState(0);
   const crawlTimer = useRef<number | null>(null);
@@ -106,10 +194,13 @@ export default function App() {
   const graphHostRef = useRef<HTMLDivElement>(null);
   const graphAreaRef = useRef<HTMLElement>(null);
 
-  const onKpiUpdate = useCallback((_n: number, _e: number) => {}, []);
+  const onKpiUpdate = useCallback((nodeCount: number, edgeCount: number) => {
+    void nodeCount;
+    void edgeCount;
+  }, []);
 
   const onGraphModeLabels = useCallback(
-    (mode: 'companies' | 'persons' | 'query') => {
+    (mode: 'companies' | 'persons' | 'query' | 'inferred') => {
       setCmdMode(mode);
       if (mode === 'companies') setFilterMode('companies');
       if (mode === 'persons') setFilterMode('persons');
@@ -128,8 +219,12 @@ export default function App() {
     graph.updateTheme();
   }, [graph, theme]);
 
+  /** Only auto-load the company hub graph once; `graph` identity changes on theme/hook churn. */
+  const initialHubLoadDone = useRef(false);
   useEffect(() => {
-    graph.loadHubsOnly().catch(console.error);
+    if (initialHubLoadDone.current) return;
+    initialHubLoadDone.current = true;
+    void graph.loadHubsOnly().catch(console.error);
   }, [graph]);
 
   useEffect(() => {
@@ -243,8 +338,125 @@ export default function App() {
       return { mode: vi.modeLabelPersons, alert: vi.alertPersons };
     if (cmdMode === 'query')
       return { mode: vi.modeLabelQuery, alert: vi.alertQuery };
+    if (cmdMode === 'inferred')
+      return { mode: vi.modeLabelInferred, alert: vi.alertInferred };
     return { mode: vi.modeLabelCompanies, alert: vi.alertCompanies };
   }, [cmdMode]);
+
+  const ruleById = useMemo(() => {
+    const m = new Map<string, RuleRow>();
+    for (const r of rules || []) {
+      if (r.id) m.set(r.id, r);
+    }
+    return m;
+  }, [rules]);
+
+  const loadHiddenRowContext = useCallback(
+    async (row: InferredRelationRow) => {
+      const rk = hiddenRowKey(row);
+      const cached = hiddenContextByKey[rk];
+      if (cached?.graph && cached?.explanationLines?.length) return cached;
+      if (cached?.loading) return cached;
+
+      setHiddenContextByKey((prev) => ({
+        ...prev,
+        [rk]: {
+          ...prev[rk],
+          loading: true,
+          error: undefined,
+        },
+      }));
+
+      try {
+        const params = new URLSearchParams({
+          source: row.source,
+          target: row.target,
+        });
+        if (row.rule) params.set('rule', row.rule);
+        if (row.relation) params.set('relation', row.relation);
+
+        const data = await apiJson<HiddenRelationContextPayload>(
+          `/api/inferred-relations/context?${params.toString()}`
+        );
+        const next = {
+          loading: false,
+          summary: data.summary || '',
+          explanationLines: data.explanation_lines || [],
+          graph: data.graph || buildGraphFromInferredRows([row]),
+          error: undefined,
+        };
+        setHiddenContextByKey((prev) => ({ ...prev, [rk]: next }));
+        return next;
+      } catch (error) {
+        const fallback = {
+          loading: false,
+          summary: '',
+          explanationLines: [],
+          graph: buildGraphFromInferredRows([row]),
+          error:
+            error instanceof Error ? error.message : vi.hiddenRelationsLoadError,
+        };
+        setHiddenContextByKey((prev) => ({ ...prev, [rk]: fallback }));
+        return fallback;
+      }
+    },
+    [hiddenContextByKey]
+  );
+
+  const handleToggleHiddenRow = useCallback(
+    (row: InferredRelationRow) => {
+      const rk = hiddenRowKey(row);
+      setHiddenExpandKey((cur) => {
+        const next = cur === rk ? null : rk;
+        if (next) void loadHiddenRowContext(row);
+        return next;
+      });
+    },
+    [loadHiddenRowContext]
+  );
+
+  const handleFocusHiddenRelation = useCallback(
+    async (row: InferredRelationRow) => {
+      const rk = hiddenRowKey(row);
+      setHiddenExpandKey(rk);
+      const ctx = await loadHiddenRowContext(row);
+      const fallback = buildGraphFromInferredRows([row]);
+      const nodes = ctx?.graph?.nodes?.length ? ctx.graph.nodes : fallback.nodes;
+      const edges = ctx?.graph?.edges?.length ? ctx.graph.edges : fallback.edges;
+      if (nodes.length && edges.length) {
+        graph.loadInferredGraph(nodes, edges);
+      }
+    },
+    [graph, loadHiddenRowContext]
+  );
+
+  const handleOpenHiddenRelations = useCallback(async () => {
+    try {
+      const data = await apiJson<{
+        relations: InferredRelationRow[];
+        graph?: { nodes: ApiNode[]; edges: ApiEdge[] };
+      }>('/api/inferred-relations?limit=5000');
+      const rels = data.relations || [];
+      setHiddenRows(rels);
+      setHiddenExpandKey(null);
+      setHiddenContextByKey({});
+      let nodes = data.graph?.nodes ?? [];
+      let edges = data.graph?.edges ?? [];
+      if (!nodes.length || !edges.length) {
+        const built = buildGraphFromInferredRows(rels);
+        nodes = built.nodes;
+        edges = built.edges;
+      }
+      if (nodes.length && edges.length) {
+        graph.loadInferredGraph(nodes, edges);
+      }
+      setHiddenPopupOpen(true);
+    } catch (e) {
+      console.error(e);
+      setHiddenRows([]);
+      setHiddenPopupOpen(true);
+    }
+  }, [graph]);
 
   const startCrawl = async () => {
     if (crawlBusy) return;
@@ -329,8 +541,6 @@ export default function App() {
     <div id="app">
       <TopBar
         theme={theme}
-        heroExpanded={heroExpanded}
-        onToggleHero={() => setHeroExpanded((v) => !v)}
         onToggleTheme={() =>
           setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
         }
@@ -360,6 +570,11 @@ export default function App() {
             topCriteria={topCriteria}
             onCriteriaChange={setTopCriteria}
             filterMode={filterMode}
+            exploreSegmentVisual={
+              cmdMode === 'query' || cmdMode === 'inferred'
+                ? null
+                : filterMode
+            }
             onCompanies={() => {
               setFilterMode('companies');
               void graph.loadHubsOnly();
@@ -373,6 +588,10 @@ export default function App() {
                 new CustomEvent('kg-search-pick', { detail: id })
               );
             }}
+            onInferredRelationsClick={handleOpenHiddenRelations}
+            inferredRelationsDisabled={
+              !stats || (stats.inferred_relationships ?? 0) <= 0
+            }
             collapsed={leftCollapsed}
             onToggleCollapsed={() => setLeftCollapsed((c) => !c)}
           />
@@ -437,6 +656,158 @@ export default function App() {
                     </section>
                   </div>
                 ) : null}
+              </div>
+            </div>
+          ) : null}
+
+          {hiddenPopupOpen ? (
+            <div className="hidden-overlay" role="presentation">
+              <div
+                className="hidden-panel"
+                role="dialog"
+                aria-modal="true"
+                aria-label={vi.hiddenRelationsPopupTitle}
+              >
+                <header className="hidden-panel-toolbar">
+                  <div>
+                    <h2 className="hidden-panel-title">
+                      {vi.hiddenRelationsPopupTitle}
+                    </h2>
+                    <p className="hidden-panel-hint">
+                      {vi.hiddenRelationsPopupHint}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    className="hidden-panel-close"
+                    onClick={() => setHiddenPopupOpen(false)}
+                  >
+                    {vi.hiddenRelationsClose}
+                  </button>
+                </header>
+                <div className="hidden-panel-body">
+                  {!hiddenRows.length ? (
+                    <div className="muted">{vi.hiddenRelationsEmpty}</div>
+                  ) : (
+                    hiddenRows.map((row) => {
+                      const rk = hiddenRowKey(row);
+                      const open = hiddenExpandKey === rk;
+                      const rowCtx = hiddenContextByKey[rk];
+                      const ruleMeta = row.rule
+                        ? ruleById.get(String(row.rule))
+                        : undefined;
+                      const fallbackWhyParts: string[] = [];
+                      if (row.rule) {
+                        fallbackWhyParts.push(`Kích hoạt: ${lawDisplay(row.rule)}.`);
+                      }
+                      if (row.level) {
+                        fallbackWhyParts.push(
+                          `Mức ảnh hưởng: ${influenceLevelVi(row.level)}.`
+                        );
+                      }
+                      if (ruleMeta?.explanation) {
+                        fallbackWhyParts.push(ruleMeta.explanation);
+                      }
+                      return (
+                        <div key={rk} className="hidden-row">
+                          <div className="hidden-row-head">
+                            <button
+                              type="button"
+                              className="hidden-row-toggle"
+                              aria-expanded={open}
+                              onClick={() => handleToggleHiddenRow(row)}
+                            >
+                              <div className="hidden-row-main">
+                                <strong>{row.source_name || row.source}</strong>
+                                {' → '}
+                                <strong>{row.target_name || row.target}</strong>
+                                {row.relation ? (
+                                  <>
+                                    {' '}
+                                    <kbd>{relationLabelVi(row.relation, row.rule)}</kbd>
+                                  </>
+                                ) : null}
+                              </div>
+                            </button>
+                            <div className="hidden-row-actions">
+                              <button
+                                type="button"
+                                className="hidden-row-expand-btn"
+                                onClick={() => void handleFocusHiddenRelation(row)}
+                              >
+                                {vi.hiddenRelationsExpandGraph}
+                              </button>
+                            </div>
+                          </div>
+                          {open ? (
+                            <div className="hidden-row-body">
+                              {rowCtx?.loading ? (
+                                <p className="muted">
+                                  {vi.hiddenRelationsLoading}
+                                </p>
+                              ) : null}
+                              {rowCtx?.summary ? (
+                                <p className="hidden-row-summary">
+                                  <strong>{vi.hiddenRelationsWhy}:</strong>{' '}
+                                  {rowCtx.summary}
+                                </p>
+                              ) : null}
+                              {rowCtx?.explanationLines?.length ? (
+                                <ul className="hidden-row-list">
+                                  {rowCtx.explanationLines.map((line) => (
+                                    <li key={line}>{line}</li>
+                                  ))}
+                                </ul>
+                              ) : fallbackWhyParts.length ? (
+                                <ul className="hidden-row-list">
+                                  {fallbackWhyParts.map((line) => (
+                                    <li key={line}>{line}</li>
+                                  ))}
+                                </ul>
+                              ) : null}
+                              {rowCtx?.error ? (
+                                <p className="muted">{rowCtx.error}</p>
+                              ) : null}
+                              {row.level ? (
+                                <p>
+                                  <strong>{vi.ruleInferredLabel}</strong> mức ảnh
+                                  hưởng: {influenceLevelVi(row.level)}
+                                  {row.ownership != null
+                                    ? `; sở hữu gián tiếp ~ ${String(row.ownership)}`
+                                    : null}
+                                </p>
+                              ) : null}
+                              {ruleMeta?.name ? (
+                                <p>
+                                  <strong>{vi.hiddenRelationsRule}:</strong>{' '}
+                                  {ruleMeta.name}
+                                </p>
+                              ) : null}
+                              {ruleMeta?.legal_refs?.length ? (
+                                <div>
+                                  <strong>{vi.hiddenRelationsLegal}</strong>
+                                  <ul>
+                                    {ruleMeta.legal_refs.map((lr) => (
+                                      <li key={lr.url}>
+                                        <a
+                                          href={lr.url}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                        >
+                                          {lr.title}
+                                        </a>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              ) : null}
+                            </div>
+                          ) : null}
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
               </div>
             </div>
           ) : null}

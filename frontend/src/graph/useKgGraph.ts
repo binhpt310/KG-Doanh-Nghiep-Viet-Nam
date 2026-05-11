@@ -18,6 +18,7 @@ export interface GraphController {
   loadHubsOnly: () => Promise<void>;
   loadPersonGraph: () => Promise<void>;
   drawQueryGraph: (nodes: ApiNode[], edges: ApiEdge[]) => void;
+  loadInferredGraph: (nodes: ApiNode[], edges: ApiEdge[]) => void;
   expandOrToggleNeighbors: (nodeId: string) => Promise<void>;
   isNodeExpanded: (nodeId: string) => boolean;
   fitView: () => void;
@@ -30,7 +31,9 @@ export interface GraphController {
 interface Options {
   theme: 'dark' | 'light';
   onKpiUpdate: (nodeCount: number, edgeCount: number) => void;
-  onGraphModeLabels: (mode: 'companies' | 'persons' | 'query') => void;
+  onGraphModeLabels: (
+    mode: 'companies' | 'persons' | 'query' | 'inferred'
+  ) => void;
   /** Trigger React re-render after internal graph store mutates (e.g. expand/collapse). */
   onGraphMutation?: () => void;
 }
@@ -99,7 +102,7 @@ export function useKgGraph(
       const s = net.getScale();
       net.setOptions({
         edges: {
-          font: { size: s < 0.4 ? 0 : s < 0.7 ? 9 : s < 1.2 ? 11 : 12 },
+          font: { size: s < 0.4 ? 0 : s < 0.7 ? 12 : s < 1.2 ? 14 : 15 },
         },
       });
     });
@@ -204,7 +207,7 @@ export function useKgGraph(
 
       const scale = net.getScale();
       net.setOptions({
-        edges: { font: { size: scale < 0.8 ? 0 : 9 } },
+        edges: { font: { size: scale < 0.8 ? 0 : 12 } },
       });
 
       setTimeout(() => {
@@ -224,8 +227,12 @@ export function useKgGraph(
     [bump, fitView, onKpiUpdate, st]
   );
 
-  const drawQueryGraph = useCallback(
-    (nodes: ApiNode[], edges: ApiEdge[]) => {
+  const mountDedupedGraph = useCallback(
+    (
+      nodes: ApiNode[],
+      edges: ApiEdge[],
+      modeLabel: 'query' | 'inferred'
+    ) => {
       const container = containerRef.current;
       if (!container) return;
 
@@ -294,7 +301,7 @@ export function useKgGraph(
       });
 
       wireInteractions();
-      onGraphModeLabels('query');
+      onGraphModeLabels(modeLabel);
       onKpiUpdate(vnodes.length, vedges.length);
       bump();
     },
@@ -309,6 +316,20 @@ export function useKgGraph(
       theme,
       wireInteractions,
     ]
+  );
+
+  const drawQueryGraph = useCallback(
+    (nodes: ApiNode[], edges: ApiEdge[]) => {
+      mountDedupedGraph(nodes, edges, 'query');
+    },
+    [mountDedupedGraph]
+  );
+
+  const loadInferredGraph = useCallback(
+    (nodes: ApiNode[], edges: ApiEdge[]) => {
+      mountDedupedGraph(nodes, edges, 'inferred');
+    },
+    [mountDedupedGraph]
   );
 
   const loadHubsOnly = useCallback(async () => {
@@ -485,6 +506,7 @@ export function useKgGraph(
       loadHubsOnly,
       loadPersonGraph,
       drawQueryGraph,
+      loadInferredGraph,
       expandOrToggleNeighbors,
       isNodeExpanded: (id: string) => st.expandedSet.has(id),
       fitView,
@@ -503,6 +525,7 @@ export function useKgGraph(
       expandOrToggleNeighbors,
       fitView,
       loadHubsOnly,
+      loadInferredGraph,
       loadPersonGraph,
       st,
       updateTheme,

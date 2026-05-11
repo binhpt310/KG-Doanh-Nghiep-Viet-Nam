@@ -57,6 +57,7 @@ export function AssistantPanel({
   const [llmApiKeyInput, setLlmApiKeyInput] = useState('');
   const [llmClearKey, setLlmClearKey] = useState(false);
   const [llmModalMsg, setLlmModalMsg] = useState('');
+  const [fetchingModels, setFetchingModels] = useState(false);
 
   const loadModelsFromApi = useCallback(
     () =>
@@ -150,6 +151,43 @@ export function AssistantPanel({
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
       setLlmModalMsg(`${vi.toastErrorPrefix}: ${msg}`);
+    }
+  };
+
+  const handleFetchModels = async () => {
+    const baseUrl = llmBaseUrl.trim();
+    if (!baseUrl) {
+      setLlmModalMsg(vi.llmBaseUrlRequired);
+      return;
+    }
+    setFetchingModels(true);
+    setLlmModalMsg('');
+    try {
+      const body: Record<string, string> = {
+        base_url: baseUrl,
+        backend: llmBackend,
+      };
+      const apiKey = llmApiKeyInput.trim();
+      if (apiKey) body.api_key = apiKey;
+      const res = await apiPostJson<{
+        models?: string[];
+        error?: string;
+      }>('/api/llm/fetch-models', body);
+      if (res.error) {
+        setLlmModalMsg(`${vi.toastErrorPrefix}: ${res.error}`);
+        return;
+      }
+      if (res.models?.length) {
+        setLlmModalModels(res.models);
+        setLlmModalMsg(`Đã lấy ${res.models.length} model(s)`);
+      } else {
+        setLlmModalMsg(vi.llmNoModelsFound);
+      }
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      setLlmModalMsg(`${vi.toastErrorPrefix}: ${msg}`);
+    } finally {
+      setFetchingModels(false);
     }
   };
 
@@ -510,19 +548,30 @@ export function AssistantPanel({
               </label>
               <label className="llm-field">
                 <span>{vi.llmModel}</span>
-                <select
-                  className="select-mini llm-select-wide"
-                  value={llmModelPick}
-                  onChange={(e) => setLlmModelPick(e.target.value)}
-                >
-                  {(llmModalModels.length ? llmModalModels : [llmModelPick || model]).map(
-                    (x) => (
-                      <option key={x} value={x}>
-                        {x}
-                      </option>
-                    )
-                  )}
-                </select>
+                <div className="llm-model-row">
+                  <select
+                    className="select-mini llm-select-wide"
+                    value={llmModelPick}
+                    onChange={(e) => setLlmModelPick(e.target.value)}
+                  >
+                    {(llmModalModels.length ? llmModalModels : [llmModelPick || model]).map(
+                      (x) => (
+                        <option key={x} value={x}>
+                          {x}
+                        </option>
+                      )
+                    )}
+                  </select>
+                  <button
+                    type="button"
+                    className="ico-btn llm-fetch-btn"
+                    disabled={fetchingModels}
+                    onClick={() => void handleFetchModels()}
+                    title={vi.llmFetchModels}
+                  >
+                    {fetchingModels ? vi.llmFetchingModels : vi.llmFetchModels}
+                  </button>
+                </div>
               </label>
               <label className="llm-field">
                 <span>{vi.llmApiKey}</span>

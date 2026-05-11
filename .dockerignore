@@ -4,19 +4,19 @@
 **/*.pyo
 
 # Local env (not needed in Docker)
-kg_from_scratch/.env
+backend/.env
 
 # IDE / editor
-kg_from_scratch/.cursor
-kg_from_scratch/.agents
+backend/.cursor
+backend/.agents
 .vscode
 .idea
 
 # Documentation (not needed at runtime)
-kg_from_scratch/*.md
+backend/*.md
 
 # Neo4j export dumps (large files)
-kg_from_scratch/Neo4j-*.txt
+backend/Neo4j-*.txt
 
 # Git
 .git
@@ -28,10 +28,10 @@ Dockerfile
 .dockerignore
 
 # Large data files (exclude very large files, keep necessary config)
-kg_from_scratch/data/*.csv
-kg_from_scratch/data/*.parquet
-kg_from_scratch/data/*.sqlite
-# Keep: data/config/, data/kg_data/, data/processed/, templates/
+backend/data/*.csv
+backend/data/*.parquet
+backend/data/*.sqlite
+# Keep: data/config/, data/kg_data/, data/processed/, docs/
 
 # Node modules (if any)
 node_modules

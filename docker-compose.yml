@@ -31,13 +31,13 @@ services:
     ports:
       - "5002:5001"
     env_file:
-      - ./kg_from_scratch/.env.docker
+      - ./backend/.env.docker
     environment:
       - FIREANT_BASE_URL=${FIREANT_BASE_URL:-https://restv2.fireant.vn}
       - FIREANT_TOKEN=${FIREANT_TOKEN:-}
     volumes:
-      - ./kg_from_scratch/data:/app/kg_from_scratch/data
-      - ./kg_from_scratch:/app/kg_from_scratch
+      - ./backend/data:/app/backend/data
+      - ./backend:/app/backend
       - llmware_data:/root/llmware_data
     depends_on:
       neo4j:
