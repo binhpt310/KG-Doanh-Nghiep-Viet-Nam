@@ -131,7 +131,7 @@ def generate_cypher_with_llm(user_query, history_context, schema, steps_list, mo
     # Load grounding document
     grounding_doc = ""
     try:
-        ref_path = os.path.join(os.path.dirname(__file__), "docs", "cypher_reference.md")
+        ref_path = os.path.join(DOCS_DIR, "cypher_reference.md")
         if os.path.exists(ref_path):
             with open(ref_path, "r", encoding="utf-8") as f:
                 grounding_doc = f.read()

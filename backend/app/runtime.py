@@ -34,7 +34,7 @@ LLMWareConfig().set_vector_db("chromadb")
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
-DOCS_DIR = os.path.join(BASE_DIR, "docs")
+DOCS_DIR = os.path.normpath(os.path.join(BASE_DIR, "..", "docs"))
 ENV_DOCKER_PATH = os.path.join(BASE_DIR, ".env.docker")
 RAG_LIBRARY_NAME = "kg_demo_vn"
 

@@ -1,6 +1,6 @@
-# Vietnam Listed Companies Knowledge Graph
+# Đồ thị tri thức doanh nghiệp niêm yết Việt Nam
 
-Knowledge Graph cho doanh nghiệp niêm yết Việt Nam:
+Đồ thị tri thức (Knowledge Graph) cho doanh nghiệp niêm yết Việt Nam:
 
 1. Khám phá đồ thị: sở hữu, lãnh đạo, công ty con, liên kết liên quan.
 2. Truy vấn qua web: graph explorer, tìm kiếm, thống kê, quan hệ suy diễn, panel trợ lý (query + cấu hình LLM).
@@ -17,14 +17,14 @@ Các khối code chính:
 | UI | `frontend/` (React, Vite, vis-network) |
 | Docker | `docker-compose.yml`, `docker/nginx.conf` |
 
-**Tài liệu:** [`docs/README.md`](docs/README.md) (mục lục) · [`docs/LLM_AND_QUERY.md`](docs/LLM_AND_QUERY.md) (LLM, chat, timeout) · [`docs/PRESENTATION_DECK_CONTENT.md`](docs/PRESENTATION_DECK_CONTENT.md) + [`docs/ppt_assets/`](docs/ppt_assets/) (slide/ảnh; không có script build `.pptx` trong repo).
+**Tài liệu:** [`docs/README.md`](docs/README.md) (mục lục) · [`docs/LLM_AND_QUERY.md`](docs/LLM_AND_QUERY.md) · [`docs/inference_rules.md`](docs/inference_rules.md) · [`docs/entities_schema.md`](docs/entities_schema.md) · [`docs/cypher_reference.md`](docs/cypher_reference.md) · [`docs/FRONTEND.md`](docs/FRONTEND.md).
 
 ## Mục lục
 
 - [1. Tổng quan](#1-tổng-quan)
 - [2. Chạy nhanh](#2-chạy-nhanh)
   - [2.1 Yêu cầu](#21-yêu-cầu)
-  - [2.2 Docker (full stack)](#22-docker-full-stack)
+  - [2.2 Docker (chạy đủ stack)](#22-docker-chạy-đủ-stack)
   - [2.3 Chạy local backend và frontend](#23-chạy-local-backend-và-frontend)
   - [2.4 Cập nhật dữ liệu (CLI)](#24-cập-nhật-dữ-liệu-cli)
 - [3. Kiến trúc và luồng dữ liệu](#3-kiến-trúc-và-luồng-dữ-liệu)
@@ -35,7 +35,7 @@ Các khối code chính:
 - [4. API và tính năng UI](#4-api-và-tính-năng-ui)
   - [4.1 Frontend](#41-frontend)
   - [4.2 Endpoint API](#42-endpoint-api)
-  - [4.3 Tech stack](#43-tech-stack)
+  - [4.3 Công nghệ sử dụng](#43-công-nghệ-sử-dụng)
 - [5. Cấu trúc repo](#5-cấu-trúc-repo)
   - [5.1 Cây thư mục rút gọn](#51-cây-thư-mục-rút-gọn)
   - [5.2 File và thư mục đáng đọc](#52-file-và-thư-mục-đáng-đọc)
@@ -48,9 +48,9 @@ Các khối code chính:
 
 Dữ liệu niêm yết được kéo về qua **API FireAnt** (REST theo `FIREANT_BASE_URL`): cổ đông, lãnh đạo, công ty con, người thân trong mạng sở hữu, ảnh hưởng gián tiếp qua tầng trung gian — thông tin nằm trong nhiều **payload/bảng** của cùng nguồn, khó phân tích dạng mạng nếu chỉ xem từng màn hình riêng lẻ.
 
-Repo gom về **một graph Neo4j**, thêm **cạnh suy diễn theo luật**, rồi phục vụ **REST `/api/*`** và **SPA** gọi cùng origin qua Nginx.
+Repo gom về **một graph Neo4j**, thêm **cạnh suy diễn theo luật**, rồi phục vụ **REST `/api/*`** và **ứng dụng web một trang (SPA)** qua cùng origin Nginx.
 
-Hai entrypoint tách bạch:
+Hai điểm vào chương trình tách bạch:
 
 - **`pipeline.py`**: cập nhật dữ liệu (CLI hoặc được gọi từ luồng crawl trong `script.py`).
 - **`script.py`**: web server Flask; không phải “chỉ đọc graph” — khi start có thể chạy bước ingest/RAG tùy file trong `ingest/` (xem mục 3.4).
@@ -67,7 +67,7 @@ Hai entrypoint tách bạch:
 | `FIREANT_TOKEN` | Bắt buộc khi crawl FireAnt thật |
 | LLM đang lên | Cần cho `/api/query` và panel model (theo `LLM_BASE_URL` trong `.env.docker`) |
 
-### 2.2 Docker (full stack)
+### 2.2 Docker (chạy đủ stack)
 
 ```bash
 export FIREANT_TOKEN=YOUR_FIREANT_TOKEN   # tuỳ chọn: chỉ xem UI với data sẵn có thì không cần
@@ -105,8 +105,8 @@ cd frontend && npm install && npm run dev
 
 `vite.config.ts` proxy `/api` → `http://127.0.0.1:5001` (timeout proxy **600s** cho `/api/query` chậm).
 
-| Dev setup | UI | API |
-|-----------|----|-----|
+| Cách chạy dev | Giao diện | API |
+|---------------|----------|-----|
 | Khuyến nghị | `http://localhost:5001` (Docker `kg-ui`) | Cùng origin `/api/*` |
 | Vite + backend local | `http://localhost:5173` | Proxy → `127.0.0.1:5001` |
 | Vite + chỉ `kg-app` Docker | `5173` | Đổi proxy `target` → `http://127.0.0.1:5002` hoặc dùng UI cổng 5001 |
@@ -163,7 +163,7 @@ Tham số (lệnh `update` / `crawl`): `--symbols VCB FPT`, `--banks-only`, `--s
 
 1. Crawl FireAnt → ghi `backend/data/raw/`.
 2. `llm_preprocessor.process_raw_files()` → `processed_raw/`, file vào `ingest/`, build `kg_data/kg_nodes.json` + `kg_edges.json`.
-3. `push_to_neo4j()`: chạy `MATCH (n) DETACH DELETE n` rồi nạp lại toàn bộ node/edge từ hai file JSON (full replace, không merge incremental).
+3. `push_to_neo4j()`: chạy `MATCH (n) DETACH DELETE n` rồi nạp lại toàn bộ node/edge từ hai file JSON (thay thế toàn bộ, không gộp tăng dần).
 4. `add_leader_family_relations` (trong pipeline) → bổ sung cạnh người thân lãnh đạo.
 5. `run_all_inference_rules` → cạnh suy diễn (`r.inferred = true`, `r.inferred_from` là một trong `R01`–`R04` tùy luật).
 6. Sinh lại `backend/data/config/entity_map.json`.
@@ -182,7 +182,7 @@ Trước `app.run()`, code có thể:
 
 - Rule inference **không** dùng LLM để “bịa” cạnh mới trong DB.
 - Luồng: entity + RAG + Neo4j + (tuỳ **Reasoning** UI) LLM sinh Cypher agentic + tin tức web ngắn + LLM tổng hợp trả lời.
-- Grounding Cypher: `backend/docs/cypher_reference.md`. Chi tiết LLM: [`docs/LLM_AND_QUERY.md`](docs/LLM_AND_QUERY.md).
+- Neo Cypher (mẫu truy vấn): [`docs/cypher_reference.md`](docs/cypher_reference.md). Chi tiết LLM: [`docs/LLM_AND_QUERY.md`](docs/LLM_AND_QUERY.md).
 
 ## 4. API và tính năng UI
 
@@ -192,9 +192,9 @@ Trước `app.run()`, code có thể:
 |------|-----------|---------|
 | Thanh trên | `TopBar` | Theme, tìm kiếm, crawl + progress, chip thống kê |
 | Cột trái | `LeftRail` | Danh sách luật ẩn, quan hệ suy diễn, điều khiển graph |
-| Canvas | `useKgGraph` + vis-network | `/api/graph`, lazy neighbors |
+| Canvas | `useKgGraph` + vis-network | `/api/graph`, nạp láng giềng theo nhu cầu |
 | Chi tiết node | `NodeDetailPanel` | `/api/node/<id>` |
-| Trợ lý | `AssistantPanel` | Chat, gợi ý prompt (kéo thay chiều cao), session local, modal **Kết nối LLM**, toggle Reasoning |
+| Trợ lý | `AssistantPanel` | Chat, gợi ý prompt (kéo thay chiều cao), phiên lưu cục bộ, modal **Kết nối LLM**, bật/tắt Reasoning |
 
 Copy tiếng Việt: `frontend/src/content/copy/vi.ts`. Markdown chat: `marked` + `DOMPurify` (`utils/chatHtml.ts`).
 
@@ -210,9 +210,9 @@ LLM / query: `GET /api/vllm/models`, `GET /api/ollama/models`, `GET|POST /api/ll
 
 `POST /api/query` body: `query`, `history`, `reasoning` (boolean — agentic Cypher), `model` (tuỳ chọn).
 
-`GET /` trên Flask: health/info JSON, không phải HTML app.
+`GET /` trên Flask: JSON trạng thái/health, không phải HTML ứng dụng.
 
-### 4.3 Tech stack
+### 4.3 Công nghệ sử dụng
 
 Backend / data:
 
@@ -251,7 +251,6 @@ Docker Compose, Nginx, tùy chọn Cloudflare Quick Tunnel (`manage.sh`).
 ├── backend/
 │   ├── app/              # runtime.py, web.py, rule_catalog.py
 │   ├── data/             # raw, processed, kg_data, config
-│   ├── docs/             # cypher_reference, entities_schema, inference_rules
 │   ├── scripts/          # entity_map, reset_db, crawl helpers, …
 │   ├── inference_rules.py
 │   ├── llm_preprocessor.py
@@ -259,7 +258,7 @@ Docker Compose, Nginx, tùy chọn Cloudflare Quick Tunnel (`manage.sh`).
 │   ├── requirements-docker.txt
 │   ├── .env.docker       # env cho Docker kg-app
 │   └── script.py         # Flask routes
-├── docs/                 # mục lục tài liệu, LLM, slide deck
+├── docs/                 # toàn bộ tài liệu Markdown (schema, luật, LLM, frontend)
 ├── docker/
 ├── frontend/src/         # React SPA
 ├── scripts/              # tmux-kg.sh, …
@@ -277,7 +276,7 @@ Docker Compose, Nginx, tùy chọn Cloudflare Quick Tunnel (`manage.sh`).
 | `backend/app/runtime.py` | Neo4j URI, LLM backend, model list, ghi `.env.docker` |
 | `backend/app/web.py` | Đối tượng Flask `app` |
 | `backend/app/rule_catalog.py` | Luật 1–4 (mã `R01`–`R04`) cho `/api/rules` và UI quan hệ ẩn |
-| `backend/docs/` | Grounding Cypher / schema / tài liệu inference |
+| `docs/` | Mẫu Cypher, schema, luật suy diễn, LLM, frontend |
 | `backend/scripts/generate_entity_map.py` | `entity_map.json` |
 | `frontend/src/components/AssistantPanel.tsx` | Chat, LLM modal, splitter prompt/chat |
 | `frontend/src/api/client.ts` | `fetch` `/api/*`, xử lý lỗi HTTP 524 |
@@ -315,9 +314,9 @@ Docker: `backend/.env.docker` là `env_file` của `kg-app` và được COPY th
 ### 6.2 Lưu ý quan trọng
 
 - Crawl thật: cần `FIREANT_TOKEN`; Compose mặc định chuỗi rỗng.
-- Assistant: LLM phải reach được từ container (địa chỉ trong `.env.docker` — thường phải là IP máy host hoặc `host.docker.internal`, không hardcode LAN của máy khác).
+- Trợ lý: container phải **kết nối được** tới LLM (địa chỉ trong `.env.docker` — thường là IP máy host hoặc `host.docker.internal`, không hardcode LAN máy khác).
 - `POST /api/llm/settings` ghi file `.env.docker`, **không có auth** — chỉ dùng trong mạng tin cậy.
-- `push_to_neo4j()` **xóa toàn bộ graph** trước khi load lại từ JSON — không phải upsert incremental.
+- `push_to_neo4j()` **xóa toàn bộ graph** trước khi nạp lại từ JSON — không phải cập nhật gộp tăng dần (upsert).
 - Image backend: base **PyTorch CUDA** — dung lượng lớn so với Flask thuần.
 - Hai chế độ dev: Vite→5001 (backend local) vs Docker API host 5002 — proxy phải khớp cổng đích (xem mục 2.3).
 - **Cloudflare Quick Tunnel** (`manage.sh`): giới hạn ~100s có thể gây **HTTP 524** trên `/api/query` khi Reasoning bật và LLM chậm — xem [6.3](#63-llm-chat-và-http-524).

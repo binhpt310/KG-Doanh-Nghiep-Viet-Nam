@@ -31,7 +31,7 @@ Dockerfile
 backend/data/*.csv
 backend/data/*.parquet
 backend/data/*.sqlite
-# Keep: data/config/, data/kg_data/, data/processed/, docs/
+# Keep: data/config/, data/kg_data/, data/processed/; docs/ copied via Dockerfile → /app/docs/
 
 # Node modules (if any)
 node_modules

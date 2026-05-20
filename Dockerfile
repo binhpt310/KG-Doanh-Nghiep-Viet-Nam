@@ -11,7 +11,7 @@ RUN pip install --no-cache-dir -r requirements-docker.txt
 COPY backend/*.py ./
 COPY backend/app/ ./app/
 COPY backend/scripts/ ./scripts/
-COPY backend/docs/ ./docs/
+COPY docs/ /app/docs/
 COPY backend/data/ ./data/
 
 # Use .env.docker as default .env inside the container

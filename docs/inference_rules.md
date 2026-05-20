@@ -1,48 +1,48 @@
-# Hidden Relations Inference Rules
+# Luật suy diễn quan hệ ẩn
 
-## Overview
+## Tổng quan
 
-This document describes the inference rules used to discover hidden relationships in the Knowledge Graph of Vietnamese listed companies. Each rule is based on Vietnamese legal thresholds for ownership disclosure and control.
+Tài liệu mô tả các luật suy diễn dùng để phát hiện **quan hệ ẩn** trên đồ thị tri thức doanh nghiệp niêm yết Việt Nam. Mỗi luật dựa trên ngưỡng pháp lý về công bố sở hữu và kiểm soát.
 
-## Legal Thresholds
+## Ngưỡng pháp lý
 
-| Threshold | Percentage | Legal Basis | Meaning |
-|-----------|-----------|-------------|---------|
-| Large Shareholder | >= 5% | [TT 96/2020/TT-BTC](https://thuvienphapluat.vn/van-ban/Chung-khoan/Thong-tu-96-2020-TT-BTC-cong-bo-thong-tin-hoat-dong-tren-thi-truong-chung-khoan-457417.aspx) | Must disclose as large shareholder |
-| Ultimate Beneficial Owner (UBO) | >= 25% | [NĐ 168/2025/NĐ-CP](https://thuvienphapluat.vn/van-ban/Doanh-nghiep/Nghi-dinh-168-2025-ND-CP-huong-dan-Luat-Doanh-nghiep-2025-558001.aspx), [Luật Doanh nghiệp 2025](https://thuvienphapluat.vn/van-ban/Doanh-nghiep/Luat-Doanh-nghiep-2025-556998.aspx) | Classified as UBO |
-| Absolute Control | >= 50% | [Luật Chứng khoán 2019](https://thuvienphapluat.vn/van-ban/Chung-khoan/Luat-Chung-khoan-2019-431476.aspx) | Absolute controlling stake |
+| Ngưỡng | Tỷ lệ | Căn cứ pháp lý | Ý nghĩa |
+|--------|-------|-----------------|---------|
+| Cổ đông lớn | ≥ 5% | [TT 96/2020/TT-BTC](https://thuvienphapluat.vn/van-ban/Chung-khoan/Thong-tu-96-2020-TT-BTC-cong-bo-thong-tin-hoat-dong-tren-thi-truong-chung-khoan-457417.aspx) | Phải công bố cổ đông lớn |
+| Chủ sở hữu hưởng lợi (CSHL) | ≥ 25% | [NĐ 168/2025/NĐ-CP](https://thuvienphapluat.vn/van-ban/Doanh-nghiep/Nghi-dinh-168-2025-ND-CP-huong-dan-Luat-Doanh-nghiep-2025-558001.aspx), [Luật Doanh nghiệp 2025](https://thuvienphapluat.vn/van-ban/Doanh-nghiep/Luat-Doanh-nghiep-2025-556998.aspx) | Xác định CSHL |
+| Kiểm soát tuyệt đối | ≥ 50% | [Luật Chứng khoán 2019](https://thuvienphapluat.vn/van-ban/Chung-khoan/Luat-Chung-khoan-2019-431476.aspx) | Tỷ lệ kiểm soát tuyệt đối |
 
-## Influence Level Classification
+## Phân loại mức ảnh hưởng
 
-| Indirect Ownership % | Influence Level | Relation Label (Neo4j) |
-|---------------------|-----------------|---------------------------|
-| < 5% | NONE | No relation created (skipped) |
-| 5% <= x < 25% | LOW | `CÓ_LỢI_ÍCH_GIÁN_TIẾP` |
-| 25% <= x < 50% | MEDIUM | `ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI` |
-| >= 50% | HIGH | `KIỂM_SOÁT_GIÁN_TIẾP` |
+| % sở hữu gián tiếp / gộp | `influence_level` | Nhãn cạnh Neo4j |
+|--------------------------|-------------------|-----------------|
+| &lt; 5% | NONE | Không tạo cạnh |
+| 5% ≤ x &lt; 25% | LOW | `CÓ_LỢI_ÍCH_GIÁN_TIẾP` |
+| 25% ≤ x &lt; 50% | MEDIUM | `ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI` |
+| ≥ 50% | HIGH | `KIỂM_SOÁT_GIÁN_TIẾP` |
 
 Catalog API và UI: `backend/app/rule_catalog.py` (`R01`–`R04`). Mã luật trên cạnh: `r.inferred_from`.
 
-**Neo4j relationship `type()` names use Vietnamese Unicode** (e.g. `LÀ_CỔ_ĐÔNG_CỦA`, `KIỂM_SOÁT_GIA_ĐÌNH`) — not ASCII slugs like `KIEM_SOAT_GIA_DINH`.
+**Tên quan hệ Neo4j dùng Unicode tiếng Việt** (vd. `LÀ_CỔ_ĐÔNG_CỦA`, `KIỂM_SOÁT_GIA_ĐÌNH`) — không dùng slug ASCII như `KIEM_SOAT_GIA_DINH`.
 
-| `inferred_from` | UI law name | Neo4j edge type(s) created |
-|-----------------|-------------|----------------------------|
+| `inferred_from` | Tên luật (UI) | Loại cạnh Neo4j được tạo |
+|-----------------|--------------|-------------------------|
 | R01 | Luật 1 | `KIỂM_SOÁT_GIA_ĐÌNH` |
 | R02 | Luật 2 | `SỞ_HỮU_GIÁN_TIẾP` |
 | R03 | Luật 3 | `CÓ_LỢI_ÍCH_GIÁN_TIẾP` (LOW), `ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI` (MEDIUM), `KIỂM_SOÁT_GIÁN_TIẾP` (HIGH) |
-| R04 | Luật 4 | `CÙNG_CỔ_ĐÔNG_LỚN` (company ↔ company) |
+| R04 | Luật 4 | `CÙNG_CỔ_ĐÔNG_LỚN` (công ty ↔ công ty) |
 
-**R02 vs R03:** R02 requires `(a)-[:LÀ_CỔ_ĐÔNG_CỦA]->(b)` and subsidiary link to `c`; always `SỞ_HỮU_GIÁN_TIẾP`. R03 allows a broader first hop `r1` and picks one of three R03 edge types by indirect % bands. Both skip when indirect/combined % &lt; 5%.
+**R02 và R03:** R02 yêu cầu `(a)-[:LÀ_CỔ_ĐÔNG_CỦA]->(b)` và liên kết công ty con tới `c`; luôn tạo `SỞ_HỮU_GIÁN_TIẾP`. R03 cho phép hop đầu `r1` rộng hơn và chọn một trong ba loại cạnh theo dải %. Cả hai bỏ qua nếu % gộp/gián tiếp &lt; 5%.
 
-**Legacy IDs:** `R07` → `R03`, `R12` → `R04` via `migrate_legacy_inferred_rule_ids()` at inference/API startup.
+**Mã cũ:** `R07` → `R03`, `R12` → `R04` qua `migrate_legacy_inferred_rule_ids()` khi chạy inference / khởi động API.
 
 ---
 
-## Rule R01: Spousal Ownership Aggregation
+## Luật R01: Gộp sở hữu vợ chồng
 
-### Description
+### Mô tả
 
-When a married couple (A and B) each hold ownership stakes in the same company C, their combined ownership is calculated. This is critical for identifying family-controlled entities where individual stakes may be below disclosure thresholds but combined stakes are significant.
+Khi vợ chồng (A và B) cùng là cổ đông một công ty C, hệ thống cộng tỷ lệ sở hữu. Giúp nhận diện kiểm soát gia đình khi từng người dưới ngưỡng công bố nhưng tổng gộp đáng kể.
 
 ### Logic
 
@@ -52,14 +52,13 @@ When a married couple (A and B) each hold ownership stakes in the same company C
 (B) --[LÀ_CỔ_ĐÔNG_CỦA: y%]--> (C)
 => (A) --[KIỂM_SOÁT_GIA_ĐÌNH: (x+y)%]--> (C)
 ```
-(Neo4j dùng đúng kiểu quan hệ như trong `inference_rules.py`.)
 
-### Legal Basis
+### Căn cứ pháp lý
 
-- **Nghị định 168/2025/NĐ-CP** Article 6: UBO determination includes ownership held by spouse.
-- **TT 96/2020/TT-BTC**: Spousal ownership must be aggregated for disclosure purposes.
+- **Nghị định 168/2025/NĐ-CP** Điều 6: xác định CSHL gồm sở hữu của vợ/chồng.
+- **TT 96/2020/TT-BTC**: gộp sở hữu vợ chồng khi công bố.
 
-### Properties on Created Relation
+### Thuộc tính trên cạnh tạo mới
 
 ```json
 {
@@ -76,13 +75,13 @@ When a married couple (A and B) each hold ownership stakes in the same company C
 }
 ```
 
-### Example
+### Ví dụ
 
-Mr. Dao Manh Khang (P_100) owns 20% of ABB. His wife (P_12345) owns 15.5% of ABB. Combined family control = 35.5% (MEDIUM influence, above UBO threshold).
+Ông Đào Mạnh Khang (P_100) nắm 20% ABB, vợ (P_12345) nắm 15,5% ABB. Kiểm soát gia đình gộp = 35,5% (`MEDIUM`, trên ngưỡng CSHL).
 
-### Equivalent Cypher
+### Cypher tương đương
 
-**Bước 1 — Khám phá cặp vợ chồng cùng cổ đông một DN** (`run_r01_spousal_aggregation`):
+**Bước 1 — Khám phá** (`run_r01_spousal_aggregation`):
 
 ```cypher
 MATCH (a:Entity)-[spouse_rel]-(b:Entity)
@@ -98,7 +97,7 @@ RETURN a.id AS A, b.id AS B, c.id AS C,
 LIMIT 500
 ```
 
-**Bước 2 — Tạo cạnh** (Python gán `combined_pct = (own_a + own_b) * 100`, bỏ qua nếu &lt; 5%):
+**Bước 2 — Tạo cạnh** (Python: `combined_pct = (own_a + own_b) * 100`, bỏ qua nếu &lt; 5%):
 
 ```cypher
 MATCH (a:Entity {id: $src})
@@ -116,30 +115,30 @@ ON CREATE SET r.inferred = true,
               r.path = $path
 ```
 
-`$influence` = `LOW` | `MEDIUM` | `HIGH` theo `combined_pct` (ngưỡng 5 / 25 / 50). `ownership` trên `LÀ_CỔ_ĐÔNG_CỦA` lưu **phân số** (0.15 = 15%).
+`$influence` = `LOW` | `MEDIUM` | `HIGH` theo `combined_pct` (ngưỡng 5 / 25 / 50). `ownership` trên `LÀ_CỔ_ĐÔNG_CỦA` lưu **phân số** (0,15 = 15%).
 
 ---
 
-## Rule R02: Indirect Ownership Chain
+## Luật R02: Sở hữu gián tiếp qua công ty con
 
-### Description
+### Mô tả
 
-Calculates indirect ownership when entity A owns a percentage of B, and B owns (or controls as subsidiary) entity C. The indirect ownership is the product of the two ownership percentages.
+Tính sở hữu gián tiếp khi A nắm B, B (hoặc quan hệ công ty con) nắm C. Tỷ lệ gián tiếp = tích hai tỷ lệ.
 
 ### Logic
 
 ```
 (A) --[LÀ_CỔ_ĐÔNG_CỦA: x]--> (B)
-(B) --[CÓ_CÔNG_TY_CON: y]--> (C)   (or reverse LÀ_CÔNG_TY_CON_CỦA)
+(B) --[CÓ_CÔNG_TY_CON: y]--> (C)   (hoặc chiều LÀ_CÔNG_TY_CON_CỦA)
 => (A) --[SỞ_HỮU_GIÁN_TIẾP: (x*y)%]--> (C)
 ```
 
-### Legal Basis
+### Căn cứ pháp lý
 
-- **Luật Chứng khoán 2019** Article 4: Defines indirect ownership for reporting requirements.
-- **TT 96/2020/TT-BTC**: Indirect ownership through subsidiaries must be disclosed.
+- **Luật Chứng khoán 2019** Điều 4: định nghĩa sở hữu gián tiếp khi công bố.
+- **TT 96/2020/TT-BTC**: công bố sở hữu gián tiếp qua công ty con.
 
-### Properties on Created Relation
+### Thuộc tính trên cạnh tạo mới
 
 ```json
 {
@@ -154,13 +153,13 @@ Calculates indirect ownership when entity A owns a percentage of B, and B owns (
 }
 ```
 
-### Example
+### Ví dụ
 
-FPT (C_FPT) owns 30% of FPT Trading (C_FPT_TRADE). FPT Trading owns 51% of a retail subsidiary. FPT's indirect ownership = 30% * 51% = 15.3% (LOW influence, above disclosure threshold).
+FPT (C_FPT) nắm 30% FPT Trading; FPT Trading nắm 51% công ty con bán lẻ. Sở hữu gián tiếp FPT = 30% × 51% = 15,3% (`LOW`, trên ngưỡng 5%).
 
-### Equivalent Cypher
+### Cypher tương đương
 
-**Bước 1 — Khám phá chuỗi cổ đông → công ty con** (hai hướng `CÓ_CÔNG_TY_CON` / `LÀ_CÔNG_TY_CON_CỦA`):
+**Bước 1 — Khám phá** (hai hướng `CÓ_CÔNG_TY_CON` / `LÀ_CÔNG_TY_CON_CỦA`):
 
 ```cypher
 CALL () {
@@ -203,35 +202,35 @@ ON CREATE SET r.inferred = true,
 
 ---
 
-## Rule R03: Indirect Influence (Threshold-Based)
+## Luật R03: Ảnh hưởng gián tiếp theo ngưỡng
 
-### Description
+### Mô tả
 
-The most comprehensive rule. Finds any 2-hop path where A has a relation to B, and B owns C as a subsidiary. Calculates indirect ownership percentage and creates a typed influence relation based on legal thresholds. This is an upgraded version of the original simple inference logic.
+Luật tổng quát: đường 2 bước A → B → C (B có công ty con C), tính % gián tiếp và gán **một trong ba** loại cạnh theo ngưỡng 5 / 25 / 50. Phiên bản nâng cấp so với logic suy diễn đơn giản ban đầu.
 
 ### Logic
 
 ```
-(A) --[r1: any relation, ownership x]--> (B)
+(A) --[r1: quan hệ bất kỳ, ownership x]--> (B)
 (B) --[CÓ_CÔNG_TY_CON: ownership y]--> (C)
 
-indirect_pct = x_frac * y_frac * 100   (see run_r03_indirect_influence)
+indirect_pct = x_frac * y_frac * 100   (xem run_r03_indirect_influence)
 
-  < 5%   => SKIP
+  < 5%   => BỎ QUA
   5–25%  => (A)-[:CÓ_LỢI_ÍCH_GIÁN_TIẾP]->(C)     [LOW]
   25–50% => (A)-[:ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI]->(C)  [MEDIUM]
   >= 50% => (A)-[:KIỂM_SOÁT_GIÁN_TIẾP]->(C)       [HIGH]
 ```
 
-On the web UI, all three R03 types display as **Ảnh hưởng gián tiếp** with level Thấp / Trung bình / Cao (`rule_catalog.inferred_edge_label_display_vi`).
+Trên UI, cả ba loại cạnh R03 hiển thị chung là **Ảnh hưởng gián tiếp** kèm mức Thấp / Trung bình / Cao (`inferred_edge_label_display_vi`).
 
-### Legal Basis
+### Căn cứ pháp lý
 
-- **TT 96/2020/TT-BTC**: >= 5% requires disclosure.
-- **NĐ 168/2025/NĐ-CP**: >= 25% qualifies as UBO (significant influence).
-- **Luật Chứng khoán 2019**: >= 50% constitutes absolute control.
+- **TT 96/2020/TT-BTC**: ≥ 5% phải công bố.
+- **NĐ 168/2025/NĐ-CP**: ≥ 25% xét CSHL.
+- **Luật Chứng khoán 2019**: ≥ 50% kiểm soát tuyệt đối.
 
-### Properties on Created Relation
+### Thuộc tính trên cạnh tạo mới
 
 ```json
 {
@@ -247,13 +246,13 @@ On the web UI, all three R03 types display as **Ảnh hưởng gián tiếp** wi
 }
 ```
 
-### Example
+### Ví dụ
 
-Person Nguyen Van A (P_100) is a 30% shareholder of VPBank (C_VPB). VPBank owns 51% of VPBank Fund (C_VPB_FUND) as a subsidiary. Indirect ownership = 30% * 51% = 15.3%. Since 5% <= 15.3% < 25%, relation `CÓ_LỢI_ÍCH_GIÁN_TIẾP` (LOW) is created.
+Nguyễn Văn A (P_100) nắm 30% VPBank (C_VPB); VPBank nắm 51% quỹ con. Gián tiếp = 15,3%. Vì 5% ≤ 15,3% &lt; 25% → tạo `CÓ_LỢI_ÍCH_GIÁN_TIẾP` (`LOW`).
 
-### Equivalent Cypher
+### Cypher tương đương
 
-**Bước 1 — Khám phá đường 2 bước** (hop đầu rộng hơn R02; loại trừ cạnh R03 đã có):
+**Bước 1 — Khám phá** (hop đầu rộng hơn R02; loại trừ cạnh R03 đã có):
 
 ```cypher
 CALL () {
@@ -299,17 +298,17 @@ ON CREATE SET r.inferred = true,
               r.label = 'CÓ_LỢI_ÍCH_GIÁN_TIẾP'
 ```
 
-Các nhánh khác: thay `CÓ_LỢI_ÍCH_GIÁN_TIẾP` + `LOW` bằng `ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI` + `MEDIUM` (25–50%) hoặc `KIỂM_SOÁT_GIÁN_TIẾP` + `HIGH` (≥ 50%). Không dùng một `MERGE` chung với `type(r)` động — runtime tạo đúng một `type()` cố định mỗi bản ghi.
+Nhánh khác: thay `CÓ_LỢI_ÍCH_GIÁN_TIẾP` + `LOW` bằng `ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI` + `MEDIUM` (25–50%) hoặc `KIỂM_SOÁT_GIÁN_TIẾP` + `HIGH` (≥ 50%). Không dùng một `MERGE` với `type(r)` động — runtime tạo đúng một `type()` cố định mỗi bản ghi.
 
 ---
 
-## Rule R04: Shared Major Shareholder
+## Luật R04: Liên kết qua cùng cổ đông lớn
 
-### Description
+### Mô tả
 
-When the same person (`P_*`) holds ≥ 5% in two listed companies (`C_*`), create `C_x -[:CÙNG_CỔ_ĐÔNG_LỚN]-> C_y` (`c.id < d.id`, both endpoints are companies).
+Cùng một cá nhân (`P_*`) nắm ≥ 5% tại hai công ty niêm yết (`C_*`) → tạo `C_x -[:CÙNG_CỔ_ĐÔNG_LỚN]-> C_y` (`c.id < d.id`, hai đầu đều là công ty).
 
-### Properties on Created Relation
+### Thuộc tính trên cạnh tạo mới
 
 ```json
 {
@@ -322,7 +321,7 @@ When the same person (`P_*`) holds ≥ 5% in two listed companies (`C_*`), creat
 }
 ```
 
-### Equivalent Cypher
+### Cypher tương đương
 
 **Bước 1 — Khám phá** (`run_r04_shared_major_shareholder`):
 
@@ -340,7 +339,7 @@ RETURN c.id AS cid, d.id AS did, n.id AS nid, n.name AS nname,
 LIMIT 500
 ```
 
-**Bước 2 — Tạo cạnh** (giữa hai công ty, không phải Person → Company):
+**Bước 2 — Tạo cạnh** (giữa hai công ty):
 
 ```cypher
 MATCH (c:Entity {id: $cid})
@@ -357,9 +356,9 @@ ON CREATE SET r.inferred = true,
 
 ---
 
-## Execution
+## Chạy suy diễn
 
-### Programmatic Usage
+### Trong Python
 
 ```python
 from inference_rules import run_all_inference_rules
@@ -376,22 +375,22 @@ print(results)
 ### REST API
 
 ```bash
-# Trigger manual inference
+# Chạy suy diễn thủ công
 curl -X POST http://localhost:5001/api/inference/run
 
-# Get all inferred relations
+# Liệt kê quan hệ ẩn
 curl http://localhost:5001/api/inferred-relations
 
-# Filter by influence level
+# Lọc theo mức ảnh hưởng
 curl http://localhost:5001/api/inferred-relations?level=HIGH
 ```
 
-## Implementation Notes
+## Ghi chú triển khai
 
-1. **WHILE True Pattern**: Each rule loops internally until no new relations are found, ensuring all possible inferences are made regardless of graph depth.
+1. **Vòng lặp WHILE:** mỗi luật lặp đến khi không còn cạnh mới, đảm bảo suy diễn đủ trên đồ thị.
 
-2. **Batch Processing**: Rules process records in configurable batches (default 500) to prevent memory issues on large graphs.
+2. **Xử lý theo lô:** mặc định 500 bản ghi/lượt, tránh tràn bộ nhớ trên graph lớn.
 
-3. **Idempotency**: Relations are created with `MERGE` + `ON CREATE SET`, so re-running is safe and only creates new relations.
+3. **Idempotent:** `MERGE` + `ON CREATE SET` — chạy lại an toàn, chỉ thêm cạnh chưa có.
 
-4. **Threshold Enforcement**: Relations below 5% indirect ownership are NOT created, avoiding noise from insignificant connections.
+4. **Ngưỡng 5%:** không tạo cạnh khi % gián tiếp/gộp dưới 5%, giảm nhiễu.
