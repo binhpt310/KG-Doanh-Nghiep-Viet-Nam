@@ -162,7 +162,11 @@ Câu hỏi: {user_query}
 """
     try:
         print("[LLM] Đang thực hiện Grounded Reasoning...")
-        response = llm_inference(prompt, model=use_model)
+        response = llm_inference(
+            prompt,
+            model=use_model,
+            max_tokens=runtime.LLM_CYPHER_MAX_TOKENS,
+        )
         full_res = response.get("llm_response", "").strip()
         
         thought = ""
@@ -2663,7 +2667,15 @@ def api_query():
         response = llm_inference(prompt, model=model)
     except Exception as e:
         print(f"[LLM] Lỗi tổng hợp: {e}")
-        response = {"llm_response": f"[Lỗi: {e}]"}
+        return jsonify({
+            "error": str(e),
+            "answer": "",
+            "nodes": list(nodes_dict.values()),
+            "edges": edges,
+            "graphs": graphs,
+            "steps": steps + [f"❌ LLM: {e}"],
+            "cypher": cypher_used.strip(),
+        }), 502
     if isinstance(response, dict):
         ans = response.get("llm_response") or response.get("text") or str(response)
     elif isinstance(response, list) and response:

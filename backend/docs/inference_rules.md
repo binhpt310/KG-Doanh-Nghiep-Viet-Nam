@@ -14,12 +14,27 @@ This document describes the inference rules used to discover hidden relationship
 
 ## Influence Level Classification
 
-| Indirect Ownership % | Influence Level | Relation Label |
-|---------------------|-----------------|----------------|
+| Indirect Ownership % | Influence Level | Relation Label (Neo4j) |
+|---------------------|-----------------|---------------------------|
 | < 5% | NONE | No relation created (skipped) |
-| 5% <= x < 25% | LOW | `CO_LOI_ICH_GIAN_TIEP` |
-| 25% <= x < 50% | MEDIUM | `ANH_HUONG_GIAN_TIEP_TOI` |
-| >= 50% | HIGH | `KIEM_SOAT_GIAN_TIEP` |
+| 5% <= x < 25% | LOW | `CÓ_LỢI_ÍCH_GIÁN_TIẾP` |
+| 25% <= x < 50% | MEDIUM | `ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI` |
+| >= 50% | HIGH | `KIỂM_SOÁT_GIÁN_TIẾP` |
+
+Catalog API và UI: `backend/app/rule_catalog.py` (`R01`–`R04`). Mã luật trên cạnh: `r.inferred_from`.
+
+**Neo4j relationship `type()` names use Vietnamese Unicode** (e.g. `LÀ_CỔ_ĐÔNG_CỦA`, `KIỂM_SOÁT_GIA_ĐÌNH`) — not ASCII slugs like `KIEM_SOAT_GIA_DINH`.
+
+| `inferred_from` | UI law name | Neo4j edge type(s) created |
+|-----------------|-------------|----------------------------|
+| R01 | Luật 1 | `KIỂM_SOÁT_GIA_ĐÌNH` |
+| R02 | Luật 2 | `SỞ_HỮU_GIÁN_TIẾP` |
+| R03 | Luật 3 | `CÓ_LỢI_ÍCH_GIÁN_TIẾP` (LOW), `ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI` (MEDIUM), `KIỂM_SOÁT_GIÁN_TIẾP` (HIGH) |
+| R04 | Luật 4 | `CÙNG_CỔ_ĐÔNG_LỚN` (company ↔ company) |
+
+**R02 vs R03:** R02 requires `(a)-[:LÀ_CỔ_ĐÔNG_CỦA]->(b)` and subsidiary link to `c`; always `SỞ_HỮU_GIÁN_TIẾP`. R03 allows a broader first hop `r1` and picks one of three R03 edge types by indirect % bands. Both skip when indirect/combined % &lt; 5%.
+
+**Legacy IDs:** `R07` → `R03`, `R12` → `R04` via `migrate_legacy_inferred_rule_ids()` at inference/API startup.
 
 ---
 
@@ -56,7 +71,7 @@ When a married couple (A and B) each hold ownership stakes in the same company C
   "spouse_id": "P_12345",
   "spouse_name": "Nguyen Van B",
   "influence_level": "MEDIUM",
-  "label": "KIEM_SOAT_GIA_DINH",
+  "label": "KIỂM_SOÁT_GIA_ĐÌNH",
   "path": "P_100<=>P_12345->C_ABC"
 }
 ```
@@ -67,25 +82,41 @@ Mr. Dao Manh Khang (P_100) owns 20% of ABB. His wife (P_12345) owns 15.5% of ABB
 
 ### Equivalent Cypher
 
+**Bước 1 — Khám phá cặp vợ chồng cùng cổ đông một DN** (`run_r01_spousal_aggregation`):
+
 ```cypher
 MATCH (a:Entity)-[spouse_rel]-(b:Entity)
 WHERE type(spouse_rel) = 'VỢ_CHỒNG'
 MATCH (a)-[r1:LÀ_CỔ_ĐÔNG_CỦA]->(c:Entity)
 MATCH (b)-[r2:LÀ_CỔ_ĐÔNG_CỦA]->(c:Entity)
 WHERE r1.ownership IS NOT NULL AND r2.ownership IS NOT NULL
-WITH a, b, c,
-     toFloat(r1.ownership) + toFloat(r2.ownership) AS combined
-WHERE combined >= 0.05
-MERGE (a)-[r:KIỂM_SOÁT_GIA_ĐÌNH]->(c)
-SET r.inferred = true,
-    r.inferred_from = 'R01',
-    r.combined_ownership_pct = combined * 100,
-    r.influence_level = CASE
-      WHEN combined * 100 >= 50 THEN 'HIGH'
-      WHEN combined * 100 >= 25 THEN 'MEDIUM'
-      WHEN combined * 100 >= 5 THEN 'LOW'
-    END
+  AND a <> b
+  AND NOT EXISTS { (a)-[:KIỂM_SOÁT_GIA_ĐÌNH]->(c) }
+RETURN a.id AS A, b.id AS B, c.id AS C,
+       toFloat(r1.ownership) AS own_a,
+       toFloat(r2.ownership) AS own_b
+LIMIT 500
 ```
+
+**Bước 2 — Tạo cạnh** (Python gán `combined_pct = (own_a + own_b) * 100`, bỏ qua nếu &lt; 5%):
+
+```cypher
+MATCH (a:Entity {id: $src})
+MATCH (c:Entity {id: $tgt})
+MERGE (a)-[r:KIỂM_SOÁT_GIA_ĐÌNH]->(c)
+ON CREATE SET r.inferred = true,
+              r.inferred_from = 'R01',
+              r.combined_ownership_pct = $combined_pct,
+              r.ownership_a = $own_a_pct,
+              r.ownership_b = $own_b_pct,
+              r.spouse_id = $spouse_id,
+              r.spouse_name = $spouse_name,
+              r.influence_level = $influence,
+              r.label = 'KIỂM_SOÁT_GIA_ĐÌNH',
+              r.path = $path
+```
+
+`$influence` = `LOW` | `MEDIUM` | `HIGH` theo `combined_pct` (ngưỡng 5 / 25 / 50). `ownership` trên `LÀ_CỔ_ĐÔNG_CỦA` lưu **phân số** (0.15 = 15%).
 
 ---
 
@@ -98,9 +129,9 @@ Calculates indirect ownership when entity A owns a percentage of B, and B owns (
 ### Logic
 
 ```
-(A) --[LA_CO_DONG_CUA: x%]--> (B)
-(B) --[CO_CONG_TY_CON: y%]--> (C)
-=> (A) --[SO_HUU_GIAN_TIEP: (x*y)%]--> (C)
+(A) --[LÀ_CỔ_ĐÔNG_CỦA: x]--> (B)
+(B) --[CÓ_CÔNG_TY_CON: y]--> (C)   (or reverse LÀ_CÔNG_TY_CON_CỦA)
+=> (A) --[SỞ_HỮU_GIÁN_TIẾP: (x*y)%]--> (C)
 ```
 
 ### Legal Basis
@@ -118,7 +149,7 @@ Calculates indirect ownership when entity A owns a percentage of B, and B owns (
   "r1_ownership": 30.0,
   "r2_ownership": 51.0,
   "influence_level": "LOW",
-  "label": "SO_HUU_GIAN_TIEP",
+  "label": "SỞ_HỮU_GIÁN_TIẾP",
   "path": "P_100->C_XYZ->C_ABC"
 }
 ```
@@ -129,24 +160,45 @@ FPT (C_FPT) owns 30% of FPT Trading (C_FPT_TRADE). FPT Trading owns 51% of a ret
 
 ### Equivalent Cypher
 
+**Bước 1 — Khám phá chuỗi cổ đông → công ty con** (hai hướng `CÓ_CÔNG_TY_CON` / `LÀ_CÔNG_TY_CON_CỦA`):
+
 ```cypher
-MATCH (a:Entity)-[r1:LA_CO_DONG_CUA]->(b:Entity)
-MATCH (b)-[r2:CO_CONG_TY_CON]->(c:Entity)
-WHERE r1.ownership IS NOT NULL AND r2.ownership IS NOT NULL
-WITH a, c, r1, r2,
-     toFloat(r1.ownership) * toFloat(r2.ownership) AS indirect
-WHERE indirect >= 0.05
-MERGE (a)-[r:SO_HUU_GIAN_TIEP]->(c)
-SET r.inferred = true,
-    r.inferred_from = 'R02',
-    r.indirect_ownership_pct = indirect * 100,
-    r.r1_ownership = toFloat(r1.ownership) * 100,
-    r.r2_ownership = toFloat(r2.ownership) * 100,
-    r.influence_level = CASE
-      WHEN indirect * 100 >= 50 THEN 'HIGH'
-      WHEN indirect * 100 >= 25 THEN 'MEDIUM'
-      WHEN indirect * 100 >= 5 THEN 'LOW'
-    END
+CALL () {
+  MATCH (a:Entity)-[r1:LÀ_CỔ_ĐÔNG_CỦA]->(b:Entity)
+  MATCH (b:Entity)-[r2:CÓ_CÔNG_TY_CON]->(c:Entity)
+  WHERE r2.ownership IS NOT NULL
+  RETURN a, b, c, r1, r2
+  UNION
+  MATCH (a:Entity)-[r1:LÀ_CỔ_ĐÔNG_CỦA]->(b:Entity)
+  MATCH (c:Entity)-[r2:LÀ_CÔNG_TY_CON_CỦA]->(b:Entity)
+  WHERE r2.ownership IS NOT NULL
+  RETURN a, b, c, r1, r2
+}
+WITH a, b, c, r1, r2
+WHERE r1.ownership IS NOT NULL
+  AND a <> c
+  AND NOT EXISTS { (a)-[:SỞ_HỮU_GIÁN_TIẾP]->(c) }
+  AND NOT EXISTS { (a)-[:LÀ_CỔ_ĐÔNG_CỦA]->(c) }
+RETURN a.id AS A, c.id AS C,
+       toFloat(r1.ownership) AS own_ab,
+       toFloat(r2.ownership) AS own_bc
+LIMIT 500
+```
+
+**Bước 2 — Tạo cạnh** (`indirect_pct = own_ab * own_bc * 100`, bỏ qua nếu &lt; 5%):
+
+```cypher
+MATCH (a:Entity {id: $src})
+MATCH (c:Entity {id: $tgt})
+MERGE (a)-[r:SỞ_HỮU_GIÁN_TIẾP]->(c)
+ON CREATE SET r.inferred = true,
+              r.inferred_from = 'R02',
+              r.indirect_ownership_pct = $indirect_pct,
+              r.r1_ownership = $r1_pct,
+              r.r2_ownership = $r2_pct,
+              r.influence_level = $influence,
+              r.label = 'SỞ_HỮU_GIÁN_TIẾP',
+              r.path = $path
 ```
 
 ---
@@ -160,17 +212,18 @@ The most comprehensive rule. Finds any 2-hop path where A has a relation to B, a
 ### Logic
 
 ```
-(A) --[r1: any relation, ownership x%]--> (B)
-(B) --[CO_CONG_TY_CON: ownership y%]--> (C)
+(A) --[r1: any relation, ownership x]--> (B)
+(B) --[CÓ_CÔNG_TY_CON: ownership y]--> (C)
 
-indirect_ownership = (x/100) * (y/100) * 100
+indirect_pct = x_frac * y_frac * 100   (see run_r03_indirect_influence)
 
-Result based on indirect_ownership:
-  < 5%  => SKIP (no relation)
-  5-25% => (A) --[CO_LOI_ICH_GIAN_TIEP]--> (C)    [LOW]
-  25-50%=> (A) --[ANH_HUONG_GIAN_TIEP_TOI]--> (C) [MEDIUM]
-  >=50% => (A) --[KIEM_SOAT_GIAN_TIEP]--> (C)     [HIGH]
+  < 5%   => SKIP
+  5–25%  => (A)-[:CÓ_LỢI_ÍCH_GIÁN_TIẾP]->(C)     [LOW]
+  25–50% => (A)-[:ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI]->(C)  [MEDIUM]
+  >= 50% => (A)-[:KIỂM_SOÁT_GIÁN_TIẾP]->(C)       [HIGH]
 ```
+
+On the web UI, all three R03 types display as **Ảnh hưởng gián tiếp** with level Thấp / Trung bình / Cao (`rule_catalog.inferred_edge_label_display_vi`).
 
 ### Legal Basis
 
@@ -188,43 +241,118 @@ Result based on indirect_ownership:
   "influence_level": "LOW",
   "r1_ownership": 30.0,
   "r2_ownership": 51.0,
-  "r1_label": "LA_CO_DONG_CUA",
+  "r1_label": "LÀ_CỔ_ĐÔNG_CỦA",
   "path": "P_100->C_VPB->C_VPB_FUND",
-  "label": "CO_LOI_ICH_GIAN_TIEP"
+  "label": "CÓ_LỢI_ÍCH_GIÁN_TIẾP"
 }
 ```
 
 ### Example
 
-Person Nguyen Van A (P_100) is a 30% shareholder of VPBank (C_VPB). VPBank owns 51% of VPBank Fund (C_VPB_FUND) as a subsidiary. Indirect ownership = 30% * 51% = 15.3%. Since 5% <= 15.3% < 25%, relation `CO_LOI_ICH_GIAN_TIEP` (LOW) is created.
+Person Nguyen Van A (P_100) is a 30% shareholder of VPBank (C_VPB). VPBank owns 51% of VPBank Fund (C_VPB_FUND) as a subsidiary. Indirect ownership = 30% * 51% = 15.3%. Since 5% <= 15.3% < 25%, relation `CÓ_LỢI_ÍCH_GIÁN_TIẾP` (LOW) is created.
 
 ### Equivalent Cypher
 
+**Bước 1 — Khám phá đường 2 bước** (hop đầu rộng hơn R02; loại trừ cạnh R03 đã có):
+
 ```cypher
-MATCH (a:Entity)-[r1]->(b:Entity)-[r2:CO_CONG_TY_CON]->(c:Entity)
+CALL () {
+  MATCH (a:Entity)-[r1]->(b:Entity)-[r2:CÓ_CÔNG_TY_CON]->(c:Entity)
+  WHERE type(r1) <> 'CÓ_CÔNG_TY_CON'
+    AND r2.ownership IS NOT NULL
+    AND r2.ownership > 0
+  RETURN a, b, c, r1, r2
+  UNION
+  MATCH (a:Entity)-[r1]->(b:Entity)<-[r2:LÀ_CÔNG_TY_CON_CỦA]-(c:Entity)
+  WHERE type(r1) <> 'LÀ_CÔNG_TY_CON_CỦA'
+    AND r2.ownership IS NOT NULL
+    AND r2.ownership > 0
+  RETURN a, b, c, r1, r2
+}
+WITH a, b, c, r1, r2
 WHERE a <> c
-  AND type(r1) <> 'CO_CONG_TY_CON'
-  AND r2.ownership IS NOT NULL AND r2.ownership > 0
-WITH a, b, c, r1, r2,
-     coalesce(toFloat(r1.ownership), 1.0) * toFloat(r2.ownership) AS indirect_pct
-WHERE indirect_pct >= 0.05
-MERGE (a)-[r]->(c)
-  WHERE type(r) = CASE
-    WHEN indirect_pct >= 0.50 THEN 'KIEM_SOAT_GIAN_TIEP'
-    WHEN indirect_pct >= 0.25 THEN 'ANH_HUONG_GIAN_TIEP_TOI'
-    ELSE 'CO_LOI_ICH_GIAN_TIEP'
-  END
-SET r.inferred = true,
-    r.inferred_from = 'R03',
-    r.indirect_ownership_pct = indirect_pct * 100,
-    r.influence_level = CASE
-      WHEN indirect_pct * 100 >= 50 THEN 'HIGH'
-      WHEN indirect_pct * 100 >= 25 THEN 'MEDIUM'
-      ELSE 'LOW'
-    END,
-    r.r1_ownership = coalesce(toFloat(r1.ownership), 1.0) * 100,
-    r.r2_ownership = toFloat(r2.ownership) * 100,
-    r.path = a.id + '->' + b.id + '->' + c.id
+  AND NOT EXISTS { (a)-[:CÓ_LỢI_ÍCH_GIÁN_TIẾP]->(c) }
+  AND NOT EXISTS { (a)-[:ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI]->(c) }
+  AND NOT EXISTS { (a)-[:KIỂM_SOÁT_GIÁN_TIẾP]->(c) }
+  AND NOT EXISTS { (a)-[:ẢNH_HƯỞNG_GIÁN_TIẾP]->(c) }
+RETURN a.id AS A, c.id AS C,
+       r1.label AS r1_label,
+       coalesce(toFloat(r1.ownership), 1.0) AS r1_ownership,
+       toFloat(r2.ownership) AS r2_ownership
+LIMIT 500
+```
+
+**Bước 2 — Tạo cạnh** (Python chọn `rel_label` theo `indirect_pct`; ví dụ nhánh LOW):
+
+```cypher
+MATCH (a:Entity {id: $src})
+MATCH (c:Entity {id: $tgt})
+MERGE (a)-[r:CÓ_LỢI_ÍCH_GIÁN_TIẾP]->(c)
+ON CREATE SET r.inferred = true,
+              r.inferred_from = 'R03',
+              r.indirect_ownership_pct = $indirect_pct,
+              r.influence_level = 'LOW',
+              r.r1_ownership = $r1_pct,
+              r.r2_ownership = $r2_pct,
+              r.r1_label = $r1_label,
+              r.path = $path,
+              r.label = 'CÓ_LỢI_ÍCH_GIÁN_TIẾP'
+```
+
+Các nhánh khác: thay `CÓ_LỢI_ÍCH_GIÁN_TIẾP` + `LOW` bằng `ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI` + `MEDIUM` (25–50%) hoặc `KIỂM_SOÁT_GIÁN_TIẾP` + `HIGH` (≥ 50%). Không dùng một `MERGE` chung với `type(r)` động — runtime tạo đúng một `type()` cố định mỗi bản ghi.
+
+---
+
+## Rule R04: Shared Major Shareholder
+
+### Description
+
+When the same person (`P_*`) holds ≥ 5% in two listed companies (`C_*`), create `C_x -[:CÙNG_CỔ_ĐÔNG_LỚN]-> C_y` (`c.id < d.id`, both endpoints are companies).
+
+### Properties on Created Relation
+
+```json
+{
+  "inferred": true,
+  "inferred_from": "R04",
+  "label": "CÙNG_CỔ_ĐÔNG_LỚN",
+  "shared_holder_id": "P_12345",
+  "ownership_c": 0.08,
+  "ownership_d": 0.06
+}
+```
+
+### Equivalent Cypher
+
+**Bước 1 — Khám phá** (`run_r04_shared_major_shareholder`):
+
+```cypher
+MATCH (n:Entity)-[r1:LÀ_CỔ_ĐÔNG_CỦA]->(c:Entity)
+MATCH (n)-[r2:LÀ_CỔ_ĐÔNG_CỦA]->(d:Entity)
+WHERE c.id STARTS WITH 'C_' AND d.id STARTS WITH 'C_'
+  AND c.id < d.id
+  AND n.id STARTS WITH 'P_'
+  AND r1.ownership IS NOT NULL AND r2.ownership IS NOT NULL
+  AND toFloat(r1.ownership) >= 0.05 AND toFloat(r2.ownership) >= 0.05
+  AND NOT EXISTS { (c)-[x]->(d) WHERE type(x) = 'CÙNG_CỔ_ĐÔNG_LỚN' }
+RETURN c.id AS cid, d.id AS did, n.id AS nid, n.name AS nname,
+       toFloat(r1.ownership) AS o1, toFloat(r2.ownership) AS o2
+LIMIT 500
+```
+
+**Bước 2 — Tạo cạnh** (giữa hai công ty, không phải Person → Company):
+
+```cypher
+MATCH (c:Entity {id: $cid})
+MATCH (d:Entity {id: $did})
+MERGE (c)-[r:CÙNG_CỔ_ĐÔNG_LỚN]->(d)
+ON CREATE SET r.inferred = true,
+              r.inferred_from = 'R04',
+              r.label = 'CÙNG_CỔ_ĐÔNG_LỚN',
+              r.shared_holder_id = $nid,
+              r.shared_holder_name = $nname,
+              r.ownership_c = $o1,
+              r.ownership_d = $o2
 ```
 
 ---
@@ -241,7 +369,8 @@ driver = GraphDatabase.driver("neo4j://localhost:7687", auth=("neo4j", "password
 results = run_all_inference_rules(driver, batch_size=500)
 print(results)
 # {'R01_spousal_aggregation': 5, 'R02_indirect_ownership': 12,
-#  'R03_indirect_influence': 48, 'total': 65, 'elapsed_seconds': 3.42}
+#  'R03_indirect_influence': 48, 'R04_shared_major_shareholder': 3,
+#  'total': 68, 'elapsed_seconds': 3.42}
 ```
 
 ### REST API

@@ -2,6 +2,8 @@
 
 This document provides abstract patterns for querying the Vietnamese Business Knowledge Graph. Use these as templates for generating precise Cypher queries.
 
+**Used by:** `generate_cypher_with_llm()` in `backend/script.py` (loaded from `backend/docs/cypher_reference.md` at runtime). Agentic mode is triggered when the UI sends `reasoning: true` on `POST /api/query`.
+
 ## 1. Node Labels & IDs
 - All nodes are labeled `:Entity`.
 - Additional labels: `:Person`, `:Company`.

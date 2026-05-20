@@ -49,7 +49,14 @@ neo4j_driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSW
 
 LLM_INFERENCE_TIMEOUT = int(os.getenv("LLM_INFERENCE_TIMEOUT", "300"))
 OLLAMA_NUM_CTX = 10000
-LLM_MAX_TOKENS = int(os.getenv("LLM_MAX_TOKENS", "8192"))
+LLM_MAX_TOKENS = int(os.getenv("LLM_MAX_TOKENS", "4096"))
+LLM_CYPHER_MAX_TOKENS = int(os.getenv("LLM_CYPHER_MAX_TOKENS", "2048"))
+LLM_DISABLE_THINKING = os.getenv("LLM_DISABLE_THINKING", "true").strip().lower() in (
+    "1",
+    "true",
+    "yes",
+    "on",
+)
 LIVE_NEWS_TIMEOUT = float(os.getenv("LIVE_NEWS_TIMEOUT", "4.0"))
 LIVE_NEWS_MAX_ITEMS = int(os.getenv("LIVE_NEWS_MAX_ITEMS", "5"))
 
@@ -132,6 +139,28 @@ def strip_think_tags(text: str) -> str:
     return THINK_RE.sub("", text).strip()
 
 
+def _looks_like_thinking_trace(text: str) -> bool:
+    """Heuristic: vLLM/Qwen may put chain-of-thought in `reasoning` instead of `content`."""
+    lowered = text.lower()
+    return (
+        "thinking process" in lowered
+        or lowered.startswith("here's a thinking")
+        or lowered.startswith("here is a thinking")
+    )
+
+
+def extract_openai_message_text(message: dict | None) -> str:
+    if not message or not isinstance(message, dict):
+        return ""
+    content = (message.get("content") or "").strip()
+    if content:
+        return strip_think_tags(content)
+    reasoning = (message.get("reasoning") or "").strip()
+    if reasoning and not _looks_like_thinking_trace(reasoning):
+        return strip_think_tags(reasoning)
+    return ""
+
+
 def fetch_remote_models(
     *,
     base_url: str | None = None,
@@ -184,35 +213,85 @@ def ollama_inference(prompt: str, model: str | None = None) -> dict:
     return {"llm_response": text.strip(), "usage": {}}
 
 
-def openai_compatible_inference(prompt: str, model: str | None = None) -> dict:
+def openai_compatible_inference(
+    prompt: str,
+    model: str | None = None,
+    *,
+    max_tokens: int | None = None,
+    disable_thinking: bool | None = None,
+) -> dict:
     model = (model or MODEL_NAME).strip()
+    use_max_tokens = max_tokens if max_tokens is not None else LLM_MAX_TOKENS
+    use_disable_thinking = (
+        LLM_DISABLE_THINKING if disable_thinking is None else disable_thinking
+    )
+    user_content = prompt.strip()
+    if use_disable_thinking and not user_content.endswith("/nothink"):
+        user_content = f"{user_content}/nothink"
+
+    payload: dict = {
+        "model": model,
+        "messages": [{"role": "user", "content": user_content}],
+        "temperature": 0.8,
+        "max_tokens": use_max_tokens,
+        "stream": False,
+    }
+    if use_disable_thinking:
+        payload["chat_template_kwargs"] = {"enable_thinking": False}
+
     headers = {"Content-Type": "application/json"}
     if LLM_API_KEY:
         headers["Authorization"] = f"Bearer {LLM_API_KEY}"
-    response = requests.post(
-        f"{LLM_BASE_URL}/v1/chat/completions",
-        json={
-            "model": model,
-            "messages": [{"role": "user", "content": prompt.strip()}],
-            "temperature": 0.8,
-            "max_tokens": LLM_MAX_TOKENS,
-            "stream": False,
-        },
-        headers=headers,
-        timeout=LLM_INFERENCE_TIMEOUT,
-    )
-    response.raise_for_status()
+    try:
+        response = requests.post(
+            f"{LLM_BASE_URL}/v1/chat/completions",
+            json=payload,
+            headers=headers,
+            timeout=LLM_INFERENCE_TIMEOUT,
+        )
+        response.raise_for_status()
+    except requests.exceptions.Timeout as ex:
+        raise TimeoutError(
+            f"LLM không phản hồi trong {LLM_INFERENCE_TIMEOUT}s ({LLM_BASE_URL})"
+        ) from ex
+    except requests.exceptions.HTTPError as ex:
+        status = ex.response.status_code if ex.response is not None else "?"
+        detail = ""
+        if ex.response is not None:
+            try:
+                detail = (ex.response.json().get("error") or {}).get("message", "")
+            except Exception:
+                detail = (ex.response.text or "")[:200]
+        raise RuntimeError(
+            f"LLM HTTP {status}{f': {detail}' if detail else ''}"
+        ) from ex
+
     body = response.json()
     choices = body.get("choices") or []
     text = ""
     if choices and isinstance(choices[0], dict):
-        text = (choices[0].get("message") or {}).get("content") or ""
-    return {"llm_response": strip_think_tags(text).strip(), "usage": body.get("usage") or {}}
+        text = extract_openai_message_text(choices[0].get("message"))
+    if not text:
+        raise RuntimeError(
+            "LLM trả về rỗng (kiểm tra model hoặc bật LLM_DISABLE_THINKING=true cho Qwen thinking)."
+        )
+    return {"llm_response": text.strip(), "usage": body.get("usage") or {}}
 
 
-def llm_inference(prompt: str, model: str | None = None) -> dict:
+def llm_inference(
+    prompt: str,
+    model: str | None = None,
+    *,
+    max_tokens: int | None = None,
+    disable_thinking: bool | None = None,
+) -> dict:
     if LLM_BACKEND in ("openai", "vllm", "openai_compat"):
-        return openai_compatible_inference(prompt, model=model)
+        return openai_compatible_inference(
+            prompt,
+            model=model,
+            max_tokens=max_tokens,
+            disable_thinking=disable_thinking,
+        )
     return ollama_inference(prompt, model=model)
 
 

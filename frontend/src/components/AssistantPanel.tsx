@@ -7,6 +7,22 @@ import type { GraphController } from '../graph/useKgGraph';
 
 const SESSIONS_KEY = 'kg_chat_sessions';
 const CHAT_KEY = 'kg_chat_history';
+const PROMPT_HEIGHT_KEY = 'kg_prompt_grid_height';
+const PROMPT_HEIGHT_DEFAULT = 200;
+const PROMPT_HEIGHT_MIN = 72;
+const CHAT_HIST_MIN = 120;
+
+function readPromptHeight(): number {
+  try {
+    const raw = localStorage.getItem(PROMPT_HEIGHT_KEY);
+    if (!raw) return PROMPT_HEIGHT_DEFAULT;
+    const n = Number.parseInt(raw, 10);
+    if (!Number.isFinite(n)) return PROMPT_HEIGHT_DEFAULT;
+    return Math.max(PROMPT_HEIGHT_MIN, n);
+  } catch {
+    return PROMPT_HEIGHT_DEFAULT;
+  }
+}
 
 interface Msg {
   role: 'user' | 'assistant';
@@ -47,7 +63,58 @@ export function AssistantPanel({
     { id: string; label: string; type?: string }[]
   >([]);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [promptHeight, setPromptHeight] = useState(readPromptHeight);
   const histRef = useRef<HTMLDivElement>(null);
+  const chatStackRef = useRef<HTMLDivElement>(null);
+  const promptHeightRef = useRef(promptHeight);
+  const promptDragRef = useRef<{ startY: number; startH: number } | null>(null);
+  promptHeightRef.current = promptHeight;
+
+  const clampPromptHeight = useCallback((height: number) => {
+    const stack = chatStackRef.current;
+    if (!stack) return Math.max(PROMPT_HEIGHT_MIN, height);
+    const stackH = stack.getBoundingClientRect().height;
+    const maxPrompt = Math.max(PROMPT_HEIGHT_MIN, stackH - CHAT_HIST_MIN - 56);
+    return Math.min(maxPrompt, Math.max(PROMPT_HEIGHT_MIN, height));
+  }, []);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      if (!promptDragRef.current) return;
+      const delta = e.clientY - promptDragRef.current.startY;
+      setPromptHeight(
+        clampPromptHeight(promptDragRef.current.startH + delta)
+      );
+    };
+    const onUp = () => {
+      if (!promptDragRef.current) return;
+      promptDragRef.current = null;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+      localStorage.setItem(PROMPT_HEIGHT_KEY, String(promptHeightRef.current));
+    };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+  }, [clampPromptHeight]);
+
+  const onPromptSplitterDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    promptDragRef.current = {
+      startY: e.clientY,
+      startH: promptHeightRef.current,
+    };
+    document.body.style.cursor = 'row-resize';
+    document.body.style.userSelect = 'none';
+  };
+
+  const resetPromptHeight = () => {
+    setPromptHeight(PROMPT_HEIGHT_DEFAULT);
+    localStorage.setItem(PROMPT_HEIGHT_KEY, String(PROMPT_HEIGHT_DEFAULT));
+  };
 
   const [llmModalOpen, setLlmModalOpen] = useState(false);
   const [llmBackend, setLlmBackend] = useState('openai');
@@ -442,61 +509,72 @@ export function AssistantPanel({
           </div>
         </div>
 
-        <div className="chat-hist" ref={histRef}>
-          {history.length === 0 ? (
-            <p className="muted">{vi.chatWelcome}</p>
-          ) : null}
-          {history.map((m, i) =>
-            m.content === '__loading__' ? (
-              <div key={i} className="bot-msg loading">
-                {vi.loadingOverlay}
-              </div>
-            ) : m.role === 'user' ? (
-              <div key={i} className="user-msg">
-                {m.content}
-              </div>
-            ) : (
-              <div
-                key={i}
-                className="bot-msg"
-                dangerouslySetInnerHTML={{
-                  __html: markdownToSafeChatHtml(m.content),
-                }}
-              />
-            )
-          )}
-        </div>
-
-        <div className="chat-input-row">
-          <div className="chat-composer">
-            <input
-              className="chat-inp"
-              placeholder={vi.chatPlaceholder}
-              aria-label={vi.chatPlaceholder}
-              value={input}
-              onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-              onChange={(e) => setInput(e.target.value)}
-            />
+        <div className="chat-panel-stack" ref={chatStackRef}>
+          <div className="chat-hist" ref={histRef}>
+            {history.length === 0 ? (
+              <p className="muted">{vi.chatWelcome}</p>
+            ) : null}
+            {history.map((m, i) =>
+              m.content === '__loading__' ? (
+                <div key={i} className="bot-msg loading">
+                  {vi.loadingOverlay}
+                </div>
+              ) : m.role === 'user' ? (
+                <div key={i} className="user-msg">
+                  {m.content}
+                </div>
+              ) : (
+                <div
+                  key={i}
+                  className="bot-msg"
+                  dangerouslySetInnerHTML={{
+                    __html: markdownToSafeChatHtml(m.content),
+                  }}
+                />
+              )
+            )}
           </div>
-          <button type="button" className="btn-send" onClick={handleSend}>
-            {vi.send}
-          </button>
-        </div>
 
-        <div className="prompt-grid">
-          {suggestedPrompts.slice(0, 5).map((p) => (
-            <button
-              type="button"
-              key={p.slice(0, 24)}
-              className="prompt-chip"
-              onClick={() => {
-                setInput(p);
-                onOpenAssistant();
-              }}
-            >
-              {p.length > 96 ? `${p.slice(0, 96)}…` : p}
+          <div className="chat-input-row">
+            <div className="chat-composer">
+              <input
+                className="chat-inp"
+                placeholder={vi.chatPlaceholder}
+                aria-label={vi.chatPlaceholder}
+                value={input}
+                onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                onChange={(e) => setInput(e.target.value)}
+              />
+            </div>
+            <button type="button" className="btn-send" onClick={handleSend}>
+              {vi.send}
             </button>
-          ))}
+          </div>
+
+          <button
+            type="button"
+            className="panel-splitter"
+            aria-label="Kéo để thay đổi chiều cao vùng gợi ý và lịch sử chat"
+            title="Kéo để thay đổi chiều cao"
+            onMouseDown={onPromptSplitterDown}
+            onDoubleClick={resetPromptHeight}
+          />
+
+          <div className="prompt-grid" style={{ height: promptHeight }}>
+            {suggestedPrompts.slice(0, 5).map((p) => (
+              <button
+                type="button"
+                key={p.slice(0, 24)}
+                className="prompt-chip"
+                onClick={() => {
+                  setInput(p);
+                  onOpenAssistant();
+                }}
+              >
+                {p.length > 96 ? `${p.slice(0, 96)}…` : p}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
