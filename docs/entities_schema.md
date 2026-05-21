@@ -2,7 +2,7 @@
 
 Tài liệu tham chiếu cho node/edge trong graph sau `push_to_neo4j`. Luật suy diễn: [inference_rules.md](inference_rules.md), catalog UI: `backend/app/rule_catalog.py`.
 
-**Tổng quan (snapshot 2026-05-21):** 2 711 công ty, 7 702 cá nhân, 10 413 node, 19 122 cạnh (119 loại `type(r)`), 280 cạnh ẩn (R01=32, R02=16, R03=232, R04=0).
+**Tổng quan (snapshot 2026-05-21):** 2 711 công ty, 7 702 cá nhân, 10 413 node, 19 122 cạnh (119 loại `type(r)`), 280 cạnh ẩn (R01=32, R02=16, R03=232, R04=0). Số cạnh theo loại: xem bảng bên dưới.
 
 ## Schema các trường dữ liệu của 1 thực thể (Entity)
 
@@ -34,17 +34,34 @@ Tài liệu tham chiếu cho node/edge trong graph sau `push_to_neo4j`. Luật s
 
 Cạnh nạp từ FireAnt / preprocess. `ownership` trên cổ đông thường là **phân số** (0.05 = 5%).
 
-| `type(r)` | Hướng điển hình | Thuộc tính thường gặp | Ghi chú |
-|-----------|-----------------|------------------------|--------|
-| `LÀ_CỔ_ĐÔNG_CỦA` | Person/Institution → Company | `shares`, `ownership` | |
-| `LÃNH_ĐẠO_CAO_NHẤT` | Person → Company | `label`, chức vụ (nếu có) | |
-| `CÓ_CÔNG_TY_CON` | Company → Company (con) | `ownership` (tỷ lệ sở hữu) | Chỉ type=0 từ FireAnt — công ty con thực sự |
-| `LÀ_CÔNG_TY_CON_CỦA` | Company (con) → Company (mẹ) | `ownership` | Cạnh ngược của `CÓ_CÔNG_TY_CON` |
-| `CÓ_CÔNG_TY_LIÊN_KẾT` | Company → Company | `ownership` | FireAnt type=1 (công ty liên kết) |
-| `LIÊN_DOANH_VỚI` | Company → Company | `ownership` | FireAnt type=2 (liên doanh) |
-| `ĐẦU_TƯ_VÀO` | Company → Company | `ownership` | FireAnt type=3 (đầu tư góp vốn) |
-| `VỢ_CHỒNG`, `CHA_MẸ`, `ANH_CHỊ`, … | Person ↔ Person | quan hệ gia đình | 60+ loại quan hệ thân tộc từ FireAnt relations API |
-| `LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO` | Person → Company | `leaderName`, `position`, `familyRelation` | Quan hệ suy diễn từ enrich bước 4 pipeline |
+FireAnt API endpoint `symbols/{symbol}/subsidiaries` trả về danh sách kèm trường `type` (0–4). Pipeline sau đó **phân loại** thành các cạnh riêng biệt thay vì gộp chung, giúp LLM và người dùng truy vấn chính xác.
+
+#### Phân loại quan hệ công ty theo `type` từ FireAnt
+
+| FireAnt `type` | Tên gốc (API) | Nhãn Neo4j | Ngưỡng sở hữu điển hình | Ý nghĩa pháp lý & nghiệp vụ |
+|---|---|---|---|---|
+| **0** | Subsidiary | `CÓ_CÔNG_TY_CON` / `LÀ_CÔNG_TY_CON_CỦA` | ≥ 50% | **Công ty con:** công ty mẹ nắm quyền kiểm soát tuyệt đối (≥50% vốn điều lệ hoặc quyền biểu quyết). Có quyền bổ nhiệm lãnh đạo, chi phối chính sách tài chính và hoạt động. Được hợp nhất báo cáo tài chính. (Căn cứ: Luật Doanh nghiệp, Luật Chứng khoán 2019) |
+| **1** | Linked | `CÓ_CÔNG_TY_LIÊN_KẾT` | 20–50% | **Công ty liên kết:** nhà đầu tư có ảnh hưởng đáng kể (≥20% quyền biểu quyết) nhưng **không** kiểm soát. Có thể cử đại diện vào HĐQT, tham gia quyết định chính sách nhưng không chi phối tuyệt đối. Hạch toán theo phương pháp vốn chủ sở hữu. (Căn cứ: VAS 07, IAS 28) |
+| **2** | Venture | `LIÊN_DOANH_VỚI` | 20–50% (đồng kiểm soát) | **Liên doanh:** hai hay nhiều bên cùng góp vốn và **cùng kiểm soát** thực thể kinh tế. Khác với công ty liên kết ở chỗ quyền kiểm soát được chia sẻ qua thỏa thuận, không bên nào đơn phương chi phối. (Căn cứ: VAS 08, IFRS 11) |
+| **3** | Investment | `ĐẦU_TƯ_VÀO` | < 20% | **Đầu tư góp vốn:** khoản đầu tư thuần túy tài chính, không có ảnh hưởng đáng kể hay quyền kiểm soát. Nhà đầu tư chỉ hưởng cổ tức và lợi nhuận từ chênh lệch giá, không tham gia điều hành. Thường là cổ phiếu niêm yết nắm giữ dưới ngưỡng công bố cổ đông lớn. |
+| **4** | Unknown | *(bị loại bỏ)* | 0% hoặc không xác định | **Không phân loại được hoặc ownership = 0:** dữ liệu không đủ để xác định bản chất quan hệ. Pipeline hiện tại bỏ qua hoàn toàn để tránh nhiễu. Thường là các công ty có quan hệ tín dụng/cầm cố với ngân hàng, không phải quan hệ sở hữu. |
+
+> **Tại sao phải tách riêng?** Trước đây (phiên bản cũ) tất cả type 0–4 đều bị gộp thành `CÓ_CÔNG_TY_CON`. Điều này khiến LLM trả lời sai nghiêm trọng: ví dụ MBB được liệt kê có 40+ "công ty con" bao gồm cả CEO, HAG, REE — những công ty MBB chỉ có quan hệ tín dụng (type=4, ownership=0%). Sau khi tách, MBB còn 8 công ty con thực sự.
+
+#### Bảng quan hệ quan sát
+
+| `type(r)` | Hướng điển hình | Thuộc tính thường gặp | Số cạnh |
+|-----------|-----------------|------------------------|---------|
+| `LÀ_CỔ_ĐÔNG_CỦA` | Person/Institution → Company | `shares`, `ownership` | 4 761 |
+| `LÃNH_ĐẠO_CAO_NHẤT` | Person → Company | `label` | 259 |
+| `CÓ_CÔNG_TY_CON` | Company → Company | `ownership` | 746 |
+| `LÀ_CÔNG_TY_CON_CỦA` | Company → Company | `ownership` | 95 |
+| `CÓ_CÔNG_TY_LIÊN_KẾT` | Company → Company | `ownership` | 177 |
+| `LIÊN_DOANH_VỚI` | Company → Company | `ownership` | 30 |
+| `ĐẦU_TƯ_VÀO` | Company → Company | `ownership` | 179 |
+| `VỢ_CHỒNG`, `CHA_MẸ`, `ANH_CHỊ`, … (56 loại) | Person ↔ Person | — | ~8 630 |
+| `LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO` | Person → Company | `leaderName`, `position`, `familyRelation` | 960 |
+| Các chức danh (25+ loại: `CHỦ_TỊCH_HĐQT`, `TỔNG_GIÁM_ĐỐC`, …) | Person → Company | `label` | ~3 000 |
 
 ---
 
