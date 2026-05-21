@@ -114,7 +114,11 @@ Các Nodes (Thực thể):
 Các Relationships (Trọng tâm truy vấn):
 - [:LÃNH_ĐẠO_CAO_NHẤT]: Người đứng đầu/Chủ tịch HĐQT của công ty. Luôn ưu tiên dùng cạnh này khi hỏi "Ai là lãnh đạo/chủ tịch/đứng đầu". (VD: (p:Entity)-[:LÃNH_ĐẠO_CAO_NHẤT]->(c:Entity {symbol: 'VIC'}))
 - [:LÀ_CỔ_ĐÔNG_CỦA]: Người/tổ chức sở hữu cổ phần công ty. Có thuộc tính: `shares` (số CP), `ownership` (tỷ lệ sở hữu).
-- [:CÓ_CÔNG_TY_CON]: Khi hỏi công ty con. (VD: MATCH (p:Entity)-[:CÓ_CÔNG_TY_CON]->(c:Entity))
+- [:CÓ_CÔNG_TY_CON]: Công ty con thực sự (type=0, sở hữu >50%). Khi hỏi về công ty con.
+- [:CÓ_CÔNG_TY_LIÊN_KẾT]: Công ty liên kết (type=1, sở hữu 20-50%).
+- [:LIÊN_DOANH_VỚI]: Liên doanh (type=2).
+- [:ĐẦU_TƯ_VÀO]: Khoản đầu tư góp vốn (type=3).
+- [:LÀ_CÔNG_TY_CON_CỦA]: Cạnh ngược của CÓ_CÔNG_TY_CON.
 - [:CHA_MẸ], [:ANH_CHỊ], [:VỢ_CHỒNG]: Quan hệ gia đình.
 - [:LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO]: Người thân của lãnh đạo công ty. Có các thuộc tính trên cạnh (relationship properties): `leaderName` (tên lãnh đạo), `position` (chức vụ lãnh đạo), `familyRelation` (quan hệ với lãnh đạo).
 

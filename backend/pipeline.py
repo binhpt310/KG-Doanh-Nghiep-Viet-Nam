@@ -626,6 +626,7 @@ def _process_structured_json(file_path):
             if parent_symbol:
                 parent_cid = f"C_{parent_symbol}"
                 for sub in item.get("subsidiaries", []):
+                    sub_type = sub.get("type")
                     sub_symbol = sub.get("symbol")
                     if sub_symbol:
                         sub_cid = f"C_{sub_symbol}"
@@ -634,14 +635,29 @@ def _process_structured_json(file_path):
                         parent_props = {}
                         if sub_ownership and sub_ownership != 0:
                             parent_props["ownership"] = sub_ownership
-                        add_edge(parent_cid, sub_cid, "CÓ_CÔNG_TY_CON", parent_props)
-                        # Giữ thêm cạnh ngược để tương thích dữ liệu cũ và các truy vấn hiện có.
-                        if sub_ownership and sub_ownership != 0:
-                            add_edge(sub_cid, parent_cid, "LÀ_CÔNG_TY_CON_CỦA", {"ownership": sub_ownership})
+                        # type=0: Công ty con thực sự, type=1: Công ty liên kết, type=2: Liên doanh
+                        # type=3: Đầu tư góp vốn, type=4: Chưa xác định (không phải công ty con)
+                        if sub_type == 0:
+                            add_edge(parent_cid, sub_cid, "CÓ_CÔNG_TY_CON", parent_props)
+                            if sub_ownership and sub_ownership != 0:
+                                add_edge(sub_cid, parent_cid, "LÀ_CÔNG_TY_CON_CỦA", {"ownership": sub_ownership})
+                        elif sub_type == 1:
+                            add_edge(parent_cid, sub_cid, "CÓ_CÔNG_TY_LIÊN_KẾT", parent_props)
+                        elif sub_type == 2:
+                            add_edge(parent_cid, sub_cid, "LIÊN_DOANH_VỚI", parent_props)
+                        elif sub_type == 3:
+                            add_edge(parent_cid, sub_cid, "ĐẦU_TƯ_VÀO", parent_props)
                     else:
                         sub_id = f"C_UNL_{sub.get('institutionID')}"
                         add_node(sub_id, "Company", sub.get("companyName", ""), {})
-                        add_edge(parent_cid, sub_id, "CÓ_CÔNG_TY_CON")
+                        if sub_type == 0:
+                            add_edge(parent_cid, sub_id, "CÓ_CÔNG_TY_CON")
+                        elif sub_type == 1:
+                            add_edge(parent_cid, sub_id, "CÓ_CÔNG_TY_LIÊN_KẾT")
+                        elif sub_type == 2:
+                            add_edge(parent_cid, sub_id, "LIÊN_DOANH_VỚI")
+                        elif sub_type == 3:
+                            add_edge(parent_cid, sub_id, "ĐẦU_TƯ_VÀO")
 
     elif filename == "holders.json":
         for item in data:

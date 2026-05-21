@@ -16,7 +16,11 @@ Tài liệu mẫu truy vấn đồ thị doanh nghiệp niêm yết. Dùng làm 
 
 - `(P)-[:LÃNH_ĐẠO_CAO_NHẤT]->(C)`: P là lãnh đạo cao nhất / Chủ tịch HĐQT của C.
 - `(A)-[:LÀ_CỔ_ĐÔNG_CỦA]->(B)`: A là cổ đông của B (thuộc tính: `shares`, `ownership` — thường là phân số).
-- `(A)-[:CÓ_CÔNG_TY_CON]->(B)`: B là công ty con của A.
+- `(A)-[:CÓ_CÔNG_TY_CON]->(B)`: B là công ty con của A (chỉ type=0 từ FireAnt — công ty con thực sự, tỷ lệ sở hữu >50%).
+- `(A)-[:CÓ_CÔNG_TY_LIÊN_KẾT]->(B)`: B là công ty liên kết của A (type=1, tỷ lệ 20-50%).
+- `(A)-[:LIÊN_DOANH_VỚI]->(B)`: A liên doanh với B (type=2).
+- `(A)-[:ĐẦU_TƯ_VÀO]->(B)`: A có khoản đầu tư góp vốn vào B (type=3).
+- `(A)-[:LÀ_CÔNG_TY_CON_CỦA]->(B)`: Cạnh ngược của CÓ_CÔNG_TY_CON (A là công ty con của B).
 - `(P1)-[:VỢ_CHỒNG|:CHA_MẸ|:ANH_CHỊ]-(P2)`: Quan hệ gia đình.
 
 ## 3. Mẫu Cypher trừu tượng
