@@ -72,6 +72,21 @@ WHERE total_roles > 1
 RETURN P.name, total_roles, companies
 ```
 
+### Mẫu F: Vừa lãnh đạo công ty A, vừa cổ đông công ty B (khác A)
+
+```cypher
+MATCH (p:Entity)-[r1]->(c1:Entity)
+WHERE p.id STARTS WITH 'P_'
+  AND c1.id STARTS WITH 'C_'
+  AND type(r1) IN ['LÃNH_ĐẠO_CAO_NHẤT', 'CHỦ_TỊCH_HĐQT', 'TỔNG_GIÁM_ĐỐC']
+MATCH (p)-[r2:LÀ_CỔ_ĐÔNG_CỦA]->(c2:Entity)
+WHERE c2.id STARTS WITH 'C_' AND c1.id <> c2.id
+RETURN p.id AS source_id, p.name AS source_name, p.type AS source_group, p.symbol AS source_symbol,
+       c2.id AS target_id, c2.name AS target_name, c2.type AS target_group, c2.symbol AS target_symbol,
+       type(r2) AS edge_label, coalesce(r2.inferred, false) AS inferred, r2.shares AS sh, r2.ownership AS ow
+LIMIT 80
+```
+
 ## 4. Định dạng RETURN bắt buộc (cho dashboard)
 
 Luôn trả alias sau để tương thích visualization:

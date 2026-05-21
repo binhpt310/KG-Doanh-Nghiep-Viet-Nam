@@ -413,11 +413,27 @@ def rebuild_rag_corpus_from_processed_raw(force=False):
         print(f"✅ Đã rebuild {rebuilt} file corpus văn bản từ processed_raw.")
     return rebuilt
 
+# Stable merge order: companies and ownership before person/family edges.
+_RAW_JSON_ORDER = (
+    "banks.json",
+    "holders.json",
+    "subsidiaries.json",
+    "officers.json",
+    "individuals.json",
+)
+
+
 def process_raw_files():
-    files = [f for f in os.listdir(RAW_DIR) if os.path.isfile(os.path.join(RAW_DIR, f))]
+    present = {
+        f
+        for f in os.listdir(RAW_DIR)
+        if os.path.isfile(os.path.join(RAW_DIR, f))
+    }
+    files = [f for f in _RAW_JSON_ORDER if f in present]
+    files.extend(sorted(present - set(_RAW_JSON_ORDER)))
     if not files:
         print("✅ Không có file thô nào trong data/raw/ để xuất ra data/ingest/.")
-        return
+        return 0
 
     print(f"🚀 Tìm thấy {len(files)} file thô. Bắt đầu tiền xử lý (LLM Preprocessor)...")
     
@@ -476,6 +492,8 @@ def process_raw_files():
             print(f"   [Lỗi] Không thể xử lý file {filename}: {str(e)}")
             if prompter:
                 prompter.clear_source_materials()
+
+    return len(files)
 
 if __name__ == "__main__":
     process_raw_files()

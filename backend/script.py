@@ -9,10 +9,11 @@ from llmware.library import Library
 from llmware.agents import LLMfx
 from itertools import combinations
 from flask import request, jsonify
-from pipeline import crawl_and_update
+from pipeline import crawl_and_update, FAMILY_RELS_WHITELIST
 import threading
 
 from app import runtime
+from app.fireant_market import collect_fireant_market_data
 from app.rule_catalog import (
     HIDDEN_RULE_QUERIES,
     RULES_API_PAYLOAD,
@@ -624,18 +625,49 @@ _PROJECT_DOMAIN_PHRASES = {
     "so huu",
     "so huu gian tiep",
     "thi truong chung khoan",
+    "chung khoan",
     "co phieu",
     "ma chung khoan",
     "niem yet",
-    "fireant",
-    "neo4j",
-    "rag",
-    "kg",
+    "khoi luong",
+    "giao dich",
+    "thanh khoan",
+    "von hoa",
+    "gia co phieu",
+    "tang truong",
+    "giam diem",
+    "phien giao dich",
+    "top tang",
+    "mua ban",
     "hose",
     "hnx",
     "upcom",
     "vn-index",
     "vn index",
+    "fireant",
+    "neo4j",
+    "rag",
+    "kg",
+}
+
+# Câu hỏi thị trường / giao dịch — KG không có KLGD theo ngày; cần tin web.
+_MARKET_LIVE_PHRASES = {
+    "khoi luong",
+    "giao dich",
+    "thanh khoan",
+    "von hoa",
+    "gia co phieu",
+    "tang truong",
+    "giam diem",
+    "phien giao dich",
+    "top tang",
+    "mua ban",
+    "dat lenh",
+    "vn-index",
+    "vn index",
+    "chi so",
+    "thanh khoan cao",
+    "thanh khoan thap",
 }
 
 _LIVE_NEWS_NOISE_TOKENS = _RAG_STOPWORDS | {
@@ -693,8 +725,226 @@ _OUT_OF_SCOPE_REPLY = (
     "Mình chỉ hỗ trợ câu hỏi về công ty niêm yết, cổ đông, lãnh đạo, quan hệ sở hữu và tin chứng khoán Việt Nam."
 )
 
+
+def _is_live_market_query(query_text):
+    """Câu hỏi cần dữ liệu thị trường/giao dịch thời gian thực (ngoài KG)."""
+    q = _normalize_vn_text(query_text)
+    if not q:
+        return False
+    if any(p in q for p in _MARKET_LIVE_PHRASES):
+        return True
+    if "hom nay" in q or "ngay hom nay" in q or _re.search(r"\d{1,2}[/-]\d{1,2}[/-]\d{2,4}", q):
+        if "chung khoan" in q or "co phieu" in q or "niem yet" in q:
+            return True
+    return False
+
 for _rule in HIDDEN_RULE_QUERIES:
     _rule["name_norm"] = _normalize_vn_text(_rule["name"])
+
+
+_LEADER_REL_TYPES = ["LÃNH_ĐẠO_CAO_NHẤT", "CHỦ_TỊCH_HĐQT", "TỔNG_GIÁM_ĐỐC", "PHÓ_TỔNG_GIÁM_ĐỐC"]
+
+_STD_GRAPH_RETURN = """
+       n.id AS source_id, n.name AS source_name, n.type AS source_group, n.symbol AS source_symbol,
+       m.id AS target_id, m.name AS target_name, m.type AS target_group, m.symbol AS target_symbol,
+       coalesce(r.label, type(r)) AS edge_label, coalesce(r.inferred, false) AS inferred,
+       r.shares AS sh, r.ownership AS ow
+"""
+
+
+def _resolve_symbol_entity_id(symbol):
+    """Map ticker (VIC) to C_VIC if present in Neo4j."""
+    sym = (symbol or "").strip().upper()
+    if not sym:
+        return None
+    cid = f"C_{sym}"
+    try:
+        with neo4j_driver.session() as session:
+            rec = session.run(
+                "MATCH (n:Entity {id: $id}) RETURN n.id AS id LIMIT 1", id=cid
+            ).single()
+            if rec:
+                return rec["id"]
+    except Exception:
+        pass
+    return cid
+
+
+def _detect_suggested_query_intent(query_text):
+    """Fast-path intent for UI suggested prompts (normalized Vietnamese keywords)."""
+    q = _normalize_vn_text(query_text)
+    if not q:
+        return None
+
+    if ("nguoi than" in q or "than nhan" in q) and (
+        "vingroup" in q or " vic" in f" {q} " or q.startswith("vic ")
+    ) and "co dong" in q:
+        return "vic_family_shareholder_other"
+    if "chu tich" in q and "co dong" in q and ("cong ty khac" in q or "khac" in q):
+        return "chairman_and_shareholder_other"
+    if "mbb" in q and ("cong ty con" in q or "2 cap" in q or "hai cap" in q):
+        return "subsidiary_chain_2"
+    if "vnm" in q and "cong ty con" in q and ("to chuc" in q or "co dong" in q):
+        return "vnm_subsidiary_institutional_holder"
+    if "fpt" in q and ("co dong" in q or "ngan hang" in q):
+        return "fpt_leader_bank_shareholder"
+    if "ho hung anh" in q and ("nguoi than" in q or "gia dinh" in q):
+        return "ho_hung_anh_family_holdings"
+    if ("vingroup" in q or "vic" in q) and ("vinhomes" in q or "vhm" in q) and (
+        "gian tiep" in q or "lien ket" in q or "soi day" in q
+    ):
+        return "vic_vhm_indirect_links"
+    if "masan" in q or "msn" in q:
+        if "cong ty con" in q or "pha loang" in q or "100" in q:
+            return "msn_subsidiary_diluted"
+    return None
+
+
+def _intent_cypher(intent_id, query_text):
+    """Return (cypher_string, params_dict) for a detected suggested-prompt intent."""
+    params = {"leaderTypes": _LEADER_REL_TYPES}
+
+    if intent_id == "chairman_and_shareholder_other":
+        cypher = f"""
+        MATCH (p:Entity)-[r1]->(c1:Entity)
+        WHERE p.id STARTS WITH 'P_'
+          AND c1.id STARTS WITH 'C_'
+          AND type(r1) IN $leaderTypes
+        MATCH (p)-[r2:LÀ_CỔ_ĐÔNG_CỦA]->(c2:Entity)
+        WHERE c2.id STARTS WITH 'C_' AND c1.id <> c2.id
+        RETURN p.id AS source_id, p.name AS source_name, p.type AS source_group, p.symbol AS source_symbol,
+               c2.id AS target_id, c2.name AS target_name, c2.type AS target_group, c2.symbol AS target_symbol,
+               type(r2) AS edge_label, coalesce(r2.inferred, false) AS inferred, r2.shares AS sh, r2.ownership AS ow
+        LIMIT 80
+        """
+        return cypher.strip(), params
+
+    if intent_id == "vic_family_shareholder_other":
+        vic_id = _resolve_symbol_entity_id("VIC")
+        params["vicId"] = vic_id
+        cypher = f"""
+        MATCH (leader:Entity)-[lr]->(vic:Entity {{id: $vicId}})
+        WHERE leader.id STARTS WITH 'P_'
+          AND type(lr) IN $leaderTypes
+        MATCH (fam:Entity)-[rf:LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO]->(vic)
+        WHERE fam.id STARTS WITH 'P_'
+        MATCH (fam)-[rh:LÀ_CỔ_ĐÔNG_CỦA]->(other:Entity)
+        WHERE other.id STARTS WITH 'C_' AND other.id <> $vicId
+        RETURN fam.id AS source_id, fam.name AS source_name, fam.type AS source_group, fam.symbol AS source_symbol,
+               other.id AS target_id, other.name AS target_name, other.type AS target_group, other.symbol AS target_symbol,
+               type(rh) AS edge_label, coalesce(rh.inferred, false) AS inferred, rh.shares AS sh, rh.ownership AS ow
+        LIMIT 80
+        """
+        return cypher.strip(), params
+
+    if intent_id == "subsidiary_chain_2":
+        mbb_id = _resolve_symbol_entity_id("MBB")
+        params["parentId"] = mbb_id
+        cypher = """
+        MATCH (parent:Entity {id: $parentId})-[:CÓ_CÔNG_TY_CON]->(child:Entity)-[:CÓ_CÔNG_TY_CON]->(grand:Entity)
+        RETURN parent.id AS source_id, parent.name AS source_name, parent.type AS source_group, parent.symbol AS source_symbol,
+               grand.id AS target_id, grand.name AS target_name, grand.type AS target_group, grand.symbol AS target_symbol,
+               'CÓ_CÔNG_TY_CON' AS edge_label, false AS inferred, null AS sh, null AS ow
+        LIMIT 50
+        """
+        return cypher.strip(), params
+
+    if intent_id == "vnm_subsidiary_institutional_holder":
+        vnm_id = _resolve_symbol_entity_id("VNM")
+        params["parentId"] = vnm_id
+        cypher = """
+        MATCH (vnm:Entity {id: $parentId})-[:CÓ_CÔNG_TY_CON]->(sub:Entity)
+        MATCH (inst:Entity)-[r:LÀ_CỔ_ĐÔNG_CỦA]->(sub)
+        WHERE inst.id STARTS WITH 'C_INST_'
+        RETURN inst.id AS source_id, inst.name AS source_name, inst.type AS source_group, inst.symbol AS source_symbol,
+               sub.id AS target_id, sub.name AS target_name, sub.type AS target_group, sub.symbol AS target_symbol,
+               type(r) AS edge_label, coalesce(r.inferred, false) AS inferred, r.shares AS sh, r.ownership AS ow
+        LIMIT 80
+        """
+        return cypher.strip(), params
+
+    if intent_id == "fpt_leader_bank_shareholder":
+        fpt_id = _resolve_symbol_entity_id("FPT")
+        params["fptId"] = fpt_id
+        cypher = """
+        MATCH (p:Entity)-[r1]->(fpt:Entity {id: $fptId})
+        WHERE p.id STARTS WITH 'P_'
+          AND type(r1) IN $leaderTypes
+        MATCH (p)-[r2:LÀ_CỔ_ĐÔNG_CỦA]->(bank:Entity)
+        WHERE bank.id STARTS WITH 'C_'
+          AND bank.id <> $fptId
+          AND (
+            toLower(coalesce(bank.name, '')) CONTAINS 'ngan hang'
+            OR toLower(coalesce(bank.name, '')) CONTAINS 'bank'
+          )
+        RETURN p.id AS source_id, p.name AS source_name, p.type AS source_group, p.symbol AS source_symbol,
+               bank.id AS target_id, bank.name AS target_name, bank.type AS target_group, bank.symbol AS target_symbol,
+               type(r2) AS edge_label, coalesce(r2.inferred, false) AS inferred, r2.shares AS sh, r2.ownership AS ow
+        LIMIT 80
+        """
+        return cypher.strip(), params
+
+    if intent_id == "ho_hung_anh_family_holdings":
+        cypher = """
+        MATCH (p:Entity)
+        WHERE toLower(p.name) CONTAINS 'hồ hùng anh' OR toLower(p.name) CONTAINS 'ho hung anh'
+        MATCH (p)-[rf]-(fam:Entity)
+        WHERE fam.id STARTS WITH 'P_' AND fam.id <> p.id
+          AND (
+            type(rf) IN $familyTypes
+            OR type(rf) = 'LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO'
+            OR type(rf) CONTAINS 'VỢ_CHỒNG'
+            OR type(rf) CONTAINS 'CHA_MẸ'
+          )
+        MATCH (holder:Entity)-[rh:LÀ_CỔ_ĐÔNG_CỦA]->(c:Entity)
+        WHERE holder.id IN [p.id, fam.id] AND c.id STARTS WITH 'C_'
+        RETURN holder.id AS source_id, holder.name AS source_name, holder.type AS source_group, holder.symbol AS source_symbol,
+               c.id AS target_id, c.name AS target_name, c.type AS target_group, c.symbol AS target_symbol,
+               type(rh) AS edge_label, coalesce(rh.inferred, false) AS inferred, rh.shares AS sh, rh.ownership AS ow
+        LIMIT 120
+        """
+        params["familyTypes"] = [
+            "VỢ_CHỒNG", "CHA_MẸ", "ANH_CHỊ", "NGƯỜI_THÂN", "MẸ", "BỐ", "ANH", "CHỊ",
+            "LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO",
+        ]
+        return cypher.strip(), params
+
+    if intent_id == "vic_vhm_indirect_links":
+        params["vicId"] = _resolve_symbol_entity_id("VIC")
+        params["vhmId"] = _resolve_symbol_entity_id("VHM")
+        cypher = """
+        MATCH path = (a:Entity {id: $vicId})-[*1..4]-(b:Entity {id: $vhmId})
+        WHERE ALL(rel IN relationships(path) WHERE type(rel) IN [
+          'CÓ_CÔNG_TY_CON', 'LÀ_CÔNG_TY_CON_CỦA', 'LÀ_CỔ_ĐÔNG_CỦA',
+          'SỞ_HỮU_GIÁN_TIẾP', 'CÓ_LỢI_ÍCH_GIÁN_TIẾP', 'ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI', 'KIỂM_SOÁT_GIÁN_TIẾP'
+        ])
+        WITH path LIMIT 40
+        UNWIND relationships(path) AS r
+        WITH startNode(r) AS s, endNode(r) AS t, r
+        RETURN s.id AS source_id, s.name AS source_name, s.type AS source_group, s.symbol AS source_symbol,
+               t.id AS target_id, t.name AS target_name, t.type AS target_group, t.symbol AS target_symbol,
+               coalesce(r.label, type(r)) AS edge_label, coalesce(r.inferred, false) AS inferred,
+               r.shares AS sh, r.ownership AS ow
+        LIMIT 120
+        """
+        return cypher.strip(), params
+
+    if intent_id == "msn_subsidiary_diluted":
+        params["msnId"] = _resolve_symbol_entity_id("MSN")
+        cypher = """
+        MATCH (msn:Entity {id: $msnId})-[rp:CÓ_CÔNG_TY_CON]->(sub:Entity)
+        MATCH (p:Entity)-[r:LÀ_CỔ_ĐÔNG_CỦA]->(sub)
+        WHERE p.id STARTS WITH 'P_'
+          AND coalesce(toFloat(r.ownership), 0) > 0
+          AND coalesce(toFloat(rp.ownership), 1) < 0.999
+        RETURN p.id AS source_id, p.name AS source_name, p.type AS source_group, p.symbol AS source_symbol,
+               sub.id AS target_id, sub.name AS target_name, sub.type AS target_group, sub.symbol AS target_symbol,
+               type(r) AS edge_label, coalesce(r.inferred, false) AS inferred, r.shares AS sh, r.ownership AS ow
+        LIMIT 80
+        """
+        return cypher.strip(), params
+
+    return None, {}
 
 
 def _detect_hidden_rule_query(query_text):
@@ -754,6 +1004,9 @@ def _is_project_domain_query(query_text, target_entity_id=None, hidden_rule_quer
     if not q_norm:
         return False
 
+    if _is_live_market_query(query_text):
+        return True
+
     if any(phrase in q_norm for phrase in _PROJECT_DOMAIN_PHRASES):
         return True
 
@@ -769,6 +1022,9 @@ def _looks_like_named_entity_query(query_text):
     raw = str(query_text or "").strip()
     if not raw:
         return False
+
+    if _is_live_market_query(query_text):
+        return True
 
     if _re.search(r"\b[A-Z]{2,5}\b", raw):
         return True
@@ -813,6 +1069,14 @@ def _is_relevant_news_item(title, query_text, target_display=None):
     overlap = title_terms & query_terms
     if len(overlap) >= (1 if len(query_terms) <= 2 else 2):
         return True
+
+    if _is_live_market_query(query_text):
+        market_terms = {
+            "giao", "dich", "khoi", "luong", "thanh", "khoan", "tang", "truong",
+            "chung", "khoan", "vn", "index", "hose", "hnx", "niem", "yet", "co", "phieu",
+        }
+        if title_terms & market_terms:
+            return True
 
     return False
 
@@ -963,6 +1227,22 @@ def _build_live_news_query(query_text, target_display=None):
     Tạo cụm tìm kiếm gọn để lấy tin nóng theo truy vấn hiện tại.
     Nếu nhận diện được thực thể đích thì ưu tiên thực thể đó.
     """
+    q_norm = _normalize_vn_text(query_text)
+    if _is_live_market_query(query_text):
+        date_hint = ""
+        m = _re.search(r"(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})", str(query_text or ""))
+        if m:
+            date_hint = f"{m.group(1)}/{m.group(2)}/{m.group(3)}"
+        if "khoi luong" in q_norm or "thanh khoan" in q_norm:
+            base = "khối lượng giao dịch cao nhất"
+            if date_hint:
+                return f"{base} {date_hint} HOSE HNX UPCOM Việt Nam"
+            if "hom nay" in q_norm:
+                return f"{base} hôm nay chứng khoán Việt Nam"
+            return f"{base} chứng khoán Việt Nam"
+        if "gia" in q_norm:
+            return f"giá cổ phiếu chứng khoán Việt Nam {date_hint}".strip()
+
     if target_display:
         raw = str(target_display).strip()
         base_name = _re.sub(r"\s*\([^)]+\)\s*$", "", raw).strip()
@@ -2286,6 +2566,7 @@ def api_query():
         return jsonify({"error": "Query rỗng"}), 400
 
     hidden_rule_query = _detect_hidden_rule_query(query_text)
+    live_market_mode = _is_live_market_query(query_text)
     model = (data.get("model") or "").strip() or MODEL_NAME
     reasoning_enabled = data.get("reasoning", True)
     if reasoning_enabled:
@@ -2309,6 +2590,21 @@ def api_query():
 
     # --- Bước 1: Phát hiện entity mục tiêu ---
     target_entity_id, target_display = extract_target_entity(query_text)
+    if live_market_mode and target_entity_id and not _extract_symbol_tokens(query_text):
+        q_norm = _normalize_vn_text(query_text)
+        generic_market_q = any(
+            p in q_norm
+            for p in (
+                "cong ty chung khoan nao",
+                "cong ty nao",
+                "ma nao",
+                "chung khoan nao",
+                "khoi luong giao dich cao nhat",
+                "thanh khoan cao nhat",
+            )
+        )
+        if generic_market_q:
+            target_entity_id, target_display = None, None
     if not _is_project_domain_query(
         query_text,
         target_entity_id=target_entity_id,
@@ -2322,6 +2618,10 @@ def api_query():
             "steps": [],
             "cypher": "",
         })
+    if live_market_mode:
+        steps.append(
+            "📈 Câu hỏi thị trường/giao dịch: KG không có KLGD theo ngày — ưu tiên FireAnt API, sau đó tin web (RSS)."
+        )
     if target_entity_id:
         steps.append(f"🔍 Phát hiện thực thể: {target_display} ({target_entity_id})")
     else:
@@ -2506,6 +2806,17 @@ def api_query():
 
         steps.append(f"🕵️ Tìm thấy {hidden_rule_match_count} quan hệ ẩn khớp rule được hỏi.")
 
+    suggested_intent = _detect_suggested_query_intent(query_text)
+    intent_row_count = 0
+    if suggested_intent and not hidden_rule_query:
+        steps.append(f"🎯 Nhận diện intent gợi ý: {suggested_intent}")
+        icypher, iparams = _intent_cypher(suggested_intent, query_text)
+        if icypher:
+            intent_row_count = execute_cypher(icypher, iparams)
+            steps.append(
+                f"📎 Intent Cypher ({suggested_intent}): {intent_row_count} bản ghi."
+            )
+
     if target_entity_id:
         q_out = """
         MATCH (n:Entity {id: $eid})-[r]->(m:Entity)
@@ -2529,7 +2840,7 @@ def api_query():
         execute_cypher(q_out.strip(), {"eid": target_entity_id})
         print(f"[Neo4j] Chạy q_in cho entity: {target_entity_id}")
         execute_cypher(q_in.strip(), {"eid": target_entity_id})
-    elif not hidden_rule_query:
+    elif not hidden_rule_query and not suggested_intent and not live_market_mode:
         tokens = [w for w in query_text.split() if len(w) > 3]
         for kw in tokens[:2]:
             q = "MATCH (n:Entity)-[r]->(m:Entity) WHERE toLower(n.name) CONTAINS toLower($kw) OR toLower(m.name) CONTAINS toLower($kw) RETURN n.id as source_id, n.name as source_name, n.type as source_group, n.symbol as source_symbol, m.id as target_id, m.name as target_name, m.type as target_group, m.symbol as target_symbol, r.label as edge_label, r.inferred as inferred, r.shares AS sh, r.ownership AS ow LIMIT 50"
@@ -2586,6 +2897,12 @@ def api_query():
     steps.append(f"✅ Hoàn tất Graph search: {len(edges)} quan hệ.")
     print(f"[Graph] Đã thu thập {len(edges)} quan hệ, {len(graph_context)} dòng context.")
 
+    fireant_lines, fireant_md = [], ""
+    if live_market_mode:
+        fireant_lines, fireant_md = collect_fireant_market_data(query_text, steps)
+        if fireant_lines:
+            graph_context.extend(fireant_lines)
+
     live_news_items, live_news_diff_lines = _collect_live_news(
         query_text,
         target_display,
@@ -2623,6 +2940,8 @@ def api_query():
                 answer_lines.append(f"- ... và còn {hidden_rule_match_count - 30} quan hệ khác.")
             ans = "\n".join(answer_lines)
 
+        if fireant_md:
+            ans = f"{ans}\n{fireant_md}"
         if live_news_md:
             ans = f"{ans}\n{live_news_md}"
 
@@ -2642,6 +2961,7 @@ def api_query():
     doc_text = "\n".join(contexts[:5])
     graph_text = "\n".join(list(set(graph_context))[:150])
     live_news_text = _format_live_news_context(live_news_items)
+    fireant_text = "\n".join(fireant_lines) if fireant_lines else "(Không có dữ liệu FireAnt cho truy vấn này.)"
     history_ctx = "\n".join([f"{h['role']}: {h['content']}" for h in history[-3:]])
     instruct = (
         "Bạn là trợ lý AI chuyên gia về các công ty đã niêm yết trên sàn chứng khoán Việt Nam. Trả lời bằng tiếng Việt, ngắn gọn, DỰA TRÊN DỮ LIỆU ĐƯỢC CUNG CẤP từ query của Neo4j.\n"
@@ -2651,14 +2971,25 @@ def api_query():
         "Khi hỏi về quan hệ của 1 người, trình bày người thân từ hướng người được hỏi.\n"
         "Khi hỏi top cổ đông / khối lượng cổ phiếu: bắt buộc dùng các dòng 'Top cổ đông' hoặc cạnh có số_CP trong Dữ liệu Graph. Không được nói không có dữ liệu nếu các dòng đó tồn tại.\n"
         "Khi người dùng hỏi theo tên rule quan hệ ẩn, bắt buộc ưu tiên các cạnh inferred trong Dữ liệu Graph. Nếu đã có dòng inferred khớp rule thì phải liệt kê thực thể/quan hệ tương ứng, không được trả lời là không có.\n"
+        "Nếu Dữ liệu Graph có ít nhất một dòng quan hệ trực tiếp liên quan câu hỏi (vd. LÃNH_ĐẠO_CAO_NHẤT + LÀ_CỔ_ĐÔNG_CỦA), bắt buộc trả lời CÓ và nêu ví dụ cụ thể (tên, mã). Không được nói 'không tìm thấy' hoặc 'không có dữ liệu Graph' khi các dòng đó đã có trong context.\n"
         "Nếu câu hỏi nhắc tới tin mới, diễn biến hiện tại, sự kiện gần đây, hãy dùng mục 'Tin tức thời gian thực' để trả lời ngắn gọn. Không được tự bịa tin, và không được nói là không có tin nếu mục đó đang có dữ liệu.\n"
         "Nếu mục 'Tin tức thời gian thực' ghi rõ là không lấy được tin phù hợp, chỉ khi đó mới nói là chưa có/không lấy được tin mới.\n"
         "Sau câu trả lời chính về KG/Cypher, có thể có thêm phần tin tức thời gian thực. Phần đó chỉ dùng để bổ sung bối cảnh mới, không được mâu thuẫn với dữ liệu Graph.\n"
     )
+    if live_market_mode:
+        instruct += (
+            "\nĐÂY LÀ CÂU HỎI THỊ TRƯỜNG (khối lượng/giá/thanh khoản theo phiên hoặc ngày). "
+            "Knowledge Graph KHÔNG chứa KLGD/giá theo ngày — KHÔNG được nói 'không có dữ liệu Graph' để từ chối. "
+            "Ưu tiên mục 'Dữ liệu FireAnt (giá/KLGD)' nếu có bảng top KLGD hoặc giá — đây là số liệu API chính thức. "
+            "Sau đó dùng 'Tin tức thời gian thực' để bổ sung bối cảnh (CafeF, Vietstock, VnExpress, …). "
+            "Nếu FireAnt đã liệt kê top mã theo totalVolume, trả lời đúng thứ tự và ghi rõ mã + KLGD. "
+            "Nếu cả FireAnt và tin đều không có bảng xếp hạng, nói rõ hạn chế.\n"
+        )
     prompt = (
         f"{instruct}\n\n=== Lịch sử ===\n{history_ctx}"
         f"\n\n=== Dữ liệu Graph ===\n{graph_text}"
         f"\n\n=== Tài liệu ===\n{doc_text}"
+        f"\n\n=== Dữ liệu FireAnt (giá/KLGD) ===\n{fireant_text}"
         f"\n\n=== Tin tức thời gian thực ===\n{live_news_text}"
         f"\n\nCâu hỏi: {query_text}"
     )
@@ -2684,6 +3015,8 @@ def api_query():
         ans = str(response)
 
     print("--- Trả kết quả ---")
+    if fireant_md:
+        ans = f"{ans.strip()}\n{fireant_md}"
     if live_news_md:
         ans = f"{ans.strip()}\n{live_news_md}"
     steps.append("🎉 Thành công.")
@@ -2698,31 +3031,183 @@ def api_query():
     return jsonify(payload)
 
 
+# Types excluded when expanding family neighbors for a person node.
+_FAMILY_EXPAND_EXCLUDE = [
+    "LÀ_CỔ_ĐÔNG_CỦA",
+    "LÀ_CÔNG_TY_CON_CỦA",
+    "CÓ_CÔNG_TY_CON",
+    "LÃNH_ĐẠO_CAO_NHẤT",
+    "SỞ_HỮU_GIÁN_TIẾP",
+    "CÓ_LỢI_ÍCH_GIÁN_TIẾP",
+    "ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI",
+    "KIỂM_SOÁT_GIÁN_TIẾP",
+    "KIỂM_SOÁT_GIA_ĐÌNH",
+]
+
+_FAMILY_EXPAND_TYPES = list(
+    dict.fromkeys(
+        list(FAMILY_RELS_WHITELIST)
+        + [
+            "LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO",
+            "VỢ_CHỒNG",
+            "CHA_MẸ",
+            "ANH_CHỊ",
+            "NGƯỜI_THÂN",
+            "MẸ",
+            "BỐ",
+            "ANH",
+            "CHỊ",
+            "CHỊ_DÂU",
+            "CHỊ_EM_GÁI",
+            "CHỊ_EM_TRAI",
+            "ANH_EM_TRAI",
+            "ANH_RỂ",
+            "EM_RỂ",
+            "CON_RỂ",
+            "CON_DÂU",
+            "ÔNG_NỘI",
+            "BÀ_NỘI",
+            "ÔNG_NGOẠI",
+            "BÀ_NGOẠI",
+        ]
+    )
+)
+
+
+_COMPANY_EXPAND_TYPES = [
+    "LÀ_CỔ_ĐÔNG_CỦA",
+    "CÓ_CÔNG_TY_CON",
+    "LÀ_CÔNG_TY_CON_CỦA",
+    "LÃNH_ĐẠO_CAO_NHẤT",
+    "CHỦ_TỊCH_HĐQT",
+    "TỔNG_GIÁM_ĐỐC",
+    "PHÓ_TỔNG_GIÁM_ĐỐC",
+    "THÀNH_VIÊN_HĐQT",
+    "THÀNH_VIÊN_BAN_KIỂM_SOÁT",
+    "LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO",
+    "SỞ_HỮU_GIÁN_TIẾP",
+    "CÓ_LỢI_ÍCH_GIÁN_TIẾP",
+    "ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI",
+    "KIỂM_SOÁT_GIÁN_TIẾP",
+]
+
+
+def _neighbor_records(session, node_id, limit, scope):
+    """Fetch neighbor rows for graph expand; scope=family | company filters rel types."""
+    nid = str(node_id)
+    if scope == "company" and (nid.startswith("C_") or nid.startswith("C_INST_")):
+        q = """
+        MATCH (n:Entity {id: $eid})-[r]-(m:Entity)
+        WHERE type(r) IN $companyTypes
+           OR type(r) STARTS WITH 'THÀNH_VIÊN'
+           OR type(r) STARTS WITH 'PHÓ_'
+           OR type(r) STARTS WITH 'CHỦ_TỊCH'
+           OR type(r) STARTS WITH 'TỔNG_GIÁM'
+           OR type(r) STARTS WITH 'KẾ_TOÁN'
+           OR type(r) STARTS WITH 'ĐẠI_DIỆN'
+        WITH n, m, r,
+             CASE WHEN startNode(r) = n THEN n ELSE m END AS src,
+             CASE WHEN startNode(r) = n THEN m ELSE n END AS tgt
+        RETURN src.id AS sid, src.name AS sname, src.type AS sgrp, src.symbol AS ssym,
+               tgt.id AS tid, tgt.name AS tname, tgt.type AS tgrp, tgt.symbol AS tsym,
+               coalesce(r.label, type(r)) AS elabel, coalesce(r.inferred, false) AS inf,
+               startNode(r).id AS edge_from, endNode(r).id AS edge_to
+        LIMIT $lim
+        """
+        return session.run(q, eid=node_id, lim=limit, companyTypes=_COMPANY_EXPAND_TYPES)
+    if scope == "company" and nid.startswith("P_"):
+        q = """
+        MATCH (n:Entity {id: $eid})-[r]-(m:Entity)
+        WHERE type(r) IN $companyTypes
+           OR type(r) STARTS WITH 'THÀNH_VIÊN'
+           OR type(r) STARTS WITH 'PHÓ_'
+           OR type(r) STARTS WITH 'CHỦ_TỊCH'
+           OR type(r) STARTS WITH 'TỔNG_GIÁM'
+           OR type(r) STARTS WITH 'KẾ_TOÁN'
+           OR type(r) STARTS WITH 'ĐẠI_DIỆN'
+        WITH n, m, r,
+             CASE WHEN startNode(r) = n THEN n ELSE m END AS src,
+             CASE WHEN startNode(r) = n THEN m ELSE n END AS tgt
+        RETURN src.id AS sid, src.name AS sname, src.type AS sgrp, src.symbol AS ssym,
+               tgt.id AS tid, tgt.name AS tname, tgt.type AS tgrp, tgt.symbol AS tsym,
+               coalesce(r.label, type(r)) AS elabel, coalesce(r.inferred, false) AS inf,
+               startNode(r).id AS edge_from, endNode(r).id AS edge_to
+        LIMIT $lim
+        """
+        return session.run(q, eid=node_id, lim=limit, companyTypes=_COMPANY_EXPAND_TYPES)
+    if scope == "family" and nid.startswith("P_"):
+        q = """
+        MATCH (n:Entity {id: $eid})-[r]-(m:Entity)
+        WHERE type(r) IN $familyTypes
+           OR type(r) = 'LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO'
+           OR (
+             n.id STARTS WITH 'P_' AND m.id STARTS WITH 'P_'
+             AND NOT type(r) IN $excludeTypes
+             AND (
+               type(r) CONTAINS 'CHÁU'
+               OR type(r) CONTAINS 'EM_'
+               OR type(r) CONTAINS 'ANH_'
+               OR type(r) CONTAINS 'CHỊ_'
+               OR type(r) CONTAINS 'CON_'
+               OR type(r) CONTAINS 'VỢ'
+               OR type(r) CONTAINS 'CHỒNG'
+               OR type(r) IN ['CHA_MẸ', 'NGƯỜI_THÂN', 'MẸ', 'BỐ', 'ANH', 'CHỊ', 'CÔ', 'CHÚ', 'CẬU', 'DÌ']
+             )
+           )
+        WITH n, m, r,
+             CASE WHEN startNode(r) = n THEN n ELSE m END AS src,
+             CASE WHEN startNode(r) = n THEN m ELSE n END AS tgt
+        RETURN src.id AS sid, src.name AS sname, src.type AS sgrp, src.symbol AS ssym,
+               tgt.id AS tid, tgt.name AS tname, tgt.type AS tgrp, tgt.symbol AS tsym,
+               coalesce(r.label, type(r)) AS elabel, coalesce(r.inferred, false) AS inf,
+               startNode(r).id AS edge_from, endNode(r).id AS edge_to
+        LIMIT $lim
+        """
+        return session.run(
+            q,
+            eid=node_id,
+            lim=limit,
+            familyTypes=_FAMILY_EXPAND_TYPES,
+            excludeTypes=_FAMILY_EXPAND_EXCLUDE,
+        )
+    q_out = """
+    MATCH (n:Entity {id: $eid})-[r]->(m:Entity)
+    WITH n, m, r LIMIT $lim
+    RETURN n.id AS sid, n.name AS sname, n.type AS sgrp, n.symbol AS ssym,
+           m.id AS tid, m.name AS tname, m.type AS tgrp, m.symbol AS tsym,
+           coalesce(r.label, type(r)) AS elabel, coalesce(r.inferred, false) AS inf,
+           n.id AS edge_from, m.id AS edge_to
+    """
+    q_in = """
+    MATCH (n:Entity)-[r]->(m:Entity {id: $eid})
+    WITH n, m, r LIMIT $lim
+    RETURN n.id AS sid, n.name AS sname, n.type AS sgrp, n.symbol AS ssym,
+           m.id AS tid, m.name AS tname, m.type AS tgrp, m.symbol AS tsym,
+           coalesce(r.label, type(r)) AS elabel, coalesce(r.inferred, false) AS inf,
+           n.id AS edge_from, m.id AS edge_to
+    """
+    return list(session.run(q_out, eid=node_id, lim=limit)) + list(
+        session.run(q_in, eid=node_id, lim=limit)
+    )
+
+
 @app.route("/api/node/<path:node_id>/neighbors", methods=["GET"])
 def get_node_neighbors(node_id):
     """Get 1-hop neighbors of a node for lazy graph expansion."""
     limit = min(200, int(request.args.get("limit", 100)))
+    scope = (request.args.get("scope") or "").strip().lower()
+    if scope == "family" and not str(node_id).startswith("P_"):
+        return jsonify({"nodes": [], "edges": []})
+    if scope == "company" and not (
+        str(node_id).startswith("C_") or str(node_id).startswith("P_")
+    ):
+        return jsonify({"nodes": [], "edges": []})
     nodes = {}
     edges = []
     try:
         with neo4j_driver.session() as session:
-            # Outgoing edges
-            q_out = """
-            MATCH (n:Entity {id: $eid})-[r]->(m:Entity)
-            WITH n, m, r LIMIT $lim
-            RETURN n.id AS sid, n.name AS sname, n.type AS sgrp, n.symbol AS ssym,
-                   m.id AS tid, m.name AS tname, m.type AS tgrp, m.symbol AS tsym,
-                   r.label AS elabel, coalesce(r.inferred, false) AS inf
-            """
-            # Incoming edges
-            q_in = """
-            MATCH (n:Entity)-[r]->(m:Entity {id: $eid})
-            WITH n, m, r LIMIT $lim
-            RETURN n.id AS sid, n.name AS sname, n.type AS sgrp, n.symbol AS ssym,
-                   m.id AS tid, m.name AS tname, m.type AS tgrp, m.symbol AS tsym,
-                   r.label AS elabel, coalesce(r.inferred, false) AS inf
-            """
-            for rec in list(session.run(q_out, eid=node_id, lim=limit)) + list(session.run(q_in, eid=node_id, lim=limit)):
+            rows = _neighbor_records(session, node_id, limit, scope)
+            for rec in rows:
                 s_sym = rec.get("ssym") or ""
                 t_sym = rec.get("tsym") or ""
                 s_label = f"{rec['sname']} ({s_sym})" if s_sym else (rec["sname"] or rec["sid"])
@@ -2730,7 +3215,8 @@ def get_node_neighbors(node_id):
                 nodes[rec["sid"]] = {"id": rec["sid"], "label": s_label, "group": rec["sgrp"] or "DEFAULT"}
                 nodes[rec["tid"]] = {"id": rec["tid"], "label": t_label, "group": rec["tgrp"] or "DEFAULT"}
                 edges.append({
-                    "from": rec["sid"], "to": rec["tid"],
+                    "from": rec.get("edge_from") or rec["sid"],
+                    "to": rec.get("edge_to") or rec["tid"],
                     "label": rec["elabel"] or "",
                     "inferred": bool(rec["inf"]),
                     "dashes": bool(rec["inf"])
@@ -2738,6 +3224,34 @@ def get_node_neighbors(node_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     return jsonify({"nodes": list(nodes.values()), "edges": edges})
+
+
+@app.route("/api/stats/edge-types", methods=["GET"])
+def api_stats_edge_types():
+    """Count edges per Neo4j relationship type for the relation-type browser."""
+    try:
+        with neo4j_driver.session() as session:
+            rows = session.run(
+                """
+                MATCH ()-[r]->()
+                RETURN type(r) AS type,
+                       coalesce(r.inferred, false) AS inferred,
+                       count(*) AS count
+                ORDER BY count DESC
+                """
+            )
+            types = [
+                {
+                    "type": rec["type"],
+                    "count": rec["count"],
+                    "inferred": bool(rec["inferred"]),
+                }
+                for rec in rows
+            ]
+            total = sum(t["count"] for t in types)
+        return jsonify({"total_edges": total, "types": types})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route("/api/stats/exchange", methods=["GET"])

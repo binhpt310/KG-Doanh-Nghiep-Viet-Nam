@@ -689,15 +689,30 @@ def _process_csv_file(file_path):
     return "\n".join(lines)
 
 
+_RAW_JSON_ORDER = (
+    "banks.json",
+    "holders.json",
+    "subsidiaries.json",
+    "officers.json",
+    "individuals.json",
+)
+
+
 def process_raw_files():
     """
     Main preprocessor entry point.
     Reads files from data/raw/, processes them, and outputs to data/ingest/.
     """
-    files = [f for f in os.listdir(RAW_DIR) if os.path.isfile(os.path.join(RAW_DIR, f))]
+    present = {
+        f
+        for f in os.listdir(RAW_DIR)
+        if os.path.isfile(os.path.join(RAW_DIR, f))
+    }
+    files = [f for f in _RAW_JSON_ORDER if f in present]
+    files.extend(sorted(present - set(_RAW_JSON_ORDER)))
     if not files:
         print("✅ Không có file thô nào trong data/raw/ để xuất ra data/ingest/.")
-        return
+        return 0
 
     print(f"🚀 Tìm thấy {len(files)} file thô. Bắt đầu tiền xử lý (LLM Preprocessor)...")
 
@@ -752,6 +767,8 @@ def process_raw_files():
             print(f"   [Lỗi] Không thể xử lý file {filename}: {str(e)}")
             if _prompter:
                 _prompter.clear_source_materials()
+
+    return len(files)
 
 
 # ============================================================================
@@ -1251,7 +1268,10 @@ def crawl_and_update(symbols=None, skip_individuals=False, push_neo4j=True,
 def _process_raw_files_wrapper():
     """Wrapper cho process_raw_files để trả về (has_new, lib)."""
     import llm_preprocessor
-    return llm_preprocessor.process_raw_files()
+    count = llm_preprocessor.process_raw_files()
+    if count is None:
+        count = 0
+    return (count > 0, None)
 
 
 def _run_hidden_relation_inference(driver):

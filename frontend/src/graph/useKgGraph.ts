@@ -146,8 +146,20 @@ export function useKgGraph(
       }
 
       const neighLimit = st.mode === 'persons' ? 200 : 120;
+      let scopeParam = '';
+      if (nodeId.startsWith('P_') && st.mode === 'persons') {
+        scopeParam = '&scope=family';
+      } else if (
+        nodeId.startsWith('C_') ||
+        nodeId.startsWith('C_INST_') ||
+        (nodeId.startsWith('P_') && st.mode !== 'persons')
+      ) {
+        scopeParam = '&scope=company';
+      } else if (nodeId.startsWith('P_')) {
+        scopeParam = '&scope=company';
+      }
       const raw = await apiJson<{ nodes: ApiNode[]; edges: ApiEdge[] }>(
-        `/api/node/${encodeURIComponent(nodeId)}/neighbors?limit=${neighLimit}`
+        `/api/node/${encodeURIComponent(nodeId)}/neighbors?limit=${neighLimit}${scopeParam}`
       );
 
       st.expandedSet.add(nodeId);
@@ -174,21 +186,25 @@ export function useKgGraph(
       });
 
       const beforeEdgeIds = new Set(edgesDs.getIds());
+      const baseCount = nodesDs.length;
+      const expandTotal = baseCount + newNodes.length;
+      const visMode = st.mode === 'persons' ? 'persons' : 'hubs';
 
       const toAdd: VisNode[] = [];
+      let addIdx = 0;
       newNodes.forEach((n) => {
         if (!nodesDs.get(n.id)) {
           art.nodeIds.add(n.id);
-          toAdd.push(
-            nodeToVis(
-              n,
-              st.degreeMap[n.id] || 1,
-              0,
-              1,
-              st.mode === 'persons' ? 'persons' : 'hubs',
-              st
-            )
+          const visNode = nodeToVis(
+            n,
+            st.degreeMap[n.id] || 1,
+            baseCount + addIdx,
+            Math.max(expandTotal, 2),
+            visMode,
+            st
           );
+          addIdx += 1;
+          toAdd.push(visNode);
         }
       });
       if (toAdd.length) nodesDs.add(toAdd);
@@ -213,11 +229,11 @@ export function useKgGraph(
       setTimeout(() => {
         net.setOptions({ physics: { enabled: false } });
         fitView();
-      }, 1800);
+      }, 2500);
 
       net.selectNodes([nodeId]);
       net.focus(nodeId, {
-        scale: 1.2,
+        scale: 1.15,
         animation: { duration: 500, easingFunction: 'easeInOutQuad' },
       });
 
@@ -363,10 +379,31 @@ export function useKgGraph(
     );
 
     const opts = getVisOptions('hubs', theme);
+    if (normalized.nodes.length > 500) {
+      opts.physics.barnesHut!.gravitationalConstant = -5000;
+      opts.physics.stabilization!.iterations = 400;
+    }
     const nodeList = Object.values(st.allNodes);
-    const vnodes = nodeList.map((n, i) =>
-      nodeToVis(n, st.degreeMap[n.id] || 0, i, nodeList.length, 'hubs', st)
-    );
+    const vnodes = nodeList.map((n, i) => {
+      const base = nodeToVis(
+        n,
+        st.degreeMap[n.id] || 0,
+        i,
+        nodeList.length,
+        'hubs',
+        st
+      );
+      const radius = Math.max(2400, nodeList.length * 14);
+      const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+      const angle = i * goldenAngle;
+      const r = radius * Math.sqrt(i / Math.max(nodeList.length, 1));
+      return {
+        ...base,
+        x: r * Math.cos(angle),
+        y: r * Math.sin(angle),
+        fixed: false,
+      };
+    });
 
     const companyEdges = st.allEdges
       .filter((e) => {

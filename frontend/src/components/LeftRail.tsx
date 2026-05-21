@@ -1,5 +1,12 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { apiJson } from '../api/client';
 import { vi } from '../content/copy/vi';
+
+interface EdgeTypeRow {
+  type: string;
+  count: number;
+  inferred: boolean;
+}
 
 export interface RuleRow {
   id?: string;
@@ -70,6 +77,26 @@ export function LeftRail({
 }: Props) {
   const fmt = (n: number) => n.toLocaleString('vi-VN');
   const [openRuleIdx, setOpenRuleIdx] = useState<number | null>(0);
+  const [edgeTypesOpen, setEdgeTypesOpen] = useState(false);
+  const [edgeTypes, setEdgeTypes] = useState<EdgeTypeRow[] | null>(null);
+  const [edgeTypesLoading, setEdgeTypesLoading] = useState(false);
+
+  const toggleEdgeTypes = useCallback(async () => {
+    if (edgeTypesOpen) {
+      setEdgeTypesOpen(false);
+      return;
+    }
+    setEdgeTypesOpen(true);
+    setEdgeTypesLoading(true);
+    try {
+      const data = await apiJson<{ types: EdgeTypeRow[] }>('/api/stats/edge-types');
+      setEdgeTypes(data.types || []);
+    } catch {
+      setEdgeTypes([]);
+    } finally {
+      setEdgeTypesLoading(false);
+    }
+  }, [edgeTypesOpen]);
 
   const toggleRule = (idx: number) => {
     setOpenRuleIdx((cur) => (cur === idx ? null : idx));
@@ -115,10 +142,49 @@ export function LeftRail({
               </div>
             </div>
             <div className="stat-lines">
-              <div className="stat-line">
+              <button
+                type="button"
+                className="stat-line stat-line--action"
+                onClick={() => void toggleEdgeTypes()}
+                title={vi.edgeTypesPanelHint}
+                aria-expanded={edgeTypesOpen}
+              >
                 <span>{vi.edgesInDb}</span>
                 <span>{stats ? fmt(stats.total_edges) : '—'}</span>
-              </div>
+              </button>
+              {edgeTypesOpen ? (
+                <div className="edge-types-panel" role="region" aria-label={vi.edgeTypesPanelTitle}>
+                  <div className="edge-types-panel-hd">
+                    <span>{vi.edgeTypesPanelTitle}</span>
+                    <button
+                      type="button"
+                      className="edge-types-close"
+                      onClick={() => setEdgeTypesOpen(false)}
+                    >
+                      {vi.edgeTypesClose}
+                    </button>
+                  </div>
+                  <div className="edge-types-list">
+                    {edgeTypesLoading ? (
+                      <div className="muted">{vi.edgeTypesLoading}</div>
+                    ) : edgeTypes?.length ? (
+                      edgeTypes.map((row) => (
+                        <div
+                          key={`${row.type}-${row.inferred}`}
+                          className={`edge-types-row${row.inferred ? ' inferred' : ''}`}
+                        >
+                          <span className="edge-types-name" title={row.type}>
+                            {row.type}
+                          </span>
+                          <span className="edge-types-count">{fmt(row.count)}</span>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="muted">{vi.loadFailed}</div>
+                    )}
+                  </div>
+                </div>
+              ) : null}
               {onInferredRelationsClick ? (
                 <button
                   type="button"

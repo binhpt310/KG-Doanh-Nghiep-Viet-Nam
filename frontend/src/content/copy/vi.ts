@@ -29,7 +29,7 @@ export const vi = {
   /** Inferred / hidden ties count — replaces vague “Suy luận” label */
   heroStatHidden: 'Quan hệ ẩn',
 
-  railSnapshot: 'Ảnh chụp nhanh',
+  railSnapshot: 'Tổngg quan',
   railSnapshotHint:
     'Tổng quan số liệu trong KG: công ty, cá nhân và quan hệ đã đồng bộ — trước khi bạn mở đồ thị chi tiết.',
   railExplore: 'Khám phá',
@@ -37,13 +37,18 @@ export const vi = {
     'Chọn chế độ công ty hoặc cá nhân, rồi nhấn vào một nút trên đồ thị để xem thêm liên kết.',
   railInference: 'Suy luận',
   railInferenceHint:
-    'Xem các luật suy luận pháp lý và gợi ý điều tra nhanh từ dữ liệu.',
+    'Xem chi tiết các văn bản pháp luật của các luật suy luận quan hệ ẩn.',
 
   overviewTitle: 'Tổng quan KG',
   overviewSync: 'Đồng bộ',
   listedCompanies: 'Công ty niêm yết',
   persons: 'Cá nhân',
   edgesInDb: 'Quan hệ trong CSDL',
+  edgeTypesPanelTitle: 'Loại quan hệ trong CSDL',
+  edgeTypesPanelHint: 'Nhấn để xem danh sách có thể cuộn',
+  edgeTypesClose: 'Đóng',
+  edgeTypesLoading: 'Đang tải loại quan hệ…',
+  edgeTypesInferred: 'ẩn',
   /** Inferred / hidden ties count in overview card — same label as graph legend */
   inferredEdgesLabel: 'Quan hệ ẩn',
   lastUpdated: 'Cập nhật gần nhất',
@@ -114,7 +119,7 @@ export const vi = {
 
   assistantKicker: 'Phân tích hỗ trợ',
   assistantHeadline:
-    'Đồ thị rối? Mở trợ lý để được giải thích ngắn gọn hoặc gợi ý truy vấn Cypher.',
+    'Truy vấn quan hệ, khối lượng giao dịch, phân tích sở hữu,... của các công ty niêm yết tại Việt Nam.',
   assistantTitle: 'Trợ lý phân tích',
   sessionPlaceholder: '— Phiên hiện tại —',
   saveSession: 'Lưu phiên',

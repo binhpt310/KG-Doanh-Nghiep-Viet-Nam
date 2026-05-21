@@ -284,7 +284,11 @@ export default function App() {
   useEffect(() => {
     const onClick = (e: Event) => {
       const ce = e as CustomEvent<string>;
-      void fetchNodeDetail(ce.detail);
+      const id = ce.detail;
+      void fetchNodeDetail(id);
+      if (filterMode === 'persons' && id.startsWith('P_')) {
+        void graph.expandOrToggleNeighbors(id);
+      }
     };
     const onClose = () => {
       setSelectedId(null);
@@ -313,7 +317,7 @@ export default function App() {
       window.removeEventListener('kg-node-close', onClose);
       window.removeEventListener('kg-query-ui', onQueryUi);
     };
-  }, [fetchNodeDetail, graph]);
+  }, [fetchNodeDetail, graph, filterMode]);
 
   const badgeType = useMemo(() => {
     if (!nodeProps) return 'company' as const;
@@ -834,12 +838,6 @@ export default function App() {
                 </div>
                 <div className="leg-item">
                   <span className="leg-dot person" /> {vi.legendPerson}
-                </div>
-                <div className="leg-item">
-                  <span className="leg-dot institution" /> {vi.legendInstitution}
-                </div>
-                <div className="leg-item">
-                  <span className="leg-dash" /> {vi.legendHiddenEdge}
                 </div>
               </div>
             </div>

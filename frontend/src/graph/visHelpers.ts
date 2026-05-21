@@ -69,9 +69,9 @@ export function getVisOptions(
       enabled: true,
       solver: 'barnesHut',
       barnesHut: {
-        gravitationalConstant: isPersonMode ? -12000 : -8000,
-        centralGravity: isPersonMode ? 0.03 : 0.08,
-        springLength: isPersonMode ? 220 : 320,
+        gravitationalConstant: isPersonMode ? -12000 : -5000,
+        centralGravity: isPersonMode ? 0.03 : 0.03,
+        springLength: isPersonMode ? 220 : 460,
         springConstant: 0.03,
         damping: 0.12,
       },
@@ -79,7 +79,7 @@ export function getVisOptions(
       minVelocity: 0.5,
       stabilization: {
         enabled: true,
-        iterations: isPersonMode ? 400 : 250,
+        iterations: isPersonMode ? 400 : 380,
         fit: true,
         updateInterval: 20,
       },

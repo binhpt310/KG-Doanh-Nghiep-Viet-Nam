@@ -35,3 +35,4 @@ backend/data/*.sqlite
 
 # Node modules (if any)
 node_modules
+

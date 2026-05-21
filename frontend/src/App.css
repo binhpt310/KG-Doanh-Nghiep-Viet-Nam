@@ -593,6 +593,69 @@ button.stat-line--action:disabled {
   color: var(--amber);
 }
 
+.edge-types-panel {
+  margin-top: 4px;
+  padding: 8px;
+  border-radius: var(--r-sm);
+  background: var(--surface-2, var(--hover));
+  border: 1px solid var(--border);
+}
+
+.edge-types-panel-hd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.edge-types-close {
+  border: none;
+  background: transparent;
+  font-size: 11px;
+  color: var(--accent);
+  cursor: pointer;
+  padding: 2px 4px;
+}
+
+.edge-types-list {
+  max-height: 220px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 4px;
+}
+
+.edge-types-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.edge-types-row.inferred .edge-types-name {
+  color: var(--amber);
+}
+
+.edge-types-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.edge-types-count {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
 .exchange-body {
   display: flex;
   flex-direction: column;

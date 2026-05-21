@@ -44,11 +44,15 @@ for index, query in enumerate(test_queries, start=1):
             cypher = data.get("cypher", "")
 
             print(f"Generated Cypher:\n{cypher.strip()}")
-            if len(cypher) > 5 and len(answer) > 20:
-                print("PASSED (Successfully emitted GraphRAG output)")
+            intent_ok = any(
+                k in cypher.upper()
+                for k in ("LÃNH_ĐẠO", "LÀ_CỔ_ĐÔNG", "CÓ_CÔNG_TY_CON", "LÀ_NGƯỜI_THÂN")
+            )
+            if len(cypher) > 5 and len(answer) > 20 and intent_ok:
+                print("PASSED (GraphRAG output + Cypher looks on-domain)")
                 success_count += 1
             else:
-                print("FAILED (Empty cypher or very short answer)")
+                print("FAILED (Empty/short answer or Cypher missing expected rel types)")
 
             print(f"Answer:\n{answer}\n(Thoi gian xu ly: {duration:.2f}s)")
         else:

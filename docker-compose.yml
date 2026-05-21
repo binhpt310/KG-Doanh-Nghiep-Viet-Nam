@@ -1,3 +1,10 @@
+# KG stack — UI :5001, API :5002, Neo4j :7474 / :7687
+#
+# Full graph sync (host, after copying processed_raw → backend/data/raw/):
+#   cd backend && python3 pipeline.py preprocess && python3 pipeline.py push
+#   then family enrich + inference (see SLIDE_CONTENT.md §5.2)
+# Rebuild after code changes: docker compose build kg-app kg-ui && docker compose up -d
+
 services:
   neo4j:
     image: neo4j:5-community

@@ -1,134 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 820" role="img" aria-labelledby="t d">
-  <title id="t">Kiến trúc runtime KG</title>
-  <desc id="d">Luồng người dùng và luồng cập nhật dữ liệu</desc>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 780">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#f0f7ff"/>
-      <stop offset="100%" stop-color="#e2ecfc"/>
-    </linearGradient>
-    <filter id="sh" x="-15%" y="-15%" width="130%" height="130%">
-      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.1"/>
-    </filter>
-    <marker id="ar" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto">
-      <path d="M0,0 L11,5.5 L0,11 Z" fill="#334155"/>
-    </marker>
-    <style>
-      .cv{fill:url(#bg)}
-      .ln{fill:#c7d9f5}
-      .lnt{font:700 22px 'Segoe UI',Arial,sans-serif;fill:#1e3a8a}
-      .cd{fill:#fff;stroke:#94a3b8;stroke-width:1.2;rx:18;filter:url(#sh)}
-      .h{font:700 20px 'Segoe UI',Arial,sans-serif;fill:#0f172a}
-      .s{font:600 15px 'Segoe UI',Arial,sans-serif;fill:#334155}
-      .b{font:14px 'Segoe UI',Arial,sans-serif;fill:#475569}
-      .m{font:13px 'Segoe UI',Arial,sans-serif;fill:#64748b}
-      .a{stroke:#334155;stroke-width:2.8;fill:none;marker-end:url(#ar)}
-      .ad{stroke:#64748b;stroke-width:2.5;stroke-dasharray:9 7;fill:none;marker-end:url(#ar)}
-    </style>
+  <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#2c3e50"/></marker>
+  <marker id="arrG" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#27ae60"/></marker>
+  <marker id="arrO" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#d35400"/></marker>
+  <marker id="arrB" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#2980b9"/></marker>
+  <marker id="arrGy" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#95a5a6"/></marker>
   </defs>
-  <rect class="cv" width="1800" height="820" rx="28"/>
-  <rect class="ln" x="40" y="36" width="1720" height="44" rx="22"/>
-  <text class="lnt" x="64" y="66">Luồng người dùng: trình duyệt → UI → API → Neo4j / LLM</text>
-  <rect class="ln" x="40" y="420" width="1720" height="44" rx="22"/>
-  <text class="lnt" x="64" y="450">Luồng cập nhật: FireAnt → pipeline → file → Neo4j</text>
-  <g transform="translate(56,108)">
-    <rect class="cd" width="240" height="168"/>
-    <circle cx="52" cy="44" r="24" fill="#2563eb"/>
-    <circle cx="40" cy="40" r="3.5" fill="#fff"/><circle cx="52" cy="32" r="3.5" fill="#fff"/><circle cx="64" cy="40" r="3.5" fill="#fff"/>
-    <path d="M42 52 Q52 62 62 52" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <text class="h" x="88" y="50">Trình duyệt</text>
-    <text class="s" x="20" y="88">Cổng chính</text>
-    <text class="b" x="20" y="112">http://localhost:5001</text>
-    <text class="m" x="20" y="138">Đồ thị, thống kê, tìm kiếm, trợ lý</text>
-  </g>
-  <g transform="translate(340,108)">
-    <rect class="cd" width="280" height="168"/>
-    <polygon points="52,24 76,38 76,62 52,76 28,62 28,38" fill="#16a34a"/>
-    <text x="52" y="52" text-anchor="middle" fill="#fff" font="700 18px Arial,sans-serif">N</text>
-    <circle cx="118" cy="48" r="18" fill="#61dafb"/>
-    <circle cx="118" cy="48" r="10" stroke="#20232a" stroke-width="2" fill="none"/>
-    <ellipse cx="118" cy="48" rx="18" ry="7" fill="none" stroke="#20232a" stroke-width="2" transform="rotate(-28 118 48)"/>
-    <text class="h" x="20" y="108">kg-ui</text>
-    <text class="s" x="20" y="132">Nginx + SPA đã build</text>
-    <text class="b" x="20" y="154">Proxy /api/* vào kg-app</text>
-  </g>
-  <g transform="translate(664,100)">
-    <rect class="cd" width="320" height="184"/>
-    <circle cx="56" cy="48" r="26" fill="#111827"/>
-    <path d="M48 58 L64 58 L60 42 L68 42 L54 26 L40 42 L48 42 Z" fill="#fff"/>
-    <text class="h" x="96" y="54">kg-app</text>
-    <text class="s" x="20" y="92">backend/script.py</text>
-    <text class="b" x="20" y="116">Flask: graph, crawl, query, LLM</text>
-    <text class="b" x="20" y="138">Trong container: cổng 5001</text>
-    <text class="b" x="20" y="160">Trên host: map 5002→5001</text>
-  </g>
-  <g transform="translate(1028,108)">
-    <rect class="cd" width="260" height="168"/>
-    <circle cx="48" cy="42" r="10" fill="#22c55e"/><circle cx="76" cy="34" r="10" fill="#16a34a"/><circle cx="76" cy="58" r="10" fill="#15803d"/>
-    <line x1="48" y1="42" x2="76" y2="34" stroke="#16a34a" stroke-width="3"/><line x1="48" y1="42" x2="76" y2="58" stroke="#16a34a" stroke-width="3"/><line x1="76" y1="34" x2="76" y2="58" stroke="#16a34a" stroke-width="3"/>
-    <text class="h" x="100" y="50">Neo4j</text>
-    <text class="s" x="20" y="96">Graph trung tâm</text>
-    <text class="b" x="20" y="120">Browser :7474</text>
-    <text class="b" x="20" y="142">Bolt :7687</text>
-  </g>
-  <g transform="translate(1328,108)">
-    <rect class="cd" width="416" height="168"/>
-    <rect x="24" y="28" width="56" height="56" rx="12" fill="#7c3aed"/>
-    <text x="52" y="64" text-anchor="middle" fill="#fff" font="700 16px Arial,sans-serif">AI</text>
-    <text class="h" x="96" y="48">LLM (ngoài compose)</text>
-    <text class="s" x="96" y="74">vLLM / Ollama / OpenAI-compatible</text>
-    <text class="b" x="24" y="108">Dùng cho /api/query và panel model</text>
-    <text class="b" x="24" y="130">backend/.env.docker</text>
-  </g>
-  <g transform="translate(56,492)">
-    <rect class="cd" width="240" height="156"/>
-    <circle cx="52" cy="44" r="22" fill="#ea580c"/>
-    <path d="M52 26 Q62 36 58 48 Q54 58 46 62 Q38 52 44 40 Q48 30 52 26" fill="#fff"/>
-    <text class="h" x="88" y="48">FireAnt API</text>
-    <text class="s" x="20" y="88">Nguồn crawl</text>
-    <text class="b" x="20" y="112">FIREANT_TOKEN</text>
-  </g>
-  <g transform="translate(340,484)">
-    <rect class="cd" width="300" height="172"/>
-    <circle cx="52" cy="50" r="24" fill="#2563eb"/>
-    <text x="52" y="58" text-anchor="middle" fill="#fff" font="700 15px Arial,sans-serif">Py</text>
-    <text class="h" x="92" y="52">pipeline.py</text>
-    <text class="s" x="20" y="92">CLI: crawl, update, push…</text>
-    <text class="b" x="20" y="116">POST /api/crawl/start</text>
-    <text class="m" x="20" y="142">(thread trong kg-app)</text>
-  </g>
-  <g transform="translate(676,484)">
-    <rect class="cd" width="340" height="172"/>
-    <circle cx="52" cy="50" r="24" fill="#4f46e5"/>
-    <text x="52" y="58" text-anchor="middle" fill="#fff" font="700 16px Arial,sans-serif">D</text>
-    <text class="h" x="92" y="52">backend/data/</text>
-    <text class="s" x="20" y="92">raw, processed_raw, ingest…</text>
-    <text class="b" x="20" y="116">kg_data/*.json</text>
-    <text class="b" x="20" y="138">entity_map.json</text>
-  </g>
-  <g transform="translate(1052,476)">
-    <rect class="cd" width="692" height="188"/>
-    <circle cx="52" cy="52" r="26" fill="#16a34a"/>
-    <text x="52" y="60" text-anchor="middle" fill="#fff" font="700 14px Arial,sans-serif">KG</text>
-    <text class="h" x="96" y="52">Neo4j: nạp lại + làm giàu</text>
-    <text class="s" x="20" y="88">push_to_neo4j(): xóa graph cũ, load JSON</text>
-    <text class="b" x="20" y="112">Sau đó: gia đình + inference rules</text>
-    <text class="b" x="20" y="136">script.py phục vụ API/UI</text>
-  </g>
-  <line class="a" x1="296" y1="192" x2="340" y2="192"/>
-  <line class="a" x1="620" y1="192" x2="664" y2="192"/>
-  <line class="a" x1="984" y1="192" x2="1028" y2="192"/>
-  <line class="a" x1="1288" y1="192" x2="1328" y2="192"/>
-  <line class="a" x1="296" y1="570" x2="340" y2="570"/>
-  <line class="a" x1="640" y1="570" x2="676" y2="570"/>
-  <line class="a" x1="1016" y1="570" x2="1052" y2="570"/>
-  <path class="ad" d="M824 284 C824 360 520 400 490 484"/>
-  <text class="m" x="520" y="392">POST /api/crawl/start → thread</text>
-  <text class="m" x="1000" y="178">Cypher</text>
-  <path class="a" d="M984 210 C1120 280 1240 260 1328 210"/>
-  <text class="m" x="1140" y="268">LLM_BASE_URL</text>
-  <path class="a" d="M1398 570 C1520 400 1400 320 984 220"/>
-  <text class="m" x="1280" y="340">/api/*</text>
-  <text class="h" x="56" y="788">Ghi nhớ</text>
-  <text class="b" x="56" y="808">1) 5001 = UI. 2) kg-app + pipeline cùng code. 3) push_to_neo4j xóa toàn bộ node trước khi load.</text>
+  <rect width="1400" height="780" fill="#f5f6fa"/>
+  <rect width="1400" height="56" fill="#2c3e50"/>
+  <rect x="12" y="10" width="36" height="36" rx="6" fill="#ffffff" stroke="#dde3ea" stroke-width="1"/>
+  <image x="14" y="12" width="32" height="32" xlink:href="icons/neo4j.svg"/>
+  <text x="58" y="24" font-family="DejaVu Sans,Arial,sans-serif" font-size="17" font-weight="700" fill="#fff">Kiến trúc runtime — KG doanh nghiệp niêm yết VN</text>
+  <text x="58" y="44" font-family="DejaVu Sans,Arial,sans-serif" font-size="11" fill="#b0bec5">(A) Online serving đọc graph  ·  (B) Batch pipeline ghi graph  ·  Docker Compose</text>
+  <rect x="1200" y="10" width="36" height="36" rx="6" fill="#ffffff" stroke="#dde3ea" stroke-width="1"/>
+  <image x="1202" y="12" width="32" height="32" xlink:href="icons/docker.svg"/>
+  <rect x="1246" y="10" width="36" height="36" rx="6" fill="#ffffff" stroke="#dde3ea" stroke-width="1"/>
+  <image x="1248" y="12" width="32" height="32" xlink:href="icons/python.svg"/>
+  <rect x="1292" y="10" width="36" height="36" rx="6" fill="#ffffff" stroke="#dde3ea" stroke-width="1"/>
+  <image x="1294" y="12" width="32" height="32" xlink:href="icons/react.svg"/>
+  <rect x="1338" y="10" width="36" height="36" rx="6" fill="#ffffff" stroke="#dde3ea" stroke-width="1"/>
+  <image x="1340" y="12" width="32" height="32" xlink:href="icons/flask.svg"/>
+  <rect x="12" y="68" width="1376" height="300" rx="8" fill="#fff" stroke="#27ae60" stroke-width="2"/>
+  <text x="28" y="90" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="700" fill="#27ae60">(A) Luồng truy vấn runtime — Người dùng đọc graph qua API</text>
+  <rect x="12" y="392" width="1376" height="280" rx="8" fill="#fff" stroke="#e67e22" stroke-width="2"/>
+  <text x="28" y="414" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="700" fill="#e67e22">(B) Luồng cập nhật dữ liệu (batch) — Ghi graph từ FireAnt</text>
+  <rect x="24" y="104" width="248" height="220" rx="8" fill="#ebf5fb" stroke="#2980b9" stroke-width="1.5"/>
+  <rect x="36" y="116" width="36" height="36" rx="6" fill="#ffffff" stroke="#dde3ea" stroke-width="1"/>
+  <image x="38" y="118" width="32" height="32" xlink:href="icons/react.svg"/>
+  <text x="80" y="132" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="700" fill="#2980b9">Trình duyệt</text>
+  <text x="38" y="154" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">React 19 · TypeScript · Vite</text>
+  <text x="38" y="172" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">vis-network · fetch /api/...</text>
+  <text x="38" y="190" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">Host: localhost:5001 (same origin)</text>
+  <rect x="292" y="104" width="248" height="220" rx="8" fill="#e8f8f5" stroke="#1abc9c" stroke-width="1.5"/>
+  <rect x="304" y="116" width="36" height="36" rx="6" fill="#ffffff" stroke="#dde3ea" stroke-width="1"/>
+  <image x="306" y="118" width="32" height="32" xlink:href="icons/nginx.svg"/>
+  <text x="348" y="132" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="700" fill="#1abc9c">kg-ui (Nginx)</text>
+  <text x="306" y="154" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">Container :80 → host :5001</text>
+  <text x="306" y="172" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">SPA static + proxy_pass /api/</text>
+  <text x="306" y="190" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">proxy_read_timeout 600s</text>
+  <line x1="280" y1="214" x2="284" y2="214" stroke="#2c3e50" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="282" y="206" text-anchor="middle" font-family="DejaVu Sans,Arial,sans-serif" font-size="9" fill="#666">HTTP</text>
+  <rect x="560" y="104" width="268" height="220" rx="8" fill="#fef9e7" stroke="#f39c12" stroke-width="1.5"/>
+  <rect x="572" y="116" width="36" height="36" rx="6" fill="#ffffff" stroke="#dde3ea" stroke-width="1"/>
+  <image x="574" y="118" width="32" height="32" xlink:href="icons/flask.svg"/>
+  <rect x="612" y="116" width="36" height="36" rx="6" fill="#ffffff" stroke="#dde3ea" stroke-width="1"/>
+  <image x="614" y="118" width="32" height="32" xlink:href="icons/python.svg"/>
+  <text x="656" y="132" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="700" fill="#f39c12">kg-app (Flask)</text>
+  <text x="574" y="154" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">backend/script.py</text>
+  <text x="574" y="172" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">/api/graph · /api/query · /api/stats</text>
+  <text x="574" y="190" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">POST /api/crawl/start (batch trigger)</text>
+  <text x="574" y="208" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">entity_map.json khi khởi động</text>
+  <line x1="548" y1="214" x2="552" y2="214" stroke="#2c3e50" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="550" y="206" text-anchor="middle" font-family="DejaVu Sans,Arial,sans-serif" font-size="9" fill="#666">/api/*</text>
+  <rect x="848" y="104" width="248" height="220" rx="8" fill="#fdecea" stroke="#e74c3c" stroke-width="1.5"/>
+  <rect x="860" y="116" width="36" height="36" rx="6" fill="#ffffff" stroke="#dde3ea" stroke-width="1"/>
+  <image x="862" y="118" width="32" height="32" xlink:href="icons/neo4j.svg"/>
+  <text x="904" y="132" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="700" fill="#e74c3c">Neo4j 5 + APOC</text>
+  <text x="862" y="154" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">Bolt :7687 · Browser :7474</text>
+  <text x="862" y="172" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">Company · Person · Institution</text>
+  <text x="862" y="190" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">Cạnh inferred R01–R04 (dashes)</text>
+  <line x1="836" y1="214" x2="840" y2="214" stroke="#2c3e50" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="838" y="206" text-anchor="middle" font-family="DejaVu Sans,Arial,sans-serif" font-size="9" fill="#666">Cypher</text>
+  <rect x="1116" y="104" width="248" height="220" rx="8" fill="#f4ecf7" stroke="#8e44ad" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <rect x="1128" y="116" width="36" height="36" rx="6" fill="#ffffff" stroke="#dde3ea" stroke-width="1"/>
+  <image x="1130" y="118" width="32" height="32" xlink:href="icons/llm.svg"/>
+  <text x="1172" y="132" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="700" fill="#8e44ad">LLM Service</text>
+  <text x="1130" y="154" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">Ngoài Docker Compose</text>
+  <text x="1130" y="172" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">vLLM / Ollama / OpenAI API</text>
+  <text x="1130" y="190" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">Chỉ POST /api/query (chat)</text>
+  <text x="1130" y="208" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">Không ghi graph / không inference</text>
+  <line x1="1104" y1="214" x2="1108" y2="214" stroke="#2c3e50" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="1106" y="206" text-anchor="middle" font-family="DejaVu Sans,Arial,sans-serif" font-size="9" fill="#666">/api/query</text>
+  <rect x="24" y="428" width="200" height="200" rx="8" fill="#f4ecf7" stroke="#8e44ad" stroke-width="1.5"/>
+  <rect x="36" y="440" width="36" height="36" rx="6" fill="#ffffff" stroke="#dde3ea" stroke-width="1"/>
+  <image x="38" y="442" width="32" height="32" xlink:href="icons/fireant.svg"/>
+  <text x="80" y="456" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="700" fill="#8e44ad">FireAnt REST</text>
+  <text x="38" y="478" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">restv2.fireant.vn</text>
+  <text x="38" y="496" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">FIREANT_TOKEN · --symbols</text>
+  <text x="38" y="514" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">backend/data/raw/</text>
+  <rect x="244" y="428" width="200" height="200" rx="8" fill="#fdf2e9" stroke="#d35400" stroke-width="1.5"/>
+  <rect x="256" y="440" width="36" height="36" rx="6" fill="#ffffff" stroke="#dde3ea" stroke-width="1"/>
+  <image x="258" y="442" width="32" height="32" xlink:href="icons/python.svg"/>
+  <text x="300" y="456" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="700" fill="#d35400">pipeline.py</text>
+  <text x="258" y="478" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">CLI: update · crawl · resume</text>
+  <text x="258" y="496" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">crawl_and_update()</text>
+  <text x="258" y="514" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">Điều phối 6 bước batch</text>
+  <line x1="232" y1="528" x2="236" y2="528" stroke="#d35400" stroke-width="2" marker-end="url(#arrO)"/>
+  <text x="234" y="520" text-anchor="middle" font-family="DejaVu Sans,Arial,sans-serif" font-size="9" fill="#666"></text>
+  <rect x="464" y="428" width="210" height="200" rx="8" fill="#fdf2e9" stroke="#d35400" stroke-width="1.5"/>
+  <rect x="476" y="440" width="36" height="36" rx="6" fill="#ffffff" stroke="#dde3ea" stroke-width="1"/>
+  <image x="478" y="442" width="32" height="32" xlink:href="icons/python.svg"/>
+  <text x="520" y="456" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="700" fill="#d35400">llm_preprocessor</text>
+  <text x="478" y="478" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">raw → processed_raw</text>
+  <text x="478" y="496" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">kg_nodes.json · kg_edges.json</text>
+  <line x1="452" y1="528" x2="456" y2="528" stroke="#d35400" stroke-width="2" marker-end="url(#arrO)"/>
+  <text x="454" y="520" text-anchor="middle" font-family="DejaVu Sans,Arial,sans-serif" font-size="9" fill="#666"></text>
+  <rect x="694" y="428" width="200" height="200" rx="8" fill="#eafaf1" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="708" y="456" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="700" fill="#27ae60">backend/data/</text>
+  <text x="708" y="478" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">processed_raw/ · kg_data/</text>
+  <text x="708" y="496" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">ingest/ (embedding RAG)</text>
+  <line x1="682" y1="528" x2="686" y2="528" stroke="#d35400" stroke-width="2" marker-end="url(#arrO)"/>
+  <text x="684" y="520" text-anchor="middle" font-family="DejaVu Sans,Arial,sans-serif" font-size="9" fill="#666"></text>
+  <rect x="914" y="428" width="450" height="200" rx="8" fill="#fdecea" stroke="#e74c3c" stroke-width="1.5"/>
+  <rect x="926" y="440" width="36" height="36" rx="6" fill="#ffffff" stroke="#dde3ea" stroke-width="1"/>
+  <image x="928" y="442" width="32" height="32" xlink:href="icons/neo4j.svg"/>
+  <text x="970" y="456" font-family="DejaVu Sans,Arial,sans-serif" font-size="13" font-weight="700" fill="#e74c3c">Neo4j load + enrich + inference</text>
+  <text x="928" y="478" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">push_to_neo4j (DETACH DELETE + load)</text>
+  <text x="928" y="496" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">add_leader_family_relations</text>
+  <text x="928" y="514" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#444">run_all_inference_rules R01–R04</text>
+  <line x1="902" y1="528" x2="906" y2="528" stroke="#d35400" stroke-width="2" marker-end="url(#arrO)"/>
+  <text x="904" y="520" text-anchor="middle" font-family="DejaVu Sans,Arial,sans-serif" font-size="9" fill="#666"></text>
+  <path d="M 1139 428 L 1139 420 L 972 420 L 972 324" fill="none" stroke="#2980b9" stroke-width="1.8" marker-end="url(#arrB)"/>
+  <text x="980" y="414" font-family="DejaVu Sans,Arial,sans-serif" font-size="9" fill="#2980b9">cập nhật graph</text>
+  <path d="M 894 528 L 934 528 L 934 388 L 694 388 L 694 324" fill="none" stroke="#27ae60" stroke-width="1.8" marker-end="url(#arrG)"/>
+  <text x="624" y="380" font-family="DejaVu Sans,Arial,sans-serif" font-size="9" fill="#27ae60">entity_map.json</text>
+  <path d="M 694 324 L 694 436 L 344 436 L 344 428" fill="none" stroke="#95a5a6" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrGy)"/>
+  <text x="324" y="430" font-family="DejaVu Sans,Arial,sans-serif" font-size="9" fill="#7f8c8d">POST /api/crawl/start</text>
+  <rect x="28" y="332" width="64" height="18" rx="4" fill="#27ae60"/>
+  <text x="36" y="345" font-family="DejaVu Sans,Arial,sans-serif" font-size="8" font-weight="700" fill="#fff">ONLINE</text>
+  <text x="100" y="345" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#7f8c8d">Đọc graph — LLM không thay rule inference.</text>
+  <rect x="28" y="636" width="64" height="18" rx="4" fill="#e67e22"/>
+  <text x="36" y="649" font-family="DejaVu Sans,Arial,sans-serif" font-size="8" font-weight="700" fill="#fff">BATCH</text>
+  <text x="100" y="649" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#7f8c8d">Full replace (DETACH DELETE + load) — không merge incremental.</text>
+  <line x1="24" y1="688" x2="1376" y2="688" stroke="#ddd"/>
+  <text x="28" y="706" font-family="DejaVu Sans,Arial,sans-serif" font-size="10" fill="#7f8c8d">(A) chỉ đọc graph · (B) ghi graph + inference Cypher · docker compose up · python3 pipeline.py update</text>
 </svg>
