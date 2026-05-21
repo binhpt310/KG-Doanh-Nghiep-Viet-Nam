@@ -2,6 +2,8 @@
 
 Mục lục tài liệu Markdown trong thư mục này. Điểm vào chính (chạy stack, API): [README.md](../README.md).
 
+**Snapshot 2026-05-21:** 10 413 node, 19 122 cạnh, 280 cạnh ẩn. Chi tiết: [entities_schema.md](entities_schema.md), [SLIDE_CONTENT.md §5.2](../SLIDE_CONTENT.md#52-số-liệu-graph).
+
 | Tài liệu | Đối tượng | Nội dung |
 |----------|-----------|----------|
 | [../README.md](../README.md) | Phát triển / vận hành | Chạy stack, kiến trúc, API, cấu hình |
@@ -38,7 +40,9 @@ Nguồn chuẩn: `rule_catalog.py`, `inference_rules.py`, `frontend/src/utils/la
 | R03 | Luật 3 — Ảnh hưởng gián tiếp 5/25/50 | `CÓ_LỢI_ÍCH_GIÁN_TIẾP` / `ẢNH_HƯỞNG_GIÁN_TIẾP_TỚI` / `KIỂM_SOÁT_GIÁN_TIẾP` | *Ảnh hưởng gián tiếp* + Thấp/Trung bình/Cao |
 | R04 | Luật 4 — Cùng cổ đông lớn | `CÙNG_CỔ_ĐÔNG_LỚN` | Cùng cổ đông lớn |
 
-**R02 và R03:** cùng có thể đi qua chuỗi cổ đông → công ty con; R02 bắt buộc hop đầu `LÀ_CỔ_ĐÔNG_CỦA` và luôn tạo `SỞ_HỮU_GIÁN_TIẾP`; R03 linh hoạt hơn ở hop đầu và chọn một trong ba loại cạnh theo ngưỡng.
+**R02 và R03:** cùng đi qua chuỗi cổ đông → công ty con thực sự (chỉ `CÓ_CÔNG_TY_CON` type=0); R02 bắt buộc hop đầu `LÀ_CỔ_ĐÔNG_CỦA` và luôn tạo `SỞ_HỮU_GIÁN_TIẾP`; R03 linh hoạt hơn ở hop đầu và chọn một trong ba loại cạnh theo ngưỡng. Các quan hệ `CÓ_CÔNG_TY_LIÊN_KẾT`, `LIÊN_DOANH_VỚI`, `ĐẦU_TƯ_VÀO` (type=1,2,3) không tham gia vào R02/R03.
+
+**Số liệu (snapshot 2026-05-21):** 10 413 node (2 711 công ty, 7 702 cá nhân), 19 122 cạnh (119 loại), 280 cạnh ẩn (R01=32, R02=16, R03=232, R04=0).
 
 **Legacy:** `R07`→`R03`, `R12`→`R04` (migrate khi khởi động API / chạy inference).
 

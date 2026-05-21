@@ -1846,8 +1846,7 @@ def api_crawl_progress():
 def api_stats():
     """Lấy thống kê hiện tại của KG.
 
-    inferred_relationships: số *cặp thực thể* có quan hệ ẩn sau khi gộp trùng nhãn giữa cùng một cặp (A→B).
-    inferred_hidden_edges_raw: tổng số *cạnh* inferred trong Neo4j (trước gộp).
+    inferred_relationships: tổng số cạnh inferred trong Neo4j (cùng giá trị với inferred_hidden_edges_raw).
     Nếu = 0: chưa chạy suy luận trên Neo4j hoặc không có pattern thỏa điều kiện (xem inference_rules.py).
     Để tạo quan hệ ẩn: POST /api/inference hoặc POST /api/inference/run, hoặc crawl với run_inference=True.
     """
@@ -1859,18 +1858,6 @@ def api_stats():
         inferred_rel_count = session.run(
             "MATCH ()-[r]->() WHERE coalesce(r.inferred, false) = true RETURN count(r) AS cnt"
         ).single()["cnt"]
-        inferred_edge_rows = session.run(
-            """
-            MATCH (a:Entity)-[r]->(b:Entity)
-            WHERE coalesce(r.inferred, false) = true
-            RETURN a.id AS source, b.id AS target,
-                   coalesce(r.label, type(r)) AS relation,
-                   coalesce(toFloat(r.indirect_ownership_pct), toFloat(r.combined_ownership_pct), -1.0) AS ownership
-            """
-        )
-        inferred_pairs_unique = len(
-            _dedupe_inferred_relation_rows([dict(x) for x in inferred_edge_rows])
-        )
         inferred_nodes_rec = session.run(
             """
             MATCH (a)-[r]->(b) WHERE coalesce(r.inferred, false) = true
@@ -1885,7 +1872,7 @@ def api_stats():
         "total_edges": edge_count,
         "companies": company_count,
         "persons": person_count,
-        "inferred_relationships": inferred_pairs_unique,
+        "inferred_relationships": inferred_rel_count,
         "inferred_hidden_edges_raw": inferred_rel_count,
         "inferred_nodes": inferred_node_count,
     })

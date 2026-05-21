@@ -2,6 +2,8 @@
 
 Tài liệu tham chiếu cho node/edge trong graph sau `push_to_neo4j`. Luật suy diễn: [inference_rules.md](inference_rules.md), catalog UI: `backend/app/rule_catalog.py`.
 
+**Tổng quan (snapshot 2026-05-21):** 2 711 công ty, 7 702 cá nhân, 10 413 node, 19 122 cạnh (119 loại `type(r)`), 280 cạnh ẩn (R01=32, R02=16, R03=232, R04=0).
+
 ## Schema các trường dữ liệu của 1 thực thể (Entity)
 
 ### Có 2 loại node trong KG hiện tại:
@@ -25,20 +27,24 @@ Tài liệu tham chiếu cho node/edge trong graph sau `push_to_neo4j`. Luật s
 | `id`    | `string` | ID duy nhất, ví dụ `C_ACB`, `C_INST_7127` |
 | `name`  | `string` | Tên công ty/tổ chức            |
 | `type`  | `string` | `"Company"`                    |
-| `props` | `object` | Hiện tại thường rỗng `{}` cho Company |
+| `symbol`| `string` | Mã chứng khoán (nếu có), ví dụ `"VCB"` |
+| `props` | `object` | Các thuộc tính bổ sung: `symbol`, `exchange`, `industry`, `price` (từ FireAnt) |
 
 ### **Quan hệ quan sát (không suy diễn)**
 
 Cạnh nạp từ FireAnt / preprocess. `ownership` trên cổ đông thường là **phân số** (0.05 = 5%).
 
-| `type(r)` | Hướng điển hình | Thuộc tính thường gặp |
-|-----------|-----------------|------------------------|
-| `LÀ_CỔ_ĐÔNG_CỦA` | Person/Institution → Company | `shares`, `ownership` |
-| `LÃNH_ĐẠO_CAO_NHẤT` | Person → Company | `label`, chức vụ (nếu có) |
-| `CÓ_CÔNG_TY_CON` | Company → Company (con) | `ownership` (tỷ lệ sở hữu CT con) |
-| `LÀ_CÔNG_TY_CON_CỦA` | Company (con) → Company (mẹ) | `ownership` |
-| `VỢ_CHỒNG`, `CHA_MẸ`, `ANH_CHỊ`, … | Person ↔ Person | quan hệ gia đình |
-| `LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO` | Person → Company | `leaderName`, `position`, `familyRelation` |
+| `type(r)` | Hướng điển hình | Thuộc tính thường gặp | Ghi chú |
+|-----------|-----------------|------------------------|--------|
+| `LÀ_CỔ_ĐÔNG_CỦA` | Person/Institution → Company | `shares`, `ownership` | |
+| `LÃNH_ĐẠO_CAO_NHẤT` | Person → Company | `label`, chức vụ (nếu có) | |
+| `CÓ_CÔNG_TY_CON` | Company → Company (con) | `ownership` (tỷ lệ sở hữu) | Chỉ type=0 từ FireAnt — công ty con thực sự |
+| `LÀ_CÔNG_TY_CON_CỦA` | Company (con) → Company (mẹ) | `ownership` | Cạnh ngược của `CÓ_CÔNG_TY_CON` |
+| `CÓ_CÔNG_TY_LIÊN_KẾT` | Company → Company | `ownership` | FireAnt type=1 (công ty liên kết) |
+| `LIÊN_DOANH_VỚI` | Company → Company | `ownership` | FireAnt type=2 (liên doanh) |
+| `ĐẦU_TƯ_VÀO` | Company → Company | `ownership` | FireAnt type=3 (đầu tư góp vốn) |
+| `VỢ_CHỒNG`, `CHA_MẸ`, `ANH_CHỊ`, … | Person ↔ Person | quan hệ gia đình | 60+ loại quan hệ thân tộc từ FireAnt relations API |
+| `LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO` | Person → Company | `leaderName`, `position`, `familyRelation` | Quan hệ suy diễn từ enrich bước 4 pipeline |
 
 ---
 
@@ -57,7 +63,7 @@ Sinh bởi `backend/inference_rules.py` sau `push_to_neo4j`. Mọi cạnh ẩn c
 
 **Ghi chú:**
 
-- **R02 vs R03:** cùng có thể đi qua chuỗi tới công ty con, nhưng R02 bắt buộc hop đầu `LÀ_CỔ_ĐÔNG_CỦA` và luôn tạo `SỞ_HỮU_GIÁN_TIẾP`; R03 hop đầu linh hoạt hơn và chọn một trong ba `type()` theo ngưỡng 5 / 25 / 50.
+- **R02 vs R03:** R02 yêu cầu `(a)-[:LÀ_CỔ_ĐÔNG_CỦA]->(b)` rồi `(b)-[:CÓ_CÔNG_TY_CON]->(c)` hoặc `(c)-[:LÀ_CÔNG_TY_CON_CỦA]->(b)`; luôn tạo `SỞ_HỮU_GIÁN_TIẾP`. R03 cho phép hop đầu `r1` rộng hơn nhưng vẫn yêu cầu hop thứ hai là `CÓ_CÔNG_TY_CON` (chỉ type=0 — công ty con thực sự). Các quan hệ `CÓ_CÔNG_TY_LIÊN_KẾT`, `LIÊN_DOANH_VỚI`, `ĐẦU_TƯ_VÀO` (type=1,2,3) không tham gia vào R02/R03.
 - Cạnh ẩn thường có `label` trùng `type(r)` và `dashes: true` trên API graph.
 - Ngưỡng %: &lt; 5% không tạo cạnh; `influence_level` = `LOW` | `MEDIUM` | `HIGH` (hoặc `NONE` nếu bị loại trước khi ghi).
 

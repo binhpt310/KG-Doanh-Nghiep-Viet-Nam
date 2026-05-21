@@ -46,7 +46,7 @@ Các khối code chính:
 
 ## 1. Tổng quan
 
-Dữ liệu niêm yết được kéo về qua **API FireAnt** (REST theo `FIREANT_BASE_URL`): cổ đông, lãnh đạo, công ty con, người thân trong mạng sở hữu, ảnh hưởng gián tiếp qua tầng trung gian — thông tin nằm trong nhiều **payload/bảng** của cùng nguồn, khó phân tích dạng mạng nếu chỉ xem từng màn hình riêng lẻ.
+Dữ liệu niêm yết được kéo về qua **API FireAnt** (REST theo `FIREANT_BASE_URL`): cổ đông, lãnh đạo, công ty con (type=0), công ty liên kết (type=1), liên doanh (type=2), đầu tư góp vốn (type=3), người thân trong mạng sở hữu, ảnh hưởng gián tiếp qua tầng trung gian — thông tin nằm trong nhiều **payload/bảng** của cùng nguồn, khó phân tích dạng mạng nếu chỉ xem từng màn hình riêng lẻ.
 
 Repo gom về **một graph Neo4j**, thêm **cạnh suy diễn theo luật**, rồi phục vụ **REST `/api/*`** và **ứng dụng web một trang (SPA)** qua cùng origin Nginx.
 
@@ -162,7 +162,7 @@ Tham số (lệnh `update` / `crawl`): `--symbols VCB FPT`, `--banks-only`, `--s
 **A. Pipeline đầy đủ (`pipeline.py`, lệnh `update` hoặc crawl từ API):**
 
 1. Crawl FireAnt → ghi `backend/data/raw/`.
-2. `llm_preprocessor.process_raw_files()` → `processed_raw/`, file vào `ingest/`, build `kg_data/kg_nodes.json` + `kg_edges.json`.
+2. `llm_preprocessor.process_raw_files()` → `processed_raw/`, file vào `ingest/`, build `kg_data/kg_nodes.json` + `kg_edges.json`. FireAnt `subsidiaries` endpoint trả về 5 loại (`type`: 0=công ty con, 1=công ty liên kết, 2=liên doanh, 3=đầu tư góp vốn, 4=chưa xác định). Bước này lọc theo type để tạo các cạnh riêng: `CÓ_CÔNG_TY_CON` (type=0), `CÓ_CÔNG_TY_LIÊN_KẾT` (type=1), `LIÊN_DOANH_VỚI` (type=2), `ĐẦU_TƯ_VÀO` (type=3). Type=4 bị bỏ qua.
 3. `push_to_neo4j()`: chạy `MATCH (n) DETACH DELETE n` rồi nạp lại toàn bộ node/edge từ hai file JSON (thay thế toàn bộ, không gộp tăng dần).
 4. `add_leader_family_relations` (trong pipeline) → bổ sung cạnh người thân lãnh đạo.
 5. `run_all_inference_rules` → cạnh suy diễn (`r.inferred = true`, `r.inferred_from` là một trong `R01`–`R04` tùy luật).

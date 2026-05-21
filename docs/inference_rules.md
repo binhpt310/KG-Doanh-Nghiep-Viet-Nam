@@ -123,7 +123,7 @@ ON CREATE SET r.inferred = true,
 
 ### Mô tả
 
-Tính sở hữu gián tiếp khi A nắm B, B (hoặc quan hệ công ty con) nắm C. Tỷ lệ gián tiếp = tích hai tỷ lệ.
+Tính sở hữu gián tiếp khi A nắm B, B có công ty con C (chỉ type=0 từ FireAnt — công ty con thực sự, `CÓ_CÔNG_TY_CON`). Tỷ lệ gián tiếp = tích hai tỷ lệ.
 
 ### Logic
 
@@ -132,6 +132,8 @@ Tính sở hữu gián tiếp khi A nắm B, B (hoặc quan hệ công ty con) n
 (B) --[CÓ_CÔNG_TY_CON: y]--> (C)   (hoặc chiều LÀ_CÔNG_TY_CON_CỦA)
 => (A) --[SỞ_HỮU_GIÁN_TIẾP: (x*y)%]--> (C)
 ```
+
+Lưu ý: `CÓ_CÔNG_TY_CON` và `LÀ_CÔNG_TY_CON_CỦA` trong KG hiện tại chỉ được tạo cho công ty con thực sự (type=0). Công ty liên kết, liên doanh, đầu tư góp vốn (type=1,2,3) có quan hệ riêng (`CÓ_CÔNG_TY_LIÊN_KẾT`, `LIÊN_DOANH_VỚI`, `ĐẦU_TƯ_VÀO`) và không tham gia vào R02/R03.
 
 ### Căn cứ pháp lý
 
@@ -206,13 +208,13 @@ ON CREATE SET r.inferred = true,
 
 ### Mô tả
 
-Luật tổng quát: đường 2 bước A → B → C (B có công ty con C), tính % gián tiếp và gán **một trong ba** loại cạnh theo ngưỡng 5 / 25 / 50. Phiên bản nâng cấp so với logic suy diễn đơn giản ban đầu.
+Luật tổng quát: đường 2 bước A → B → C (B có công ty con C — chỉ `CÓ_CÔNG_TY_CON` type=0), tính % gián tiếp và gán **một trong ba** loại cạnh theo ngưỡng 5 / 25 / 50.
 
 ### Logic
 
 ```
-(A) --[r1: quan hệ bất kỳ, ownership x]--> (B)
-(B) --[CÓ_CÔNG_TY_CON: ownership y]--> (C)
+(A) --[r1: quan hệ bất kỳ, có ownership x]--> (B)
+(B) --[CÓ_CÔNG_TY_CON: ownership y]--> (C)   (chỉ công ty con thực sự, type=0)
 
 indirect_pct = x_frac * y_frac * 100   (xem run_r03_indirect_influence)
 
@@ -367,9 +369,9 @@ from neo4j import GraphDatabase
 driver = GraphDatabase.driver("neo4j://localhost:7687", auth=("neo4j", "password"))
 results = run_all_inference_rules(driver, batch_size=500)
 print(results)
-# {'R01_spousal_aggregation': 5, 'R02_indirect_ownership': 12,
-#  'R03_indirect_influence': 48, 'R04_shared_major_shareholder': 3,
-#  'total': 68, 'elapsed_seconds': 3.42}
+# {'R01_spousal_aggregation': 32, 'R02_indirect_ownership': 16,
+#  'R03_indirect_influence': 232, 'R04_shared_major_shareholder': 0,
+#  'total': 280}
 ```
 
 ### REST API
