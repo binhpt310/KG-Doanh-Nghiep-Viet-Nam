@@ -59,9 +59,9 @@ FireAnt API endpoint `symbols/{symbol}/subsidiaries` trả về danh sách kèm 
 | `CÓ_CÔNG_TY_LIÊN_KẾT` | Company → Company | `ownership` | 177 |
 | `LIÊN_DOANH_VỚI` | Company → Company | `ownership` | 30 |
 | `ĐẦU_TƯ_VÀO` | Company → Company | `ownership` | 179 |
-| `VỢ_CHỒNG`, `CHA_MẸ`, `ANH_CHỊ`, … (56 loại) | Person ↔ Person | — | ~8 630 |
+| `VỢ_CHỒNG`, `CHA_MẸ`, `ANH_CHỊ`, … (70 loại) | Person ↔ Person | — | 8 630 |
 | `LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO` | Person → Company | `leaderName`, `position`, `familyRelation` | 960 |
-| Các chức danh (25+ loại: `CHỦ_TỊCH_HĐQT`, `TỔNG_GIÁM_ĐỐC`, …) | Person → Company | `label` | ~3 000 |
+| Các chức danh (35+ loại: `CHỦ_TỊCH_HĐQT`, `TỔNG_GIÁM_ĐỐC`, `THÀNH_VIÊN_HĐQT`, …) | Person → Company | `label` | 3 264 |
 
 ---
 
