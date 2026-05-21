@@ -462,6 +462,12 @@ def extract_main_entities(query_text, target_entity_id, target_display):
 
 def extract_target_entity(query_text):
     q_lower = query_text.lower().strip()
+    q_norm = _normalize_vn_text(query_text)
+    # Ngân hàng Quân Đội = MBB (không phải MIG bảo hiểm) — tránh alias entity_map cũ.
+    if "ngan hang" in q_norm and "quan doi" in q_norm:
+        if "bao hiem" not in q_norm and "mig" not in q_norm.split():
+            mbb_id = ENTITY_MAP.get("mbb") or ENTITY_MAP.get("ngân hàng tmcp quân đội") or "C_MBB"
+            return mbb_id, "Ngân hàng TMCP Quân Đội (MBB)"
     # 1. Ưu tiên khớp Bank từ ENTITY_MAP
     for key in sorted(ENTITY_MAP.keys(), key=len, reverse=True):
         if key in q_lower:

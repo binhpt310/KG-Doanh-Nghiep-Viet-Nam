@@ -1016,9 +1016,15 @@ def _extract_short_name(full_name: str) -> list:
         parts = [p for p in remain.split() if len(p) >= 2]
         if len(parts) >= 2:
             key_part = " ".join(parts[-2:])
-            if key_part != remain:
+            # Chỉ sinh alias "ngân hàng …" cho DN có tên chứa ngân hàng/bank — tránh MIG → "ngân hàng quân đội".
+            if key_part != remain and _is_bank_like_name(full_name):
                 aliases.append(f"ngân hàng {key_part}")
     return aliases
+
+
+def _is_bank_like_name(full_name: str) -> bool:
+    n = _normalize_str(full_name)
+    return "ngan hang" in n or " bank" in n or n.startswith("bank ")
 
 
 def _is_listed_symbol(s: str) -> bool:
@@ -1095,9 +1101,11 @@ def _from_banks_json() -> dict:
             out["eximbank"] = cid
         if "sài gòn" in full.lower() and "thương tín" in full.lower():
             out["sacombank"] = cid
-        if "quân đội" in full.lower():
+        if "quân đội" in full.lower() and "ngân hàng" in full.lower():
             out["mbbank"] = cid
             out["mb bank"] = cid
+            out["ngân hàng quân đội"] = cid
+            out["ngan hang quan doi"] = cid
         if "việt nam thịnh vượng" in full.lower():
             out["vpbank"] = cid
         if "quốc tế" in full.lower() and "việt nam" in full.lower():

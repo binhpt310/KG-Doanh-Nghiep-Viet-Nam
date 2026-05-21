@@ -157,11 +157,13 @@ export function edgeToVis(e: ApiEdge): VisEdge {
   }
   const neonColor = RULE_COLORS[ruleId];
 
+  const from = e.from || e.source || '';
+  const to = e.to || e.target || '';
   const obj: VisEdge = {
-    id: `${e.from || e.source}→${e.to || e.target}:${e.label || ''}`,
-    from: e.from || e.source || '',
-    to: e.to || e.target || '',
-    label: e.label || '',
+    id: edgePairKey(from, to),
+    from,
+    to,
+    label: e.label || e.edge_label || '',
     dashes: !!(e.inferred || e.dashes),
   };
 
@@ -184,6 +186,77 @@ function edgeIdentity(e: ApiEdge): string {
   return `${e.from || e.source || ''}→${e.to || e.target || ''}:${e.label || e.edge_label || ''}`;
 }
 
+/** Khóa không phân hướng — một cặp nút chỉ một cạnh trên UI. */
+export function edgePairKey(from: string, to: string): string {
+  return from < to ? `${from}|${to}` : `${to}|${from}`;
+}
+
+const EDGE_TYPE_PRIORITY: Record<string, number> = {
+  LÃNH_ĐẠO_CAO_NHẤT: 100,
+  CHỦ_TỊCH_HĐQT: 95,
+  TỔNG_GIÁM_ĐỐC: 90,
+  PHÓ_TỔNG_GIÁM_ĐỐC: 85,
+  LÀ_CỔ_ĐÔNG_CỦA: 70,
+  LÀ_NGƯỜI_THÂN_CỦA_LÃNH_ĐẠO: 60,
+  VỢ_CHỒNG: 55,
+  ANH_CHỊ: 54,
+  CÓ_CÔNG_TY_CON: 50,
+  LÀ_CÔNG_TY_CON_CỦA: 45,
+};
+
+function edgeEndpoints(e: ApiEdge): [string, string] | null {
+  const from = e.from || e.source || '';
+  const to = e.to || e.target || '';
+  if (!from || !to || from === to) return null;
+  return [from, to];
+}
+
+function edgePriority(e: ApiEdge): number {
+  const label = String(e.label || e.edge_label || '').trim();
+  if (EDGE_TYPE_PRIORITY[label] != null) return EDGE_TYPE_PRIORITY[label];
+  if (e.inferred || e.dashes) return 25;
+  return 40;
+}
+
+/** Ưu tiên hướng Cá nhân → Công ty khi có cạnh 2 chiều. */
+function normalizeEdgeDirection(e: ApiEdge): ApiEdge {
+  const from = e.from || e.source || '';
+  const to = e.to || e.target || '';
+  if (from.startsWith('P_') && to.startsWith('C_')) {
+    return { ...e, from, to, source: from, target: to };
+  }
+  if (from.startsWith('C_') && to.startsWith('P_')) {
+    return { ...e, from: to, to: from, source: to, target: from };
+  }
+  return { ...e, from, to, source: from, target: to };
+}
+
+function compareEdgeKeep(a: ApiEdge, b: ApiEdge): number {
+  const pa = edgePriority(a);
+  const pb = edgePriority(b);
+  if (pa !== pb) return pa - pb;
+  const ia = a.inferred || a.dashes ? 1 : 0;
+  const ib = b.inferred || b.dashes ? 1 : 0;
+  return ia - ib;
+}
+
+/** Gộp mọi quan hệ giữa cùng 2 nút (2 chiều hoặc nhiều nhãn) thành một cạnh. */
+export function collapseEdgePairs(edges: ApiEdge[]): ApiEdge[] {
+  const byPair: Record<string, ApiEdge> = {};
+  (edges || []).forEach((e) => {
+    const ep = edgeEndpoints(e);
+    if (!ep) return;
+    const [from, to] = ep;
+    const pk = edgePairKey(from, to);
+    const cand = normalizeEdgeDirection(e);
+    const cur = byPair[pk];
+    if (!cur || compareEdgeKeep(cand, cur) > 0) {
+      byPair[pk] = cand;
+    }
+  });
+  return Object.values(byPair);
+}
+
 export function dedupeGraphPayload(nodes: ApiNode[], edges: ApiEdge[]) {
   const nodeSeen: Record<string, boolean> = {};
   const edgeSeen: Record<string, boolean> = {};
@@ -203,7 +276,7 @@ export function dedupeGraphPayload(nodes: ApiNode[], edges: ApiEdge[]) {
     cleanEdges.push(e);
   });
 
-  return { nodes: cleanNodes, edges: cleanEdges };
+  return { nodes: cleanNodes, edges: collapseEdgePairs(cleanEdges) };
 }
 
 export function computeDegrees(edges: ApiEdge[]): Record<string, number> {

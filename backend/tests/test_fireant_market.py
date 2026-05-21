@@ -37,6 +37,15 @@ def test_rank_symbols_by_volume_sorts_desc():
     assert [r["symbol"] for r in ranked] == ["VNM", "FPT", "VIC"]
 
 
+def test_extract_mbb_for_ngan_hang_quan_doi_leader_query():
+    import script as s
+
+    s.ENTITY_MAP = s._load_entity_map()
+    eid, disp = s.extract_target_entity("Ngân hàng Quân Đội có ai là lãnh đạo cao nhất?")
+    assert eid == "C_MBB", (eid, disp)
+    assert "MBB" in disp or "Quân Đội" in disp
+
+
 def test_collect_without_token_returns_empty():
     with patch.object(fm, "FIREANT_TOKEN", ""):
         steps = []

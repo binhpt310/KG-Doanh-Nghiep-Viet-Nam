@@ -1,3 +1,7 @@
 {
-  "ngân hàng ngoại thương": "C_VCB"
+  "ngân hàng ngoại thương": "C_VCB",
+  "ngân hàng quân đội": "C_MBB",
+  "ngan hang quan doi": "C_MBB",
+  "bảo hiểm quân đội": "C_MIG",
+  "bao hiem quan doi": "C_MIG"
 }

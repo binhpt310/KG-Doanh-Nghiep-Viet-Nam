@@ -9,6 +9,7 @@ import { createInitialStore } from './types';
 import {
   dedupeGraphPayload,
   computeDegrees,
+  edgePairKey,
   edgeToVis,
   getVisOptions,
   nodeToVis,
@@ -210,6 +211,11 @@ export function useKgGraph(
       if (toAdd.length) nodesDs.add(toAdd);
 
       newEdges.forEach((e) => {
+        const from = e.from || e.source || '';
+        const to = e.to || e.target || '';
+        if (!from || !to) return;
+        const pk = edgePairKey(from, to);
+        if (edgesDs.get(pk)) return;
         const ev = edgeToVis(e);
         try {
           edgesDs.add(ev);
